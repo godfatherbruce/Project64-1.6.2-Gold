@@ -29,12 +29,11 @@
 #include "registers.h"
 #include "Recompiler Ops.h"
 #include "tlb.h"
-#include "Sync CPU.h"
 #include "memory.h"
 #include "DMA.h"
-#include "eeprom.h"
-#include "sram.h"
-#include "flashram.h"
+#include "eepROM.h"
+#include "SRAM.h"
+#include "FlashRAM.h"
 #include "mempak.h"
 #include "Exception.h"
 #include "pif.h"
@@ -78,11 +77,13 @@ void CheckTimer         ( void );
 void CloseCpu           ( void );
 int  DelaySlotEffectsCompare ( DWORD PC, DWORD Reg1, DWORD Reg2 );
 int  DelaySlotEffectsJump (DWORD JumpPC);
+char * R4300iOpcodeName ( DWORD OpCode, DWORD PC );
+char * LabelName    ( DWORD Address );
 void DoSomething        ( void );
 void GetAutoSaveDir     ( char * Directory );
 void GetInstantSaveDir  ( char * Directory );
 void InPermLoop         ( void );
-void InitiliazeCPUFlags ( void );
+void INITIALIZECPUFlags ( void );
 BOOL Machine_LoadState  ( void );
 BOOL Machine_SaveState  ( void );
 void PauseCpu           ( void );
@@ -104,13 +105,14 @@ void TimerDone          ( void );
 #define DELAY_SLOT_DONE			7
 #define LIKELY_DELAY_SLOT_DONE	8
 #define END_BLOCK 				9
+#define CPU_Message
 
 enum SaveType {
 	Auto,
-	Eeprom_4K,
-	Eeprom_16K,
-	Sram,
-	FlashRam
+	eepROM_4K,
+	eepROM_16K,
+	SRAM,
+	FlashRAM
 };
 
 #ifdef CFB_READ

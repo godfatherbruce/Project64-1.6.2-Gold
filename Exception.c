@@ -27,7 +27,6 @@
 #include "main.h"
 #include "cpu.h"
 #include "plugin.h"
-#include "debugger.h"
 
 void __cdecl AiCheckInterrupts ( void ) {	
 	CPU_Action.CheckInterrupts = TRUE;
@@ -37,9 +36,7 @@ void __cdecl AiCheckInterrupts ( void ) {
 void __cdecl CheckInterrupts ( void ) {	
 
 	MI_INTR_REG &= ~MI_INTR_AI;
-	if (CPU_Type != CPU_SyncCores) {
-		MI_INTR_REG |= (AudioIntrReg & MI_INTR_AI);
-	}
+	MI_INTR_REG |= (AudioIntrReg & MI_INTR_AI);
 	if ((MI_INTR_MASK_REG & MI_INTR_REG) != 0) {
 		FAKE_CAUSE_REGISTER |= CAUSE_IP2;
 	} else  {

@@ -34,39 +34,31 @@
 
 #include "main.h"
 #include "cheats.h"
-#include "cheatsearch.h"
 #include "cpu.h"
 #include "plugin.h"
-#include "debugger.h"
 #include "Settings.h"
 #include "htmlHelp.h"
 #include "resource.h"
-#include "resource_cheat.h"
 #include "RomTools_Common.h"
-#include "Settings Api_2.h"
 #include "Registry.h"
 
 LARGE_INTEGER Frequency, Frames[NoOfFrames], LastFrame;
-BOOL HaveDebugger, AutoLoadMapFile, ShowUnhandledMemory, ShowTLBMisses,
-	ShowDListAListCount, ShowCompMem, Profiling, IndvidualBlock, AutoStart,
+BOOL 	AutoStart,
 	AutoSleep, DisableRegCaching, UseIni, UseTlb, UseLinking, RomBrowser,
-	IgnoreMove, Rercursion, ShowPifRamErrors, LimitFPS, ShowCPUPer, AutoZip,
+	IgnoreMove, Rercursion, LimitFPS,
 	AutoFullScreen, SystemABL, AlwaysOnTop, BasicMode, DelaySI, RememberCheats, AudioSignal,
 	DelayRSP, DelayRDP, EmulateAI, ForceClose;
 DWORD CurrentFrame, CPU_Type, SystemCPU_Type, SelfModCheck, SystemSelfModCheck,
 	RomsToRemember, RomDirsToRemember;
-HWND hMainWindow, hHiddenWin, hStatusWnd, hCheatSearchDlg;
+HWND hMainWindow, hHiddenWin, hStatusWnd;
 char CurrentSave[256];
 HMENU hMainMenu;
 HINSTANCE hInst;
 
 void MenuSetText ( HMENU hMenu, int MenuPos, char * Title, char * ShotCut );
 void RomInfo     ( void );
-void GameInfoByRomID();
-void GameInfoByGameInfoID(char* GameInfoID);
 void SetupMenu   ( HWND hWnd );
 void UninstallApplication(HWND hWnd);
-void UninstallJabo(HWND hWnd);
 
 LRESULT CALLBACK AboutIniBoxProc ( HWND, UINT, WPARAM, LPARAM );
 LRESULT CALLBACK Main_Proc       ( HWND, UINT, WPARAM, LPARAM );
@@ -77,14 +69,14 @@ void AboutIniBox (void) {
 }
 
 LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	static char RDBHomePage[300], CHTHomePage[300], RDXHomePage[300], JINIHomePage[300];
+	static char RDBHomePage[300], CHTHomePage[300], RDXHomePage[300];
 
 	switch (uMsg) {
 	case WM_INITDIALOG:
 		{
 			char * IniFile, String[200],String2[200];
 
-			SetWindowText(hDlg, GS(INI_TITLE));
+			SetWindowText(hDlg, GS(MENU_ABOUT_INI));
 
 			//Language
 			SetDlgItemText(hDlg,IDC_LAN,GS(INI_CURRENT_LANG));
@@ -175,31 +167,6 @@ LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 			if (strlen(RDXHomePage) == 0) {
 				EnableWindow(GetDlgItem(hDlg,IDC_RDX_HOME),FALSE);
 			}
-
-			//Jabo Ini Info
-			SetDlgItemText(hDlg, IDC_JINI, GS(INI_CURRENT_JINI));
-			IniFile = GetJIniFileName();
-			_GetPrivateProfileString("Meta", "Author", "", String, sizeof(String), IniFile);
-			if (strlen(String) == 0) {
-				EnableWindow(GetDlgItem(hDlg, IDC_JINI), FALSE);
-				EnableWindow(GetDlgItem(hDlg, IDC_JINI_AUTHOR), FALSE);
-				EnableWindow(GetDlgItem(hDlg, IDC_JINI_VERSION), FALSE);
-				EnableWindow(GetDlgItem(hDlg, IDC_JINI_DATE), FALSE);
-				EnableWindow(GetDlgItem(hDlg, IDC_JINI_HOME), FALSE);
-			}
-			sprintf(String2, "%s: %s", GS(INI_AUTHOR), String);
-			SetDlgItemText(hDlg, IDC_JINI_AUTHOR, String2);
-			_GetPrivateProfileString("Meta", "Version", "", String, sizeof(String), IniFile);
-			sprintf(String2, "%s: %s", GS(INI_VERSION), String);
-			SetDlgItemText(hDlg, IDC_JINI_VERSION, String2);
-			_GetPrivateProfileString("Meta", "Date", "", String, sizeof(String), IniFile);
-			sprintf(String2, "%s: %s", GS(INI_DATE), String);
-			SetDlgItemText(hDlg, IDC_JINI_DATE, String2);
-			_GetPrivateProfileString("Meta", "Homepage", "", JINIHomePage, sizeof(CHTHomePage), IniFile);
-			SetDlgItemText(hDlg, IDC_JINI_HOME, GS(INI_HOMEPAGE));
-			if (strlen(JINIHomePage) == 0) {
-				EnableWindow(GetDlgItem(hDlg, IDC_JINI_HOME), FALSE);
-			}
 		}
 		break;
 	case WM_COMMAND: {
@@ -208,7 +175,6 @@ LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 			case IDC_RDB_HOME: sprintf(String, "https://%s", RDBHomePage); ShellExecute(NULL,"open",String,NULL,NULL,SW_SHOWNORMAL); break;
 			case IDC_CHT_HOME: sprintf(String, "https://%s", CHTHomePage); ShellExecute(NULL,"open",String,NULL,NULL,SW_SHOWNORMAL); break;
 			case IDC_RDX_HOME: sprintf(String, "https://%s", RDXHomePage); ShellExecute(NULL,"open",String,NULL,NULL,SW_SHOWNORMAL); break;
-			case IDC_JINI_HOME: sprintf(String, "https://%s", JINIHomePage); ShellExecute(NULL, "open", String, NULL, NULL, SW_SHOWNORMAL); break;
 
 			case IDOK:
 			case IDCANCEL:
@@ -297,11 +263,7 @@ void __cdecl DisplayErrorFatal (char * Message, ...) {
 	char Msg[1000];
 	va_list ap;
 	
-	if (inFullScreen) {
-		CPU_Paused = TRUE;
-		SendMessage(hMainWindow,WM_COMMAND,ID_OPTIONS_FULLSCREEN,0); //ID_FILE_ENDEMULATION
-		CPU_Paused = FALSE;
-	}
+	if (inFullScreen) { return; }
 
 	va_start( ap, Message );
 	vsprintf( Msg, Message, ap );
@@ -320,10 +282,8 @@ void DisplayFPS (void) {
 		for (count = 0; count < NoOfFrames; count ++) {
 			Total.QuadPart += Frames[count].QuadPart;
 		}
-		sprintf(Message, "FPS: %.2f", Frequency.QuadPart/ ((double)Total.QuadPart / (NoOfFrames << 3)));
+		sprintf(Message, "Frames Per Second: ~~ %.0f", Frequency.QuadPart/ ((double)Total.QuadPart / (NoOfFrames << 3)));
 		SendMessage( hStatusWnd, SB_SETTEXT, 1, (LPARAM)Message );
-	} else {
-		SendMessage( hStatusWnd, SB_SETTEXT, 1, (LPARAM)"FPS: -.--" );
 	}
 }
 
@@ -333,92 +293,51 @@ void FixMenuLang (HMENU hMenu) {
 	MenuSetText(hMenu, 0, GS(MENU_FILE), NULL);
 	MenuSetText(hMenu, 1, GS(MENU_SYSTEM), NULL);
 	MenuSetText(hMenu, 2, GS(MENU_OPTIONS), NULL);
-	MenuSetText(hMenu, 3, GS(MENU_DEBUGGER), NULL);
-	MenuSetText(hMenu, 4, GS(MENU_HELP), NULL);
+	MenuSetText(hMenu, 3, GS(MENU_HELP), NULL);
 
 	//File
 	hSubMenu = GetSubMenu(hMenu,0);
 	MenuSetText(hSubMenu, 0, GS(MENU_OPEN), "Ctrl+O");
 	MenuSetText(hSubMenu, 1, GS(MENU_ROM_INFO), NULL);
-	MenuSetText(hSubMenu, 2, GS(MENU_GAME_INFO), NULL);
-	MenuSetText(hSubMenu, 4, GS(MENU_START), "F11");
-	MenuSetText(hSubMenu, 5, GS(MENU_END), "F12");
-	MenuSetText(hSubMenu, 7, GS(MENU_LANGUAGE), NULL);
-	MenuSetText(hSubMenu, 9, GS(MENU_CHOOSE_ROM), NULL);
-	MenuSetText(hSubMenu, 10, GS(MENU_REFRESH), "F5");
-	MenuSetText(hSubMenu, 12, GS(MENU_RECENT_ROM), NULL);
-	MenuSetText(hSubMenu, 14, GS(MENU_RECENT_DIR), NULL);
-	MenuSetText(hSubMenu, 15, GS(MENU_EXIT), "Alt+F4");
+	MenuSetText(hSubMenu, 3, GS(MENU_START), "F11");
+	MenuSetText(hSubMenu, 4, GS(MENU_END), "F12");
+	MenuSetText(hSubMenu, 6, GS(MENU_LANGUAGE), NULL);
+	MenuSetText(hSubMenu, 8, GS(MENU_CHOOSE_ROM), NULL);
+	MenuSetText(hSubMenu, 9, GS(MENU_REFRESH), "F5");
+	MenuSetText(hSubMenu, 11, GS(MENU_RECENT_ROM), NULL);
+	MenuSetText(hSubMenu, 12, GS(MENU_RECENT_DIR), NULL);
+	MenuSetText(hSubMenu, 14, GS(MENU_EXIT), "Alt+F4");
 
 	//System
 	hSubMenu = GetSubMenu(hMenu,1);
 	MenuSetText(hSubMenu, 0, GS(MENU_RESET),"F1");
 	MenuSetText(hSubMenu, 1, GS(CPU_Paused?MENU_RESUME:MENU_PAUSE),"F2");
-	MenuSetText(hSubMenu, 2, GS(MENU_BITMAP),"F3");
+        MenuSetText(hSubMenu, 2, GS(MENU_BITMAP),"F3");
 	MenuSetText(hSubMenu, 4, GS(MENU_LIMIT_FPS),"F4");
 	MenuSetText(hSubMenu, 6, GS(MENU_SAVE),"F5");
 	MenuSetText(hSubMenu, 7, GS(MENU_SAVE_AS),"Ctrl+S");
 	MenuSetText(hSubMenu, 8, GS(MENU_RESTORE),"F7");
 	MenuSetText(hSubMenu, 9, GS(MENU_LOAD),"Ctrl+L");
-	MenuSetText(hSubMenu,11, GS(MENU_CURRENT_SAVE),NULL);
-	MenuSetText(hSubMenu,13, GS(MENU_CHEAT),"Ctrl+C");
-	// TODO Witten: Translate Cheat Search
-	MenuSetText(hSubMenu,15, GS(MENU_GS_BUTTON),"F9");
+	MenuSetText(hSubMenu, 11, GS(MENU_CURRENT_SAVE),NULL);
+	MenuSetText(hSubMenu, 13, GS(MENU_CHEAT),"Ctrl+C");
+	MenuSetText(hSubMenu, 14, GS(MENU_GS_BUTTON),"F9");
 
 	//Options
 	hSubMenu = GetSubMenu(hMenu,2);
-	MenuSetText(hSubMenu, 0, GS(MENU_FULL_SCREEN), "Alt+Enter");
+	MenuSetText(hSubMenu, 0, GS(MENU_FULL_SCREEN), "Esc");
 	MenuSetText(hSubMenu, 1, GS(MENU_ON_TOP), "Ctrl+A");
-	MenuSetText(hSubMenu, 3, GS(MENU_CONFG_GFX), NULL);
-	MenuSetText(hSubMenu, 4, GS(MENU_CONFG_AUDIO), NULL);
-	MenuSetText(hSubMenu, 5, GS(MENU_CONFG_CTRL), NULL);
-	MenuSetText(hSubMenu, 6, GS(MENU_CONFG_RSP), NULL);
-	MenuSetText(hSubMenu, 8, GS(MENU_SHOW_CPU), NULL);
-	MenuSetText(hSubMenu, 9, GS(MENU_SETTINGS), "Ctrl+T");
+	MenuSetText(hSubMenu, 3, GS(MENU_CONFIG_GFX), "Ctrl+V");
+	MenuSetText(hSubMenu, 4, GS(MENU_CONFIG_AUDIO), "Ctrl+B");
+	MenuSetText(hSubMenu, 5, GS(MENU_CONFIG_CTRL), "Ctrl+D");
+	MenuSetText(hSubMenu, 6, GS(MENU_CONFIG_RSP), "Ctrl+R");
+	MenuSetText(hSubMenu, 8, GS(MENU_SETTINGS), "Ctrl+T");
 
 	//Help Menu
-	hSubMenu = GetSubMenu(hMenu,4);
-#ifdef BETA_VERSION
-	MenuSetText(hSubMenu, 2, GS(MENU_USER_MAN), NULL);
-	MenuSetText(hSubMenu, 3, GS(MENU_GAME_FAQ), NULL);
-	MenuSetText(hSubMenu, 5, GS(MENU_ABOUT_INI), NULL);
-	MenuSetText(hSubMenu, 6, GS(MENU_ABOUT_PJ64), NULL);
-#else
-	MenuSetText(hSubMenu, 0, GS(MENU_USER_GUIDE), NULL);
-	MenuSetText(hSubMenu, 1, GS(MENU_GAME_RDX), NULL);
-	MenuSetText(hSubMenu, 3, GS(MENU_GITHUB), NULL);
-	MenuSetText(hSubMenu, 4, GS(MENU_DISCORD), NULL);
-	MenuSetText(hSubMenu, 6, GS(MENU_UNINSTALL), NULL);
-	MenuSetText(hSubMenu, 8, GS(MENU_JABO_UNINSTALL), NULL);
-	MenuSetText(hSubMenu, 9, GS(MENU_ABOUT_INI), NULL);
-	MenuSetText(hSubMenu, 10, GS(MENU_ABOUT_PJ64), NULL);
-#endif
-
-	//Save Slot
-	hSubMenu = GetSubMenu(hMenu, 1);
-	hSubMenu = GetSubMenu(hSubMenu, 19);
-	MenuSetText(hSubMenu, 0, GS(MENU_SLOT_DEFAULT), "0");
-	MenuSetText(hSubMenu, 1, GS(MENU_SLOT_1), "1");
-	MenuSetText(hSubMenu, 2, GS(MENU_SLOT_2), "2");
-	MenuSetText(hSubMenu, 3, GS(MENU_SLOT_3), "3");
-	MenuSetText(hSubMenu, 4, GS(MENU_SLOT_4), "4");
-	MenuSetText(hSubMenu, 5, GS(MENU_SLOT_5), "5");
-	MenuSetText(hSubMenu, 6, GS(MENU_SLOT_6), "6");
-	MenuSetText(hSubMenu, 7, GS(MENU_SLOT_7), "7");
-	MenuSetText(hSubMenu, 8, GS(MENU_SLOT_8), "8");
-	MenuSetText(hSubMenu, 9, GS(MENU_SLOT_9), "9");
-	MenuSetText(hSubMenu, 10, GS(MENU_SLOT_10), "Shift+0");
-	MenuSetText(hSubMenu, 11, GS(MENU_SLOT_11), "Shift+1");
-	MenuSetText(hSubMenu, 12, GS(MENU_SLOT_12), "Shift+2");
-	MenuSetText(hSubMenu, 13, GS(MENU_SLOT_13), "Shift+3");
-	MenuSetText(hSubMenu, 14, GS(MENU_SLOT_14), "Shift+4");
-	MenuSetText(hSubMenu, 15, GS(MENU_SLOT_15), "Shift+5");
-	MenuSetText(hSubMenu, 16, GS(MENU_SLOT_16), "Shift+6");
-	MenuSetText(hSubMenu, 17, GS(MENU_SLOT_17), "Shift+7");
-	MenuSetText(hSubMenu, 18, GS(MENU_SLOT_18), "Shift+8");
-	MenuSetText(hSubMenu, 19, GS(MENU_SLOT_19), "Shift+9");
-
-	//MenuSetText(hSubMenu, 11, GS(MENU_SLOT_10), "0");
+	hSubMenu = GetSubMenu(hMenu,3);
+	MenuSetText(hSubMenu, 0, GS(MENU_UNINSTALL), NULL);
+	MenuSetText(hSubMenu, 1, GS(MENU_ABOUT_INI), NULL);
+	MenuSetText(hSubMenu, 2, GS(MENU_GITHUB), NULL);
+	MenuSetText(hSubMenu, 3, GS(MENU_USER_GUIDE), NULL);
 }
 
 char * GetExtIniFileName(void) {
@@ -429,19 +348,7 @@ char * GetExtIniFileName(void) {
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
 
-	// Moved RDX out of root and into the Config Folder (Gent)
-
-	sprintf(IniFileName,"%s%sConfig\\%s",drive,dir,ExtIniName);
-	return IniFileName;
-}
-char* GetJIniFileName(void) {
-	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE], dir[_MAX_DIR];
-	char fname[_MAX_FNAME], ext[_MAX_EXT];
-	static char IniFileName[_MAX_PATH];
-
-	GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
-	_splitpath(path_buffer, drive, dir, fname, ext);
-	sprintf(IniFileName, "%s%sConfig\\%s", drive, dir, JIniName);
+	sprintf(IniFileName,"%s%sPJ64DB\\%s",drive,dir,ExtIniName);
 	return IniFileName;
 }
 
@@ -453,9 +360,7 @@ char * GetIniFileName(void) {
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
 
-	// Moved RDB out of root and into the Config Folder (Gent)
-
-	sprintf(IniFileName,"%s%sConfig\\%s",drive,dir,IniName);
+	sprintf(IniFileName,"%s%sPJ64DB\\%s",drive,dir,IniName);
 	return IniFileName;
 }
 
@@ -478,9 +383,7 @@ char * GetNotesIniFileName(void) {
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
 
-	// Moved RDN out of root and into the Config Folder (Gent)
-
-	sprintf(IniFileName,"%s%sConfig\\%s",drive,dir,NotesIniName);
+	sprintf(IniFileName,"%s%sPJ64DB\\%s",drive,dir,NotesIniName);
 	return IniFileName;
 }
 
@@ -489,7 +392,7 @@ int GetStoredWinPos( char * WinName, DWORD * X, DWORD * Y ) {
 	HKEY hKeyResults = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);
 
 	if (lResult == ERROR_SUCCESS) {
@@ -523,7 +426,7 @@ int GetStoredWinSize( char * WinName, DWORD * Width, DWORD * Height ) {
 	HKEY hKeyResults = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);
 
 	if (lResult == ERROR_SUCCESS) {
@@ -567,25 +470,17 @@ void LoadSettings (void) {
 	AutoSleep = Default_AutoSleep;
 	DisableRegCaching = Default_DisableRegCaching;
 	UseIni = Default_UseIni;
-	AutoZip = Default_AutoZip;
 	AutoFullScreen = FALSE;
 	RomsToRemember = Default_RomsToRemember;
 	RomDirsToRemember = Default_RomsDirsToRemember;
-	AutoLoadMapFile = Default_AutoMap;
-	ShowUnhandledMemory = Default_ShowUnhandledMemory;
-	ShowCPUPer = Default_ShowCPUPer;
 	LimitFPS = Default_LimitFPS;
 	AlwaysOnTop = Default_AlwaysOnTop;
 	BasicMode = Default_BasicMode;
 	RememberCheats = Default_RememberCheats;
-	ShowTLBMisses = Default_ShowTLBMisses;
-	Profiling = Default_ProfilingOn;
-	IndvidualBlock = Default_IndvidualBlock;
 	RomBrowser = Default_UseRB;
 	Rercursion = Default_Rercursion;
-	HaveDebugger = FALSE;
 
-	sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(String,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0,KEY_ALL_ACCESS,
 		&hKeyResults);
 	if (lResult == ERROR_SUCCESS) {
@@ -600,34 +495,23 @@ void LoadSettings (void) {
 		lResult = RegQueryValueEx(hKeyResults,"Pause emulation when window is not active",0,&Type,(BYTE *)(&AutoSleep),&Bytes);
 		if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { AutoSleep = Default_AutoSleep; }
 
-		lResult = RegQueryValueEx(hKeyResults,"On open rom go full screen",0,&Type,(BYTE *)(&AutoFullScreen),&Bytes);
+		lResult = RegQueryValueEx(hKeyResults,"On open ROM go full screen",0,&Type,(BYTE *)(&AutoFullScreen),&Bytes);
 		if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { AutoFullScreen = FALSE; }
 
-		if (!BasicMode) {
-#if (!defined(EXTERNAL_RELEASE))
-			DWORD Value;
-
-			lResult = RegQueryValueEx(hKeyResults,"Debugger",0,&Type,(LPBYTE)(&Value),&Bytes);
-			if (Type == REG_DWORD && lResult == ERROR_SUCCESS) {
-				if (Value == 0x9348ae97) { HaveDebugger = TRUE; }
-				// MODIFIED TO ALLOW DEBUGGER ALWAYS ON
-				HaveDebugger = TRUE;
-			}
-#endif
-
+		{
 			lResult = RegQueryValueEx(hKeyResults,"Limit FPS",0,&Type,(LPBYTE)(&LimitFPS),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { LimitFPS = Default_LimitFPS;	}
 
-			lResult = RegQueryValueEx(hKeyResults,"Roms To Remember",0,&Type,(BYTE *)(&RomsToRemember),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"ROMs To Remember",0,&Type,(BYTE *)(&RomsToRemember),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { RomsToRemember = Default_RomsToRemember; }
 
-			lResult = RegQueryValueEx(hKeyResults,"Rom Dirs To Remember",0,&Type,(BYTE *)(&RomDirsToRemember),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"ROM Dirs To Remember",0,&Type,(BYTE *)(&RomDirsToRemember),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { RomDirsToRemember = Default_RomsDirsToRemember; }
 
-			lResult = RegQueryValueEx(hKeyResults,"Start Emulation when rom is opened",0,&Type,(BYTE *)(&AutoStart),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"Start Emulation when ROM is opened",0,&Type,(BYTE *)(&AutoStart),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { AutoStart = Default_AutoStart; }
 
-			lResult = RegQueryValueEx(hKeyResults,"Use Rom Browser",0,&Type,(BYTE *)(&RomBrowser),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"Use ROM Browser",0,&Type,(BYTE *)(&RomBrowser),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { RomBrowser = Default_UseRB; }
 
 			lResult = RegQueryValueEx(hKeyResults,"Use Recursion",0,&Type,(BYTE *)(&Rercursion),&Bytes);
@@ -635,9 +519,6 @@ void LoadSettings (void) {
 
 			lResult = RegQueryValueEx(hKeyResults,"Overwrite default settings with ones from RDB?",0,&Type,(BYTE *)(&UseIni),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { UseIni = Default_UseIni; }
-
-			lResult = RegQueryValueEx(hKeyResults,"Automatically compress instant saves",0,&Type,(BYTE *)(&AutoZip),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { AutoZip = Default_AutoZip; }
 
 			lResult = RegQueryValueEx(hKeyResults,"CPU Type",0,&Type,(BYTE *)(&SystemCPU_Type),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemCPU_Type = Default_CPU; }
@@ -648,44 +529,12 @@ void LoadSettings (void) {
 			lResult = RegQueryValueEx(hKeyResults,"Advanced Block Linking",0,&Type,(LPBYTE)(&SystemABL),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemABL = Default_AdvancedBlockLink; }
 
-			lResult = RegQueryValueEx(hKeyResults,"Default RDRAM Size",0,&Type,(LPBYTE)(&SystemRdramSize),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"RDRAM Size",0,&Type,(LPBYTE)(&SystemRdramSize),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemRdramSize = Default_RdramSize; }
-
-			lResult = RegQueryValueEx(hKeyResults,"Show CPU %",0,&Type,(LPBYTE)(&ShowCPUPer),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { ShowCPUPer = Default_ShowCPUPer;	}
 
 			lResult = RegQueryValueEx(hKeyResults,"Always On Top",0,&Type,(LPBYTE)(&AlwaysOnTop),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { AlwaysOnTop = Default_AlwaysOnTop;	}
 		}
-
-#if (!defined(EXTERNAL_RELEASE))
-		if (HaveDebugger) {
-			lResult = RegQueryValueEx(hKeyResults,"Auto Load Map File",0,&Type,(BYTE *)(&AutoLoadMapFile),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { AutoLoadMapFile = Default_AutoMap; }
-
-			lResult = RegQueryValueEx(hKeyResults,"Show Unhandled Memory Accesses",0,&Type,(LPBYTE)(&ShowUnhandledMemory),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { ShowUnhandledMemory = Default_ShowUnhandledMemory;	}
-
-			lResult = RegQueryValueEx(hKeyResults,"Show Load/Store TLB Misses",0,&Type,(LPBYTE)(&ShowTLBMisses),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { ShowTLBMisses = Default_ShowTLBMisses;	}
-
-			lResult = RegQueryValueEx(hKeyResults,"Show Dlist/Alist Count",0,&Type,(LPBYTE)(&ShowDListAListCount),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { ShowDListAListCount = Default_ShowDlistCount;	}
-
-			lResult = RegQueryValueEx(hKeyResults,"Show Compile Memory",0,&Type,(LPBYTE)(&ShowCompMem),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { ShowCompMem = Default_ShowCompileMemory;	}
-
-			lResult = RegQueryValueEx(hKeyResults,"Show Pif Ram Errors",0,&Type,(LPBYTE)(&ShowPifRamErrors),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { ShowPifRamErrors = Default_ShowPifRamErrors;	}
-
-			lResult = RegQueryValueEx(hKeyResults,"Profiling On",0,&Type,(LPBYTE)(&Profiling),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Profiling = Default_ProfilingOn; }
-
-			lResult = RegQueryValueEx(hKeyResults,"Log Indvidual Blocks",0,&Type,(LPBYTE)(&IndvidualBlock),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { IndvidualBlock = Default_IndvidualBlock; }
-
-		}
-#endif
 		RegCloseKey(hKeyResults);
 	}
 }
@@ -705,7 +554,7 @@ int InitalizeApplication ( HINSTANCE hInstance ) {
 	{
 		char String[200];
 
-		sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+		sprintf(String,"N64 Software\\%s",AppName);
 		//Language selection if none found
 		LoadLanguage(String);
 	}
@@ -717,14 +566,10 @@ int InitalizeApplication ( HINSTANCE hInstance ) {
 
 	hPauseMutex = CreateMutex(NULL,FALSE,NULL);
 
-	InitiliazeCPUFlags();
+	INITIALIZECPUFlags();
 	LoadSettings();
 	SetupRegisters(&Registers);
 	QueryPerformanceFrequency(&Frequency);
-#if (!defined(EXTERNAL_RELEASE))
-	LoadLogOptions(&LogOptions, FALSE);
-	StartLog();
-#endif
 	LoadRomBrowserColoumnInfo ();
 	InitilizeInitialCompilerVariable();
 	return TRUE;
@@ -749,7 +594,7 @@ void CheckedMenuItem(UINT uMenuID, BOOL * Flag, char * FlagName) {
 		*Flag = TRUE;
 	}
 
-	sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(String,"N64 Software\\%s",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER,String,0,"",
 		REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
 
@@ -869,14 +714,12 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		break;
 	case WM_MENUSELECT:
 		switch (LOWORD(wParam)) {
-		case ID_PLAYGAME: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_PLAY_GAME)); break;
+		case ID_PLAYGAME: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_START)); break;
 		case ID_POPUPMENU_ROMINFORMATION: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ROM_INFO)); break;
-		case ID_POPUPMENU_GAMEINFORMATION: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_INFO)); break;
 		case ID_EDITSETTINGS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_GAME_SETTINGS)); break;
 		case ID_EDITCHEATS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_GAME_CHEATS)); break;
 		case ID_FILE_OPEN_ROM: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_OPEN)); break;
 		case ID_FILE_ROM_INFO: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ROM_INFO)); break;
-		case ID_FILE_GAME_INFO: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_INFO)); break;
 		case ID_FILE_STARTEMULATION: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_START)); break;
 		case ID_FILE_ENDEMULATION: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_END)); break;
 		case ID_FILE_ROMDIRECTORY: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_CHOOSE_ROM)); break;
@@ -884,7 +727,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_FILE_EXIT: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_EXIT)); break;
 		case ID_CPU_RESET: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_RESET)); break;
 		case ID_CPU_PAUSE: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_PAUSE)); break;
-		case ID_SYSTEM_GENERATEBITMAP: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_BITMAP)); break;
+                case ID_SYSTEM_GENERATEBITMAP: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_BITMAP)); break;
 		case ID_SYSTEM_LIMITFPS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_LIMIT_FPS)); break;
 		case ID_CPU_SAVE: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_SAVE)); break;
 		case ID_CPU_SAVEAS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_SAVE_AS)); break;
@@ -894,26 +737,17 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_SYSTEM_GSBUTTON: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_GS_BUTTON)); break;
 		case ID_OPTIONS_FULLSCREEN: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_FULL_SCREEN)); break;
 		case ID_OPTIONS_ALWAYSONTOP: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ON_TOP)); break;
-		case ID_OPTIONS_CONFIG_GFX: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_CONFG_GFX)); break;
-		case ID_OPTIONS_CONFIG_AUDIO: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_CONFG_AUDIO)); break;
-		case ID_OPTIONS_CONFIG_CONTROL: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_CONFG_CTRL)); break;
-		case ID_OPTIONS_CONFIG_RSP: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_CONFG_RSP)); break;
-		case ID_OPTIONS_SHOWCPUUSAGE: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_SHOW_CPU)); break;
+		case ID_OPTIONS_CONFIG_GFX: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_CONFIG_GFX)); break;
+		case ID_OPTIONS_CONFIG_AUDIO: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_CONFIG_AUDIO)); break;
+		case ID_OPTIONS_CONFIG_CONTROL: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_CONFIG_CTRL)); break;
+		case ID_OPTIONS_CONFIG_RSP: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_CONFIG_RSP)); break;
 		case ID_OPTIONS_SETTINGS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_SETTINGS)); break;
 		case ID_HELP_GUIDE: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_USER_GUIDE)); break;
-		case ID_HELP_GAMERDX: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_GAME_RDX)); break;
 		case ID_HELP_ABOUTSETTINGFILES: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ABOUT_INI)); break;
-		case ID_HELP_ABOUT: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ABOUT_PJ64)); break;
 		case ID_HELP_GITHUB: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GITHUB)); break;
-		case ID_HELP_DISCORD: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_DISCORD)); break;
 		case ID_HELP_UNINSTALL: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_UNINSTALLAPP)); break;
-		case ID_HELP_JABO_UNINSTALL: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_UNINSTALLJABO)); break;
 		
 		case ID_CURRENTSAVE_DEFAULT:
-			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
-			break;
-
-		case ID_CURRENTSAVE_1:
 			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
 			break;
 
@@ -948,8 +782,6 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_CURRENTSAVE_9:
 			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
 			break;
-
-			// Added an extra 10 save state slots with 10-19 on Shift+0-9 (Gent)
 
 		case ID_CURRENTSAVE_10:
 			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
@@ -991,12 +823,129 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
 			break;
 
-
-			// Removed this as we now have 0 to 9 - Gent
-
-		/*case ID_CURRENTSAVE_0:
+		case ID_CURRENTSAVE_20:
 			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
-			break;*/
+			break;
+
+		case ID_CURRENTSAVE_21:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_22:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_23:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_24:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_25:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_26:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_27:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_28:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_29:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_30:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_31:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_32:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_33:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_34:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_35:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_36:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_37:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_38:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_39:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_40:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_41:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_42:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_43:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_44:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_45:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_46:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_47:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_48:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_49:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
+
+		case ID_CURRENTSAVE_50:
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
+			break;
 
 
 		default:
@@ -1070,22 +1019,15 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
 			}
 			break;
-		case ID_POPUPMENU_GAMEINFORMATION: GameInfoByGameInfoID(CurrentGameInfoID); break;
 		case ID_FILE_OPEN_ROM: OpenN64Image(); break;
 		case ID_FILE_ROM_INFO: RomInfo(); break;
-		case ID_FILE_GAME_INFO: GameInfoByRomID(); break;
 		case ID_FILE_STARTEMULATION:
-			if (strlen(RomName) == 0) { break; }
 			HideRomBrowser();
 			StartEmulation();
 			break;
 		case ID_FILE_ENDEMULATION:
-			if (inFullScreen) {
-				CPU_Paused = TRUE;
-				SendMessage(hMainWindow,WM_COMMAND,ID_OPTIONS_FULLSCREEN,0);
-				CPU_Paused = FALSE;
-			}
 			CloseCpu();
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MSG_EMULATION_ENDED));
 			hMenu = GetMenu(hMainWindow);
 			EnableMenuItem(hMenu,ID_FILE_STARTEMULATION,MFS_ENABLED|MF_BYCOMMAND);
 			if (DrawScreen != NULL) { DrawScreen(); }
@@ -1097,20 +1039,35 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_FILE_ROMDIRECTORY: SelectRomDir(); break;
 		case ID_FILE_REFRESHROMLIST: RefreshRomBrowser(); break;
 		case ID_FILE_EXIT: DestroyWindow(hWnd);	break;
-		case ID_CPU_RESET:
-			CloseCpu();
-			StartEmulation();
+		case ID_CPU_RESET: {
+		char drive[_MAX_DRIVE],dir[_MAX_DIR], fname[_MAX_FNAME],ext[_MAX_EXT];
+		char SaveFile[255];
+		const char* fixedDir;
+		OSVERSIONINFO osvi;
+		ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+		osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+		GetVersionEx(&osvi);
+    		if (osvi.dwMajorVersion >= 6) {
+        	// Windows Vista and later
+        	fixedDir = "C:\\ProgramData\\";
+    		} else {
+      		// Windows XP
+      		fixedDir = "C:\\Documents and Settings\\All Users\\Application Data\\";
+   		}
+		_splitpath(SaveFile, drive, dir, fname, ext);
+		_makepath(SaveFile, drive, fixedDir, (GS(MSG_EMULATION_STARTED)), "");
+		strcpy(LoadFileName,SaveFile);
+		CPU_Action.RestoreState = TRUE;
+			}
 			break;
 		case ID_CPU_PAUSE: ManualPaused = TRUE; PauseCpu(); break;
 		case ID_CPU_SAVE:
 			if (CPU_Paused) {
 				if (!Machine_SaveState()) {
 					CPU_Action.SaveState = TRUE;
-					CPU_Action.DoSomething = TRUE;
 				}
 			} else {
 				CPU_Action.SaveState = TRUE;
-				CPU_Action.DoSomething = TRUE;
 			}
 			break;
 		case ID_CPU_SAVEAS:
@@ -1119,7 +1076,6 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 				char Directory[255], SaveFile[255];
 				OPENFILENAME openfilename;
 
-				if (BasicMode) { break; }
 				memset(&SaveFile, 0, sizeof(SaveFile));
 				memset(&openfilename, 0, sizeof(openfilename));
 
@@ -1127,7 +1083,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
 				openfilename.lStructSize  = sizeof( openfilename );
 				openfilename.hwndOwner    = hMainWindow;
-				openfilename.lpstrFilter  = "PJ64 Saves (*.zip, *.pj)\0*.pj?;*.pj;*.zip;";
+				openfilename.lpstrFilter  = "All files (*.*)\0*\0Slots (*.st)\0*.st\0";
 				openfilename.lpstrFile    = SaveFile;
 				openfilename.lpstrInitialDir    = Directory;
 				openfilename.nMaxFile     = MAX_PATH;
@@ -1135,32 +1091,28 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
 				if (GetSaveFileName (&openfilename)) {
 					_splitpath( SaveFile, drive, dir, fname, ext );
-					if (strcmp(ext, "pj") == 0 || strcmp(ext, "zip") == 0) {
+					if (strcmp(ext, "st") == 0) {
 						_makepath( SaveFile, drive, dir, fname, NULL );
 					}
 					strcpy(SaveAsFileName,SaveFile);
 					if (CPU_Paused) {
 						if (!Machine_SaveState()) {
 							CPU_Action.SaveState = TRUE;
-							CPU_Action.DoSomething = TRUE;
 						}
 					} else {
 						CPU_Action.SaveState = TRUE;
-						CPU_Action.DoSomething = TRUE;
 					}
 				}
 			}
 			break;
 		case ID_CPU_RESTORE:
 			CPU_Action.RestoreState = TRUE;
-			CPU_Action.DoSomething = TRUE;
 			break;
 		case ID_CPU_LOAD:
 			{
 				char Directory[255], SaveFile[255];
 				OPENFILENAME openfilename;
 
-				if (BasicMode) { break; }
 				memset(&SaveFile, 0, sizeof(SaveFile));
 				memset(&openfilename, 0, sizeof(openfilename));
 
@@ -1168,7 +1120,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
 				openfilename.lStructSize  = sizeof( openfilename );
 				openfilename.hwndOwner    = hMainWindow;
-				openfilename.lpstrFilter  = "PJ64 Saves (*.zip, *.pj)\0*.pj?;*.pj;*.zip;";
+				openfilename.lpstrFilter  = "All files (*.*)\0*\0Slots (*.st)\0*.st\0";
 				openfilename.lpstrFile    = SaveFile;
 				openfilename.lpstrInitialDir    = Directory;
 				openfilename.nMaxFile     = MAX_PATH;
@@ -1177,7 +1129,6 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 				if (GetOpenFileName (&openfilename)) {
 					strcpy(LoadFileName,SaveFile);
 					CPU_Action.RestoreState = TRUE;
-					CPU_Action.DoSomething = TRUE;
 				}
 			}
 			break;
@@ -1189,21 +1140,10 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			}
 			break;
 		case ID_SYSTEM_LIMITFPS:
-			if (BasicMode) { break; }
 			CheckedMenuItem(ID_SYSTEM_LIMITFPS,&LimitFPS,"Limit FPS");
 			break;
 	
 				case ID_CURRENTSAVE_DEFAULT:
-					SetCurrentSaveState(hWnd, LOWORD(wParam));
-					break;
-
-					// Removed this as we now have 0 to 9 - Gent
-
-				/*case ID_CURRENTSAVE_0:
-					SetCurrentSaveState(hWnd, LOWORD(wParam));
-					break;*/
-
-				case ID_CURRENTSAVE_1:
 					SetCurrentSaveState(hWnd, LOWORD(wParam));
 					break;
 
@@ -1238,8 +1178,6 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 				case ID_CURRENTSAVE_9:
 					SetCurrentSaveState(hWnd, LOWORD(wParam));
 					break;
-					
-				// Added an extra 10 save state slots with 10-19 on Shift+0-9 (Gent)
 
 				case ID_CURRENTSAVE_10:
 					SetCurrentSaveState(hWnd, LOWORD(wParam));
@@ -1280,12 +1218,135 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 				case ID_CURRENTSAVE_19:
 					SetCurrentSaveState(hWnd, LOWORD(wParam));
 					break;
+
+				case ID_CURRENTSAVE_20:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_21:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_22:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_23:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_24:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_25:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_26:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_27:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_28:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_29:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_30:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_31:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_32:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_33:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_34:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_35:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_36:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_37:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_38:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_39:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_40:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_41:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_42:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_43:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_44:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_45:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_46:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_47:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_48:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_49:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
+
+				case ID_CURRENTSAVE_50:
+					SetCurrentSaveState(hWnd, LOWORD(wParam));
+					break;
 			
-			/* Witten */
-		//Cheat search crashes on first scan so disabling for now (Gent)
-		//case ID_SYSTEM_CHEATSEARCH: Show_CheatSearchDlg (hWnd); break;
-		/* Witten */
-		case ID_SYSTEM_GSBUTTON: ApplyGSButton(); break;
+		case ID_SYSTEM_GSBUTTON:
+		ApplyGSButton();
+		SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(GS_PRESS));
+		break;
 		case ID_OPTIONS_FULLSCREEN:
 			if (CPU_Paused) {
 				CPU_Action.ChangeWindow = FALSE;
@@ -1296,18 +1357,11 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 				}
 			} else {
 				CPU_Action.ChangeWindow = TRUE;
-				CPU_Action.DoSomething = TRUE;
 			}
-			
-			if (!inFullScreen || CPU_Action.ChangeWindow == TRUE)
-			{
-				LONG style = GetWindowLong(hWnd, GWL_STYLE) | WS_SYSMENU | WS_CAPTION;
-				SetWindowLongPtr(hWnd, GWL_STYLE, style);
-				SendMessage(hWnd, WM_SETICON, ICON_SMALL, (LPARAM)LoadIcon(hInst, "ICON"));
-			}
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(FULLSCREEN_TOGGLE));
 			break;
+                case ID_SYSTEM_ALTERNATEPAUSE: PauseCpu(); Sleep(3); PauseCpu(); break;
 		case ID_OPTIONS_ALWAYSONTOP:
-			if (BasicMode) { break; }
 			CheckedMenuItem(ID_OPTIONS_ALWAYSONTOP,&AlwaysOnTop,"Always On Top");
 			AlwaysOnTopWindow(hWnd);
 			break;
@@ -1317,309 +1371,22 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_OPTIONS_CONFIG_CONTROL: ContConfig(hWnd); break;
 		case ID_OPTIONS_SETTINGS: ChangeSettings(hWnd); break;
 		case ID_OPTIONS_CHEATS: ManageCheats(NULL); break;
-		case ID_OPTIONS_SHOWCPUUSAGE:
-			CheckedMenuItem(ID_OPTIONS_SHOWCPUUSAGE,&ShowCPUPer,"Show CPU %");
-			break;
-#if (!defined(EXTERNAL_RELEASE))
-		case ID_OPTIONS_PROFILING_ON:
-		case ID_OPTIONS_PROFILING_OFF:
-			if (HaveDebugger) {
-
-				hMenu = GetMenu( hWnd );
-				uState = GetMenuState( hMenu, ID_OPTIONS_PROFILING_ON, MF_BYCOMMAND);
-				hKeyResults = 0;
-				Disposition = 0;
-
-				if ( uState & MFS_CHECKED ) {
-					CheckMenuItem( hMenu, ID_OPTIONS_PROFILING_ON, MF_BYCOMMAND | MFS_UNCHECKED );
-					CheckMenuItem( hMenu, ID_OPTIONS_PROFILING_OFF, MF_BYCOMMAND | MFS_CHECKED );
-					Profiling = FALSE;
-					ResetTimerList();
-				} else {
-					CheckMenuItem( hMenu, ID_OPTIONS_PROFILING_ON, MF_BYCOMMAND | MFS_CHECKED );
-					CheckMenuItem( hMenu, ID_OPTIONS_PROFILING_OFF, MF_BYCOMMAND | MFS_UNCHECKED );
-					ResetTimerList();
-					Profiling = TRUE;
-				}
-
-				sprintf(String,"Software\\N64 Emulation\\%s",AppName);
-				lResult = RegCreateKeyEx( HKEY_CURRENT_USER,String,0,"",
-					REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
-
-				if (lResult == ERROR_SUCCESS) {
-					RegSetValueEx(hKeyResults,"Profiling On",0,REG_DWORD,(BYTE *)&Profiling,sizeof(DWORD));
-				}
-				RegCloseKey(hKeyResults);
-			}
-			break;
-		case ID_OPTIONS_PROFILING_RESETSTATS:
-			if (HaveDebugger) { ResetTimerList(); }
-			break;
-		case ID_OPTIONS_PROFILING_GENERATELOG:
-			if (HaveDebugger) { GenerateTimerResults(); }
-			break;
-		case ID_OPTIONS_PROFILING_LOGINDIVIDUALBLOCKS:
-			if (HaveDebugger) {
-				hMenu = GetMenu( hWnd );
-				uState = GetMenuState( hMenu, ID_OPTIONS_PROFILING_LOGINDIVIDUALBLOCKS, MF_BYCOMMAND);
-				hKeyResults = 0;
-				Disposition = 0;
-
-				if ( uState & MFS_CHECKED ) {
-					CheckMenuItem( hMenu, ID_OPTIONS_PROFILING_LOGINDIVIDUALBLOCKS, MF_BYCOMMAND | MFS_UNCHECKED );
-					IndvidualBlock = FALSE;
-				} else {
-					CheckMenuItem( hMenu, ID_OPTIONS_PROFILING_LOGINDIVIDUALBLOCKS, MF_BYCOMMAND | MFS_CHECKED );
-					IndvidualBlock = TRUE;
-				}
-
-				sprintf(String,"Software\\N64 Emulation\\%s",AppName);
-				lResult = RegCreateKeyEx( HKEY_CURRENT_USER,String,0,"",
-					REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
-
-				if (lResult == ERROR_SUCCESS) {
-					RegSetValueEx(hKeyResults,"Log Indvidual Blocks",0,REG_DWORD,
-						(BYTE *)&IndvidualBlock,sizeof(DWORD));
-				}
-				RegCloseKey(hKeyResults);
-			}
-			break;
-		case ID_OPTIONS_MAPPINGS_OPENMAPFILE: ChooseMapFile(hWnd); break;
-		case ID_OPTIONS_MAPPINGS_CLOSEMAPFILE: ResetMappings(); break;
-		case ID_OPTIONS_MAPPINGS_AUTOLOADMAPFILE:
-			if (HaveDebugger) {
-				hMenu = GetMenu( hWnd );
-				uState = GetMenuState( hMenu, ID_OPTIONS_MAPPINGS_AUTOLOADMAPFILE, MF_BYCOMMAND);
-				hKeyResults = 0;
-				Disposition = 0;
-
-				if ( uState & MFS_CHECKED ) {
-					CheckMenuItem( hMenu, ID_OPTIONS_MAPPINGS_AUTOLOADMAPFILE, MF_BYCOMMAND | MFS_UNCHECKED );
-					AutoLoadMapFile = FALSE;
-				} else {
-					CheckMenuItem( hMenu, ID_OPTIONS_MAPPINGS_AUTOLOADMAPFILE, MF_BYCOMMAND | MFS_CHECKED );
-					AutoLoadMapFile = TRUE;
-				}
-
-				sprintf(String,"Software\\N64 Emulation\\%s",AppName);
-				lResult = RegCreateKeyEx( HKEY_CURRENT_USER,String,0,"",
-					REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
-
-				if (lResult == ERROR_SUCCESS) {
-					RegSetValueEx(hKeyResults,"Auto Load Map File",0,REG_DWORD,
-						(BYTE *)&AutoLoadMapFile,sizeof(DWORD));
-				}
-				RegCloseKey(hKeyResults);
-			}
-			break;
-		case ID_DEBUGGER_SETBREAKPOINT: Enter_BPoint_Window(); break;
-		case ID_DEBUGGER_R4300ICOMMANDS: Enter_R4300i_Commands_Window(); break;
-		case ID_DEBUGGER_R4300IREGISTERS: Enter_R4300i_Register_Window(); break;
-		case ID_DEBUGGER_LOGOPTIONS: EnterLogOptions(hWnd); break;
-		case ID_DEBUGGER_GENERATELOG:
-			if (HaveDebugger) {
-				hMenu = GetMenu( hWnd );
-				uState = GetMenuState( hMenu, ID_DEBUGGER_GENERATELOG, MF_BYCOMMAND);
-				hKeyResults = 0;
-				Disposition = 0;
-
-				if ( uState & MFS_CHECKED ) {
-					CheckMenuItem( hMenu, ID_DEBUGGER_GENERATELOG, MF_BYCOMMAND | MFS_UNCHECKED );
-					LogOptions.GenerateLog = FALSE;
-				} else {
-					CheckMenuItem( hMenu, ID_DEBUGGER_GENERATELOG, MF_BYCOMMAND | MFS_CHECKED );
-					LogOptions.GenerateLog = TRUE;
-				}
-
-				sprintf(String,"Software\\N64 Emulation\\%s\\Logging",AppName);
-				lResult = RegCreateKeyEx( HKEY_CURRENT_USER,String,0,"",
-					REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
-
-				if (lResult == ERROR_SUCCESS) {
-					RegSetValueEx(hKeyResults,"Generate Log File",0,
-						REG_DWORD,(BYTE *)&LogOptions.GenerateLog,sizeof(DWORD));
-				}
-				RegCloseKey(hKeyResults);
-				LoadLogOptions(&LogOptions, FALSE);
-#ifndef EXTERNAL_RELEASE
-				StartLog();
-#endif
-			}
-			break;
-		case ID_DEBUGGER_MEMORY: Enter_Memory_Window(); break;
-		case ID_DEBUGGER_TLBENTRIES: Enter_TLB_Window(); break;
-		case ID_DEBUGGER_SHOWUNHANDLEDMEMORYACCESSES:
-			if (HaveDebugger) {
-				hMenu = GetMenu( hWnd );
-				uState = GetMenuState( hMenu, ID_DEBUGGER_SHOWUNHANDLEDMEMORYACCESSES, MF_BYCOMMAND);
-				hKeyResults = 0;
-				Disposition = 0;
-
-				if ( uState & MFS_CHECKED ) {
-					CheckMenuItem( hMenu, ID_DEBUGGER_SHOWUNHANDLEDMEMORYACCESSES, MF_BYCOMMAND | MFS_UNCHECKED );
-					ShowUnhandledMemory = FALSE;
-				} else {
-					CheckMenuItem( hMenu, ID_DEBUGGER_SHOWUNHANDLEDMEMORYACCESSES, MF_BYCOMMAND | MFS_CHECKED );
-					ShowUnhandledMemory = TRUE;
-				}
-
-				sprintf(String,"Software\\N64 Emulation\\%s",AppName);
-				lResult = RegCreateKeyEx( HKEY_CURRENT_USER,String,0,"",
-					REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
-
-				if (lResult == ERROR_SUCCESS) {
-					RegSetValueEx(hKeyResults,"Show Unhandled Memory Accesses",0,
-						REG_DWORD,(BYTE *)&ShowUnhandledMemory,sizeof(DWORD));
-				}
-				RegCloseKey(hKeyResults);
-			}
-			break;
-		case ID_DEBUGGER_SHOWTLBMISSES:
-			if (HaveDebugger) {
-				hMenu = GetMenu( hWnd );
-				uState = GetMenuState( hMenu, ID_DEBUGGER_SHOWTLBMISSES, MF_BYCOMMAND);
-				hKeyResults = 0;
-				Disposition = 0;
-
-				if ( uState & MFS_CHECKED ) {
-					CheckMenuItem( hMenu, ID_DEBUGGER_SHOWTLBMISSES, MF_BYCOMMAND | MFS_UNCHECKED );
-					ShowTLBMisses = FALSE;
-				} else {
-					CheckMenuItem( hMenu, ID_DEBUGGER_SHOWTLBMISSES, MF_BYCOMMAND | MFS_CHECKED );
-					ShowTLBMisses = TRUE;
-				}
-
-				sprintf(String,"Software\\N64 Emulation\\%s",AppName);
-				lResult = RegCreateKeyEx( HKEY_CURRENT_USER,String,0,"",
-					REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
-
-				if (lResult == ERROR_SUCCESS) {
-					RegSetValueEx(hKeyResults,"Show Load/Store TLB Misses",0,
-						REG_DWORD,(BYTE *)&ShowTLBMisses,sizeof(DWORD));
-				}
-				RegCloseKey(hKeyResults);
-			}
-			break;
-		case ID_DEBUGGER_SHOWDLISTALISTCOUNT:
-			if (HaveDebugger) {
-				hMenu = GetMenu( hWnd );
-				uState = GetMenuState( hMenu, ID_DEBUGGER_SHOWDLISTALISTCOUNT, MF_BYCOMMAND);
-				hKeyResults = 0;
-				Disposition = 0;
-
-				if ( uState & MFS_CHECKED ) {
-					CheckMenuItem( hMenu, ID_DEBUGGER_SHOWDLISTALISTCOUNT, MF_BYCOMMAND | MFS_UNCHECKED );
-					ShowDListAListCount = FALSE;
-				} else {
-					CheckMenuItem( hMenu, ID_DEBUGGER_SHOWDLISTALISTCOUNT, MF_BYCOMMAND | MFS_CHECKED );
-					ShowDListAListCount = TRUE;
-				}
-
-				sprintf(String,"Software\\N64 Emulation\\%s",AppName);
-				lResult = RegCreateKeyEx( HKEY_CURRENT_USER,String,0,"",
-					REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
-
-				if (lResult == ERROR_SUCCESS) {
-					RegSetValueEx(hKeyResults,"Show Dlist/Alist Count",0,
-						REG_DWORD,(BYTE *)&ShowDListAListCount,sizeof(DWORD));
-				}
-				RegCloseKey(hKeyResults);
-			}
-			break;
-		case ID_DEBUGGER_SHOWCOMPMEM:
-			if (HaveDebugger) {
-				hMenu = GetMenu( hWnd );
-				uState = GetMenuState( hMenu, ID_DEBUGGER_SHOWCOMPMEM, MF_BYCOMMAND);
-				hKeyResults = 0;
-				Disposition = 0;
-
-				if ( uState & MFS_CHECKED ) {
-					CheckMenuItem( hMenu, ID_DEBUGGER_SHOWCOMPMEM, MF_BYCOMMAND | MFS_UNCHECKED );
-					ShowCompMem = FALSE;
-				} else {
-					CheckMenuItem( hMenu, ID_DEBUGGER_SHOWCOMPMEM, MF_BYCOMMAND | MFS_CHECKED );
-					ShowCompMem = TRUE;
-				}
-
-				sprintf(String,"Software\\N64 Emulation\\%s",AppName);
-				lResult = RegCreateKeyEx( HKEY_CURRENT_USER,String,0,"",
-					REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
-
-				if (lResult == ERROR_SUCCESS) {
-					RegSetValueEx(hKeyResults,"Show Compile Memory",0,
-						REG_DWORD,(BYTE *)&ShowCompMem,sizeof(DWORD));
-				}
-				RegCloseKey(hKeyResults);
-			}
-			break;
-		case ID_DEBUGGER_SHOWPIFRAMERRORS:
-			if (HaveDebugger) {
-				hMenu = GetMenu( hWnd );
-				uState = GetMenuState( hMenu, ID_DEBUGGER_SHOWPIFRAMERRORS, MF_BYCOMMAND);
-				hKeyResults = 0;
-				Disposition = 0;
-
-				if ( uState & MFS_CHECKED ) {
-					CheckMenuItem( hMenu, ID_DEBUGGER_SHOWPIFRAMERRORS, MF_BYCOMMAND | MFS_UNCHECKED );
-					ShowPifRamErrors = FALSE;
-				} else {
-					CheckMenuItem( hMenu, ID_DEBUGGER_SHOWPIFRAMERRORS, MF_BYCOMMAND | MFS_CHECKED );
-					ShowPifRamErrors = TRUE;
-				}
-
-				sprintf(String,"Software\\N64 Emulation\\%s",AppName);
-				lResult = RegCreateKeyEx( HKEY_CURRENT_USER,String,0,"",
-					REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
-
-				if (lResult == ERROR_SUCCESS) {
-					RegSetValueEx(hKeyResults,"Show Pif Ram Errors",0,
-						REG_DWORD,(BYTE *)&ShowPifRamErrors,sizeof(DWORD));
-				}
-				RegCloseKey(hKeyResults);
-			}
-			break;
-#endif
 		case ID_HELP_GUIDE:
-			ShellExecute(NULL, "open", "https://github.com/pj64team/Project64-1.6-Plus/wiki/Project64-1.6-Plus-User-Guide", NULL, NULL, SW_SHOWMAXIMIZED); // Changed chm to online version for better user experience
-			break;
+			{
+				char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
+				char fname[_MAX_FNAME],ext[_MAX_EXT], HelpFileName[_MAX_PATH];
 
-			// The call causes a crash if 1 is there at the end, no idea why it's even there as it works fine without it.
-			/*if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_TOPIC, (DWORD)NULL) == NULL) {
-				ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
+				GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
+				_splitpath( path_buffer, drive, dir, fname, ext );
+   				_makepath( HelpFileName, drive, dir, "User Guide", "txt" );
+
+				if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
+					ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
+				}
 			}
-		}
-		break;*/
-		/*		case ID_HELPMNU_INDEX:
-					{
-						char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
-						char fname[_MAX_FNAME],ext[_MAX_EXT], HelpFileName[_MAX_PATH];
-
-						GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
-						_splitpath( path_buffer, drive, dir, fname, ext );
-						//_makepath( HelpFileName, drive, dir, "Project64", "chm" );
-						sprintf(HelpFileName, "%s%sConfig\\%s", drive, dir, ChmFileName);
-
-						if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
-							ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
-						}
-					}
-					break;*/
-		case ID_HELP_GAMERDX:
-			ShellExecute(NULL, "open", "https://www.project64-legacy.com/online-rdx", NULL, NULL, SW_SHOWMAXIMIZED); // Changed chm to online version for better user experience
-			break;
-
-
-			// Gent no longer indexes these files so the old value of 1 no longer points to something valid, using NULL instead
-			/*if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_TOPIC, (DWORD)NULL) == NULL) {
-				ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
-			}
-		}
-		break;*/
-		case ID_HELP_GITHUB: ShellExecute(NULL, "open", "https://github.com/pj64team/Project64-1.6-Plus", NULL, NULL, SW_SHOWMAXIMIZED); break;
-		case ID_HELP_DISCORD: ShellExecute(NULL, "open", "https://discord.gg/TnFmnW6WQE", NULL, NULL, SW_SHOWMAXIMIZED); break;
+		break;
+		case ID_HELP_GITHUB: ShellExecute(NULL, "open", "https://github.com/BruceShankleIV/Project64-1.6.2", NULL, NULL, SW_SHOWMAXIMIZED); break;
 		case ID_HELP_UNINSTALL: UninstallApplication(hWnd); break;
-		case ID_HELP_JABO_UNINSTALL: UninstallJabo(hWnd); break;
-		case ID_HELP_ABOUT: AboutBox(); break;
 		case ID_HELP_ABOUTSETTINGFILES: AboutIniBox(); break;
 		default:
 			if (LOWORD(wParam) >= ID_FILE_RECENT_FILE && LOWORD(wParam) <= (ID_FILE_RECENT_FILE + RomsToRemember)) {
@@ -1630,14 +1397,6 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 				SelectLangMenuItem(GetMenu(hWnd),LOWORD(wParam));
 				FixRomBrowserColoumnLang();
 				SetupMenu(hWnd);
-			} else if (LOWORD(wParam) > 5000 && LOWORD(wParam) <= 5100 ) {
-				if (RspDebug.ProcessMenuItem != NULL) {
-					RspDebug.ProcessMenuItem(LOWORD(wParam));
-				}
-			} else if (LOWORD(wParam) > 5100 && LOWORD(wParam) <= 5200 ) {
-				if (GFXDebug.ProcessMenuItem != NULL) {
-					GFXDebug.ProcessMenuItem(LOWORD(wParam));
-				}
 			}
 		}
 		break;
@@ -1646,6 +1405,17 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			SaveRomBrowserColoumnInfo();
 		PostQuitMessage(0);
 		break;
+
+	case WM_DROPFILES: {
+		HDROP hDrop = (HDROP)wParam;
+		DWORD ThreadID;
+
+		DragQueryFile(hDrop, 0, CurrentFileName, sizeof(CurrentFileName));
+		DragFinish(hDrop);
+
+		CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)OpenChosenFile, NULL, 0, &ThreadID);
+		break;
+	}
 	default:
 		return DefWindowProc(hWnd,uMsg,wParam,lParam);
 	}
@@ -1836,27 +1606,6 @@ LRESULT CALLBACK RomInfoProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 	return TRUE;
 }
 
-void GameInfoByRomID() {
-	char Identifier[100];
-	char GameInfoID[250];
-
-	GetRomIdentifier(Identifier);
-	GetString(Identifier, "GameInformation", "", GameInfoID, sizeof(GameInfoID), GetExtIniFileName());
-	GameInfoByGameInfoID(GameInfoID);
-}
-
-void GameInfoByGameInfoID(char * GameInfoID) {
-	char String[300];
-
-	if (strcmp(GameInfoID, "") == 0) {
-		MessageBox(NULL, GS(MSG_NO_GAME_INFORMATION), GS(MSG_MSGBOX_TITLE), MB_OK | MB_ICONINFORMATION | MB_SETFOREGROUND);
-	}
-	else {
-		sprintf(String, "https://www.project64-legacy.com/index.php?id=%s", GameInfoID);
-		ShellExecute(NULL, "open", String, NULL, NULL, SW_SHOWNORMAL);
-	}
-}
-
 BOOL TestExtensionRegistered ( char * Extension ) {
 	char ShortAppName[] = { "PJ64" };
 	HKEY hKeyResults = 0;
@@ -1876,49 +1625,15 @@ BOOL TestExtensionRegistered ( char * Extension ) {
 	return TRUE;
 }
 
-
-void DeleteAdvanceMenuOptions (HMENU hMenu) {
-	HMENU hSubMenu;
-
-	if (!BasicMode) { return; }
-	//File
-	hSubMenu = GetSubMenu(hMenu,0);
-	//if (CPURunning) { DeleteMenu(hSubMenu,5,MF_BYPOSITION); } //Line
-	DeleteMenu(hSubMenu,2,MF_BYPOSITION); //Line
-	//System
-	hSubMenu = GetSubMenu(hMenu,1);
-	DeleteMenu(hSubMenu,3,MF_BYPOSITION); //Line
-
-	DeleteMenu(hMenu,ID_FILE_STARTEMULATION,MF_BYCOMMAND);
-	DeleteMenu(hMenu,ID_SYSTEM_GENERATEBITMAP,MF_BYCOMMAND);
-	DeleteMenu(hMenu,ID_CPU_SAVEAS,MF_BYCOMMAND);
-	DeleteMenu(hMenu,ID_CPU_LOAD,MF_BYCOMMAND);
-	DeleteMenu(hMenu,ID_OPTIONS_ALWAYSONTOP,MF_BYCOMMAND);
-	DeleteMenu(hMenu,ID_OPTIONS_SHOWCPUUSAGE,MF_BYCOMMAND);
-	DeleteMenu(hMenu,ID_HELP_ABOUTSETTINGFILES,MF_BYCOMMAND);
-	DeleteMenu(hMenu,ID_SYSTEM_LIMITFPS,MF_BYCOMMAND);
-	DeleteMenu(hMenu,ID_OPTIONS_CONFIG_RSP,MF_BYCOMMAND);
-	DeleteMenu(hMenu,ID_FILE_ROM_INFO,MF_BYCOMMAND);
-
-	if (CPURunning) {
-	//	DeleteMenu(hMenu,ID_FILE_ROMDIRECTORY,MF_BYCOMMAND);
-	//	DeleteMenu(hMenu,ID_FILE_REFRESHROMLIST,MF_BYCOMMAND);
-	} else {
-		DeleteMenu(hMenu,1,MF_BYPOSITION);	// System
-	}
-}
-
 void SetupMenu ( HWND hWnd ) {
 	HMENU hMenu = GetMenu(hWnd), hSubMenu;
 	int State;
 
-	if (IsMenu(GFXDebug.hGFXMenu)) { RemoveMenu(hMenu,(DWORD)GFXDebug.hGFXMenu, MF_BYCOMMAND); }
-	if (IsMenu(RspDebug.hRSPMenu)) { RemoveMenu(hMenu,(DWORD)RspDebug.hRSPMenu, MF_BYCOMMAND); }
 	DestroyMenu(hMenu);
 	hMenu = LoadMenu(hInst,MAKEINTRESOURCE(MAIN_MENU));
 
 	FixMenuLang(hMenu);
-	CreateLangList(GetSubMenu(hMenu,0),7, ID_LANG_SELECT);
+	CreateLangList(GetSubMenu(hMenu,0),6, ID_LANG_SELECT);
 
 	CreateRecentDirList(hMenu);
 	CreateRecentFileList(hMenu);
@@ -1927,108 +1642,19 @@ void SetupMenu ( HWND hWnd ) {
 	if (LimitFPS) {
 		CheckMenuItem( hMenu, ID_SYSTEM_LIMITFPS, MF_BYCOMMAND | MFS_CHECKED );
 	}
-	if (ShowCPUPer) {
-		CheckMenuItem( hMenu, ID_OPTIONS_SHOWCPUUSAGE, MF_BYCOMMAND | MFS_CHECKED );
-	}
 	if (AlwaysOnTop) {
 		CheckMenuItem( hMenu, ID_OPTIONS_ALWAYSONTOP, MF_BYCOMMAND | MFS_CHECKED );
 	}
-#if (!defined(EXTERNAL_RELEASE))
-	if (HaveDebugger) {
-		if (AutoLoadMapFile) {
-			CheckMenuItem( hMenu, ID_OPTIONS_MAPPINGS_AUTOLOADMAPFILE, MF_BYCOMMAND | MFS_CHECKED );
-		}
-		if (LogOptions.GenerateLog) {
-			CheckMenuItem( hMenu, ID_DEBUGGER_GENERATELOG, MF_BYCOMMAND | MFS_CHECKED );
-		}
-		if (ShowUnhandledMemory) {
-			CheckMenuItem( hMenu, ID_DEBUGGER_SHOWUNHANDLEDMEMORYACCESSES, MF_BYCOMMAND | MFS_CHECKED );
-		}
-		if (ShowTLBMisses) {
-			CheckMenuItem( hMenu, ID_DEBUGGER_SHOWTLBMISSES, MF_BYCOMMAND | MFS_CHECKED );
-		}
-		if (ShowDListAListCount) {
-			CheckMenuItem( hMenu, ID_DEBUGGER_SHOWDLISTALISTCOUNT, MF_BYCOMMAND | MFS_CHECKED );
-		}
-		if (ShowCompMem) {
-			CheckMenuItem( hMenu, ID_DEBUGGER_SHOWCOMPMEM, MF_BYCOMMAND | MFS_CHECKED );
-		}
-		if (ShowPifRamErrors) {
-			CheckMenuItem( hMenu, ID_DEBUGGER_SHOWPIFRAMERRORS, MF_BYCOMMAND | MFS_CHECKED );
-		}
-		if (IndvidualBlock) {
-			CheckMenuItem( hMenu, ID_OPTIONS_PROFILING_LOGINDIVIDUALBLOCKS, MF_BYCOMMAND | MFS_CHECKED );
-		}
-
-		if (Profiling) {
-			CheckMenuItem( hMenu, ID_OPTIONS_PROFILING_ON, MF_BYCOMMAND | MFS_CHECKED );
-		} else {
-			CheckMenuItem( hMenu, ID_OPTIONS_PROFILING_OFF, MF_BYCOMMAND | MFS_CHECKED );
-		}
-	}
-#endif
-
-#ifdef BETA_VERSION
-	{
-		MENUITEMINFO menuinfo;
-		char String[256];
-
-		hSubMenu = GetSubMenu(hMenu,4);
-		memset(&menuinfo, 0, sizeof(MENUITEMINFO));
-		menuinfo.cbSize = sizeof(MENUITEMINFO);
-		menuinfo.fMask = MIIM_TYPE;
-		menuinfo.fType = MFT_STRING;
-		menuinfo.fState = MFS_ENABLED;
-		menuinfo.dwTypeData = String;
-		menuinfo.cch = sizeof(String);
-		strcpy(String,"Beta For: ...");
-		InsertMenuItem(hSubMenu, 0, TRUE, &menuinfo);
-		strcpy(String,"Email: ...");
-		InsertMenuItem(hSubMenu, 1, TRUE, &menuinfo);
-	}
-#endif
-
-	//Plugins
+	EnableMenuItem(hMenu, ID_OPTIONS_ALWAYSONTOP, MF_BYCOMMAND);
 	EnableMenuItem(hMenu, ID_OPTIONS_CONFIG_AUDIO, MF_BYCOMMAND | (AiDllConfig == NULL?MF_GRAYED:MF_ENABLED));
 	EnableMenuItem(hMenu, ID_OPTIONS_CONFIG_GFX, MF_BYCOMMAND | (GFXDllConfig == NULL?MF_GRAYED:MF_ENABLED));
 	EnableMenuItem(hMenu, ID_OPTIONS_CONFIG_RSP, MF_BYCOMMAND | (RSPDllConfig == NULL?MF_GRAYED:MF_ENABLED));
 	EnableMenuItem(hMenu, ID_OPTIONS_CONFIG_CONTROL, MF_BYCOMMAND | (ContConfig == NULL?MF_GRAYED:MF_ENABLED));
 
-	if (HaveDebugger) {
-		MENUITEMINFO lpmii;
-		hSubMenu = GetSubMenu(hMenu,3);
-		if (IsMenu(RspDebug.hRSPMenu)) {
-			InsertMenu (hSubMenu, 3, MF_POPUP|MF_BYPOSITION, (DWORD)RspDebug.hRSPMenu, "&RSP");
-			lpmii.cbSize = sizeof(MENUITEMINFO);
-			lpmii.fMask = MIIM_STATE;
-			lpmii.fState = 0;
-			SetMenuItemInfo(hSubMenu, (DWORD)RspDebug.hRSPMenu, MF_BYCOMMAND,&lpmii);
-		}
-		if (IsMenu(GFXDebug.hGFXMenu)) {
-			InsertMenu (hSubMenu, 3, MF_POPUP|MF_BYPOSITION, (DWORD)GFXDebug.hGFXMenu, "&RDP");
-			lpmii.cbSize = sizeof(MENUITEMINFO);
-			lpmii.fMask = MIIM_STATE;
-			lpmii.fState = 0;
-			SetMenuItemInfo(hSubMenu, (DWORD)GFXDebug.hGFXMenu, MF_BYCOMMAND,&lpmii);
-		}
-	}
-
 	if (strlen(RomName) > 0) {
 		EnableMenuItem(hMenu,ID_FILE_ROM_INFO,MFS_ENABLED|MF_BYCOMMAND);
-		EnableMenuItem(hMenu, ID_FILE_GAME_INFO, MFS_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu,ID_FILE_STARTEMULATION,MFS_ENABLED|MF_BYCOMMAND);
 		EnableMenuItem(hMenu,ID_SYSTEM_GSBUTTON,MFS_ENABLED|MF_BYCOMMAND);						//added by Witten on 10/03/2002
-		if (HaveDebugger) {
-			EnableMenuItem(hMenu,ID_DEBUGGER_MEMORY,MFS_ENABLED|MF_BYCOMMAND);
-			EnableMenuItem(hMenu,ID_DEBUGGER_TLBENTRIES,MFS_ENABLED|MF_BYCOMMAND);
-			EnableMenuItem(hMenu,ID_DEBUGGER_R4300IREGISTERS,MFS_ENABLED|MF_BYCOMMAND);
-			if (IsMenu(RspDebug.hRSPMenu)) {
-				EnableMenuItem(hMenu,(DWORD)RspDebug.hRSPMenu,MFS_ENABLED|MF_BYCOMMAND);
-			}
-			if (IsMenu(GFXDebug.hGFXMenu)) {
-				EnableMenuItem(hMenu,(DWORD)GFXDebug.hGFXMenu,MFS_ENABLED|MF_BYCOMMAND);
-			}
-		}
 	}
 
 	//Enable if cpu is running
@@ -2037,19 +1663,16 @@ void SetupMenu ( HWND hWnd ) {
 	EnableMenuItem(hMenu,ID_OPTIONS_FULLSCREEN,State|MF_BYCOMMAND);
 	EnableMenuItem(hMenu,ID_CPU_RESET,State|MF_BYCOMMAND);
 	EnableMenuItem(hMenu,ID_CPU_PAUSE,State|MF_BYCOMMAND);
-	EnableMenuItem(hMenu,ID_OPTIONS_ALWAYSONTOP,State|MF_BYCOMMAND);
 	EnableMenuItem(hMenu,ID_OPTIONS_CHEATS,State|MF_BYCOMMAND);
-	//Cheat search crashes on first scan so disabling for now (Gent)
-	//EnableMenuItem(hMenu,ID_SYSTEM_CHEATSEARCH,State|MF_BYCOMMAND);
+	EnableMenuItem(hMenu,ID_CPU_SAVE,State|MF_BYCOMMAND);
+	EnableMenuItem(hMenu,ID_CPU_SAVEAS,State|MF_BYCOMMAND);
+	EnableMenuItem(hMenu,ID_CPU_RESTORE,State|MF_BYCOMMAND);
+	EnableMenuItem(hMenu,ID_CPU_LOAD,State|MF_BYCOMMAND);
 	if (CPURunning && CaptureScreen != NULL) {
 		EnableMenuItem(hMenu,ID_SYSTEM_GENERATEBITMAP,MFS_ENABLED|MF_BYCOMMAND);
 	} else {
 		EnableMenuItem(hMenu,ID_SYSTEM_GENERATEBITMAP,MFS_DISABLED|MF_BYCOMMAND);
 	}
-	EnableMenuItem(hMenu,ID_CPU_SAVE,State|MF_BYCOMMAND);
-	EnableMenuItem(hMenu,ID_CPU_SAVEAS,State|MF_BYCOMMAND);
-	EnableMenuItem(hMenu,ID_CPU_RESTORE,State|MF_BYCOMMAND);
-	EnableMenuItem(hMenu,ID_CPU_LOAD,State|MF_BYCOMMAND);
 
 	hSubMenu = GetSubMenu(hMenu,1); 	//System
 	EnableMenuItem(hSubMenu,11,State|MF_BYPOSITION);  //Save State
@@ -2060,14 +1683,6 @@ void SetupMenu ( HWND hWnd ) {
 	EnableMenuItem(hMenu,ID_FILE_REFRESHROMLIST,State|MF_BYCOMMAND);
 	if (State == MFS_DISABLED) { EnableMenuItem(hMenu,ID_FILE_STARTEMULATION,State|MF_BYCOMMAND); }
 
-	/* Debugger Menu */
-	if (!HaveDebugger) { DeleteMenu(hMenu,3,MF_BYPOSITION);  }
-	DeleteAdvanceMenuOptions(hMenu);
-	if ((BasicMode && CPURunning) || !RomListVisible()) {
-		DeleteMenu(GetSubMenu(hMenu,0),8,MF_BYPOSITION);  //Line
-		DeleteMenu(hMenu,ID_FILE_ROMDIRECTORY,MF_BYCOMMAND);
-		DeleteMenu(hMenu,ID_FILE_REFRESHROMLIST,MF_BYCOMMAND);
-	}
 	SetMenu(hWnd, hMenu);
 	DrawMenuBar(hWnd);
 	hMainMenu = hMenu;
@@ -2082,11 +1697,6 @@ void SetCurrentSaveState (HWND hWnd, int State) {
 		State = ID_CURRENTSAVE_DEFAULT;
 
 	CheckMenuItem(hMenu, ID_CURRENTSAVE_DEFAULT, MF_BYCOMMAND | MFS_UNCHECKED);
-	
-	// Removed this as we now have 0 to 9 - Gent
-	//CheckMenuItem(hMenu, ID_CURRENTSAVE_0, MF_BYCOMMAND | MFS_UNCHECKED);
-	
-	CheckMenuItem(hMenu, ID_CURRENTSAVE_1, MF_BYCOMMAND | MFS_UNCHECKED);
 	
 	CheckMenuItem(hMenu, ID_CURRENTSAVE_2, MF_BYCOMMAND | MFS_UNCHECKED);
 	
@@ -2124,6 +1734,68 @@ void SetCurrentSaveState (HWND hWnd, int State) {
 	
 	CheckMenuItem(hMenu, ID_CURRENTSAVE_19, MF_BYCOMMAND | MFS_UNCHECKED);
 	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_20, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_21, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_22, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_23, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_24, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_25, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_26, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_27, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_28, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_29, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_30, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_31, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_32, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_33, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_34, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_35, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_36, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_37, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_38, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_39, MF_BYCOMMAND | MFS_UNCHECKED);
+
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_40, MF_BYCOMMAND | MFS_UNCHECKED);
+
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_41, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_42, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_43, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_44, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_45, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_46, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_47, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_48, MF_BYCOMMAND | MFS_UNCHECKED);
+	
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_49, MF_BYCOMMAND | MFS_UNCHECKED);
+
+	CheckMenuItem(hMenu, ID_CURRENTSAVE_50, MF_BYCOMMAND | MFS_UNCHECKED);
+	
 	CheckMenuItem(hMenu, State, MF_BYCOMMAND | MFS_CHECKED);
 	if (strlen(RomName) == 0) { return; }
 
@@ -2131,121 +1803,219 @@ void SetCurrentSaveState (HWND hWnd, int State) {
 
 	switch (State) {
 	case ID_CURRENTSAVE_DEFAULT:
-		strcat(CurrentSave, ".pj0");
-		break;
-
-		// Removed this as we now have 0 to 9 - Gent
-
-	/*case ID_CURRENTSAVE_0:
-		strcat(CurrentSave, ".pj0");
-		break;*/
-
-	case ID_CURRENTSAVE_1:
-		strcat(CurrentSave, ".pj1");
+		strcat(CurrentSave, " 01.st");
 		break;
 
 	case ID_CURRENTSAVE_2:
-		strcat(CurrentSave, ".pj2");
+		strcat(CurrentSave, " 02.st");
 		break;
 
 	case ID_CURRENTSAVE_3:
-		strcat(CurrentSave, ".pj3");
+		strcat(CurrentSave, " 03.st");
 		break;
 
 	case ID_CURRENTSAVE_4:
-		strcat(CurrentSave, ".pj4");
+		strcat(CurrentSave, " 04.st");
 		break;
 
 	case ID_CURRENTSAVE_5:
-		strcat(CurrentSave, ".pj5");
+		strcat(CurrentSave, " 05.st");
 		break;
 
 	case ID_CURRENTSAVE_6:
-		strcat(CurrentSave, ".pj6");
+		strcat(CurrentSave, " 06.st");
 		break;
 
 	case ID_CURRENTSAVE_7:
-		strcat(CurrentSave, ".pj7");
+		strcat(CurrentSave, " 07.st");
 		break;
 
 	case ID_CURRENTSAVE_8:
-		strcat(CurrentSave, ".pj8");
+		strcat(CurrentSave, " 08.st");
 		break;
 
 	case ID_CURRENTSAVE_9:
-		strcat(CurrentSave, ".pj9");
+		strcat(CurrentSave, " 09.st");
 		break;
 
 	case ID_CURRENTSAVE_10:
-		strcat(CurrentSave, ".pj10");
+		strcat(CurrentSave, " 10.st");
 		break;
 
 	case ID_CURRENTSAVE_11:
-		strcat(CurrentSave, ".pj11");
+		strcat(CurrentSave, " 11.st");
 		break;
 
 	case ID_CURRENTSAVE_12:
-		strcat(CurrentSave, ".pj12");
+		strcat(CurrentSave, " 12.st");
 		break;
 
 	case ID_CURRENTSAVE_13:
-		strcat(CurrentSave, ".pj13");
+		strcat(CurrentSave, " 13.st");
 		break;
 
 	case ID_CURRENTSAVE_14:
-		strcat(CurrentSave, ".pj14");
+		strcat(CurrentSave, " 14.st");
 		break;
 
 	case ID_CURRENTSAVE_15:
-		strcat(CurrentSave, ".pj15");
+		strcat(CurrentSave, " 15.st");
 		break;
 
 	case ID_CURRENTSAVE_16:
-		strcat(CurrentSave, ".pj16");
+		strcat(CurrentSave, " 16.st");
 		break;
 
 	case ID_CURRENTSAVE_17:
-		strcat(CurrentSave, ".pj17");
+		strcat(CurrentSave, " 17.st");
 		break;
 
 	case ID_CURRENTSAVE_18:
-		strcat(CurrentSave, ".pj18");
+		strcat(CurrentSave, " 18.st");
 		break;
 
 	case ID_CURRENTSAVE_19:
-		strcat(CurrentSave, ".pj19");
+		strcat(CurrentSave, " 19.st");
+		break;
+
+	case ID_CURRENTSAVE_20:
+		strcat(CurrentSave, " 20.st");
+		break;
+
+	case ID_CURRENTSAVE_21:
+		strcat(CurrentSave, " 21.st");
+		break;
+
+	case ID_CURRENTSAVE_22:
+		strcat(CurrentSave, " 22.st");
+		break;
+
+	case ID_CURRENTSAVE_23:
+		strcat(CurrentSave, " 23.st");
+		break;
+
+	case ID_CURRENTSAVE_24:
+		strcat(CurrentSave, " 24.st");
+		break;
+
+	case ID_CURRENTSAVE_25:
+		strcat(CurrentSave, " 25.st");
+		break;
+
+	case ID_CURRENTSAVE_26:
+		strcat(CurrentSave, " 26.st");
+		break;
+
+	case ID_CURRENTSAVE_27:
+		strcat(CurrentSave, " 27.st");
+		break;
+
+	case ID_CURRENTSAVE_28:
+		strcat(CurrentSave, " 28.st");
+		break;
+
+	case ID_CURRENTSAVE_29:
+		strcat(CurrentSave, " 29.st");
+		break;
+
+	case ID_CURRENTSAVE_30:
+		strcat(CurrentSave, " 30.st");
+		break;
+
+	case ID_CURRENTSAVE_31:
+		strcat(CurrentSave, " 31.st");
+		break;
+
+	case ID_CURRENTSAVE_32:
+		strcat(CurrentSave, " 32.st");
+		break;
+
+	case ID_CURRENTSAVE_33:
+		strcat(CurrentSave, " 33.st");
+		break;
+
+	case ID_CURRENTSAVE_34:
+		strcat(CurrentSave, " 34.st");
+		break;
+
+	case ID_CURRENTSAVE_35:
+		strcat(CurrentSave, " 35.st");
+		break;
+
+	case ID_CURRENTSAVE_36:
+		strcat(CurrentSave, " 36.st");
+		break;
+
+	case ID_CURRENTSAVE_37:
+		strcat(CurrentSave, " 37.st");
+		break;
+
+	case ID_CURRENTSAVE_38:
+		strcat(CurrentSave, " 38.st");
+		break;
+
+	case ID_CURRENTSAVE_39:
+		strcat(CurrentSave, " 39.st");
+		break;
+
+	case ID_CURRENTSAVE_40:
+		strcat(CurrentSave, " 40.st");
+		break;
+
+	case ID_CURRENTSAVE_41:
+		strcat(CurrentSave, " 41.st");
+		break;
+
+	case ID_CURRENTSAVE_42:
+		strcat(CurrentSave, " 42.st");
+		break;
+
+	case ID_CURRENTSAVE_43:
+		strcat(CurrentSave, " 43.st");
+		break;
+
+	case ID_CURRENTSAVE_44:
+		strcat(CurrentSave, " 44.st");
+		break;
+
+	case ID_CURRENTSAVE_45:
+		strcat(CurrentSave, " 45.st");
+		break;
+
+	case ID_CURRENTSAVE_46:
+		strcat(CurrentSave, " 46.st");
+		break;
+
+	case ID_CURRENTSAVE_47:
+		strcat(CurrentSave, " 47.st");
+		break;
+
+	case ID_CURRENTSAVE_48:
+		strcat(CurrentSave, " 48.st");
+		break;
+
+	case ID_CURRENTSAVE_49:
+		strcat(CurrentSave, " 49.st");
+		break;
+
+	case ID_CURRENTSAVE_50:
+		strcat(CurrentSave, " 50.st");
 		break;
 	}
-
-	sprintf(String,"%s: %s",GS(MSG_SAVE_SLOT),CurrentSave);
+	sprintf(String,"%s",CurrentSave);
 	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)String );
 	CurrentSaveSlot = State;
 }
 
 void UninstallApplication(HWND hWnd) {
-	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE], dir[_MAX_DIR];
-	char fname[_MAX_FNAME], ext[_MAX_EXT];
-	char FileName[_MAX_PATH];
 	char RegistryKey[300];
-	char ErrorMessage[300];
 
 	if (MessageBox(NULL, GS(MSG_CONFIRMATION_UNINSTALL), AppName, MB_OKCANCEL | MB_ICONEXCLAMATION | MB_SETFOREGROUND) ==  IDOK) {
-		// Delete cache file
-		GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
-		_splitpath(path_buffer, drive, dir, fname, ext);
-		sprintf(FileName, "%s%sConfig\\%s", drive, dir, CacheFileName);
-		if (remove(FileName) != 0) {
-			sprintf(ErrorMessage, "%s: %s", GS(MSG_DELETE_FILE_FAILED), FileName);
-			DisplayError(ErrorMessage);
-		}
-
 		// Delete registry keys recursive
-		sprintf(RegistryKey, "Software\\N64 Emulation\\%s", AppName);
+		sprintf(RegistryKey, "N64 Software\\%s", AppName);
 		if (!RegDelnode(HKEY_CURRENT_USER, RegistryKey)) {
 			DisplayError(GS(MSG_DELETE_SETTINGS_FAILED));
 		}
-
-		MessageBox(NULL, GS(MSG_RESTART_APPLICATION), AppName, MB_OK | MB_ICONINFORMATION | MB_SETFOREGROUND);
 
 		ForceClose = TRUE;
 		DestroyWindow(hWnd);
@@ -2262,34 +2032,9 @@ void ShutdownApplication ( void ) {
 	if (!ForceClose)
 		SaveRecentFiles();
 	Release_Memory();
-	ResetTimerList();
-#if (!defined(EXTERNAL_RELEASE))
-	StopLog();
-#endif
 	CloseHandle(hPauseMutex);
 	CoUninitialize();
 }
-
-void UninstallJabo(HWND hWnd) {
-	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE], dir[_MAX_DIR];
-	char fname[_MAX_FNAME], ext[_MAX_EXT];
-	char FileName[_MAX_PATH];
-	char RegistryKey[300];
-	char ErrorMessage[300];
-
-	if (MessageBox(NULL, GS(MSG_JABO_CONFIRM_UNINSTALL), JaboPlugins, MB_OKCANCEL | MB_ICONEXCLAMATION | MB_SETFOREGROUND) == IDOK) {
-
-		// Delete registry keys recursive
-		sprintf(RegistryKey, "Software\\JaboSoft\\%s", JaboPlugins);
-		if (!RegDelnode(HKEY_CURRENT_USER, RegistryKey)) {
-			DisplayError(GS(MSG_DELETE_SETTINGS_FAILED));
-		}
-
-		MessageBox(NULL, GS(MSG_JABO_REMOVE), JaboPlugins, MB_OK | MB_ICONINFORMATION | MB_SETFOREGROUND);
-	}
-
-}
-
 
 void StoreCurrentWinPos (  char * WinName, HWND hWnd ) {
 	long lResult;
@@ -2299,7 +2044,7 @@ void StoreCurrentWinPos (  char * WinName, HWND hWnd ) {
 	char String[200];
 
 	GetWindowRect(hWnd, &WinRect );
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
@@ -2323,7 +2068,7 @@ void StoreCurrentWinSize (  char * WinName, HWND hWnd ) {
 	GetWindowRect(hWnd, &WinRect );
 	WinRect.bottom -= WinRect.top;
 	WinRect.right -= WinRect.left;
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
@@ -2368,14 +2113,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgs,
 		NULL,NULL,hInst,NULL
 	);
 
+        DragAcceptFiles(hMainWindow, TRUE);
+
 	if ( !hMainWindow ) { return FALSE; }
-	if (strlen(lpszArgs) > 0) {
+	if (__argc > 1) {
 		DWORD ThreadID;
 
 		SetupPlugins(hMainWindow);
 		SetupMenu(hMainWindow);
 		ShowWindow(hMainWindow, nWinMode);
-		strcpy(CurrentFileName,lpszArgs);
+		strcpy(CurrentFileName, __argv[1]);
 		CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)OpenChosenFile,NULL,0, &ThreadID);
 	} else {
 		if (RomBrowser) {
@@ -2394,7 +2141,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgs,
 			if (!inFullScreen && TranslateAccelerator(hMainWindow,AccelWinMode,&msg)) { continue; }
 		}
 		if (IsDialogMessage( hManageWindow,&msg)) { continue; }
-        if(!IsDialogMessage(hCheatSearchDlg, &msg))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);

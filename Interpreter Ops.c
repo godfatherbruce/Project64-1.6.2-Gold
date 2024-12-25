@@ -29,7 +29,6 @@
 #include <float.h>
 #include "main.h"
 #include "cpu.h"
-#include "debugger.h"
 
 int RoundingModel = _RC_NEAR;
 
@@ -265,11 +264,6 @@ void _fastcall r4300i_LB (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if (Opcode.rt == 0) { return; }
 	if (!r4300i_LB_VAddr(Address,&GPR[Opcode.rt].UB[0])) {
-		if (ShowTLBMisses) {
-#ifndef EXTERNAL_RELEASE
-			DisplayError("LB TLB: %X",Address);
-#endif
-		}
 		TLB_READ_EXCEPTION(Address);
 	} else {
 		GPR[Opcode.rt].DW = GPR[Opcode.rt].B[0];
@@ -280,9 +274,6 @@ void _fastcall r4300i_LH (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if ((Address & 1) != 0) { ADDRESS_ERROR_EXCEPTION(Address,TRUE); }
 	if (!r4300i_LH_VAddr(Address,&GPR[Opcode.rt].UHW[0])) {
-		if (ShowTLBMisses) {
-			DisplayError("LH TLB: %X",Address);
-		}
 		TLB_READ_EXCEPTION(Address);
 	} else {
 		GPR[Opcode.rt].DW = GPR[Opcode.rt].HW[0];
@@ -312,16 +303,9 @@ void _fastcall r4300i_LWL (void) {
 void _fastcall r4300i_LW (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if ((Address & 3) != 0) { ADDRESS_ERROR_EXCEPTION(Address,TRUE); }
-
-#if (!defined(EXTERNAL_RELEASE))
-	Log_LW(PROGRAM_COUNTER,Address);
-#endif
 	if (Opcode.rt == 0) { return; }
 
 	if (!r4300i_LW_VAddr(Address,&GPR[Opcode.rt].UW[0])) {
-		if (ShowTLBMisses) {
-			DisplayError("LW TLB: %X",Address);
-		}
 		TLB_READ_EXCEPTION(Address);
 	} else {
 		GPR[Opcode.rt].DW = GPR[Opcode.rt].W[0];
@@ -335,9 +319,6 @@ void _fastcall r4300i_LW (void) {
 void _fastcall r4300i_LBU (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if (!r4300i_LB_VAddr(Address,&GPR[Opcode.rt].UB[0])) {
-		if (ShowTLBMisses) {
-			DisplayError("LBU TLB: %X",Address);
-		}
 		TLB_READ_EXCEPTION(Address);
 	} else {
 		GPR[Opcode.rt].UDW = GPR[Opcode.rt].UB[0];
@@ -348,9 +329,6 @@ void _fastcall r4300i_LHU (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if ((Address & 1) != 0) { ADDRESS_ERROR_EXCEPTION(Address,TRUE); }
 	if (!r4300i_LH_VAddr(Address,&GPR[Opcode.rt].UHW[0])) {
-		if (ShowTLBMisses) {
-			DisplayError("LHU TLB: %X",Address);
-		}
 		TLB_READ_EXCEPTION(Address);
 	} else {
 		GPR[Opcode.rt].UDW = GPR[Opcode.rt].UHW[0];
@@ -383,9 +361,6 @@ void _fastcall r4300i_LWU (void) {
 	if (Opcode.rt == 0) { return; }
 
 	if (!r4300i_LW_VAddr(Address,&GPR[Opcode.rt].UW[0])) {
-		if (ShowTLBMisses) {
-			DisplayError("LWU TLB: %X",Address);
-		}
 		TLB_READ_EXCEPTION(Address);
 	} else {
 		GPR[Opcode.rt].UDW = GPR[Opcode.rt].UW[0];
@@ -445,9 +420,7 @@ void _fastcall r4300i_SW (void) {
 	Log_SW(PROGRAM_COUNTER,Address,GPR[Opcode.rt].UW[0]);
 #endif
 	if (!r4300i_SW_VAddr(Address,GPR[Opcode.rt].UW[0])) {
-#ifndef EXTERNAL_RELEASE
 		DisplayError("SW TLB: %X",Address);
-#endif
 	}
 	//TranslateVaddr(&Address);
 	//if (Address == 0x00090AA0) {
@@ -549,15 +522,7 @@ void _fastcall r4300i_SWR (void) {
 #endif
 	}
 }
-
-void _fastcall r4300i_CACHE (void) {
-#if (!defined(EXTERNAL_RELEASE))
-	if (!LogOptions.LogCache) { return; }
-	LogMessage("%08X: Cache operation %d, 0x%08X", PROGRAM_COUNTER, Opcode.rt,
-		GPR[Opcode.base].UW[0] + (short)Opcode.offset );
-#endif
-}
-
+void _fastcall r4300i_CACHE (void) {}
 void _fastcall r4300i_LL (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if ((Address & 3) != 0) { ADDRESS_ERROR_EXCEPTION(Address,TRUE); }
@@ -565,9 +530,6 @@ void _fastcall r4300i_LL (void) {
 	if (Opcode.rt == 0) { return; }
 
 	if (!r4300i_LW_VAddr(Address,&GPR[Opcode.rt].UW[0])) {
-		if (ShowTLBMisses) {
-			DisplayError("LW TLB: %X",Address);
-		}
 		TLB_READ_EXCEPTION(Address);
 	} else {
 		GPR[Opcode.rt].DW = GPR[Opcode.rt].W[0];
@@ -582,9 +544,6 @@ void _fastcall r4300i_LWC1 (void) {
 	TEST_COP1_USABLE_EXCEPTION
 	if ((Address & 3) != 0) { ADDRESS_ERROR_EXCEPTION(Address,TRUE); }
 	if (!r4300i_LW_VAddr(Address,&*(DWORD *)FPRFloatLocation[Opcode.ft])) {
-		if (ShowTLBMisses) {
-			DisplayError("LWC1 TLB: %X",Address);
-		}
 		TLB_READ_EXCEPTION(Address);
 	}
 }
@@ -993,26 +952,10 @@ void _fastcall r4300i_REGIMM_BGEZAL (void) {
 }
 /************************** COP0 functions **************************/
 void _fastcall r4300i_COP0_MF (void) {
-#if (!defined(EXTERNAL_RELEASE))
-	if (LogOptions.LogCP0reads) {
-		LogMessage("%08X: R4300i Read from %s (0x%08X)", PROGRAM_COUNTER,
-			Cop0_Name[Opcode.rd], CP0[Opcode.rd]);
-	}
-#endif
 	GPR[Opcode.rt].DW = (int)CP0[Opcode.rd];
 }
 
 void _fastcall r4300i_COP0_MT (void) {
-#if (!defined(EXTERNAL_RELEASE))
-	if (LogOptions.LogCP0changes) {
-		LogMessage("%08X: Writing 0x%X to %s register (Originally: 0x%08X)",PROGRAM_COUNTER,
-			GPR[Opcode.rt].UW[0],Cop0_Name[Opcode.rd], CP0[Opcode.rd]);
-		if (Opcode.rd == 11) { //Compare
-			LogMessage("%08X: Cause register changed from %08X to %08X",PROGRAM_COUNTER,
-				CAUSE_REGISTER, (CAUSE_REGISTER & ~CAUSE_IP7));
-		}
-	}
-#endif
 	switch (Opcode.rd) {	
 	case 0: //Index
 	case 2: //EntryLo0
@@ -1551,25 +1494,7 @@ void _fastcall R4300i_UnknownOpcode (void) {
 
 	sprintf(Message,"%s: %08X\n%s\n\n", GS(MSG_UNHANDLED_OP), PROGRAM_COUNTER,
 		R4300iOpcodeName(Opcode.Hex,PROGRAM_COUNTER));
-	strcat(Message,"Stoping Emulation !");
-	
-#if (!defined(EXTERNAL_RELEASE))
-	if (HaveDebugger && !inFullScreen) {
-		int response;
-
-		strcat(Message,"\n\nDo you wish to enter the debugger ?");
-	
-		response = MessageBox(NULL,Message,GS(MSG_MSGBOX_TITLE), MB_YESNO | MB_ICONERROR );
-		if (response == IDYES) {
-			Enter_R4300i_Commands_Window ();
-		}
-		ExitThread(0);
-	} else {
+	strcat(Message,GS(MSG_UNHANDLED_OP_IDEAS));
 		DisplayError(Message);
 		ExitThread(0);
 	}
-#else
-	DisplayError(Message);
-	ExitThread(0);
-#endif
-}

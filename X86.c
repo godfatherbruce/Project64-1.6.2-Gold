@@ -28,7 +28,7 @@
 #include "main.h"
 #include "cpu.h"
 #include "x86.h"
-#include "debugger.h"
+
 
 #define PUTDST8(dest,value)  (*((BYTE *)(dest))=(BYTE)(value)); dest += 1;
 #define PUTDST16(dest,value) (*((WORD *)(dest))=(WORD)(value)); dest += 2;
@@ -286,7 +286,7 @@ void AndVariableDispToX86Reg(void *Variable, char *VariableName, int x86Reg, int
 	case 2: x = 0x40; break;
 	case 4: x = 0x80; break;
 	case 8: x = 0xC0; break;
-	default: DisplayError("And\nInvalid x86 multiplier");
+	default: DisplayError("Invalid x86 multiplier");
 	}
 
 	/* format xx|000000 */
@@ -2361,7 +2361,7 @@ void Setae(int x86reg) {
 	case x86_ECX: PUTDST8(RecompPos,0xC1); break;
 	case x86_EDX: PUTDST8(RecompPos,0xC2); break;
 	default:
-		DisplayError("Seta\nUnknown x86 Register");
+		DisplayError("Setae\nUnknown x86 Register");
 	}
 }
 

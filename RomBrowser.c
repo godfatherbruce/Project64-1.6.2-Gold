@@ -62,7 +62,6 @@ typedef struct {
 	DWORD    CRC2;
 	int      CicChip;
 	char     ForceFeedback[15];
-	char	 GameInfoID[250];
 
 } ROM_INFO;
 
@@ -124,7 +123,6 @@ typedef struct {
 #define RB_Genre			16
 #define RB_Players			17
 #define RB_ForceFeedback	18
-#define RB_GameInfoID		19
 
 char * GetSortField          ( int Index );
 void LoadRomList             ( void );
@@ -151,29 +149,25 @@ char CurrentRBFileName[MAX_PATH+1] = {""};
 
 ROMBROWSER_FIELDS RomBrowserFields[] =
 {
-	"File Name",              -1, RB_FileName,      218,RB_FILENAME,
-	"Internal Name",          -1, RB_InternalName,  200,RB_INTERNALNAME,
-
-// This changes Good Name to "Game Game
-
-	"Game Name",               0, RB_GameName,      218,RB_GAMENAME,
-	"Status",                  1, RB_Status,        92,RB_STATUS,
-	"Rom Size",               -1, RB_RomSize,       100,RB_ROMSIZE,
-	"Notes (Core)",            2, RB_CoreNotes,     120,RB_NOTES_CORE,
-	"Notes (default plugins)", 3, RB_PluginNotes,   188,RB_NOTES_PLUGIN,
-	"Notes (User)",           -1, RB_UserNotes,     100,RB_NOTES_USER,
-	"Cartridge ID",           -1, RB_CartridgeID,   100,RB_CART_ID,
-	"Manufacturer",           -1, RB_Manufacturer,  100,RB_MANUFACTUER,
-	"Country",                -1, RB_Country,       100,RB_COUNTRY,
-	"Developer",              -1, RB_Developer,     100,RB_DEVELOPER,
-	"CRC1",                   -1, RB_Crc1,          100,RB_CRC1,
-	"CRC2",                   -1, RB_Crc2,          100,RB_CRC2,
-	"CIC Chip",               -1, RB_CICChip,       100,RB_CICCHIP,
-	"Release Date",           -1, RB_ReleaseDate,   100,RB_RELEASE_DATE,
-	"Genre",                  -1, RB_Genre,         100,RB_GENRE,
-	"Players",                -1, RB_Players,       100,RB_PLAYERS,
-	"Force Feedback",          4, RB_ForceFeedback, 100,RB_FORCE_FEEDBACK,
-	"Game Info ID",			  -1, RB_GameInfoID,    100,RB_GAME_INFO_ID,
+	"Game Name",               0, RB_GameName,      260,RB_GAMENAME,
+	"Internal Name",           1, RB_InternalName,  133,RB_INTERNALNAME,
+	"File Name",               2, RB_FileName,      101,RB_FILENAME,
+	"1st CRC",                 3, RB_Crc1,           71,RB_CRC1,
+	"Size",                    4, RB_RomSize,        58,RB_ROMSIZE,
+	"Core Note",              -1, RB_CoreNotes,     273,RB_NOTES_CORE,
+	"Plugin Note",            -1, RB_PluginNotes,   173,RB_NOTES_PLUGIN,
+	"Note",                   -1, RB_UserNotes,      49,RB_NOTES_USER,
+	"Status",                 -1, RB_Status,         93,RB_STATUS,
+	"2nd CRC",                -1, RB_Crc2,           71,RB_CRC2,
+	"ID",                     -1, RB_CartridgeID,    23,RB_CART_ID,
+	"Manufacturer",           -1, RB_Manufacturer,   84,RB_MANUFACTURER,
+	"Country",                -1, RB_Country,        55,RB_COUNTRY,
+	"CIC Chip",               -1, RB_CICChip,        79,RB_CICCHIP,
+	"Developer",              -1, RB_Developer,      65,RB_DEVELOPER,
+	"Force Feedback",         -1, RB_ForceFeedback,  94,RB_FORCE_FEEDBACK,
+	"Genre",                  -1, RB_Genre,          98,RB_GENRE,
+	"Player",                 -1, RB_Players,        44,RB_PLAYERS,
+	"Release Date",           -1, RB_ReleaseDate,    78,RB_RELEASE_DATE,
 };
 
 HWND hRomList= NULL;
@@ -225,9 +219,9 @@ void AddRomToList (char * RomLocation) {
 }
 
 void CreateRomListControl (HWND hParent) {
-	hRomList = CreateWindowEx( WS_EX_CLIENTEDGE,WC_LISTVIEW,NULL,
+	hRomList = CreateWindow( WC_LISTVIEW,NULL,
 					WS_TABSTOP | WS_VISIBLE | WS_CHILD | LVS_OWNERDRAWFIXED |
-					WS_BORDER | LVS_SINGLESEL | LVS_REPORT,
+					LVS_SINGLESEL | LVS_REPORT,
 					0,0,0,0,hParent,(HMENU)IDC_ROMLIST,hInst,NULL);
 	
 	ResetRomBrowserColomuns();
@@ -268,7 +262,7 @@ BOOL IsRomBrowserMaximized (void) {
 	HKEY hKeyResults = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);
 	
 	if (lResult == ERROR_SUCCESS) {
@@ -289,7 +283,7 @@ BOOL IsSortAscending (int Index) {
 	HKEY hKeyResults = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);
 	
 	if (lResult == ERROR_SUCCESS) {
@@ -320,9 +314,7 @@ void LoadRomList (void) {
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
 
-	// Moved to Config (Gent)
-
-	sprintf(FileName,"%s%sConfig\\%s",drive,dir,CacheFileName);
+	sprintf(FileName,"%s%sPJ64DB\\%s",drive,dir,CacheFileName);
 
 	hFile = CreateFile(FileName,GENERIC_READ,0,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
 	if (hFile == INVALID_HANDLE_VALUE) {
@@ -374,7 +366,7 @@ void LoadRomBrowserColoumnInfo (void) {
 
 	NoOfFields ;
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Rom Browser",AppName);
+	sprintf(String,"N64 Software\\%s\\Rom Browser",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);	
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Value, count, Bytes = 4;
@@ -412,42 +404,29 @@ void FillRomExtensionInfo(ROM_INFO * pRomInfo) {
 	
 	//Rom Extension info
 	if (RomBrowserFields[RB_Developer].Pos >= 0)
-		GetString(Identifier, "Developer", "", pRomInfo->Developer, sizeof(pRomInfo->Developer), ExtIniFileName);
+		GetString(Identifier, "Developer", GS(RB_NOT_IN_RDB), pRomInfo->Developer, sizeof(pRomInfo->Developer), ExtIniFileName);
 	
 	if (RomBrowserFields[RB_ReleaseDate].Pos >= 0)
-		GetString(Identifier, "ReleaseDate", "", pRomInfo->ReleaseDate, sizeof(pRomInfo->ReleaseDate), ExtIniFileName);
+		GetString(Identifier, "ReleaseDate", GS(RB_NOT_IN_RDB), pRomInfo->ReleaseDate, sizeof(pRomInfo->ReleaseDate), ExtIniFileName);
 	
 	if (RomBrowserFields[RB_Genre].Pos >= 0)
-		GetString(Identifier, "Genre", "", pRomInfo->Genre, sizeof(pRomInfo->Genre), ExtIniFileName);
-
-	//if (RomBrowserFields[RB_GameInfoID].Pos >= 0)
-		GetString(Identifier, "GameInformation", "", pRomInfo->GameInfoID, sizeof(pRomInfo->GameInfoID), ExtIniFileName);
+		GetString(Identifier, "Genre", GS(RB_NOT_IN_RDB), pRomInfo->Genre, sizeof(pRomInfo->Genre), ExtIniFileName);
 
 	if (RomBrowserFields[RB_Players].Pos >= 0) {
 		char junk[10];
-		GetString(Identifier, "Players", "1", junk, sizeof(junk), ExtIniFileName);
+		GetString(Identifier, "Player", "1", junk, sizeof(junk), ExtIniFileName);
 		pRomInfo->Players = atoi(junk);
 	}
 		
 	if (RomBrowserFields[RB_ForceFeedback].Pos >= 0)
-		GetString(Identifier, "ForceFeedback", "unknown", pRomInfo->ForceFeedback, sizeof(pRomInfo->ForceFeedback), ExtIniFileName);
+		GetString(Identifier, "ForceFeedback", GS(RB_NOT_IN_RDB), pRomInfo->ForceFeedback, sizeof(pRomInfo->ForceFeedback), ExtIniFileName);
 
 	//Rom Settings
 	if (RomBrowserFields[RB_GameName].Pos >= 0)
 
-		// This displays the message "Not in database? Add yourself or check for RDB updated"
-		// in the ROM Browser if a ROM is not in the RDB (Game Database)
-		// What i would like to achieve is to display the file name until the game is added
-		// and then updated from that entry (Gent)
+	GetString(Identifier, "Game Name", GS(RB_HACK), pRomInfo->GameName, sizeof(pRomInfo->GameName), IniFileName);
 
-		//GetString(Identifier, "Game Name", GS(RB_NOT_IN_RDB), pRomInfo->GameName, sizeof(pRomInfo->GameName), IniFileName);
-
-		// This allows the browser to display filename until the Game Name= is populated.
-		// Once Game Name= is poulated (Game Added to databse) the browser uses that. (Gent / Witten)
-
-		GetString(Identifier, "Game Name", pRomInfo->FileName, pRomInfo->GameName, sizeof(pRomInfo->GameName), IniFileName);
-
-	GetString(Identifier, "Status", Default_RomStatus, pRomInfo->Status, sizeof(pRomInfo->Status), IniFileName);
+	GetString(Identifier, "Status", GS(RB_NOT_IN_RDB), pRomInfo->Status, sizeof(pRomInfo->Status), IniFileName);
 
 	if (RomBrowserFields[RB_CoreNotes].Pos >= 0)
 		GetString(Identifier, "Core Note", "", pRomInfo->CoreNotes, sizeof(pRomInfo->CoreNotes), IniFileName);
@@ -503,13 +482,13 @@ int GetRomBrowserSize ( DWORD * nWidth, DWORD * nHeight ) {
 	HKEY hKeyResults = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);
 	
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Value, Bytes = 4;
 
-		lResult = RegQueryValueEx(hKeyResults,"Rom Browser Width",0,&Type,(LPBYTE)(&Value),&Bytes);
+		lResult = RegQueryValueEx(hKeyResults,"ROM Browser Width",0,&Type,(LPBYTE)(&Value),&Bytes);
 		if (Type == REG_DWORD && lResult == ERROR_SUCCESS) { 
 			*nWidth = Value;
 		} else {
@@ -517,7 +496,7 @@ int GetRomBrowserSize ( DWORD * nWidth, DWORD * nHeight ) {
 			return FALSE;
 		}
 	
-		lResult = RegQueryValueEx(hKeyResults,"Rom Browser Height",0,&Type,(LPBYTE)(&Value),&Bytes);
+		lResult = RegQueryValueEx(hKeyResults,"ROM Browser Height",0,&Type,(LPBYTE)(&Value),&Bytes);
 		if (Type == REG_DWORD && lResult == ERROR_SUCCESS) { 
 			*nHeight = Value;
 		} else {
@@ -531,17 +510,17 @@ int GetRomBrowserSize ( DWORD * nWidth, DWORD * nHeight ) {
 }
 
 char * GetSortField ( int Index ) {
-	static char String[200];
+	static char String[400];
 	long lResult;
 	HKEY hKeyResults = 0;
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);	
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Bytes = sizeof(String);
 		char Key[100];
 
-		sprintf(Key,"Rom Browser Sort Field %d",Index);
+		sprintf(Key,"ROM Browser Sort Field %d",Index);
 
 		lResult = RegQueryValueEx(hKeyResults,Key,0,&Type,(LPBYTE)String,&Bytes);
 		if (lResult == ERROR_SUCCESS) { 
@@ -666,16 +645,11 @@ int CALLBACK RomList_CompareItems2(LPARAM lParam1, LPARAM lParam2, LPARAM lParam
 		case RB_Players: result =  (int)pRomInfo1->Players - (int)pRomInfo2->Players; break;
 		case RB_ForceFeedback: result = (int)lstrcmpi(pRomInfo1->ForceFeedback, pRomInfo2->ForceFeedback); break;
 		case RB_Genre: result =  (int)lstrcmpi(pRomInfo1->Genre, pRomInfo2->Genre); break;
-		case RB_GameInfoID: result = (int)lstrcmpi(pRomInfo1->GameInfoID, pRomInfo2->GameInfoID); break;
 		default: result = 0; break;
 		}
 		if (result != 0) { return result; }
 	}
 	return 0;
-}
- 
-
-void RomList_DeleteItem(LPNMHDR pnmh) {
 }
 
 void RomList_GetDispInfo(LPNMHDR pnmh) {
@@ -685,13 +659,7 @@ void RomList_GetDispInfo(LPNMHDR pnmh) {
 	switch(FieldType[lpdi->item.iSubItem]) {
 	case RB_FileName: strncpy(lpdi->item.pszText, pRomInfo->FileName, lpdi->item.cchTextMax); break;
 	case RB_InternalName: strncpy(lpdi->item.pszText, pRomInfo->InternalName, lpdi->item.cchTextMax); break;
-	
-		// TpRomInfo->GameName displays Game Name=Text there in the RDB,
-	// TpRomInfo->FileName displays File Name but then will not update what is written
-	// in Game Name=Text there in the RDB (Gent)
-
 	case RB_GameName: strncpy(lpdi->item.pszText, pRomInfo->GameName, lpdi->item.cchTextMax); break;
-
 	case RB_CoreNotes: strncpy(lpdi->item.pszText, pRomInfo->CoreNotes, lpdi->item.cchTextMax); break;
 	case RB_PluginNotes: strncpy(lpdi->item.pszText, pRomInfo->PluginNotes, lpdi->item.cchTextMax); break;
 	case RB_Status: strncpy(lpdi->item.pszText, pRomInfo->Status, lpdi->item.cchTextMax); break;
@@ -701,7 +669,7 @@ void RomList_GetDispInfo(LPNMHDR pnmh) {
 		switch (pRomInfo->Manufacturer) {
 		case 'N':strncpy(lpdi->item.pszText, "Nintendo", lpdi->item.cchTextMax); break;
 		case 0:  strncpy(lpdi->item.pszText, "None", lpdi->item.cchTextMax); break;
-		default: sprintf(lpdi->item.pszText, "(Unknown %c (%X))", pRomInfo->Manufacturer,pRomInfo->Manufacturer); break;
+		default: sprintf(lpdi->item.pszText, GS(RB_NOT_IN_RDB), pRomInfo->Manufacturer,pRomInfo->Manufacturer); break;
 		}
 		break;
 	case RB_Country: {
@@ -712,13 +680,12 @@ void RomList_GetDispInfo(LPNMHDR pnmh) {
 	case RB_Crc1: sprintf(lpdi->item.pszText,"0x%08X",pRomInfo->CRC1); break;
 	case RB_Crc2: sprintf(lpdi->item.pszText,"0x%08X",pRomInfo->CRC2); break;
 
-		// Disabled Unknown CIC Chip on CicChip 0 Message (Gent)
-	/*case RB_CICChip: 
-		if (pRomInfo->CicChip < 0) { 
-			sprintf(lpdi->item.pszText, "Unknown CIC Chip");
+	case RB_CICChip: 
+                if (pRomInfo->CicChip < 0) { 
+			sprintf(lpdi->item.pszText, GS(RB_NOT_IN_RDB));
 		} else {
 			sprintf(lpdi->item.pszText,"CIC-NUS-610%d",pRomInfo->CicChip); 
-		}*/
+		}
 
 		break;
 	case RB_UserNotes: strncpy(lpdi->item.pszText, pRomInfo->UserNotes, lpdi->item.cchTextMax); break;
@@ -727,7 +694,6 @@ void RomList_GetDispInfo(LPNMHDR pnmh) {
 	case RB_Genre: strncpy(lpdi->item.pszText, pRomInfo->Genre, lpdi->item.cchTextMax); break;
 	case RB_Players: sprintf(lpdi->item.pszText,"%d",pRomInfo->Players); break;
 	case RB_ForceFeedback: strncpy(lpdi->item.pszText, pRomInfo->ForceFeedback, lpdi->item.cchTextMax); break;
-	case RB_GameInfoID: strncpy(lpdi->item.pszText, pRomInfo->GameInfoID, lpdi->item.cchTextMax); break;
 	default: strncpy(lpdi->item.pszText, " ", lpdi->item.cchTextMax);
 	}
 	if (strlen(lpdi->item.pszText) == 0) { strcpy(lpdi->item.pszText," "); }
@@ -754,19 +720,16 @@ void RomList_PopupMenu(LPNMHDR pnmh) {
 
 		if (!pRomInfo) { return; }
 		strcpy(CurrentRBFileName,pRomInfo->szFullFileName);
-		strcpy(CurrentGameInfoID, pRomInfo->GameInfoID);
 	} else {
 		strcpy(CurrentRBFileName,"");
 	}
 	
 	//Fix up menu
-	MenuSetText(hPopupMenu, 0, GS(POPUP_PLAY), NULL);
+	MenuSetText(hPopupMenu, 0, GS(MENU_OPEN), NULL);
 	MenuSetText(hPopupMenu, 2, GS(MENU_REFRESH), NULL);
 	MenuSetText(hPopupMenu, 3, GS(MENU_CHOOSE_ROM), NULL);
-	MenuSetText(hPopupMenu, 5, GS(POPUP_INFO), NULL);
-	MenuSetText(hPopupMenu, 6, GS(POPUP_GAMEINFO), NULL);
-	MenuSetText(hPopupMenu, 8, GS(POPUP_SETTINGS), NULL);
-	MenuSetText(hPopupMenu, 9, GS(POPUP_CHEATS), NULL);
+	MenuSetText(hPopupMenu, 4, GS(TAB_ROMSETTINGS), NULL);
+	MenuSetText(hPopupMenu, 5, GS(MENU_CHEAT), NULL);
 
 	if (strlen(CurrentRBFileName) == 0) {
 		DeleteMenu(hPopupMenu,9,MF_BYPOSITION);
@@ -776,10 +739,6 @@ void RomList_PopupMenu(LPNMHDR pnmh) {
 		DeleteMenu(hPopupMenu,4,MF_BYPOSITION);
 		DeleteMenu(hPopupMenu,1,MF_BYPOSITION);
 		DeleteMenu(hPopupMenu,0,MF_BYPOSITION);
-	} else {
-		if (BasicMode && !RememberCheats) { DeleteMenu(hPopupMenu,8,MF_BYPOSITION); }
-		if (BasicMode) { DeleteMenu(hPopupMenu,8,MF_BYPOSITION); }
-		if (BasicMode && !RememberCheats) { DeleteMenu(hPopupMenu,6,MF_BYPOSITION); }
 	}
 	
 	TrackPopupMenu(hPopupMenu, 0, Mouse.x, Mouse.y, 0,hMainWindow, NULL);
@@ -884,7 +843,6 @@ void RomListDrawItem (LPDRAWITEMSTRUCT ditem) {
 
 void RomListNotify(LPNMHDR pnmh) {
 	switch (pnmh->code) {
-	case LVN_DELETEITEM:  RomList_DeleteItem(pnmh); break;
 	case LVN_GETDISPINFO: RomList_GetDispInfo(pnmh); break;
 	case LVN_COLUMNCLICK: RomList_ColoumnSortList((LPNMLISTVIEW)pnmh); break;
 	case NM_RETURN:       RomList_OpenRom(pnmh); break;
@@ -904,7 +862,7 @@ void SaveRomBrowserColoumnInfo (void) {
 	char  String[200];
 	long  lResult;
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Rom Browser",AppName);
+	sprintf(String,"N64 Software\\%s\\Rom Browser",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
@@ -932,7 +890,7 @@ void SaveRomBrowserColoumnPosition (int index, int Position) {
 	HKEY  hKeyResults = 0;
 	long  lResult;
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Rom Browser",AppName);
+	sprintf(String,"N64 Software\\%s\\Rom Browser",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
@@ -953,9 +911,7 @@ void SaveRomList (void) {
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
 
-	// Moved to Config (Gent)
-
-	sprintf(FileName,"%s%sConfig\\%s",drive,dir,CacheFileName);
+	sprintf(FileName,"%s%sPJ64DB\\%s",drive,dir,CacheFileName);
 	
 	hFile = CreateFile(FileName,GENERIC_WRITE,0,NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
 	Size = sizeof(ROM_INFO);
@@ -1014,7 +970,7 @@ void SetRomBrowserMaximized (BOOL Maximized) {
 	DWORD Disposition = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
@@ -1029,12 +985,12 @@ void SetRomBrowserSize ( int nWidth, int nHeight ) {
 	DWORD Disposition = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
-		RegSetValueEx(hKeyResults,"Rom Browser Width",0, REG_DWORD,(CONST BYTE *)(&nWidth),sizeof(DWORD));
-		RegSetValueEx(hKeyResults,"Rom Browser Height",0, REG_DWORD,(CONST BYTE *)(&nHeight),sizeof(DWORD));
+		RegSetValueEx(hKeyResults,"ROM Browser Width",0, REG_DWORD,(CONST BYTE *)(&nWidth),sizeof(DWORD));
+		RegSetValueEx(hKeyResults,"ROM Browser Height",0, REG_DWORD,(CONST BYTE *)(&nHeight),sizeof(DWORD));
 	}
 	RegCloseKey(hKeyResults);
 }
@@ -1045,7 +1001,7 @@ void SetSortAscending (BOOL Ascending, int Index) {
 	DWORD Disposition = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
@@ -1063,13 +1019,13 @@ void SetSortField (char * FieldName, int Index) {
 	DWORD Disposition = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Page Setup",AppName);
+	sprintf(String,"N64 Software\\%s\\Page Setup",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
 		char Key[100];
 
-		sprintf(Key,"Rom Browser Sort Field %d",Index);
+		sprintf(Key,"ROM Browser Sort Field %d",Index);
 		RegSetValueEx(hKeyResults,Key,0, REG_SZ,(CONST BYTE *)FieldName,strlen(FieldName));
 	}
 	RegCloseKey(hKeyResults);
@@ -1244,12 +1200,12 @@ void SetColors(char *status) {
 	IniFileName = GetIniFileName();
 
 	if (ColorIndex(status) == -1) {
-		_GetPrivateProfileString("Rom Status", status, "000000", String, 7, IniFileName);
+		_GetPrivateProfileString("ROM Status", status, "000000", String, 7, IniFileName);
 		count = (AsciiToHex(String) & 0xFFFFFF);
 		colors.Text = (count & 0x00FF00) | ((count >> 0x10) & 0xFF) | ((count & 0xFF) << 0x10);
 
 		sprintf(String,"%s.Sel",status);
-		_GetPrivateProfileString("Rom Status", String, "FFFFFFFF", String, 9, IniFileName);
+		_GetPrivateProfileString("ROM Status", String, "FFFFFFFF", String, 9, IniFileName);
 		count = AsciiToHex(String);
 		if (count < 0) {
 			colors.HighLight = COLOR_HIGHLIGHT + 1;
@@ -1260,7 +1216,7 @@ void SetColors(char *status) {
 		}
 		
 		sprintf(String,"%s.Seltext",status);
-		_GetPrivateProfileString("Rom Status", String, "FFFFFF", String, 7, IniFileName);
+		_GetPrivateProfileString("ROM Status", String, "FFFFFF", String, 7, IniFileName);
 		count = (AsciiToHex(String) & 0xFFFFFF);
 		colors.SelectedText = (count & 0x00FF00) | ((count >> 0x10) & 0xFF) | ((count & 0xFF) << 0x10);
 

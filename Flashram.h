@@ -23,8 +23,8 @@
  * should be forwarded to them so if they want them.
  *
  */
-void  DmaFromFlashram     ( BYTE * dest, int StartOffset, int len );
-void  DmaToFlashram       ( BYTE * Source, int StartOffset, int len );
+void  DmaFromFlashRAM     ( BYTE * dest, int StartOffset, int len );
+void  DmaToFlashRAM       ( BYTE * Source, int StartOffset, int len );
 DWORD ReadFromFlashStatus ( DWORD PAddr );
 void  WriteToFlashCommand ( DWORD Value );
 

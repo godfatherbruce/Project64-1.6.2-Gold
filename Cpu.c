@@ -31,11 +31,11 @@
 #include "zip.h"
 #include "cpu.h"
 #include "cheats.h"
-#include "debugger.h"
 #include "plugin.h"
 #include "EmulateAI.h"
 #include "resource.h" 
-
+char CommandName[100];
+char strLabelName[100];
 
 int NextInstruction, JumpToLocation, ManualPaused, CPU_Paused, CountPerOp;
 char SaveAsFileName[255], LoadFileName[255];
@@ -80,7 +80,7 @@ void __cdecl SetFrameBuffer (DWORD Address, DWORD Length) {
 
 char *TimeName[MaxTimers] = { "CompareTimer","SiTimer","PiTimer","ViTimer" };
 
-void InitiliazeCPUFlags (void) {
+void INITIALIZECPUFlags (void) {
 	inFullScreen = FALSE;
 	CPURunning   = FALSE;
 	CurrentSaveSlot = ID_CURRENTSAVE_DEFAULT;
@@ -123,7 +123,7 @@ void CheckTimer (void) {
 		Timers.CurrentTimerType = count;
 	}
 	if (Timers.CurrentTimerType == -1) {
-		DisplayError("No active timers ???\nEmulation Stoped");
+		DisplayError("No active timers detected.\n\nEmulation ending");
 		ExitThread(0);
 	}
 	for (count = 0; count < MaxTimers; count++) {
@@ -146,7 +146,7 @@ void CloseCpu (void) {
 	
 	if (!CPURunning) { return; }
 	ManualPaused = FALSE;
-	if (CPU_Paused) { PauseCpu (); Sleep(1000); }
+	if (CPU_Paused) { PauseCpu (); }
 	
 	{
 		BOOL Temp = AlwaysOnTop;
@@ -160,7 +160,9 @@ void CloseCpu (void) {
 		CPU_Action.Stepping = FALSE;
 		CPU_Action.DoSomething = TRUE;
 		PulseEvent( CPU_Action.hStepping );
-		Sleep(100);
+		timeBeginPeriod(16);
+                Sleep(66); // timeBeginPeriod rounds the timer resolution to Windows 10's 15.625, Sleep 20 reliably functions on my 3.3ghz CPU, I want this to work on a 1ghz CPU because that's Windows 7's minimum clock speed, 3.3*20=66 with rounding buffer, timeEndPeriod restores the system's timer resolution
+		timeEndPeriod(16);
 		GetExitCodeThread(hCPU,&ExitCode);
 		if (ExitCode != STILL_ACTIVE) {
 			hCPU = NULL;
@@ -172,25 +174,707 @@ void CloseCpu (void) {
 	VirtualProtect(N64MEM,RdramSize,PAGE_READWRITE,&OldProtect);
 	VirtualProtect(N64MEM + 0x04000000,0x2000,PAGE_READWRITE,&OldProtect);
 	Timer_Stop();
-	SetCurrentSaveState(hMainWindow,ID_CURRENTSAVE_DEFAULT);
-	CloseEeprom();
+	CloseeepROM();
 	CloseMempak();
-	CloseSram();
-	FreeSyncMemory();
+	CloseSRAM();
 	if (GfxRomClosed != NULL)  { GfxRomClosed(); }
 	if (AiRomClosed != NULL)   { AiRomClosed(); }
 	if (ContRomClosed != NULL) { ContRomClosed(); }
 	if (RSPRomClosed) { RSPRomClosed(); }
-	if (Profiling) { GenerateTimerResults(); }
 	CloseHandle(CPU_Action.hStepping);
-	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MSG_EMULATION_ENDED) );
+}
+
+char * LabelName (DWORD Address) {
+	sprintf(strLabelName,"0x%08X",Address);
+	return strLabelName;
+}
+
+char * R4300iRegImmName ( DWORD OpCode, DWORD PC ) {
+	OPCODE command;
+	command.Hex = OpCode;
+
+	switch (command.rt) {
+	case R4300i_REGIMM_BLTZ:
+		sprintf(CommandName,"bltz\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		break;
+	case R4300i_REGIMM_BGEZ:
+		if (command.rs == 0) {
+			sprintf(CommandName,"b\t%s", LabelName(PC + ((short)command.offset << 2) + 4));
+		} else {
+			sprintf(CommandName,"bgez\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		}
+		break;
+	case R4300i_REGIMM_BLTZL:
+		sprintf(CommandName,"bltzl\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		break;
+	case R4300i_REGIMM_BGEZL:
+		sprintf(CommandName,"bgezl\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		break;
+	case R4300i_REGIMM_TGEI:
+		sprintf(CommandName,"tgei\t%s, 0x%X",GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_REGIMM_TGEIU:
+		sprintf(CommandName,"tgeiu\t%s, 0x%X",GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_REGIMM_TLTI:
+		sprintf(CommandName,"tlti\t%s, 0x%X",GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_REGIMM_TLTIU:
+		sprintf(CommandName,"tltiu\t%s, 0x%X",GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_REGIMM_TEQI:
+		sprintf(CommandName,"teqi\t%s, 0x%X",GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_REGIMM_TNEI:
+		sprintf(CommandName,"tnei\t%s, 0x%X",GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_REGIMM_BLTZAL:
+		sprintf(CommandName,"bltzal\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		break;
+	case R4300i_REGIMM_BGEZAL:
+		if (command.rs == 0) {
+			sprintf(CommandName,"bal\t%s",LabelName(PC + ((short)command.offset << 2) + 4));
+		} else {
+			sprintf(CommandName,"bgezal\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		}
+		break;
+	case R4300i_REGIMM_BLTZALL:
+		sprintf(CommandName,"bltzall\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		break;
+	case R4300i_REGIMM_BGEZALL:
+		sprintf(CommandName,"bgezall\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		break;
+	default:	
+		sprintf(CommandName,"Unknown\t%02X %02X %02X %02X",
+			command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
+	}
+	return CommandName;
+}
+
+char * R4300iSpecialName ( DWORD OpCode, DWORD PC ) {
+	OPCODE command;
+	command.Hex = OpCode;
+
+	switch (command.funct) {
+	case R4300i_SPECIAL_SLL:
+		if (command.Hex != 0) {
+			sprintf(CommandName,"sll\t%s, %s, 0x%X",GPR_Name[command.rd],
+			GPR_Name[command.rt], command.sa);
+		} else {
+			sprintf(CommandName,"nop");
+		}
+		break;
+	case R4300i_SPECIAL_SRL:
+		sprintf(CommandName,"srl\t%s, %s, 0x%X",GPR_Name[command.rd], GPR_Name[command.rt],
+			command.sa);
+		break;
+	case R4300i_SPECIAL_SRA:
+		sprintf(CommandName,"sra\t%s, %s, 0x%X",GPR_Name[command.rd], GPR_Name[command.rt],
+				command.sa);
+		break;
+	case R4300i_SPECIAL_SLLV:
+		sprintf(CommandName,"sllv\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rt],
+			GPR_Name[command.rs]);
+		break;
+	case R4300i_SPECIAL_SRLV:
+		sprintf(CommandName,"srlv\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rt],
+			GPR_Name[command.rs]);
+		break;
+	case R4300i_SPECIAL_SRAV:
+		sprintf(CommandName,"srav\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rt],
+			GPR_Name[command.rs]);
+		break;
+	case R4300i_SPECIAL_JR:
+		sprintf(CommandName,"jr\t%s",GPR_Name[command.rs]);
+		break;
+	case R4300i_SPECIAL_JALR:
+		sprintf(CommandName,"jalr\t%s, %s",GPR_Name[command.rd],GPR_Name[command.rs]);
+		break;
+	case R4300i_SPECIAL_SYSCALL:
+		sprintf(CommandName,"system call");
+		break;
+	case R4300i_SPECIAL_BREAK:
+		sprintf(CommandName,"break");
+		break;
+	case R4300i_SPECIAL_SYNC:
+		sprintf(CommandName,"sync");
+		break;
+	case R4300i_SPECIAL_MFHI:
+		sprintf(CommandName,"mfhi\t%s",GPR_Name[command.rd]);
+		break;
+	case R4300i_SPECIAL_MTHI:
+		sprintf(CommandName,"mthi\t%s",GPR_Name[command.rs]);
+		break;
+	case R4300i_SPECIAL_MFLO:
+		sprintf(CommandName,"mflo\t%s",GPR_Name[command.rd]);
+		break;
+	case R4300i_SPECIAL_MTLO:
+		sprintf(CommandName,"mtlo\t%s",GPR_Name[command.rs]);
+		break;
+	case R4300i_SPECIAL_DSLLV:
+		sprintf(CommandName,"dsllv\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rt],
+			GPR_Name[command.rs]);
+		break;
+	case R4300i_SPECIAL_DSRLV:
+		sprintf(CommandName,"dsrlv\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rt],
+			GPR_Name[command.rs]);
+		break;
+	case R4300i_SPECIAL_DSRAV:
+		sprintf(CommandName,"dsrav\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rt],
+			GPR_Name[command.rs]);
+		break;
+	case R4300i_SPECIAL_MULT:
+		sprintf(CommandName,"mult\t%s, %s",GPR_Name[command.rs], GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_MULTU:
+		sprintf(CommandName,"multu\t%s, %s",GPR_Name[command.rs], GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_DIV:
+		sprintf(CommandName,"div\t%s, %s",GPR_Name[command.rs], GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_DIVU:
+		sprintf(CommandName,"divu\t%s, %s",GPR_Name[command.rs], GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_DMULT:
+		sprintf(CommandName,"dmult\t%s, %s",GPR_Name[command.rs], GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_DMULTU:
+		sprintf(CommandName,"dmultu\t%s, %s",GPR_Name[command.rs], GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_DDIV:
+		sprintf(CommandName,"ddiv\t%s, %s",GPR_Name[command.rs], GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_DDIVU:
+		sprintf(CommandName,"ddivu\t%s, %s",GPR_Name[command.rs], GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_ADD:
+		sprintf(CommandName,"add\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_ADDU:
+		sprintf(CommandName,"addu\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_SUB:
+		sprintf(CommandName,"sub\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_SUBU:
+		sprintf(CommandName,"subu\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_AND:
+		sprintf(CommandName,"and\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_OR:
+		sprintf(CommandName,"or\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_XOR:
+		sprintf(CommandName,"xor\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_NOR:
+		sprintf(CommandName,"nor\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_SLT:
+		sprintf(CommandName,"slt\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_SLTU:
+		sprintf(CommandName,"sltu\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_DADD:
+		sprintf(CommandName,"dadd\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_DADDU:
+		sprintf(CommandName,"daddu\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_DSUB:
+		sprintf(CommandName,"dsub\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_DSUBU:
+		sprintf(CommandName,"dsubu\t%s, %s, %s",GPR_Name[command.rd], GPR_Name[command.rs],
+			GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_TGE:
+		sprintf(CommandName,"tge\t%s, %s",GPR_Name[command.rs],GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_TGEU:
+		sprintf(CommandName,"tgeu\t%s, %s",GPR_Name[command.rs],GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_TLT:
+		sprintf(CommandName,"tlt\t%s, %s",GPR_Name[command.rs],GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_TLTU:
+		sprintf(CommandName,"tltu\t%s, %s",GPR_Name[command.rs],GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_TEQ:
+		sprintf(CommandName,"teq\t%s, %s",GPR_Name[command.rs],GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_TNE:
+		sprintf(CommandName,"tne\t%s, %s",GPR_Name[command.rs],GPR_Name[command.rt]);
+		break;
+	case R4300i_SPECIAL_DSLL:
+		sprintf(CommandName,"dsll\t%s, %s, 0x%X",GPR_Name[command.rd],
+			GPR_Name[command.rt], command.sa);
+		break;
+	case R4300i_SPECIAL_DSRL:
+		sprintf(CommandName,"dsrl\t%s, %s, 0x%X",GPR_Name[command.rd], GPR_Name[command.rt],
+			command.sa);
+		break;
+	case R4300i_SPECIAL_DSRA:
+		sprintf(CommandName,"dsra\t%s, %s, 0x%X",GPR_Name[command.rd], GPR_Name[command.rt],
+			command.sa);
+		break;
+	case R4300i_SPECIAL_DSLL32:
+		sprintf(CommandName,"dsll32\t%s, %s, 0x%X",GPR_Name[command.rd],GPR_Name[command.rt], command.sa);
+		break;
+	case R4300i_SPECIAL_DSRL32:
+		sprintf(CommandName,"dsrl32\t%s, %s, 0x%X",GPR_Name[command.rd], GPR_Name[command.rt], command.sa);
+		break;
+	case R4300i_SPECIAL_DSRA32:
+		sprintf(CommandName,"dsra32\t%s, %s, 0x%X",GPR_Name[command.rd], GPR_Name[command.rt], command.sa);
+		break;
+	default:	
+		sprintf(CommandName,"Unknown\t%02X %02X %02X %02X",
+			command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
+	}
+	return CommandName;
+}
+
+char * R4300iCop1Name ( DWORD OpCode, DWORD PC ) {
+	OPCODE command;
+	command.Hex = OpCode;
+
+	switch (command.fmt) {
+	case R4300i_COP1_MF:
+		sprintf(CommandName,"mfc1\t%s, %s",GPR_Name[command.rt], FPR_Name[command.fs]);
+		break;
+	case R4300i_COP1_DMF:
+		sprintf(CommandName,"dmfc1\t%s, %s",GPR_Name[command.rt], FPR_Name[command.fs]);
+		break;
+	case R4300i_COP1_CF:
+		sprintf(CommandName,"cfc1\t%s, %s",GPR_Name[command.rt], FPR_Ctrl_Name[command.fs]);
+		break;
+	case R4300i_COP1_MT:
+		sprintf(CommandName,"mtc1\t%s, %s",GPR_Name[command.rt], FPR_Name[command.fs]);
+		break;
+	case R4300i_COP1_DMT:
+		sprintf(CommandName,"dmtc1\t%s, %s",GPR_Name[command.rt], FPR_Name[command.fs]);
+		break;
+	case R4300i_COP1_CT:
+		sprintf(CommandName,"ctc1\t%s, %s",GPR_Name[command.rt], FPR_Ctrl_Name[command.fs]);
+		break;
+	case R4300i_COP1_BC:
+		switch (command.ft) {
+		case R4300i_COP1_BC_BCF:
+			sprintf(CommandName,"BC1F\t%s", LabelName(PC + ((short)command.offset << 2) + 4));
+			break;
+		case R4300i_COP1_BC_BCT:
+			sprintf(CommandName,"BC1T\t%s", LabelName(PC + ((short)command.offset << 2) + 4));
+			break;
+		case R4300i_COP1_BC_BCFL:
+			sprintf(CommandName,"BC1FL\t%s", LabelName(PC + ((short)command.offset << 2) + 4));
+			break;
+		case R4300i_COP1_BC_BCTL:
+			sprintf(CommandName,"BC1TL\t%s", LabelName(PC + ((short)command.offset << 2) + 4));
+			break;
+		default:
+			sprintf(CommandName,"Unknown Cop1\t%02X %02X %02X %02X",
+				command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
+		}
+		break;
+	case R4300i_COP1_S:
+	case R4300i_COP1_D:
+	case R4300i_COP1_W:
+	case R4300i_COP1_L:
+		switch (command.funct) {			
+		case R4300i_COP1_FUNCT_ADD:
+			sprintf(CommandName,"ADD.%s\t%s, %s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs], 
+				FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_SUB:
+			sprintf(CommandName,"SUB.%s\t%s, %s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs], 
+				FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_MUL:
+			sprintf(CommandName,"MUL.%s\t%s, %s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs], 
+				FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_DIV:
+			sprintf(CommandName,"DIV.%s\t%s, %s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs], 
+				FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_SQRT:
+			sprintf(CommandName,"SQRT.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_ABS:
+			sprintf(CommandName,"ABS.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_MOV:
+			sprintf(CommandName,"MOV.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_NEG:
+			sprintf(CommandName,"NEG.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_ROUND_L:
+			sprintf(CommandName,"ROUND.L.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_TRUNC_L:
+			sprintf(CommandName,"TRUNC.L.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_CEIL_L:
+			sprintf(CommandName,"CEIL.L.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_FLOOR_L:
+			sprintf(CommandName,"FLOOR.L.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_ROUND_W:
+			sprintf(CommandName,"ROUND.W.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_TRUNC_W:
+			sprintf(CommandName,"TRUNC.W.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_CEIL_W:
+			sprintf(CommandName,"CEIL.W.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_FLOOR_W:
+			sprintf(CommandName,"FLOOR.W.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_CVT_S:
+			sprintf(CommandName,"CVT.S.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_CVT_D:
+			sprintf(CommandName,"CVT.D.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_CVT_W:
+			sprintf(CommandName,"CVT.W.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_CVT_L:
+			sprintf(CommandName,"CVT.L.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fd], FPR_Name[command.fs]);
+			break;
+		case R4300i_COP1_FUNCT_C_F:
+			sprintf(CommandName,"C.F.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_UN:
+			sprintf(CommandName,"C.UN.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_EQ:
+			sprintf(CommandName,"C.EQ.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_UEQ:
+			sprintf(CommandName,"C.UEQ.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_OLT:
+			sprintf(CommandName,"C.OLT.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_ULT:
+			sprintf(CommandName,"C.ULT.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_OLE:
+			sprintf(CommandName,"C.OLE.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_ULE:
+			sprintf(CommandName,"C.ULE.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_SF:
+			sprintf(CommandName,"C.SF.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_NGLE:
+			sprintf(CommandName,"C.NGLE.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_SEQ:
+			sprintf(CommandName,"C.SEQ.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_NGL:
+			sprintf(CommandName,"C.NGL.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_LT:
+			sprintf(CommandName,"C.LT.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_NGE:
+			sprintf(CommandName,"C.NGE.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_LE:
+			sprintf(CommandName,"C.LE.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		case R4300i_COP1_FUNCT_C_NGT:
+			sprintf(CommandName,"C.NGT.%s\t%s, %s",FPR_Type(command.fmt),  
+				FPR_Name[command.fs], FPR_Name[command.ft]);
+			break;
+		default:
+			sprintf(CommandName,"Unknown Cop1\t%02X %02X %02X %02X",
+				command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
+		}
+		break;
+	default:
+		sprintf(CommandName,"Unknown Cop1\t%02X %02X %02X %02X",
+			command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
+	}
+	return CommandName;
+}
+
+char * R4300iOpcodeName ( DWORD OpCode, DWORD PC ) {
+	OPCODE command;
+	command.Hex = OpCode;
+		
+	switch (command.op) {
+	case R4300i_SPECIAL:
+		return R4300iSpecialName ( OpCode, PC );
+		break;
+	case R4300i_REGIMM:
+		return R4300iRegImmName ( OpCode, PC );
+		break;
+	case R4300i_J:
+		sprintf(CommandName,"j\t%s",LabelName((PC & 0xF0000000) + (command.target << 2)));
+		break;
+	case R4300i_JAL:
+		sprintf(CommandName,"jal\t%s",LabelName((PC & 0xF0000000) + (command.target << 2)));
+		break;
+	case R4300i_BEQ:
+		if (command.rs == 0 && command.rt == 0) {
+			sprintf(CommandName,"b\t%s", LabelName(PC + ((short)command.offset << 2) + 4));
+		} else if (command.rs == 0 || command.rt == 0) {
+			sprintf(CommandName,"beqz\t%s, %s", GPR_Name[command.rs == 0 ? command.rt : command.rs ],
+				LabelName(PC + ((short)command.offset << 2) + 4));
+		} else {
+			sprintf(CommandName,"beq\t%s, %s, %s", GPR_Name[command.rs], GPR_Name[command.rt],
+				LabelName(PC + ((short)command.offset << 2) + 4));
+		}
+		break;
+	case R4300i_BNE:
+		if ((command.rs == 0) ^ (command.rt == 0)){
+			sprintf(CommandName,"bnez\t%s, %s", GPR_Name[command.rs == 0 ? command.rt : command.rs ],
+				LabelName(PC + ((short)command.offset << 2) + 4));
+		} else {
+			sprintf(CommandName,"bne\t%s, %s, %s", GPR_Name[command.rs], GPR_Name[command.rt],
+				LabelName(PC + ((short)command.offset << 2) + 4));
+		}
+		break;
+	case R4300i_BLEZ:
+		sprintf(CommandName,"blez\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		break;
+	case R4300i_BGTZ:
+		sprintf(CommandName,"bgtz\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		break;
+	case R4300i_ADDI:
+		sprintf(CommandName,"addi\t%s, %s, 0x%X",GPR_Name[command.rt], GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_ADDIU:
+		sprintf(CommandName,"addiu\t%s, %s, 0x%X",GPR_Name[command.rt], GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_SLTI:
+		sprintf(CommandName,"slti\t%s, %s, 0x%X",GPR_Name[command.rt], GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_SLTIU:
+		sprintf(CommandName,"sltiu\t%s, %s, 0x%X",GPR_Name[command.rt], GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_ANDI:
+		sprintf(CommandName,"andi\t%s, %s, 0x%X",GPR_Name[command.rt], GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_ORI:
+		sprintf(CommandName,"ori\t%s, %s, 0x%X",GPR_Name[command.rt], GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_XORI:
+		sprintf(CommandName,"xori\t%s, %s, 0x%X",GPR_Name[command.rt], GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_LUI:
+		sprintf(CommandName,"lui\t%s, 0x%X",GPR_Name[command.rt], command.immediate);
+		break;
+	case R4300i_CP0:
+		switch (command.rs) {
+		case R4300i_COP0_MF:
+			sprintf(CommandName,"mfc0\t%s, %s",GPR_Name[command.rt], Cop0_Name[command.rd]);
+			break;
+		case R4300i_COP0_MT:
+			sprintf(CommandName,"mtc0\t%s, %s",GPR_Name[command.rt], Cop0_Name[command.rd]);
+			break;
+		default:
+			if ( (command.rs & 0x10 ) != 0 ) {
+				switch( command.funct ) {
+				case R4300i_COP0_CO_TLBR:  sprintf(CommandName,"tlbr"); break;
+				case R4300i_COP0_CO_TLBWI: sprintf(CommandName,"tlbwi"); break;
+				case R4300i_COP0_CO_TLBWR: sprintf(CommandName,"tlbwr"); break;
+				case R4300i_COP0_CO_TLBP:  sprintf(CommandName,"tlbp"); break;
+				case R4300i_COP0_CO_ERET:  sprintf(CommandName,"eret"); break;
+				default:	
+					sprintf(CommandName,"Unknown\t%02X %02X %02X %02X",
+						command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
+				}
+			} else {
+				sprintf(CommandName,"Unknown\t%02X %02X %02X %02X",
+				command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
+			}
+			break;
+		}
+		break;
+	case R4300i_CP1:
+		return R4300iCop1Name ( OpCode, PC );
+	case R4300i_BEQL:
+		if (command.rs == command.rt) {
+			sprintf(CommandName,"b\t%s", LabelName(PC + ((short)command.offset << 2) + 4));
+		} else if ((command.rs == 0) ^ (command.rt == 0)){
+			sprintf(CommandName,"beqzl\t%s, %s", GPR_Name[command.rs == 0 ? command.rt : command.rs ],
+				LabelName(PC + ((short)command.offset << 2) + 4));
+		} else {
+			sprintf(CommandName,"beql\t%s, %s, %s", GPR_Name[command.rs], GPR_Name[command.rt],
+				LabelName(PC + ((short)command.offset << 2) + 4));
+		}
+		break;
+	case R4300i_BNEL:
+		if ((command.rs == 0) ^ (command.rt == 0)){
+			sprintf(CommandName,"bnezl\t%s, %s", GPR_Name[command.rs == 0 ? command.rt : command.rs ],
+				LabelName(PC + ((short)command.offset << 2) + 4));
+		} else {
+			sprintf(CommandName,"bnel\t%s, %s, %s", GPR_Name[command.rs], GPR_Name[command.rt],
+				LabelName(PC + ((short)command.offset << 2) + 4));
+		}
+		break;
+	case R4300i_BLEZL:
+		sprintf(CommandName,"blezl\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		break;
+	case R4300i_BGTZL:
+		sprintf(CommandName,"bgtzl\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
+		break;
+	case R4300i_DADDI:
+		sprintf(CommandName,"daddi\t%s, %s, 0x%X",GPR_Name[command.rt], GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_DADDIU:
+		sprintf(CommandName,"daddiu\t%s, %s, 0x%X",GPR_Name[command.rt], GPR_Name[command.rs],command.immediate);
+		break;
+	case R4300i_LDL:
+		sprintf(CommandName,"ldl\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LDR:
+		sprintf(CommandName,"ldr\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LB:
+		sprintf(CommandName,"lb\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LH:
+		sprintf(CommandName,"lh\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LWL:
+		sprintf(CommandName,"lwl\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LW:
+		sprintf(CommandName,"lw\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LBU:
+		sprintf(CommandName,"lbu\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LHU:
+		sprintf(CommandName,"lhu\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LWR:
+		sprintf(CommandName,"lwr\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LWU:
+		sprintf(CommandName,"lwu\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_SB:
+		sprintf(CommandName,"sb\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_SH:
+		sprintf(CommandName,"sh\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_SWL:
+		sprintf(CommandName,"swl\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_SW:
+		sprintf(CommandName,"sw\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_SDL:
+		sprintf(CommandName,"sdl\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_SDR:
+		sprintf(CommandName,"sdr\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_SWR:
+		sprintf(CommandName,"swr\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_CACHE:
+		sprintf(CommandName,"cache\t%d, 0x%X (%s)",command.rt, command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LL:
+		sprintf(CommandName,"ll\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LWC1:
+		sprintf(CommandName,"lwc1\t%s, 0x%X (%s)",FPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LDC1:
+		sprintf(CommandName,"ldc1\t%s, 0x%X (%s)",FPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_LD:
+		sprintf(CommandName,"ld\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_SC:
+		sprintf(CommandName,"sc\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_SWC1:
+		sprintf(CommandName,"swc1\t%s, 0x%X (%s)",FPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_SDC1:
+		sprintf(CommandName,"sdc1\t%s, 0x%X (%s)",FPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	case R4300i_SD:
+		sprintf(CommandName,"sd\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
+		break;
+	default:	
+		sprintf(CommandName,"Unknown\t%02X %02X %02X %02X",
+			command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
+	}
+
+	return CommandName;
 }
 
 int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 	OPCODE Command;
 
 	if (!r4300i_LW_VAddr(PC + 4, &Command.Hex)) {
-		DisplayError("Failed to load word 2");
+		DisplayError("Failed to load word 2.\n\nEmulation ending");
 		ExitThread(0);
 		return TRUE;
 	}
@@ -251,13 +935,7 @@ int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 		case R4300i_SPECIAL_DDIVU:
 			break;
 		default:
-
-		// Disabled Does * effect Delay slot at * Message (Gent)
-
-/*#ifndef EXTERNAL_RELEASE
-			DisplayError("Does %s effect Delay slot at %X?",R4300iOpcodeName(Command.Hex,PC+4), PC);
-#endif*/
-			return TRUE;
+	return TRUE;
 		}
 		break;
 	case R4300i_CP0:
@@ -276,16 +954,11 @@ int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 				case R4300i_COP0_CO_TLBWR: break;
 				case R4300i_COP0_CO_TLBP: break;
 				default: 
-#ifndef EXTERNAL_RELEASE
+/*#ifndef EXTERNAL_RELEASE
 					DisplayError("Does %s effect Delay slot at %X?\n6",R4300iOpcodeName(Command.Hex,PC+4), PC);
-#endif
+#endif*/
 					return TRUE;
 				}
-			} else {
-#ifndef EXTERNAL_RELEASE
-				DisplayError("Does %s effect Delay slot at %X?\n7",R4300iOpcodeName(Command.Hex,PC+4), PC);
-#endif
-				return TRUE;
 			}
 		}
 		break;
@@ -303,10 +976,10 @@ int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 		case R4300i_COP1_D: break;
 		case R4300i_COP1_W: break;
 		case R4300i_COP1_L: break;
-#ifndef EXTERNAL_RELEASE
+/*#ifndef EXTERNAL_RELEASE
 		default:
 			DisplayError("Does %s effect Delay slot at %X?",R4300iOpcodeName(Command.Hex,PC+4), PC);
-#endif
+#endif*/
 			return TRUE;
 		}
 		break;
@@ -346,9 +1019,9 @@ int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 	case R4300i_SDC1: break;
 	case R4300i_SD: break;
 	default:
-#ifndef EXTERNAL_RELEASE
+/*#ifndef EXTERNAL_RELEASE
 		DisplayError("Does %s effect Delay slot at %X?",R4300iOpcodeName(Command.Hex,PC+4), PC);
-#endif
+#endif*/
 		return TRUE;
 	}
 	return FALSE;
@@ -458,12 +1131,6 @@ void DoSomething ( void ) {
 	if (CPU_Action.DoInterrupt) {
 		CPU_Action.DoInterrupt = FALSE;
 		DoIntrException(FALSE);
-		if (CPU_Type == CPU_SyncCores) {
-			SyncRegisters.MI[2] = Registers.MI[2];
-			SwitchSyncRegisters();
-			DoIntrException(FALSE);
-			SwitchSyncRegisters();
-		}
 	}
 
 	if (CPU_Action.ChangeWindow) {
@@ -481,7 +1148,6 @@ void DoSomething ( void ) {
 			MenuSetText(hSubMenu, 1, GS(MENU_RESUME),"F2");
 
 			CurrentFrame = 0;
-			CurrentPercent = 0;
 			CPU_Paused = TRUE;
 			CPU_Action.Pause = FALSE;
 			ReleaseMutex(hPauseMutex);
@@ -526,9 +1192,9 @@ void GetAutoSaveDir( char * Directory ) {
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
 
-	sprintf(Directory,"%s%sSave\\",drive,dir);
+	sprintf(Directory,"%s%sSave Data\\",drive,dir);
 
-	sprintf(Group,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(Group,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,Group,0,KEY_ALL_ACCESS,
 		&hKeyResults);
 	if (lResult == ERROR_SUCCESS) {
@@ -556,9 +1222,9 @@ void GetInstantSaveDir( char * Directory ) {
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
 
-	sprintf(Directory,"%s%sSave\\",drive,dir);
+	sprintf(Directory,"%s%sSave States\\",drive,dir);
 
-	sprintf(Group,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(Group,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,Group,0,KEY_ALL_ACCESS,
 		&hKeyResults);
 	if (lResult == ERROR_SUCCESS) {
@@ -597,7 +1263,6 @@ void InPermLoop (void) {
 	/* check RDP running */
 	if (Timers.Timer > 0) {
 		COUNT_REGISTER += Timers.Timer + 1;
-		if (CPU_Type == CPU_SyncCores) { SyncRegisters.CP0[9] += Timers.Timer + 1; }
 		Timers.Timer = -1;
 	}
 	return;
@@ -605,7 +1270,6 @@ void InPermLoop (void) {
 InterruptsDisabled:
 	if (UpdateScreen != NULL) { UpdateScreen(); }
 	CurrentFrame = 0;
-	CurrentPercent = 0;
 	DisplayFPS();
 	DisplayError(GS(MSG_PERM_LOOP));
 	ExitThread(0);
@@ -622,7 +1286,6 @@ BOOL Machine_LoadState(void) {
 	if (strlen(LoadFileName) == 0) {
 		GetInstantSaveDir(Directory);
 		sprintf(FileName,"%s%s",Directory,CurrentSave);
-		sprintf(ZipFile,"%s.zip",FileName);
 	} else {
 		strcpy(FileName,LoadFileName);
 		strcpy(ZipFile,LoadFileName);
@@ -654,24 +1317,7 @@ BOOL Machine_LoadState(void) {
 			}
 			unzReadCurrentFile(file,&SaveRDRAMSize,sizeof(SaveRDRAMSize));	
 			unzReadCurrentFile(file,LoadHeader,0x40);			
-			//Check header
-			if (memcmp(LoadHeader,RomHeader,0x40) != 0) {
-				int result;
 
-				if (inFullScreen) { return FALSE; }
-				result = MessageBox(hMainWindow,GS(MSG_SAVE_STATE_HEADER),GS(MSG_MSGBOX_TITLE),
-					MB_YESNO|MB_ICONQUESTION|MB_DEFBUTTON2);
-				if (result == IDNO) { return FALSE; }
-			}
-
-			if (CPU_Type == CPU_SyncCores) {
-				DWORD OldProtect;
-
-				VirtualProtect(N64MEM,RdramSize,PAGE_READWRITE,&OldProtect);
-				VirtualProtect(N64MEM + 0x04000000,0x2000,PAGE_READWRITE,&OldProtect);
-				VirtualProtect(SyncMemory,RdramSize,PAGE_READWRITE,&OldProtect);
-				VirtualProtect(SyncMemory + 0x04000000,0x2000,PAGE_READWRITE,&OldProtect);	
-			}
 			if (CPU_Type != CPU_Interpreter) { 
 				ResetRecompCode(); 
 			}
@@ -685,7 +1331,7 @@ BOOL Machine_LoadState(void) {
 				if (RdramSize == 0x400000) { 
 					if (VirtualAlloc(N64MEM + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
 #ifndef EXTERNAL_RELEASE
-						DisplayError("Failed to Extend memory to 8mb");
+						DisplayError("Failed to extend memory to 8MB.\n\nEmulation ending");
 #else
 						DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 #endif
@@ -693,7 +1339,7 @@ BOOL Machine_LoadState(void) {
 					}
 					if (VirtualAlloc((BYTE *)JumpTable + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
 #ifndef EXTERNAL_RELEASE
-						DisplayError("Failed to Extend Jump Table to 8mb");
+						DisplayError("Failed to extend jump table to 8MB.\n\nEmulation ending");
 #else
 						DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 #endif
@@ -701,7 +1347,7 @@ BOOL Machine_LoadState(void) {
 					}
 					if (VirtualAlloc((BYTE *)DelaySlotTable + (0x400000 >> 0xA), (0x400000 >> 0xA), MEM_COMMIT, PAGE_READWRITE)==NULL) {
 #ifndef EXTERNAL_RELEASE
-						DisplayError("Failed to Extend Delay Slot Table to 8mb");
+						DisplayError("Failed to extend delay slot table to 8MB.\n\nEmulation ending");
 #else
 						DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 #endif
@@ -760,24 +1406,6 @@ BOOL Machine_LoadState(void) {
 		ReadFile( hSaveFile,&SaveRDRAMSize,sizeof(SaveRDRAMSize),&dwRead,NULL);	
 		ReadFile( hSaveFile,LoadHeader,0x40,&dwRead,NULL);	
 
-		//Check header
-		if (memcmp(LoadHeader,ROM,0x40) != 0) {
-			int result;
-
-			if (inFullScreen) { return FALSE; }
-			result = MessageBox(hMainWindow,GS(MSG_SAVE_STATE_HEADER),GS(MSG_MSGBOX_TITLE),
-				MB_YESNO|MB_ICONQUESTION|MB_DEFBUTTON2);
-			if (result == IDNO) { return FALSE; }
-		}
-
-		if (CPU_Type == CPU_SyncCores) {
-			DWORD OldProtect;
-
-			VirtualProtect(N64MEM,RdramSize,PAGE_READWRITE,&OldProtect);
-			VirtualProtect(N64MEM + 0x04000000,0x2000,PAGE_READWRITE,&OldProtect);
-			VirtualProtect(SyncMemory,RdramSize,PAGE_READWRITE,&OldProtect);
-			VirtualProtect(SyncMemory + 0x04000000,0x2000,PAGE_READWRITE,&OldProtect);	
-		}
 		if (CPU_Type != CPU_Interpreter) { 
 			ResetRecompCode(); 
 		}
@@ -791,7 +1419,7 @@ BOOL Machine_LoadState(void) {
 			if (RdramSize == 0x400000) { 
 				if (VirtualAlloc(N64MEM + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
 #ifndef EXTERNAL_RELEASE
-					DisplayError("Failed to Extend memory to 8mb");
+					DisplayError("Failed to extend memory to 8MB.\n\nEmulation ending");
 #else
 					DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 #endif
@@ -799,7 +1427,7 @@ BOOL Machine_LoadState(void) {
 				}
 				if (VirtualAlloc((BYTE *)JumpTable + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
 #ifndef EXTERNAL_RELEASE
-					DisplayError("Failed to Extend Jump Table to 8mb");
+					DisplayError("Failed to extend jump table to 8MB.\n\nEmulation ending");
 #else
 					DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 #endif
@@ -807,7 +1435,7 @@ BOOL Machine_LoadState(void) {
 				}
 				if (VirtualAlloc((BYTE *)DelaySlotTable + (0x400000 >> 0xA), (0x400000 >> 0xA), MEM_COMMIT, PAGE_READWRITE)==NULL) {
 #ifndef EXTERNAL_RELEASE
-					DisplayError("Failed to Extend Delay Slot Table to 8mb");
+					DisplayError("Failed to extend delay slot table to 8MB.\n\nEmulation ending");
 #else
 					DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 #endif
@@ -850,13 +1478,12 @@ BOOL Machine_LoadState(void) {
 	}
 	//memcpy(RomHeader,ROM,sizeof(RomHeader));
 	ChangeCompareTimer();
-	if (GfxRomClosed != NULL)  { GfxRomClosed(); }
+	//if (GfxRomClosed != NULL)  { GfxRomClosed(); }
 	if (AiRomClosed != NULL)   { AiRomClosed(); }
-	if (ContRomClosed != NULL) { ContRomClosed(); }
+	//if (ContRomClosed != NULL) { ContRomClosed(); }
 	if (RSPRomClosed) { RSPRomClosed(); }
-	if (AiRomOpen != NULL) { AiRomOpen(); }
-	if (GfxRomOpen != NULL) { GfxRomOpen(); }
-	if (ContRomOpen != NULL) { ContRomOpen(); }	
+	//if (GfxRomOpen != NULL) { GfxRomOpen(); }
+	//if (ContRomOpen != NULL) { ContRomOpen(); }	
 	DlistCount = 0;
 	AlistCount = 0;
 	AI_STATUS_REG = 0;
@@ -876,37 +1503,7 @@ BOOL Machine_LoadState(void) {
 	strcpy(SaveAsFileName,"");
 	strcpy(LoadFileName,"");
 
-	if (CPU_Type == CPU_SyncCores) {		
-		Registers.PROGRAM_COUNTER = PROGRAM_COUNTER;
-		Registers.HI.DW = HI.DW;
-		Registers.LO.DW = LO.DW;
-		Registers.DMAUsed = DMAUsed;
-		memcpy(&SyncRegisters,&Registers,sizeof(Registers));
-		memcpy(SyncFastTlb,FastTlb,sizeof(FastTlb));
-		memcpy(SyncTlb,tlb,sizeof(tlb));
-		memcpy(SyncMemory,N64MEM,RdramSize);
-		memcpy(SyncMemory + 0x04000000,N64MEM + 0x04000000,0x2000);		
-		SwitchSyncRegisters();
-		SetupTLB();
-		SwitchSyncRegisters();		
-		SyncNextInstruction = NORMAL;
-		SyncJumpToLocation = -1;
-		NextInstruction = NORMAL;
-		JumpToLocation = -1;
-		MemAddrUsedCount[0] = 0;
-		MemAddrUsedCount[1] = 0;
-		SyncToPC ();
-		DisplayError("Loaded");
-	}
-#ifdef Log_x86Code
-	Stop_x86_Log();
-	Start_x86_Log();
-#endif
-#ifndef EXTERNAL_RELEASE
-	StopLog();
-	StartLog();
-#endif
-	sprintf(String,"%s %s",GS(MSG_LOADED_STATE),FileName);
+	sprintf(String,"%s",FileName);
 	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)String );
 	return TRUE;
 }
@@ -924,58 +1521,12 @@ BOOL Machine_SaveState(void) {
 	if (strlen(SaveAsFileName) == 0) {
 		GetInstantSaveDir(Directory);
 		sprintf(FileName,"%s%s",Directory,CurrentSave);
-		sprintf(ZipFile,"%s.zip",FileName);
 	} else {
-		sprintf(FileName,"%s.pj",SaveAsFileName);
-		sprintf(ZipFile,"%s.zip",SaveAsFileName);
+		sprintf(FileName,"%s",SaveAsFileName);
 	}
 
 	if (SelfModCheck == ModCode_ChangeMemory) { ResetRecompCode(); }
-	if (AutoZip) {
-		zip_fileinfo	ZipInfo;
-		zipFile			file;
-
-		CreateDirectory(Directory,NULL);
-		file = zipOpen(ZipFile,FALSE);
-		zipOpenNewFileInZip(file,CurrentSave,&ZipInfo,NULL,0,NULL,0,NULL,Z_DEFLATED,Z_DEFAULT_COMPRESSION);
-		Value = 0x23D8A6C8;
-		zipWriteInFileInZip( file,&Value,sizeof(Value));
-		zipWriteInFileInZip( file,&RdramSize,sizeof(RdramSize));
-		zipWriteInFileInZip( file,RomHeader,0x40);	
-		Value = Timers.NextTimer[ViTimer] + Timers.Timer;
-		zipWriteInFileInZip( file,&Value,sizeof(Value));
-		zipWriteInFileInZip( file,&PROGRAM_COUNTER,sizeof(PROGRAM_COUNTER));
-		zipWriteInFileInZip( file,GPR,sizeof(_int64)*32);
-		zipWriteInFileInZip( file,FPR,sizeof(_int64)*32);
-		zipWriteInFileInZip( file,CP0,sizeof(DWORD)*32);
-		zipWriteInFileInZip( file,FPCR,sizeof(DWORD)*32);
-		zipWriteInFileInZip( file,&HI,sizeof(_int64));
-		zipWriteInFileInZip( file,&LO,sizeof(_int64));
-		zipWriteInFileInZip( file,RegRDRAM,sizeof(DWORD)*10);
-		zipWriteInFileInZip( file,RegSP,sizeof(DWORD)*10);
-		zipWriteInFileInZip( file,RegDPC,sizeof(DWORD)*10);
-
-		Value = MI_INTR_REG;
-		if (AiReadLength() != 0) { MI_INTR_REG |= MI_INTR_AI; }
-		zipWriteInFileInZip( file,RegMI,sizeof(DWORD)*4);
-		MI_INTR_REG = Value;
-		zipWriteInFileInZip( file,RegVI,sizeof(DWORD)*14);
-		zipWriteInFileInZip( file,RegAI,sizeof(DWORD)*6);
-		zipWriteInFileInZip( file,RegPI,sizeof(DWORD)*13);
-		zipWriteInFileInZip( file,RegRI,sizeof(DWORD)*8);
-		zipWriteInFileInZip( file,RegSI,sizeof(DWORD)*4);
-		zipWriteInFileInZip( file,tlb,sizeof(TLB)*32);
-		zipWriteInFileInZip( file,PIF_Ram,0x40);
-		zipWriteInFileInZip( file,RDRAM,RdramSize);
-		zipWriteInFileInZip( file,DMEM,0x1000);
-		zipWriteInFileInZip( file,IMEM,0x1000);
-			
-		zipCloseFileInZip(file);
-		zipClose(file,"");
-		DeleteFile(FileName);
-		_splitpath( ZipFile, drive, dir, FileName, ext );
-		sprintf(FileName,"%s%s",FileName,ext);
-	} else {
+{
 		hSaveFile = CreateFile(FileName,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
 			FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
 		if (hSaveFile == INVALID_HANDLE_VALUE) {
@@ -1041,7 +1592,7 @@ BOOL Machine_SaveState(void) {
 	}
 	strcpy(SaveAsFileName,"");
 	strcpy(LoadFileName,"");
-	sprintf(String,"%s %s",GS(MSG_SAVED_STATE),FileName);
+	sprintf(String,"%s",FileName);
 	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)String );
 	return TRUE;
 }
@@ -1089,10 +1640,7 @@ void PauseCpu (void) {
 void RefreshScreen (void ){ 
 	static DWORD OLD_VI_V_SYNC_REG = 0, VI_INTR_TIME = 500000;
 	LARGE_INTEGER Time;
-	char Label[100];
 
-	if (Profiling || ShowCPUPer) { memcpy(Label,ProfilingLabel,sizeof(Label)); }
-	if (Profiling) { StartTimer("RefreshScreen"); }
 
 	if (OLD_VI_V_SYNC_REG != VI_V_SYNC_REG) {
 		if (VI_V_SYNC_REG == 0) {
@@ -1117,10 +1665,7 @@ void RefreshScreen (void ){
 		ViFieldNumber = 0;
 	}
 	
-	if (ShowCPUPer || Profiling) { StartTimer("CPU Idel"); }
 	if (LimitFPS) {	Timer_Process(NULL); }
-	if (ShowCPUPer || Profiling) { StopTimer(); }
-	if (Profiling) { StartTimer("RefreshScreen: Update FPS"); }
 	if ((CurrentFrame & 7) == 0) {
 		//Disables Screen saver
 		//mouse_event(MOUSEEVENTF_MOVE,1,1,0,GetMessageExtraInfo());
@@ -1131,20 +1676,14 @@ void RefreshScreen (void ){
 		LastFrame.QuadPart = Time.QuadPart;	
 		DisplayFPS();
 	}
-	if (Profiling) { StopTimer(); }
-	if (ShowCPUPer) { DisplayCPUPer(); }
-	CurrentFrame += 1;
-
-	if (Profiling) { StartTimer("RefreshScreen: Update Screen"); }
+        CurrentFrame += 1;
 	__try {
 		if (UpdateScreen != NULL) { UpdateScreen(); }
 	} __except( r4300i_CPU_MemoryFilter( GetExceptionCode(), GetExceptionInformation()) ) {
-		DisplayError("Unknown memory action in trying to update the screen\n\nEmulation stop");
+		DisplayError("Unknown memory action detected when updating screen.\n\nEmulation ending");
 		ExitThread(0);
 	}
-	if (Profiling) { StartTimer("RefreshScreen: Cheats"); }
 	if ((STATUS_REGISTER & STATUS_IE) != 0 ) { ApplyCheats(); }
-	if (Profiling || ShowCPUPer) { StartTimer(Label); }
 }
 
 void RunRsp (void) {
@@ -1171,29 +1710,7 @@ void RunRsp (void) {
 				AlistCount += 1; 
 				break;
 			}
-
-			if (ShowDListAListCount) {
-				char StatusString[256];
-
-				sprintf(StatusString,"Dlist: %d   Alist: %d",DlistCount,AlistCount);
-				SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)StatusString );
-			}
-			if (Profiling || DisplayCPUPer) {
-				char Label[100];
-
-				strncpy(Label,ProfilingLabel,sizeof(Label));
-
-				if (IndvidualBlock && !DisplayCPUPer) {
-					StartTimer("RSP");
-				} else {
-					switch (*( DWORD *)(DMEM + 0xFC0)) {
-					case 1:  StartTimer("RSP: Dlist"); break;
-					case 2:  StartTimer("RSP: Alist"); break;
-					default: StartTimer("RSP: Unknown"); break;
-					}
-				}
 				DoRspCycles(100);
-				StartTimer(Label); 
 			} else {
 				DoRspCycles(100);
 			}
@@ -1204,7 +1721,6 @@ void RunRsp (void) {
 #endif
 		} 
 	}
-}
 
 void SetCoreToRunning  ( void ) {
 	CPU_Action.Stepping = FALSE;
@@ -1216,11 +1732,11 @@ void SetCoreToStepping ( void ) {
 }
 
 void StartEmulation ( void ) {
+	char drive[_MAX_DRIVE],dir[_MAX_DIR], fname[_MAX_FNAME],ext[_MAX_EXT];
+	char SaveFile[255];
 	DWORD ThreadID, count;
-	CloseCpu();
 
 	memset(&CPU_Action,0,sizeof(CPU_Action));
-	//memcpy(RomHeader,ROM,sizeof(RomHeader));
 	CPU_Action.hStepping = CreateEvent( NULL, FALSE, FALSE, NULL);
 	WrittenToRom = FALSE;
 
@@ -1230,21 +1746,11 @@ void StartEmulation ( void ) {
 	BuildInterpreter();
 
 	RecompPos = RecompCode;
-
-#if (!defined(EXTERNAL_RELEASE))
-	Enable_R4300i_Commands_Window();
-	if (InR4300iCommandsWindow) {
-		SetCoreToStepping();
-	}
-    DlistCount = 0;
-	AlistCount = 0;
-#endif
 	Timers.CurrentTimerType = -1;
 	Timers.Timer = 0;
 	CurrentFrame = 0;
-	CurrentPercent = 0;
 	for (count = 0; count < MaxTimers; count ++) { Timers.Active[count] = FALSE; }
-	ChangeTimer(ViTimer,5000); 
+	ChangeTimer(ViTimer, 5000);
 	ChangeCompareTimer();
 	ViFieldNumber = 0;
 	DMAUsed = FALSE;
@@ -1253,25 +1759,36 @@ void StartEmulation ( void ) {
 	Timer_Start();
 	LoadRomOptions();
 	LoadCheats();
-	if (Profiling) { ResetTimerList(); }
-	strcpy(ProfilingLabel,"");
 	strcpy(LoadFileName,"");
 	strcpy(SaveAsFileName,"");
 	CPURunning = TRUE;
 	SetupMenu(hMainWindow);
-	if (!inFullScreen)	// Only reset plugins if not in fullscreen
-		SetupPlugins(hMainWindow);
-	else
-		ResetAudio(hMainWindow);
+	ResetAudio(hMainWindow);
+	AlwaysOnTopWindow(hMainWindow);
 	switch (CPU_Type) {
 	case CPU_Interpreter: hCPU = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)StartInterpreterCPU,NULL,0, &ThreadID); break;
 	case CPU_Recompiler: hCPU = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)StartRecompilerCPU,NULL,0, &ThreadID);	break;
-	case CPU_SyncCores: hCPU = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)StartSyncCPU,NULL,0, &ThreadID);	 break;
 	default:
 		DisplayError("Unhandled CPU %d",CPU_Type);
 	}
-	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MSG_EMULATION_STARTED) );
-	AlwaysOnTopWindow(hMainWindow);
+	{
+	const char* fixedDir;
+	OSVERSIONINFO osvi;
+	ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+	GetVersionEx(&osvi);
+    	if (osvi.dwMajorVersion >= 6) {
+        // Windows Vista and later
+        fixedDir = "C:\\ProgramData\\";
+    	} else {
+      	// Windows XP
+      	fixedDir = "C:\\Documents and Settings\\All Users\\Application Data\\";
+   	}
+	_splitpath( SaveFile, drive, dir, fname, ext );
+	_makepath(SaveFile, drive, fixedDir, (GS(MSG_EMULATION_STARTED)), "");
+	strcpy(SaveAsFileName,SaveFile);
+	CPU_Action.SaveState = TRUE;
+	}
 }
 
 void StepOpcode        ( void ) {
@@ -1279,11 +1796,6 @@ void StepOpcode        ( void ) {
 }
 
 void TimerDone (void) {
-	char Label[100];
-	if (Profiling) { 
-		strncpy(Label, ProfilingLabel, sizeof(Label));
-		StartTimer("TimerDone"); 
-	}
 
 	switch (Timers.CurrentTimerType) {
 	case CompareTimer:
@@ -1321,7 +1833,4 @@ void TimerDone (void) {
 		break;
 	}
 	CheckTimer();
-	if (Profiling) { 
-		StartTimer(Label); 
-	}
 }

@@ -28,7 +28,7 @@
 #include "main.h"
 #include "cpu.h"
 #include "x86.h"
-#include "debugger.h"
+
 #include "RomTools_Common.h"
 
 char *GPR_Name[32] = {"r0","at","v0","v1","a0","a1","a2","a3",
@@ -111,7 +111,7 @@ void ChangeFPURegFormat (BLOCK_SECTION * Section, int Reg, int OldFormat, int Ne
 	}
 
 #ifndef EXTERNAL_RELEASE
-	DisplayError("ChangeFormat: Register not on stack!!");
+	DisplayError("Changeformat register not located on stack");
 #endif
 }
 
@@ -151,7 +151,7 @@ void ChangeSpStatus (void) {
 		CheckInterrupts();
 	}
 #ifndef EXTERNAL_RELEASE
-	if ( ( RegModValue & SP_SET_INTR ) != 0) { DisplayError("SP_SET_INTR"); }
+	if ( ( RegModValue & SP_SET_INTR ) != 0) { DisplayError("SP SET INTR error"); }
 #endif
 	if ( ( RegModValue & SP_CLR_SSTEP ) != 0) { SP_STATUS_REG &= ~SP_STATUS_SSTEP; }
 	if ( ( RegModValue & SP_SET_SSTEP ) != 0) { SP_STATUS_REG |= SP_STATUS_SSTEP;  }
@@ -321,13 +321,6 @@ void InitalizeR4300iRegisters (int UsePif, int Country, int CIC_Chip) {
 	memset(GPR,0,sizeof(Registers.GPR));	
 	memset(FPR,0,sizeof(Registers.FPR));	
 	
-	// Disable Unknown CIC Chip on CicChip 0 Message (Gent)
-
-	/*if (CIC_Chip < 0) {
-		DisplayError(GS(MSG_UNKNOWN_CIC_CHIP));
-		CIC_Chip = 2;
-	}*/
-
 	LO.DW                 = 0x0;
 	HI.DW                 = 0x0;
 	RANDOM_REGISTER	  = 0x1F;
@@ -541,8 +534,8 @@ BOOL Is8BitReg (int x86Reg) {
 void Load_FPR_ToTop (BLOCK_SECTION * Section, int Reg, int RegToLoad, int Format) {
 	int i;
 
-	if (RegToLoad < 0) { DisplayError("Load_FPR_ToTop\nRegToLoad < 0 ???"); return; }
-	if (Reg < 0) { DisplayError("Load_FPR_ToTop\nReg < 0 ???"); return; }
+	if (RegToLoad < 0) { DisplayError("Load FPR to top\nRegtoload < 0 error"); return; }
+	if (Reg < 0) { DisplayError("Load FPR to top\nReg < 0 error"); return; }
 
 	if (Format == FPU_Double || Format == FPU_Qword) {
 		UnMap_FPR(Section,Reg + 1,TRUE);
@@ -660,7 +653,7 @@ void Load_FPR_ToTop (BLOCK_SECTION * Section, int Reg, int RegToLoad, int Format
 			break;
 #ifndef EXTERNAL_RELEASE
 		default:
-			DisplayError("Load_FPR_ToTop\nUnkown format to load %d",Format);
+			DisplayError("Unknown Load FPR to top format to load %d",Format);
 #endif
 		}
 		x86Protected(TempReg) = FALSE;
@@ -677,7 +670,7 @@ void Map_GPR_32bit (BLOCK_SECTION * Section, int Reg, BOOL SignValue, int MipsRe
 
 	if (Reg == 0) {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("Map_GPR_32bit\n\nWhy are you trying to map reg 0");
+		DisplayError("Map GPR x86 reg 0 error");
 #endif
 		return;
 	}
@@ -686,7 +679,7 @@ void Map_GPR_32bit (BLOCK_SECTION * Section, int Reg, BOOL SignValue, int MipsRe
 		x86Reg = FreeX86Reg(Section);		
 		if (x86Reg < 0) { 
 #ifndef EXTERNAL_RELEASE
-			DisplayError("Map_GPR_32bit\n\nOut of registers"); 
+			DisplayError("Map GPR x86 is out of registers"); 
 			_asm int 3
 #endif
 			return; 
@@ -737,7 +730,7 @@ void Map_GPR_64bit (BLOCK_SECTION * Section, int Reg, int MipsRegToLoad) {
 
 	if (Reg == 0) {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("Map_GPR_32bit\n\nWhy are you trying to map reg 0");
+		DisplayError("Map GPR x86 reg 0 error");
 #endif
 		return;
 	}
@@ -745,11 +738,11 @@ void Map_GPR_64bit (BLOCK_SECTION * Section, int Reg, int MipsRegToLoad) {
 	ProtectGPR(Section,Reg);
 	if (IsUnknown(Reg) || IsConst(Reg)) {
 		x86Hi = FreeX86Reg(Section);
-		if (x86Hi < 0) {  DisplayError("Map_GPR_64bit\n\nOut of registers"); return; }
+		if (x86Hi < 0) {  DisplayError("Map GPR x64 out of registers"); return; }
 		x86Protected(x86Hi) = TRUE;
 
 		x86lo = FreeX86Reg(Section);
-		if (x86lo < 0) {  DisplayError("Map_GPR_64bit\n\nOut of registers"); return; }
+		if (x86lo < 0) {  DisplayError("Map GPR x64 out of registers"); return; }
 		x86Protected(x86lo) = TRUE;
 		
 		CPU_Message("    regcache: allocate %s to hi word of %s",x86_Name(x86Hi),GPR_Name[Reg]);
@@ -841,7 +834,7 @@ int Map_MemoryStack (BLOCK_SECTION * Section, BOOL AutoMap) {
 	x86Reg = FreeX86Reg(Section);	
 	if (x86Reg < 0) {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("Map_MemoryStack\n\nOut of registers");
+		DisplayError("Map memorystack out of registers");
 		_asm int 3
 #endif
 	}
@@ -865,7 +858,7 @@ int Map_TempReg (BLOCK_SECTION * Section, int x86Reg, int MipsReg, BOOL LoadHiWo
 			x86Reg = FreeX86Reg(Section);
 			if (x86Reg < 0) {
 #ifndef EXTERNAL_RELEASE
-				DisplayError("Map_TempReg\n\nOut of registers");
+				DisplayError("Map tempreg out of registers");
 				_asm int 3
 #endif
 					
@@ -884,7 +877,7 @@ int Map_TempReg (BLOCK_SECTION * Section, int x86Reg, int MipsReg, BOOL LoadHiWo
 			x86Reg = Free8BitX86Reg(Section);
 			if (x86Reg < 0) { 
 #ifndef EXTERNAL_RELEASE
-				DisplayError("Map_GPR_8bit\n\nOut of registers");
+				DisplayError("Map GPR 8bit out of registers");
 				_asm int 3
 #endif
 				return -1;
@@ -896,7 +889,7 @@ int Map_TempReg (BLOCK_SECTION * Section, int x86Reg, int MipsReg, BOOL LoadHiWo
 		if (x86Mapped(x86Reg) == GPR_Mapped) {
 			if (x86Protected(x86Reg) == TRUE) {
 #ifndef EXTERNAL_RELEASE
-				DisplayError("Map_TempReg\nRegister is protected !!!");
+				DisplayError("Map tempreg protected register error");
 #endif
 				return -1;
 			}
@@ -1151,7 +1144,7 @@ void UnMap_FPR (BLOCK_SECTION * Section, int Reg, int WriteBackValue ) {
 				case RoundUp: OrConstToX86Reg(0x0800, x86reg); break;
 #ifndef EXTERNAL_RELEASE
 				default:
-					DisplayError("Unknown Rounding model");
+					DisplayError("Unknown rounding model");
 #endif
 				}
 				MoveX86regToVariable(x86reg, &fpuControl, "fpuControl");
@@ -1184,7 +1177,7 @@ void UnMap_FPR (BLOCK_SECTION * Section, int Reg, int WriteBackValue ) {
 				break;
 #ifndef EXTERNAL_RELEASE
 			default:
-				DisplayError("UnMap_FPR\nUnknown format to load %d",FpuState(StackTopPos));
+				DisplayError("Unknown unmap FPR format to load %d",FpuState(StackTopPos));
 #endif
 			}
 			x86Protected(TempReg) = FALSE;
@@ -1204,7 +1197,7 @@ void UnMap_FPR (BLOCK_SECTION * Section, int Reg, int WriteBackValue ) {
 void UnMap_GPR (BLOCK_SECTION * Section, DWORD Reg, int WriteBackValue) {
 	if (Reg == 0) {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("UnMap_GPR\n\nWhy are you trying to unmap reg 0");
+		DisplayError("UnmapGPR reg 0 unmapping error");
 #endif
 		return;
 	}
@@ -1323,10 +1316,6 @@ void UnProtectGPR(BLOCK_SECTION * Section, DWORD Reg) {
 }
 
 void UpdateCurrentHalfLine (void) {
-	if (CPU_Type == CPU_SyncCores) {
-		HalfLine = 0;
-		return;
-	}
     if (Timers.Timer < 0) { 
 		HalfLine = 0;
 		return;
@@ -1432,7 +1421,7 @@ void WriteBackRegisters (BLOCK_SECTION * Section) {
 			break;
 #ifndef EXTERNAL_RELEASE
 		default:
-			DisplayError("Unknown State: %d\nin WriteBackRegisters",MipsRegState(count));
+			DisplayError("Unknown state: %d\nin writebackregisters",MipsRegState(count));
 #endif
 		}
 	}

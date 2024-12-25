@@ -28,7 +28,6 @@
 #include "main.h"
 #include "cpu.h"
 #include "x86.h"
-#include "debugger.h"
 
 DWORD BranchCompare = 0;
 
@@ -215,7 +214,7 @@ void Compile_R4300i_Branch (BLOCK_SECTION * Section, void (*CompareFunc)(BLOCK_S
 		NextInstruction = END_BLOCK;
 	} else {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("WTF\n\nBranch\nNextInstruction = %X", NextInstruction);
+		DisplayError("Branch\nNextInstruction = %X", NextInstruction);
 #endif
 	}
 }
@@ -257,11 +256,6 @@ void Compile_R4300i_BranchLikely (BLOCK_SECTION * Section, void (*CompareFunc)(B
 		memcpy(&Section->Cont.RegSet,&Section->RegWorking,sizeof(REG_INFO));
 	
 		if (Section->Cont.FallThrough)  {
-			if (Section->Jump.LinkLocation != NULL) {
-#ifndef EXTERNAL_RELEASE
-				DisplayError("WTF .. problem with Compile_R4300i_BranchLikely");
-#endif
-			}
 			GenerateSectionLinkage(Section);
 			NextInstruction = END_BLOCK;
 		} else {
@@ -303,7 +297,7 @@ void Compile_R4300i_BranchLikely (BLOCK_SECTION * Section, void (*CompareFunc)(B
 		NextInstruction = END_BLOCK;
 	} else {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("WTF\n\nBranchLikely\nNextInstruction = %X", NextInstruction);
+		DisplayError("BranchLikely\nNextInstruction = %X", NextInstruction);
 #endif
 	}
 }
@@ -1090,7 +1084,7 @@ void Compile_R4300i_J (BLOCK_SECTION * Section) {
 		NextInstruction = END_BLOCK;
 	} else {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("WTF\n\nJal\nNextInstruction = %X", NextInstruction);
+		DisplayError("J\nNextInstruction = %X", NextInstruction);
 #endif
 	}
 }
@@ -1112,7 +1106,7 @@ void Compile_R4300i_JAL (BLOCK_SECTION * Section) {
 			}
 			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
 			WriteBackRegisters(Section);
-			if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+			//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 			MoveConstToVariable(DELAY_SLOT,&NextInstruction,"NextInstruction");
 			Ret();
 			NextInstruction = END_BLOCK;
@@ -1125,7 +1119,7 @@ void Compile_R4300i_JAL (BLOCK_SECTION * Section) {
 		NextInstruction = END_BLOCK;
 	} else {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("WTF\n\nBranch\nNextInstruction = %X", NextInstruction);
+		DisplayError("J\nNextInstruction = %X", NextInstruction);
 #endif
 	}
 	return;
@@ -1158,7 +1152,7 @@ void Compile_R4300i_JAL (BLOCK_SECTION * Section) {
 		NextInstruction = END_BLOCK;
 	} else {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("WTF\n\nJal\nNextInstruction = %X", NextInstruction);
+		DisplayError("J\nNextInstruction = %X", NextInstruction);
 #endif
 	}
 }
@@ -2381,7 +2375,7 @@ void Compile_R4300i_SDR (BLOCK_SECTION * Section) {
 }
 
 void _fastcall ClearRecomplierCache (DWORD Address) {
-	if (!TranslateVaddr(&Address)) { DisplayError("Cache: Failed to translate: %X",Address); return; }
+	if (!TranslateVaddr(&Address)) { DisplayError("Failed to translate cache: %X",Address); return; }
 	if (Address < RdramSize) {
 		DWORD Block = Address >> 12;
 		if (N64_Blocks.NoOfRDRamBlocks[Block] > 0) {
@@ -2391,7 +2385,7 @@ void _fastcall ClearRecomplierCache (DWORD Address) {
 		}		
 	} else {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("ClearRecomplierCache: %X",Address);
+		DisplayError("Clearrecompliercache: %X",Address);
 #endif
 	}
 }
@@ -2949,7 +2943,7 @@ void Compile_R4300i_SPECIAL_JR (BLOCK_SECTION * Section) {
 			}
 			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
 			WriteBackRegisters(Section);
-			if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+			//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 			MoveConstToVariable(DELAY_SLOT,&NextInstruction,"NextInstruction");
 			Ret();
 			NextInstruction = END_BLOCK;
@@ -2984,7 +2978,7 @@ void Compile_R4300i_SPECIAL_JR (BLOCK_SECTION * Section) {
 		NextInstruction = END_BLOCK;
 	} else {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("WTF\n\nBranch\nNextInstruction = %X", NextInstruction);
+		DisplayError("NextInstruction = %X", NextInstruction);
 #endif
 	}
 }
@@ -3013,7 +3007,7 @@ void Compile_R4300i_SPECIAL_JALR (BLOCK_SECTION * Section) {
 			}
 			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
 			WriteBackRegisters(Section);
-			if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+			//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 			MoveConstToVariable(DELAY_SLOT,&NextInstruction,"NextInstruction");
 			Ret();
 			NextInstruction = END_BLOCK;
@@ -3045,7 +3039,7 @@ void Compile_R4300i_SPECIAL_JALR (BLOCK_SECTION * Section) {
 		NextInstruction = END_BLOCK;
 	} else {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("WTF\n\nBranch\nNextInstruction = %X", NextInstruction);
+		DisplayError("NextInstruction = %X", NextInstruction);
 #endif
 	}
 }
@@ -3879,9 +3873,6 @@ void Compile_R4300i_SPECIAL_XOR (BLOCK_SECTION * Section) {
 		if (IsConst(Opcode.rt) && IsConst(Opcode.rs)) {
 			if (IsMapped(Opcode.rd)) { UnMap_GPR(Section,Opcode.rd, FALSE); }
 			if (Is64Bit(Opcode.rt) || Is64Bit(Opcode.rs)) {
-#ifndef EXTERNAL_RELEASE
-				DisplayError("XOR 1");
-#endif
 				Compile_R4300i_UnknownOpcode(Section);
 			} else {
 				MipsRegState(Opcode.rd) = STATE_CONST_32;
@@ -4073,7 +4064,6 @@ void Compile_R4300i_SPECIAL_SLT (BLOCK_SECTION * Section) {
 	if (IsKnown(Opcode.rt) && IsKnown(Opcode.rs)) {
 		if (IsConst(Opcode.rt) && IsConst(Opcode.rs)) {
 			if (Is64Bit(Opcode.rt) || Is64Bit(Opcode.rs)) {
-				DisplayError("1");
 				Compile_R4300i_UnknownOpcode(Section);
 			} else {
 				if (IsMapped(Opcode.rd)) { UnMap_GPR(Section,Opcode.rd, FALSE); }
@@ -4259,9 +4249,6 @@ void Compile_R4300i_SPECIAL_SLTU (BLOCK_SECTION * Section) {
 	if (IsKnown(Opcode.rt) && IsKnown(Opcode.rs)) {
 		if (IsConst(Opcode.rt) && IsConst(Opcode.rs)) {
 			if (Is64Bit(Opcode.rt) || Is64Bit(Opcode.rs)) {
-#ifndef EXTERNAL_RELEASE
-				DisplayError("1");
-#endif
 				Compile_R4300i_UnknownOpcode(Section);
 			} else {
 				if (IsMapped(Opcode.rd)) { UnMap_GPR(Section,Opcode.rd, FALSE); }
@@ -4951,7 +4938,7 @@ void Compile_R4300i_UnknownOpcode (BLOCK_SECTION * Section) {
 	WriteBackRegisters(Section);
 	AddConstToVariable(BlockCycleCount,&CP0[9],Cop0_Name[9]);
 	SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]);
-	if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+	//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 	MoveConstToVariable(Opcode.Hex,&Opcode.Hex,"Opcode.Hex");
 	Call_Direct(R4300i_UnknownOpcode, "R4300i_UnknownOpcode");
 	Ret();

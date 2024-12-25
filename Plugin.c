@@ -27,7 +27,6 @@
 #include <stdio.h>
 #include "main.h"
 #include "CPU.h"
-#include "Debugger.h"
 #include "plugin.h"
 #include "settings.h"
 #include "EmulateAI.h"
@@ -38,8 +37,6 @@ HINSTANCE hAudioDll, hControllerDll, hGfxDll, hRspDll;
 DWORD PluginCount, RspTaskValue, AudioIntrReg;
 WORD RSPVersion,ContVersion;
 HANDLE hAudioThread = NULL;
-GFXDEBUG_INFO GFXDebug;
-RSPDEBUG_INFO RspDebug;
 CONTROL Controllers[4];
 BOOL PluginsInitilized = FALSE;
 
@@ -57,7 +54,7 @@ void GetCurrentDlls (void) {
 	HKEY hKeyResults = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s\\Dll",AppName);
+	sprintf(String,"N64 Software\\%s\\Dll",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);
 
 	if (lResult == ERROR_SUCCESS) {
@@ -102,7 +99,7 @@ void GetPluginDir( char * Directory ) {
 	strcat(Directory,dir);
 	strcat(Directory,"Plugin\\");
 
-	sprintf(Group,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(Group,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,Group,0,KEY_ALL_ACCESS, &hKeyResults);
 
 	if (lResult == ERROR_SUCCESS) {
@@ -118,7 +115,6 @@ void GetPluginDir( char * Directory ) {
 	}
 	RegCloseKey(hKeyResults);	
 }
-
 void GetSnapShotDir( char * Directory ) {
 	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
 	char fname[_MAX_FNAME],ext[_MAX_EXT];
@@ -131,7 +127,7 @@ void GetSnapShotDir( char * Directory ) {
 
 	sprintf(Directory,"%s%sScreenshots\\",drive,dir);
 
-	sprintf(Group,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(Group,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,Group,0,KEY_ALL_ACCESS,
 		&hKeyResults);
 	if (lResult == ERROR_SUCCESS) {
@@ -148,7 +144,6 @@ void GetSnapShotDir( char * Directory ) {
 	RegCloseKey(hKeyResults);	
 
 }
-
 BOOL LoadAudioDll(char * AudioDll) {
 	PLUGIN_INFO PluginInfo;
 	char DllName[300];
@@ -174,10 +169,8 @@ BOOL LoadAudioDll(char * AudioDll) {
 	if (AiLenChanged == NULL) { return FALSE; }
 	AiReadLength = (DWORD (__cdecl *)(void))GetProcAddress( hAudioDll, "AiReadLength" );
 	if (AiReadLength == NULL) { return FALSE; }
-	InitiateAudio = (BOOL(__cdecl*)(AUDIO_INFO))GetProcAddress(hAudioDll, "InitiateAudio");
+	InitiateAudio = (BOOL (__cdecl *)(AUDIO_INFO))GetProcAddress( hAudioDll, "InitiateAudio" );
 	if (InitiateAudio == NULL) { return FALSE; }
-	AiRomOpen = (void(__cdecl*)(void))GetProcAddress(hAudioDll, "RomOpen");
-	//if (AiRomOpen == NULL) { return FALSE; }
 	AiRomClosed = (void (__cdecl *)(void))GetProcAddress( hAudioDll, "RomClosed" );
 	if (AiRomClosed == NULL) { return FALSE; }
 	ProcessAList = (void (__cdecl *)(void))GetProcAddress( hAudioDll, "ProcessAList" );	
@@ -281,14 +274,10 @@ BOOL LoadGFXDll(char * RspDll) {
 		if (CaptureScreen == NULL) { return FALSE; }
 		ShowCFB = (void (__cdecl *)(void))GetProcAddress( hGfxDll, "ShowCFB" );
 		if (ShowCFB == NULL) { return FALSE; }
-		GetGfxDebugInfo = (void (__cdecl *)(GFXDEBUG_INFO *))GetProcAddress( hGfxDll, "GetGfxDebugInfo" );
-		InitiateGFXDebugger = (void (__cdecl *)(DEBUG_INFO))GetProcAddress( hGfxDll, "InitiateGFXDebugger" );
 	} else {
 		ProcessRDPList = NULL;
 		CaptureScreen = NULL;
 		ShowCFB = NULL;
-		GetGfxDebugInfo = NULL;
-		InitiateGFXDebugger = NULL;
 	}
 #ifdef CFB_READ
 	FrameBufferRead = (void (__cdecl *)(DWORD))GetProcAddress( hGfxDll, "FBRead" );
@@ -303,8 +292,6 @@ BOOL LoadRSPDll(char * RspDll) {
 
 	GetPluginDir(DllName);
 	strcat(DllName,RspDll);
-
-	RspDebug.UseBPoints = FALSE;
 
 	hRspDll = LoadLibrary(DllName);
 	if (hRspDll == NULL) {  return FALSE; }
@@ -333,8 +320,6 @@ BOOL LoadRSPDll(char * RspDll) {
 	if (RSPRomClosed == NULL) { return FALSE; }
 	RSPCloseDLL = (void (__cdecl *)(void))GetProcAddress( hRspDll, "CloseDLL" );
 	if (RSPCloseDLL == NULL) { return FALSE; }
-	GetRspDebugInfo = (void (__cdecl *)(RSPDEBUG_INFO *))GetProcAddress( hRspDll, "GetRspDebugInfo" );
-	InitiateRSPDebugger = (void (__cdecl *)(DEBUG_INFO))GetProcAddress( hRspDll, "InitiateRSPDebugger" );
 	RSPDllConfig = (void (__cdecl *)(HWND))GetProcAddress( hRspDll, "DllConfig" );
 	return TRUE;
 }
@@ -567,26 +552,6 @@ void SetupPlugins (HWND hWnd) {
 		if (RSPVersion == 0x0100) { InitiateRSP_1_0(RspInfo10, &RspTaskValue); }
 		if (RSPVersion == 0x0101) { InitiateRSP_1_1(RspInfo11, &RspTaskValue); }
 	}
-	
-#if (!defined(EXTERNAL_RELEASE))
-	if (HaveDebugger) {
-		DEBUG_INFO DebugInfo;
-
-		if (GetRspDebugInfo != NULL) { GetRspDebugInfo(&RspDebug); }				
-		if (GetGfxDebugInfo != NULL) { GetGfxDebugInfo(&GFXDebug); }
-		
-		DebugInfo.UpdateBreakPoints = RefreshBreakPoints;
-		DebugInfo.UpdateMemory = Refresh_Memory;
-		DebugInfo.UpdateR4300iRegisters = UpdateCurrentR4300iRegisterPanel;
-		DebugInfo.Enter_BPoint_Window = Enter_BPoint_Window;
-		DebugInfo.Enter_Memory_Window = Enter_Memory_Window;
-		DebugInfo.Enter_R4300i_Commands_Window = Enter_R4300i_Commands_Window;
-		DebugInfo.Enter_R4300i_Register_Window = Enter_R4300i_Register_Window;
-		DebugInfo.Enter_RSP_Commands_Window = RspDebug.Enter_RSP_Commands_Window;
-		if (InitiateRSPDebugger != NULL) { InitiateRSPDebugger(DebugInfo); }
-		if (InitiateGFXDebugger != NULL) { InitiateGFXDebugger(DebugInfo); }
-	}
-#endif
 
 	if (!LoadControllerDll(ControllerDLL)) { 
 		DisplayError(GS(MSG_FAIL_INIT_CONTROL));
@@ -649,6 +614,7 @@ void SetupPluginScreen (HWND hDlg) {
 	SetDlgItemText(hDlg,IDC_GFX_NAME,GS(PLUG_GFX));
 	SetDlgItemText(hDlg,IDC_AUDIO_NAME,GS(PLUG_AUDIO));
 	SetDlgItemText(hDlg,IDC_CONT_NAME,GS(PLUG_CTRL));
+        SetDlgItemText(hDlg,IDC_PLUGHOTSWAPDOUBLE,GS(PLUG_HOT_SWAP_DOUBLE));
 	
 	GetPluginDir(SearchsStr);
 	strcat(SearchsStr,"*.dll");
@@ -753,7 +719,7 @@ void ShutdownPlugins (void) {
 	TerminateThread(hAudioThread,0);
 	if (GFXCloseDLL != NULL) { GFXCloseDLL(); }
 	if (RSPCloseDLL != NULL) { RSPCloseDLL(); }
-	//if (AiCloseDLL != NULL) { AiCloseDLL(); }
+	if (AiCloseDLL != NULL) { AiCloseDLL(); }
 	if (ContCloseDLL != NULL) { ContCloseDLL(); }
 	FreeLibrary(hAudioDll);
 	FreeLibrary(hControllerDll);

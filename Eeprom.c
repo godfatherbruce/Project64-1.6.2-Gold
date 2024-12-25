@@ -29,29 +29,29 @@
 #include "main.h"
 #include "CPU.h"
 
-static HANDLE hEepromFile = NULL;
-BYTE EEPROM[0x800];
+static HANDLE heepROMFile = NULL;
+BYTE eepROM[0x800];
 
-void CloseEeprom (void) {
-	if (hEepromFile) {
-		CloseHandle(hEepromFile);
-		hEepromFile = NULL;
+void CloseeepROM (void) {
+	if (heepROMFile) {
+		CloseHandle(heepROMFile);
+		heepROMFile = NULL;
 	}
 }
 
-void EepromCommand ( BYTE * Command) {
-	if (SaveUsing == Auto) { SaveUsing = Eeprom_4K; }
+void eepROMCommand ( BYTE * Command) {
+	if (SaveUsing == Auto) { SaveUsing = eepROM_4K; }
 
 	switch (Command[2]) {
 	case 0: // check
-		if (SaveUsing != Eeprom_4K &&  SaveUsing != Eeprom_16K) {
+		if (SaveUsing != eepROM_4K &&  SaveUsing != eepROM_16K) {
 			Command[1] |= 0x80;
 			break;
 		}
 		if (Command[1] != 3) { 
 			Command[1] |= 0x40; 
 			if ((Command[1] & 3) > 0) { Command[3] = 0x00; }
-			if (SaveUsing == Eeprom_4K) {
+			if (SaveUsing == eepROM_4K) {
 				if ((Command[1] & 3) > 1) { Command[4] = 0x80; }
 			} else {
 				if ((Command[1] & 3) > 1) { Command[4] = 0xC0; }
@@ -59,77 +59,75 @@ void EepromCommand ( BYTE * Command) {
 			if ((Command[1] & 3) > 2) { Command[5] = 0x00; }
 		} else {
 			Command[3] = 0x00;
-			Command[4] = SaveUsing == Eeprom_4K?0x80:0xC0;
+			Command[4] = SaveUsing == eepROM_4K?0x80:0xC0;
 			Command[5] = 0x00;
 		}
 		break;
-	case 4: // Read from Eeprom
+	case 4: // Read from eepROM
 #ifndef EXTERNAL_RELEASE
-		if (Command[0] != 2) { DisplayError("What am I meant to do with this Eeprom Command"); }
-		if (Command[1] != 8) { DisplayError("What am I meant to do with this Eeprom Command"); }
+		if (Command[0] != 2) { DisplayError("What am I meant to do with this eepROM Command"); }
+		if (Command[1] != 8) { DisplayError("What am I meant to do with this eepROM Command"); }
 #endif
-		ReadFromEeprom(&Command[4],Command[3]);
+		ReadFromeepROM(&Command[4],Command[3]);
 		break;
 	case 5:
 #ifndef EXTERNAL_RELEASE
-		if (Command[0] != 10) { DisplayError("What am I meant to do with this Eeprom Command"); }
-		if (Command[1] != 1) { DisplayError("What am I meant to do with this Eeprom Command"); }
+		if (Command[0] != 10) { DisplayError("What am I meant to do with this eepROM Command"); }
+		if (Command[1] != 1) { DisplayError("What am I meant to do with this eepROM Command"); }
 #endif
-		WriteToEeprom(&Command[4],Command[3]);
+		WriteToeepROM(&Command[4],Command[3]);
 		break;
-	default:
-		if (ShowPifRamErrors) { DisplayError("Unknown EepromCommand %d",Command[2]); }
 	}
 }
 
 
-void LoadEeprom (void) {
+void LoadeepROM (void) {
 	char File[255], Directory[255];
 	DWORD dwRead;
 
 	GetAutoSaveDir(Directory);
 	sprintf(File,"%s%s.eep",Directory,RomName);
 	
-	hEepromFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
+	heepROMFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
-	if (hEepromFile == INVALID_HANDLE_VALUE) {
+	if (heepROMFile == INVALID_HANDLE_VALUE) {
 		switch (GetLastError()) {
 		case ERROR_PATH_NOT_FOUND:
 			CreateDirectory(Directory,NULL);
-			hEepromFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,
+			heepROMFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,
 				NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
-			if (hEepromFile == INVALID_HANDLE_VALUE) {
-				DisplayError(GS(MSG_FAIL_OPEN_EEPROM));
+			if (heepROMFile == INVALID_HANDLE_VALUE) {
+				DisplayError(GS(MSG_FAIL_OPEN_FLASH));
 			}
 			return;
 			break;
 		default:
-			DisplayError(GS(MSG_FAIL_OPEN_EEPROM));
+			DisplayError(GS(MSG_FAIL_OPEN_FLASH));
 			return;
 		}
 	}
-	memset(EEPROM,0xFF,sizeof(EEPROM));
-	SetFilePointer(hEepromFile,0,NULL,FILE_BEGIN);	
-	ReadFile(hEepromFile,EEPROM,sizeof(EEPROM),&dwRead,NULL);
+	memset(eepROM,0xFF,sizeof(eepROM));
+	SetFilePointer(heepROMFile,0,NULL,FILE_BEGIN);	
+	ReadFile(heepROMFile,eepROM,sizeof(eepROM),&dwRead,NULL);
 }
 
-void ReadFromEeprom(BYTE * Buffer, int line) {
+void ReadFromeepROM(BYTE * Buffer, int line) {
 	int i;
 	
-	if (hEepromFile == NULL) {
-		LoadEeprom();
+	if (heepROMFile == NULL) {
+		LoadeepROM();
 	}
-	for(i=0;i<8;i++) { Buffer[i]=EEPROM[line*8+i]; }
+	for(i=0;i<8;i++) { Buffer[i]=eepROM[line*8+i]; }
 }
 
-void WriteToEeprom(BYTE * Buffer, int line) {
+void WriteToeepROM(BYTE * Buffer, int line) {
 	DWORD dwWritten;
 	int i;
 
-	if (hEepromFile == NULL) {
-		LoadEeprom();
+	if (heepROMFile == NULL) {
+		LoadeepROM();
 	}
-	for(i=0;i<8;i++) { EEPROM[line*8+i]=Buffer[i]; }
-	SetFilePointer(hEepromFile,line*8,NULL,FILE_BEGIN);	
-	WriteFile( hEepromFile,Buffer,8,&dwWritten,NULL );
+	for(i=0;i<8;i++) { eepROM[line*8+i]=Buffer[i]; }
+	SetFilePointer(heepROMFile,line*8,NULL,FILE_BEGIN);	
+	WriteFile( heepROMFile,Buffer,8,&dwWritten,NULL );
 }

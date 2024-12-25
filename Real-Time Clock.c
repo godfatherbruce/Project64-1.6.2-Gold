@@ -58,8 +58,6 @@ int RTC_Command (BYTE *Command) {
 				Command[12] = 0x00;
 			}
 			break;
-		default:
-			if (ShowPifRamErrors) { DisplayError("Unknown RTC Read Block %X", Command[3]); } 
 		}
 		break;
 
@@ -68,7 +66,6 @@ int RTC_Command (BYTE *Command) {
 		case 0x00:	// This area should lock the chip and release it as needed when block 0x02 is written to.
 					// As the chip is not real it is not necessary to emulate these commands.
 					// Pif should remain locked as busy while this is happening and only be unset by block 0x02.
-			if (Command[12] != 0x80 && ShowPifRamErrors) { DisplayError("RTC Write Status is not busy? %X", Command[12]); }
 			break;
 		case 0x02:
 			{
@@ -89,8 +86,6 @@ int RTC_Command (BYTE *Command) {
 				Command[12] = 0x00;
 			}
 			break;
-		default:
-			if (ShowPifRamErrors) { DisplayError("Unknown RTC Write Block %X", Command[3]); }
 		}
 		break;
 

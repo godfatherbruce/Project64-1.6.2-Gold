@@ -28,16 +28,16 @@
 #include "main.h"
 #include "CPU.h"
 
-static HANDLE hSramFile = NULL;
+static HANDLE hSRAMFile = NULL;
 
-void CloseSram (void) {
-	if (hSramFile) {
-		CloseHandle(hSramFile);
-		hSramFile = NULL;
+void CloseSRAM (void) {
+	if (hSRAMFile) {
+		CloseHandle(hSRAMFile);
+		hSRAMFile = NULL;
 	}
 }
   
-/*BOOL LoadSram (void) {
+/*BOOL LoadSRAM (void) {
 	char File[255], Directory[255];
 	LPVOID lpMsgBuf;
 
@@ -46,7 +46,7 @@ void CloseSram (void) {
 	
 	// This fixes the pop-up error message (Icepir8)
   
-  BOOL LoadSram (void) {
+  BOOL LoadSRAM (void) {
   int i = 0;
   char File[255], Directory[255];
   LPVOID lpMsgBuf;
@@ -59,15 +59,15 @@ void CloseSram (void) {
       File[i] = '_';
   }
 	
-	hSramFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
+	hSRAMFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
-	if (hSramFile == INVALID_HANDLE_VALUE) {
+	if (hSRAMFile == INVALID_HANDLE_VALUE) {
 		switch (GetLastError()) {
 		case ERROR_PATH_NOT_FOUND:
 			CreateDirectory(Directory,NULL);
-			hSramFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,
+			hSRAMFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,
 				NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
-			if (hSramFile == INVALID_HANDLE_VALUE) {
+			if (hSRAMFile == INVALID_HANDLE_VALUE) {
 				FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | 
 					FORMAT_MESSAGE_IGNORE_INSERTS,NULL,GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 					(LPTSTR) &lpMsgBuf,0,NULL 
@@ -90,27 +90,27 @@ void CloseSram (void) {
 	return TRUE;
 }
 
-void DmaFromSram(BYTE * dest, int StartOffset, int len) {
+void DmaFromSRAM(BYTE * dest, int StartOffset, int len) {
 	DWORD dwRead;
 
-	if (hSramFile == NULL) {
-		if (!LoadSram()) {
+	if (hSRAMFile == NULL) {
+		if (!LoadSRAM()) {
 			return;
 		}
 	}
-	SetFilePointer(hSramFile,StartOffset,NULL,FILE_BEGIN);	
-	ReadFile(hSramFile,dest,len,&dwRead,NULL);
+	SetFilePointer(hSRAMFile,StartOffset,NULL,FILE_BEGIN);	
+	ReadFile(hSRAMFile,dest,len,&dwRead,NULL);
 
 }
 
-void DmaToSram(BYTE * Source, int StartOffset, int len) {
+void DmaToSRAM(BYTE * Source, int StartOffset, int len) {
 	DWORD dwWritten;
 
-	if (hSramFile == NULL) {
-		if (!LoadSram()) {
+	if (hSRAMFile == NULL) {
+		if (!LoadSRAM()) {
 			return;
 		}
 	}
-	SetFilePointer(hSramFile,StartOffset,NULL,FILE_BEGIN);	
-	WriteFile(hSramFile,Source,len,&dwWritten,NULL);
+	SetFilePointer(hSRAMFile,StartOffset,NULL,FILE_BEGIN);	
+	WriteFile(hSRAMFile,Source,len,&dwWritten,NULL);
 }

@@ -29,7 +29,7 @@
 #include "main.h"
 #include "cpu.h"
 #include "x86.h"
-#include "debugger.h"
+
 #include "plugin.h"
 
 void _fastcall CreateSectionLinkage (BLOCK_SECTION * Section);
@@ -94,10 +94,6 @@ void _fastcall AddParent(BLOCK_SECTION * Section, BLOCK_SECTION * Parent){
 			memcpy(&Section->RegStart,&Parent->Cont.RegSet,sizeof(REG_INFO));
 		} else if (Parent->JumpSection == Section) {
 			memcpy(&Section->RegStart,&Parent->Jump.RegSet,sizeof(REG_INFO));
-		} else {
-#ifndef EXTERNAL_RELEASE
-			DisplayError("How are these sections joined?????");
-#endif
 		}
 		memcpy(&Section->RegWorking,&Section->RegStart,sizeof(REG_INFO));
 	} else {
@@ -176,9 +172,7 @@ BYTE * Compiler4300iBlock(void) {
 		CPU_Message("====== PIF ROM: block ======");
 	} else {
 #ifndef ROM_IN_MAPSPACE
-#ifndef EXTERNAL_RELEASE
-		DisplayError("Ummm... Where does this block go");
-#endif
+                DisplayError("Unknown block location.\n\nEmulation ending");
 		ExitThread(0);			
 #endif
 	}
@@ -186,15 +180,6 @@ BYTE * Compiler4300iBlock(void) {
 	CPU_Message("Start of Block: %X",BlockInfo.StartVAddr );
 	CPU_Message("No of Sections: %d",BlockInfo.NoOfSections );
 	CPU_Message("====== recompiled code ======");
-	if (UseLinking) {
-		/*for (count = 0; count < BlockInfo.NoOfSections; count ++) {
-			DisplaySectionInformation(&BlockInfo.BlockInfo,count + 1,BlockInfo.BlockInfo.Test + 1);
-		}*/
-	}
-	if (CPU_Type == CPU_SyncCores) {
-		//if ((DWORD)BlockInfo.CompiledLocation == 0x60A7B73B) { BreakPoint(); }
-		MoveConstToVariable((DWORD)BlockInfo.CompiledLocation,&CurrentBlock,"CurrentBlock");
-	}
 	
 	if (UseLinking) {
 		while (GenerateX86Code(&BlockInfo.BlockInfo,GetNewTestValue()));
@@ -219,19 +204,6 @@ BYTE * Compiler4300iBlock(void) {
 	BlockInfo.ExitInfo = NULL;
 	BlockInfo.ExitCount = 0;
 
-	if (ShowCompMem) {
-		char StatusString[256];		
-		DWORD Size, MB, KB;
-		
-		Size = RecompPos - RecompCode;
-		MB = Size / 0x100000;
-		Size -= MB * 0x100000;
-		KB = Size / 1024;
-		Size -= KB  * 1024;
-		sprintf(StatusString,"Memory used: %d mb %d kb %d bytes ",MB,KB,Size);
-		SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)StatusString );
-	}
-
 	return BlockInfo.CompiledLocation;
 }
 
@@ -245,13 +217,13 @@ BYTE * CompileDelaySlot(void) {
 
 	if ((StartAddress & 0xFFC) != 0) {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("Why are you compiling the Delay Slot at %X",StartAddress);
+		DisplayError("Delay slot start address error at %X\n\nEmulation ending",StartAddress);
 #endif
 		ExitThread(0);
 	}
 	if (!r4300i_LW_VAddr(StartAddress, &Opcode.Hex)) {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("TLB Miss in delay slot\nEmulation will know stop");
+		DisplayError("TLB miss in delay slot.\n\nEmulation ending");
 #endif
 		ExitThread(0);
 	} 
@@ -267,9 +239,7 @@ BYTE * CompileDelaySlot(void) {
 		CPU_Message("====== PIF ROM: Delay Slot ======");
 	} else {
 #ifndef ROM_IN_MAPSPACE
-#ifndef EXTERNAL_RELEASE
-		DisplayError("Ummm... Where does this block go");
-#endif
+                DisplayError("Unknown block location.\n\nEmulation ending");
 		ExitThread(0);
 #endif
 	}
@@ -281,10 +251,6 @@ BYTE * CompileDelaySlot(void) {
 	InitilzeSection (Section, NULL, PROGRAM_COUNTER, 0);
 	InitilizeRegSet(&Section->RegStart);
 	memcpy(&Section->RegWorking,&Section->RegStart,sizeof(REG_INFO));		
-
-	if (CPU_Type == CPU_SyncCores) {
-		MoveConstToVariable((DWORD)Block,&CurrentBlock,"CurrentBlock");
-	}
 
 	BlockCycleCount += CountPerOp;
 	//CPU_Message("BlockCycleCount = %d",BlockCycleCount);
@@ -439,7 +405,7 @@ BYTE * CompileDelaySlot(void) {
 	MoveVariableToX86reg(&JumpToLocation,"JumpToLocation",x86Reg);
 	MoveX86regToVariable(x86Reg,&PROGRAM_COUNTER,"PROGRAM_COUNTER");
 	MoveConstToVariable(NORMAL,&NextInstruction,"NextInstruction");
-	if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+	//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 	Ret();
 	CPU_Message("====== End of recompiled code ======");
 	return Block;
@@ -458,7 +424,7 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 		sprintf(String,"Exit_%d",BlockInfo.ExitCount);
 		if (x86Jmp == NULL) { 
 #ifndef EXTERNAL_RELEASE
-			DisplayError("CompileExit error");
+			DisplayError("Compileexit error.\n\nEmulation ending");
 #endif
 			ExitThread(0);
 		}
@@ -487,7 +453,7 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 
 	switch (reason) {
 	case Normal: case Normal_NoSysCheck:
-		if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Section.RegWorking.RandomModifier = 0;
 		Section.RegWorking.CycleCount = 0;
 		if (reason == Normal) { CompileSystemCheck(0,(DWORD)-1,Section.RegWorking);	}
@@ -563,29 +529,29 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 #endif
 		break;
 	case DoCPU_Action:
-		if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Call_Direct(DoSomething,"DoSomething");
-		if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Ret();
 		break;
 	case DoSysCall:
 		MoveConstToX86reg(NextInstruction == JUMP || NextInstruction == DELAY_SLOT,x86_ECX);		
 		Call_Direct(DoSysCallException,"DoSysCallException");
-		if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Ret();
 		break;
 	case COP1_Unuseable:
 		MoveConstToX86reg(NextInstruction == JUMP || NextInstruction == DELAY_SLOT,x86_ECX);		
 		MoveConstToX86reg(1,x86_EDX);
 		Call_Direct(DoCopUnusableException,"DoCopUnusableException");
-		if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Ret();
 		break;
 	case ExitResetRecompCode:
 		if (NextInstruction == JUMP || NextInstruction == DELAY_SLOT) {
 			BreakPoint();
 		}
-		if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Call_Direct(ResetRecompCode, "ResetRecompCode");
 		Ret();
 		break;
@@ -593,19 +559,19 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 		MoveConstToX86reg(NextInstruction == JUMP || NextInstruction == DELAY_SLOT,x86_ECX);
 		MoveVariableToX86reg(&TLBLoadAddress,"TLBLoadAddress",x86_EDX);
 		Call_Direct(DoTLBMiss,"DoTLBMiss");
-		if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Ret();
 		break;
 		case TLBWriteMiss:
 		MoveConstToX86reg(NextInstruction == JUMP || NextInstruction == DELAY_SLOT, x86_ECX);
 		MoveVariableToX86reg(&TLBLoadAddress, "TLBLoadAddress", x86_EDX);
 		Call_Direct(DoTLBMiss, "DoTLBMiss");
-		if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Ret();
 		break;
 #ifndef EXTERNAL_RELEASE
 	default:
-		DisplayError("how did you want to exit on reason (%d) ???",reason);
+		DisplayError("Unknown exit on reason %d",reason);
 #endif
 	}
 }
@@ -627,9 +593,9 @@ void CompileSystemCheck (DWORD TimerModifier, DWORD TargetPC, REG_INFO RegSet) {
 	InitilzeSection (&Section, NULL, (DWORD)-1, 0);
 	memcpy(&Section.RegWorking, &RegSet, sizeof(REG_INFO));
 	WriteBackRegisters(&Section);
-	if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+	//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 	Call_Direct(TimerDone,"TimerDone");
-	if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+	//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 	Popad();
 
 	//Interrupt
@@ -1753,7 +1719,7 @@ void GenerateSectionLinkage (BLOCK_SECTION * Section) {
 		}
 		if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
 		WriteBackRegisters(Section);
-		if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
+		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		MoveConstToVariable(DELAY_SLOT,&NextInstruction,"NextInstruction");
 		Ret();
 		return;
@@ -1921,7 +1887,6 @@ CPU_Message("PermLoop ***");
 			continue;
 		}
 		if (JumpInfo[count]->TargetPC != TargetSection[count]->StartPC) {
-			DisplayError("I need to add more code in GenerateSectionLinkage cause this is going to cause an exception");
 			_asm int 3
 		}
 		if (TargetSection[count]->CompiledLocation == NULL) {
@@ -2395,11 +2360,6 @@ BOOL GenerateX86Code (BLOCK_SECTION * Section, DWORD Test) {
 		//CPU_Message("MemoryStack = %s",Map_MemoryStack(Section, FALSE) > 0?x86_Name(Map_MemoryStack(Section, FALSE)):"Not Mapped");
 
 		if ((Section->CompilePC &0xFFC) == 0xFFC) {
-			if (NextInstruction == DO_DELAY_SLOT) {
-#ifndef EXTERNAL_RELEASE
-				DisplayError("Wanting to do delay slot over end of block");
-#endif
-			}
 			if (NextInstruction == NORMAL) {
 				CompileExit (Section->CompilePC + 4,Section->RegWorking,Normal,TRUE,NULL);
 				NextInstruction = END_BLOCK;
@@ -2520,19 +2480,11 @@ BOOL InheritParentInfo (BLOCK_SECTION * Section) {
 	}
 	
 	if (NoOfParents == 0) { 
-#ifndef EXTERNAL_RELEASE
-		DisplayError("No Parents ???"); 
-#endif
 		return FALSE;
 	} else if (NoOfParents == 1) { 
 		Parent = Section->ParentSection[0];
 		if (Section == Parent->ContinueSection) { JumpInfo = &Parent->Cont; }
 		else if (Section == Parent->JumpSection) { JumpInfo = &Parent->Jump; }
-		else { 
-#ifndef EXTERNAL_RELEASE
-			DisplayError("How are these sections joined?????"); return FALSE; 
-#endif
-		}
 
 		memcpy(&Section->RegStart,&JumpInfo->RegSet,sizeof(REG_INFO));
 		if (JumpInfo->LinkLocation != NULL) {
@@ -2553,7 +2505,7 @@ BOOL InheritParentInfo (BLOCK_SECTION * Section) {
 			NoOfCompiledParents += Parent->JumpSection != Parent->ContinueSection?1:2;
 		}
 	}
-	if (NoOfCompiledParents == 0){ DisplayError("No Parent has been compiled ????"); return FALSE; }	
+	if (NoOfCompiledParents == 0){ DisplayError("No compiled parent detected"); return FALSE; }	
 	SectionParents = (BLOCK_PARENT *)malloc(NoOfParents * sizeof(BLOCK_PARENT));
 	
 	for (count = 0, NoOfCompiledParents = 0;Section->ParentSection[count] != NULL;count++) {
@@ -2670,7 +2622,7 @@ BOOL InheritParentInfo (BLOCK_SECTION * Section) {
 					break;
 #ifndef EXTERNAL_RELEASE
 				default:
-					DisplayError("Unknown CPU State(%d) in InheritParentInfo",RegSet->MIPS_RegState[count2]);
+					DisplayError("Unknown inherintparentinfo CPU State: %d",RegSet->MIPS_RegState[count2]);
 #endif
 				}
 			}
@@ -2744,15 +2696,12 @@ BOOL InheritParentInfo (BLOCK_SECTION * Section) {
 				break;
 			case STATE_CONST_32:
 				if (MipsRegLo(count2) != RegSet->MIPS_RegVal[count2].UW[0]) {
-#if (!defined(EXTERNAL_RELEASE))
-					DisplayError("Umm.. how ???");
-#endif
 					NeedSync = TRUE;
 				}
 				break;
 #ifndef EXTERNAL_RELEASE
 			default:
-				DisplayError("Unhandled Reg state %d\nin InheritParentInfo",MipsRegState(count2));
+				DisplayError("Unhandled reg state in inheritparentinfo: %d",MipsRegState(count2));
 #endif
 			}
 		}
@@ -2866,7 +2815,7 @@ void MarkCodeBlock (DWORD PAddr) {
 	} else {
 #ifndef ROM_IN_MAPSPACE
 #ifndef EXTERNAL_RELEASE
-		DisplayError("Ummm... Which code block should be marked on\nPC = 0x%08X\nRdramSize: %X",PAddr,RdramSize);
+		DisplayError("Unknown block code to be marked on\nPC = 0x%08X\nRdramSize: %X\n\nEmulation ending",PAddr,RdramSize);
 #endif
 		ExitThread(0);
 #endif
@@ -2878,9 +2827,6 @@ void StartRecompilerCPU (void ) {
 	BYTE * Block;
 		
 	CoInitialize(NULL);
-#ifdef Log_x86Code
-	Start_x86_Log();
-#endif
 
 	if (ModCode_CheckMemoryCache || ModCode_CheckMemory2) {// *** Add in Build 53
 		if (TargetInfo == NULL) {
@@ -2908,7 +2854,6 @@ void StartRecompilerCPU (void ) {
 		}
 	}
 
-	if (AiRomOpen != NULL) { AiRomOpen(); }
 	if (GfxRomOpen != NULL) { GfxRomOpen(); }
 	if (ContRomOpen != NULL) { ContRomOpen(); }
 	ResetRecompCode();
@@ -2927,7 +2872,7 @@ void StartRecompilerCPU (void ) {
 						Addr = PROGRAM_COUNTER;
 						if (!TranslateVaddr(&Addr)) {
 #ifndef EXTERNAL_RELEASE
-							DisplayError("Failed to tranlate PC to a PAddr: %X\n\nEmulation stopped",PROGRAM_COUNTER);
+							DisplayError("Failed to tranlate PC to a PAddr: %X\n\nEmulation ending",PROGRAM_COUNTER);
 #endif
 							ExitThread(0);
 						}
@@ -2941,7 +2886,7 @@ void StartRecompilerCPU (void ) {
 						Value = (DWORD)(*(DelaySlotTable + (Addr >> 12)));
 					} __except(EXCEPTION_EXECUTE_HANDLER) {
 #ifndef EXTERNAL_RELEASE
-						DisplayError("Executing Delay Slot from non maped space\nPROGRAM_COUNTER = 0x%X",PROGRAM_COUNTER);
+						DisplayError("Executing delay slot from unmapped space\nPROGRAM_COUNTER = 0x%X\n\nEmulation ending",PROGRAM_COUNTER);
 #endif
 						ExitThread(0);
 					}
@@ -3023,24 +2968,6 @@ void StartRecompilerCPU (void ) {
 					*(DWORD *)(N64MEM + Addr) = Value;					
 					NextInstruction = NORMAL;
 				}
-				if (Profiling && IndvidualBlock) {
-					static DWORD ProfAddress = 0;
-
-					if ((PROGRAM_COUNTER & ~0xFFF) != ProfAddress) {
-						char Label[100];
-		
-						ProfAddress = PROGRAM_COUNTER & ~0xFFF;
-						sprintf(Label,"PC: %X to %X",ProfAddress,ProfAddress+ 0xFFC);
-						StartTimer(Label);				
-					}
-					/*if (PROGRAM_COUNTER >= 0x800DD000 && PROGRAM_COUNTER <= 0x800DDFFC) {
-						char Label[100];
-						sprintf(Label,"PC: %X   Block: %X",PROGRAM_COUNTER,Block);
-						StartTimer(Label);				
-					}*/
-				} else 	if ((Profiling || ShowCPUPer) && ProfilingLabel[0] == 0) { 
-					StartTimer("r4300i Running"); 
-				}
 				_asm {
 					pushad
 					call Block
@@ -3057,7 +2984,7 @@ void StartRecompilerCPU (void ) {
 					Addr = PROGRAM_COUNTER;
 					if (!TranslateVaddr(&Addr)) {
 #ifndef EXTERNAL_RELEASE
-						DisplayError("Failed to tranlate PC to a PAddr: %X\n\nEmulation stopped",PROGRAM_COUNTER);
+						DisplayError("Failed to translate PC to a PAddr: %X\n\nEmulation ending",PROGRAM_COUNTER);
 #endif
 						ExitThread(0);
 					}
@@ -3150,10 +3077,7 @@ void StartRecompilerCPU (void ) {
 
 			if (Block == NULL) {
 				DWORD OldProtect;
-				char Label[100];
 				
-				if (Profiling) { strncpy(Label, ProfilingLabel, sizeof(Label)); }
-				if (Profiling) { StartTimer("Compiling Block"); }	
 				__try {
 					Block = Compiler4300iBlock();
 				} __except(EXCEPTION_EXECUTE_HANDLER) {
@@ -3161,7 +3085,6 @@ void StartRecompilerCPU (void ) {
 					ResetRecompCode();
 					Block = Compiler4300iBlock();
 				}
-				if (Profiling) { StartTimer(Label); }	
 				if (SelfModCheck == ModCode_CheckMemoryCache || SelfModCheck == ModCode_CheckMemory2) {
 					TargetInfo[TargetIndex].CodeBlock  = Block;
 					TargetInfo[TargetIndex].OriginalMemory = *(QWORD *)(N64MEM+Addr);
@@ -3179,25 +3102,6 @@ void StartRecompilerCPU (void ) {
 				}
 				NextInstruction = NORMAL;
 			}
-			if (Profiling && IndvidualBlock) {
-				static DWORD ProfAddress = 0;
-
-				if ((PROGRAM_COUNTER & ~0xFFF) != ProfAddress) {
-					char Label[100];
-	
-					ProfAddress = PROGRAM_COUNTER & ~0xFFF;
-					sprintf(Label,"PC: %X to %X",ProfAddress,ProfAddress+ 0xFFC);
-					StartTimer(Label);				
-				}
-				/*if (PROGRAM_COUNTER >= 0x800DD000 && PROGRAM_COUNTER <= 0x800DDFFC) {
-					char Label[100];
-					sprintf(Label,"PC: %X   Block: %X",PROGRAM_COUNTER,Block);
-					StartTimer(Label);				
-				}*/
-			} else 	if ((Profiling || ShowCPUPer) && ProfilingLabel[0] == 0) { 
-				StartTimer("r4300i Running"); 
-			}
-
 			_asm {
 				pushad
 				call Block
@@ -3259,21 +3163,15 @@ void SyncRegState (BLOCK_SECTION * Section, REG_INFO * SyncTo) {
 				break;
 			case STATE_CONST_64:
 				if (MipsReg(count) != SyncTo->MIPS_RegVal[count].UDW) {
-#if (!defined(EXTERNAL_RELEASE))
-					DisplayError("Umm.. how ???");
-#endif
+					continue;
 				}
-				continue;
 			case STATE_CONST_32:
 				if (MipsRegLo(count) != SyncTo->MIPS_RegVal[count].UW[0]) {
-#if (!defined(EXTERNAL_RELEASE))
-					DisplayError("Umm.. how ???");
-#endif
+					continue;
 				}
-				continue;
 #ifndef EXTERNAL_RELEASE
 			default:
-				DisplayError("Unhandled Reg state %d\nin SyncRegState",MipsRegState(count));
+				DisplayError("Unhandled reg state in syncregstate: %d",MipsRegState(count));
 #endif
 			}			
 		}
@@ -3318,8 +3216,8 @@ void SyncRegState (BLOCK_SECTION * Section, REG_INFO * SyncTo) {
 				break;
 			default:
 #ifndef EXTERNAL_RELEASE
-				CPU_Message("Do something with states in SyncRegState\nSTATE_MAPPED_64\n%d",MipsRegState(count));
-				DisplayError("Do something with states in SyncRegState\nSTATE_MAPPED_64\n%d",MipsRegState(count));
+				CPU_Message("Do something with states in syncregstate\nSTATE_MAPPED_64\n%d",MipsRegState(count));
+				DisplayError("Do something with states in syncregstate\nSTATE_MAPPED_64\n%d",MipsRegState(count));
 #endif
 				continue;
 			}
@@ -3356,8 +3254,8 @@ void SyncRegState (BLOCK_SECTION * Section, REG_INFO * SyncTo) {
 			case STATE_CONST_64:
 				DisplayError("hi %X\nLo %X",MipsRegHi(count),MipsRegLo(count));
 			default:				
-				CPU_Message("Do something with states in SyncRegState\nSTATE_MAPPED_32_SIGN\n%d",MipsRegState(count));
-				DisplayError("Do something with states in SyncRegState\nSTATE_MAPPED_32_SIGN\n%d",MipsRegState(count));
+				CPU_Message("Do something with states in syncregstate\nSTATE_MAPPED_32_SIGN\n%d",MipsRegState(count));
+				DisplayError("Do something with states in syncregstate\nSTATE_MAPPED_32_SIGN\n%d",MipsRegState(count));
 #endif
 			}
 			MipsRegLo(count) = x86Reg;
@@ -3382,15 +3280,15 @@ void SyncRegState (BLOCK_SECTION * Section, REG_INFO * SyncTo) {
 					CPU_Message("Sign Problems in SyncRegState\nSTATE_MAPPED_32_ZERO");
 					CPU_Message("%s: %X",GPR_Name[count],MipsRegLo_S(count));
 #ifndef EXTERNAL_RELEASE
-					DisplayError("Sign Problems in SyncRegState\nSTATE_MAPPED_32_ZERO");
+					DisplayError("Sign issues detected in syncregstate\nSTATE_MAPPED_32_ZERO");
 #endif
 				}
 				MoveConstToX86reg(MipsRegLo(count),x86Reg);  
 				break;
 #ifndef EXTERNAL_RELEASE
 			default:				
-				CPU_Message("Do something with states in SyncRegState\nSTATE_MAPPED_32_ZERO\n%d",MipsRegState(count));
-				DisplayError("Do something with states in SyncRegState\nSTATE_MAPPED_32_ZERO\n%d",MipsRegState(count));
+				CPU_Message("SyncRegState states\nSTATE_MAPPED_32_ZERO\n%d",MipsRegState(count));
+				DisplayError("SyncRegState states\nSTATE_MAPPED_32_ZERO\n%d",MipsRegState(count));
 #endif
 			}
 			MipsRegLo(count) = x86Reg;
@@ -3402,7 +3300,7 @@ void SyncRegState (BLOCK_SECTION * Section, REG_INFO * SyncTo) {
 #if (!defined(EXTERNAL_RELEASE))
 			CPU_Message("%d\n%d\nreg: %s (%d)",SyncTo->MIPS_RegState[count],MipsRegState(count),GPR_Name[count],count);
 			DisplayError("%d\n%d\nreg: %s (%d)",SyncTo->MIPS_RegState[count],MipsRegState(count),GPR_Name[count],count);
-			DisplayError("Do something with states in SyncRegState");
+			DisplayError("SyncRegState states");
 #endif
 			changed = FALSE;
 		}

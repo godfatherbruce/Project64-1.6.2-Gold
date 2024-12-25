@@ -29,7 +29,6 @@
 #include "main.h"
 #include "cpu.h"
 #include "memory.h"
-#include "debugger.h"
 #include "plugin.h"
 #include "cheats.h"
 #include "unzip.h"
@@ -37,20 +36,16 @@
 #include "resource.h"
 #include "RomTools_Common.h"
 
-#define MenuLocOfUsedFiles	12
+#define MenuLocOfUsedFiles	11
 #define MenuLocOfUsedDirs	(MenuLocOfUsedFiles + 1)
 
 DWORD RomFileSize, RomRamSize, RomSaveUsing, RomCPUType, RomSelfMod,
 	RomUseTlb, RomUseLinking, RomCF, RomUseLargeBuffer, RomUseCache,
 	RomDelaySI, RomSPHack, RomAudioSignal, RomDelayRDP, RomDelayRSP, RomEmulateAI;
-char CurrentFileName[MAX_PATH+1] = {""}, RomName[MAX_PATH+1] = {""}, RomHeader[0x1000], CurrentGameInfoID[250];
+char CurrentFileName[MAX_PATH+1] = {""}, RomName[MAX_PATH+1] = {""}, RomHeader[0x1000];
 char LastRoms[10][MAX_PATH+1], LastDirs[10][MAX_PATH+1];
 
 BOOL IsValidRomImage ( BYTE Test[4] );
-
-void GetRomIdentifier(char* Identifier) {
-	sprintf(Identifier, "%08X-%08X-C:%X", *(DWORD*)(&RomHeader[0x10]), *(DWORD*)(&RomHeader[0x14]), RomHeader[0x3D]);
-}
 
 void AddRecentDir(HWND hWnd, char * addition) {
 	DWORD count;
@@ -103,7 +98,6 @@ void AddRecentFile(HWND hWnd, char * addition) {
 void ByteSwapRom (BYTE * Rom, DWORD RomLen) {
 	DWORD count;
 
-	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MSG_BYTESWAP) );
 	switch (*((DWORD *)&Rom[0])) {
 	case 0x12408037:
 		for( count = 0 ; count < RomLen; count += 4 ) {
@@ -143,7 +137,7 @@ int ChooseN64RomToOpen ( void ) {
 
 	openfilename.lStructSize  = sizeof( openfilename );
 	openfilename.hwndOwner    = hMainWindow;
-	openfilename.lpstrFilter  = "N64 ROMs (*.zip, *.?64, *.rom, *.usa, *.jap, *.pal, *.bin)\0*.?64;*.zip;*.bin;*.rom;*.usa;*.jap;*.pal\0All files (*.*)\0*.*\0";
+	openfilename.lpstrFilter  = "N64 ROMs (*.zip, *.z64, *.n64)\0*.zip;*.z64;*.n64\0All files (*.*)\0*.*\0";
 	openfilename.lpstrFile    = FileName;
 	openfilename.lpstrInitialDir    = Directory;
 	openfilename.nMaxFile     = MAX_PATH;
@@ -171,10 +165,10 @@ void GetRomDirectory ( char * Directory ) {
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
 
-	sprintf(Group,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(Group,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,Group,0,KEY_ALL_ACCESS,
 		&hKeyResults);
-	sprintf(Directory,"%s%sRom\\",drive,dir);
+	sprintf(Directory,"%s%sRoms\\",drive,dir);
 
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Bytes = sizeof(Dir);
@@ -194,7 +188,7 @@ BOOL IsValidRomImage ( BYTE Test[4] ) {
 
 BOOL LoadDataFromRomFile(char * FileName,BYTE * Data,int DataLen, int * RomSize) {
 	BYTE Test[4];
-	int count;
+        int count;
 
 	if (_strnicmp(&FileName[strlen(FileName)-4], ".ZIP",4) == 0 ){
 		int len, port = 0, FoundRom;
@@ -298,7 +292,7 @@ void CreateRecentDirList (HMENU hMenu) {
 	long lResult;
 	DWORD count;
 
-	sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(String,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0,KEY_ALL_ACCESS,&hKeyResults);
 
 	if (lResult == ERROR_SUCCESS) {
@@ -322,7 +316,6 @@ void CreateRecentDirList (HMENU hMenu) {
 
 		hSubMenu = GetSubMenu(hMenu,0);
 		DeleteMenu(hSubMenu, MenuLocOfUsedDirs, MF_BYPOSITION);
-		if (BasicMode || !RomListVisible()) { return; }
 		memset(&menuinfo, 0, sizeof(MENUITEMINFO));
 		menuinfo.cbSize = sizeof(MENUITEMINFO);
 		menuinfo.fMask = MIIM_TYPE|MIIM_ID;
@@ -363,7 +356,7 @@ void CreateRecentFileList(HMENU hMenu) {
 	long lResult;
 	DWORD count;
 
-	sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(String,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0,KEY_ALL_ACCESS,&hKeyResults);
 
 	if (lResult == ERROR_SUCCESS) {
@@ -380,30 +373,7 @@ void CreateRecentFileList(HMENU hMenu) {
 		}
 		RegCloseKey(hKeyResults);
 	}
-	if (BasicMode || !RomListVisible()) {
-		HMENU hSubMenu;
-		MENUITEMINFO menuinfo;
-
-		hSubMenu = GetSubMenu(hMenu,0);
-		DeleteMenu(hSubMenu, MenuLocOfUsedFiles, MF_BYPOSITION);
-		if (strlen(LastRoms[0]) == 0) {
-			DeleteMenu(hSubMenu, MenuLocOfUsedFiles, MF_BYPOSITION);
-		}
-
-		memset(&menuinfo, 0, sizeof(MENUITEMINFO));
-		menuinfo.cbSize = sizeof(MENUITEMINFO);
-		menuinfo.fMask = MIIM_TYPE|MIIM_ID;
-		menuinfo.fType = MFT_STRING;
-		menuinfo.fState = MFS_ENABLED;
-		menuinfo.dwTypeData = String;
-		menuinfo.cch = 256;
-		for (count = 0; count < RomsToRemember; count ++ ) {
-			if (strlen(LastRoms[count]) == 0) { break; }
-			menuinfo.wID = ID_FILE_RECENT_FILE + count;
-			sprintf(String,"&%d %s",(count + 1) % 10,LastRoms[count]);
-			InsertMenuItem(hSubMenu, MenuLocOfUsedFiles + count, TRUE, &menuinfo);
-		}
-	} else {
+	{
 		HMENU hSubMenu;
 		MENUITEMINFO menuinfo;
 
@@ -455,7 +425,6 @@ void LoadRecentRom (DWORD Index) {
 BOOL LoadRomHeader ( void ) {
 	char drive[_MAX_DRIVE] ,FileName[_MAX_DIR],dir[_MAX_DIR], ext[_MAX_EXT];
 	BYTE Test[4];
-	int count;
 
 	if (_strnicmp(&CurrentFileName[strlen(CurrentFileName)-4], ".ZIP",4) == 0 ){
 		int port = 0, FoundRom;
@@ -515,8 +484,6 @@ BOOL LoadRomHeader ( void ) {
 			NULL);
 
 		if (hFile == INVALID_HANDLE_VALUE) {
-			SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"" );
-			DisplayError(GS(MSG_FAIL_OPEN_IMAGE));
 			return FALSE;
 		}
 
@@ -533,8 +500,6 @@ BOOL LoadRomHeader ( void ) {
 		CloseHandle( hFile );
 	}
 	ByteSwapRom(RomHeader,sizeof(RomHeader));
-
-	// This replaces the Internal Name with File Name (Gent)
 
 	memcpy(&RomName, &FileName, 60);
 	/*for( count = 0 ; count < 20; count += 4 ) {
@@ -689,17 +654,16 @@ void ReadRomOptions (void) {
 		if (RomCF > 6) { RomCF = -1; }
 
 		_GetPrivateProfileString(Identifier,"Save Type","",String,sizeof(String),IniFileName);
-		if (strcmp(String,"4kbit Eeprom") == 0)       { RomSaveUsing = Eeprom_4K; }
-		else if (strcmp(String,"16kbit Eeprom") == 0) { RomSaveUsing = Eeprom_16K; }
-		else if (strcmp(String,"Sram") == 0)          { RomSaveUsing = Sram; }
-		else if (strcmp(String,"FlashRam") == 0)      { RomSaveUsing = FlashRam; }
+		if (strcmp(String,"4kbit eepROM") == 0)       { RomSaveUsing = eepROM_4K; }
+		else if (strcmp(String,"16kbit eepROM") == 0) { RomSaveUsing = eepROM_16K; }
+		else if (strcmp(String,"SRAM") == 0)          { RomSaveUsing = SRAM; }
+		else if (strcmp(String,"FlashRAM") == 0)      { RomSaveUsing = FlashRAM; }
 		else                                          { RomSaveUsing = Auto; }
 
 		if (UseIni) {
 			_GetPrivateProfileString(Identifier,"CPU Type","",String,sizeof(String),IniFileName);
 			if (strcmp(String,"Interpreter") == 0)       { RomCPUType = CPU_Interpreter; }
 			else if (strcmp(String,"Recompiler") == 0)   { RomCPUType = CPU_Recompiler; }
-			else if (strcmp(String,"SyncCores") == 0)    { RomCPUType = CPU_SyncCores; }
 			else                                         { RomCPUType = CPU_Default; }
 
 			_GetPrivateProfileString(Identifier,"Self-modifying code Method","",String,sizeof(String),IniFileName);
@@ -739,7 +703,6 @@ void ReadRomOptions (void) {
 void OpenN64Image ( void ) {
 	DWORD ThreadID;
 
-	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MSG_CHOOSE_IMAGE) );
 	if (ChooseN64RomToOpen()) {
 		CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)OpenChosenFile,NULL,0, &ThreadID);
 	} else {
@@ -752,13 +715,13 @@ void SetNewFileDirectory (void ){
 	HKEY hKeyResults = 0;
 	long lResult;
 
-	sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(String,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);
 	if (lResult == ERROR_SUCCESS) {
 		char drive[_MAX_DRIVE] ,dir[_MAX_DIR], fname[_MAX_FNAME],ext[_MAX_EXT];
 		DWORD Type, ChangeRomDir, Bytes = 4;
 
-		lResult = RegQueryValueEx(hKeyResults,"Use Default Rom Dir",0,&Type,(LPBYTE)(&ChangeRomDir),&Bytes);
+		lResult = RegQueryValueEx(hKeyResults,"Use Default ROM Dir",0,&Type,(LPBYTE)(&ChangeRomDir),&Bytes);
 		if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { ChangeRomDir = FALSE; }
 
 		if (!ChangeRomDir) { return; }
@@ -800,11 +763,7 @@ void OpenChosenFile ( void ) {
 		}
 		DrawMenuBar(hMainWindow);
 	}
-	Sleep(1000);
 	CloseCpu();
-#if (!defined(EXTERNAL_RELEASE))
-	ResetMappings();
-#endif
 	SetNewFileDirectory();
 	strcpy(MapFile,CurrentFileName);
 	if (_strnicmp(&CurrentFileName[strlen(CurrentFileName)-4], ".ZIP",4) == 0 ){
@@ -855,9 +814,7 @@ void OpenChosenFile ( void ) {
 				len = 4;
 				for (count = 4; count < (int)RomFileSize; count += ReadFromRomSection) {
 					len += unzReadCurrentFile(file,&ROM[count],ReadFromRomSection);
-					sprintf(Message,"%s: %.2f%c",GS(MSG_LOADED),((float)len/(float)RomFileSize) * 100.0f,'%');
 					SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)Message );
-					Sleep(100);
 				}
 				if ((int)RomFileSize != len) {
 					unzCloseCurrentFile(file);
@@ -899,11 +856,6 @@ void OpenChosenFile ( void ) {
 			ShowRomList(hMainWindow);
 			return;
 		}
-#if (!defined(EXTERNAL_RELEASE))
-		if (AutoLoadMapFile) {
-			OpenZipMapFile(MapFile);
-		}
-#endif
 	} else {
 		DWORD dwRead, dwToRead, TotalRead;
 		HANDLE hFile;
@@ -941,7 +893,6 @@ void OpenChosenFile ( void ) {
 			return;
 		}
 
-		SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MSG_LOADING) );
 		SetFilePointer(hFile,0,0,FILE_BEGIN);
 
 		TotalRead = 0;
@@ -958,9 +909,7 @@ void OpenChosenFile ( void ) {
 				return;
 			}
 			TotalRead += dwRead;
-			sprintf(Message,"%s: %.2f%c",GS(MSG_LOADED),((float)TotalRead/(float)RomFileSize) * 100.0f,'%');
 			SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)Message );
-			Sleep(100);
 		}
 		dwRead = TotalRead;
 
@@ -986,25 +935,6 @@ void OpenChosenFile ( void ) {
 	}
 #endif
 	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"" );
-#if (!defined(EXTERNAL_RELEASE))
-	if (AutoLoadMapFile) {
-		char *p;
-
-		p = strrchr(MapFile,'.');
-		if (p != NULL) {
-			*p = '\0';
-		}
-		strcat(MapFile,".cod");
-		if (OpenMapFile(MapFile)) {
-			p = strrchr(MapFile,'.');
-			if (p != NULL) {
-				*p = '\0';
-			}
-			strcat(MapFile,".map");
-			OpenMapFile(MapFile);
-		}
-	}
-#endif
 
 	memcpy(&RomName[0],(void *)(ROM + 0x20),20);
 	for( count = 0 ; count < 20; count += 4 ) {
@@ -1026,10 +956,7 @@ void OpenChosenFile ( void ) {
 	RomName[20] = '\0';
 	if (strlen(RomName) == 0) { strcpy(RomName,FileName); }
 
-	// This replaces the use of ROM Internal Name with File name in the title bar
-	// what i would like to see is File name used until Game Name= exists & then use that (Gent)
-
-	sprintf(WinTitle, "%s - %s", FileName, AppName);
+	sprintf(WinTitle, "%s - %s, %s", AppName, RomName, FileName);
 	for( count = 0 ; count < (int)strlen(RomName); count ++ ) {
 		switch (RomName[count]) {
 		case '/':
@@ -1046,19 +973,17 @@ void OpenChosenFile ( void ) {
 	if (!RememberCheats) { DisableAllCheats(); }
 	EnableOpenMenuItems();
 	//if (RomBrowser) { SetupPlugins(hMainWindow); }
-	SetCurrentSaveState(hMainWindow,ID_CURRENTSAVE_DEFAULT);
-	sprintf(WinTitle,"%s - [ %s ]",GS(MSG_LOADED),FileName);
-	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)WinTitle );
+        SetCurrentSaveState(hMainWindow,ID_CURRENTSAVE_DEFAULT);
+	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"");
 	if (AutoStart) {
 		StartEmulation();
-		Sleep(100);
 		if (AutoFullScreen) {
 			char Status[100], Identifier[100], result[100];
 
 			sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(RomHeader + 0x10),*(DWORD *)(RomHeader + 0x14),*(RomHeader + 0x3D));
-			_GetPrivateProfileString(Identifier,"Status",Default_RomStatus,Status,sizeof(Status),GetIniFileName());
+			_GetPrivateProfileString(Identifier,"Status",GS(RB_NOT_IN_RDB),Status,sizeof(Status),GetIniFileName());
 			strcat(Status,".AutoFullScreen");
-			_GetPrivateProfileString("Rom Status",Status,"True",result,sizeof(result),GetIniFileName());
+			_GetPrivateProfileString("ROM Status",Status,"True",result,sizeof(result),GetIniFileName());
 			if (strcmp(result,"True") == 0) {
 				SendMessage(hMainWindow,WM_COMMAND,ID_OPTIONS_FULLSCREEN,0);
 			}
@@ -1072,7 +997,7 @@ void SaveRecentDirs (void) {
 	DWORD Disposition = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(String,"N64 Software\\%s",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"",REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
@@ -1093,7 +1018,7 @@ void SaveRecentFiles (void) {
 	DWORD Disposition = 0;
 	char String[200];
 
-	sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(String,"N64 Software\\%s",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"",REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
@@ -1117,10 +1042,8 @@ void SaveRomOptions (void) {
 
 	IniFileName = GetIniFileName();
 	sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-	
-	// This changes "Internal Name" to "Game Name" in the RDB where File Name is placed from Line 539 (Gent)
+	_WritePrivateProfileString(Identifier,"Internal Name",RomName,IniFileName);
 
-	_WritePrivateProfileString(Identifier, "Game Name", RomName, IniFileName);
 	switch (RomRamSize) {
 	case 0x400000: strcpy(String,"4"); break;
 	case 0x800000: strcpy(String,"8"); break;
@@ -1135,10 +1058,10 @@ void SaveRomOptions (void) {
 	_WritePrivateProfileString(Identifier,"Counter Factor",String,GetIniFileName());
 
 	switch (RomSaveUsing) {
-	case Eeprom_4K: sprintf(String,"4kbit Eeprom"); break;
-	case Eeprom_16K: sprintf(String,"16kbit Eeprom"); break;
-	case Sram: sprintf(String,"Sram"); break;
-	case FlashRam: sprintf(String,"FlashRam"); break;
+	case eepROM_4K: sprintf(String,"4kbit eepROM"); break;
+	case eepROM_16K: sprintf(String,"16kbit eepROM"); break;
+	case SRAM: sprintf(String,"SRAM"); break;
+	case FlashRAM: sprintf(String,"FlashRAM"); break;
 	default: sprintf(String,"First Save Type"); break;
 	}
 	_WritePrivateProfileString(Identifier,"Save Type",String,GetIniFileName());
@@ -1146,7 +1069,6 @@ void SaveRomOptions (void) {
 	switch (RomCPUType) {
 	case CPU_Interpreter: sprintf(String,"Interpreter"); break;
 	case CPU_Recompiler: sprintf(String,"Recompiler"); break;
-	case CPU_SyncCores: sprintf(String,"SyncCores"); break;
 	default: sprintf(String,"Default"); break;
 	}
 	_WritePrivateProfileString(Identifier,"CPU Type",String,GetIniFileName());
@@ -1189,7 +1111,7 @@ void SetRomDirectory ( char * Directory ) {
 	DWORD Disposition = 0;
 	char Group[200];
 
-	sprintf(Group,"Software\\N64 Emulation\\%s",AppName);
+	sprintf(Group,"N64 Software\\%s",AppName);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, Group,0,"",REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL,&hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
@@ -1259,7 +1181,7 @@ void RecalculateCRCs ( void ) {
 	
 	if (*(DWORD *)&ROM[0x10] != crc[0] || *(DWORD *)&ROM[0x14] != crc[1]) {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("Calculated CRC does not match CRC1 and CRC2.");
+		DisplayError("Calculated CRC mismatches CRC1 and CRC2.");
 #endif
 		ROM[0x13] = (crc[0] & 0xFF000000) >> 24;
 		ROM[0x12] = (crc[0] & 0x00FF0000) >> 16;

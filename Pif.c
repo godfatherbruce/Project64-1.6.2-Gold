@@ -28,7 +28,6 @@
 #include "main.h"
 #include "cpu.h"
 #include "plugin.h"
-#include "Debugger.h"
 #include "n64_cic_nus_6105.h"
 #include "RomTools_Common.h"
 #include "Real-Time Clock.h"
@@ -57,44 +56,6 @@ int GetCicChipID (char * RomData) {
 	default:
 		return -1;
 	}
-}
-
-void LogControllerPakData (char * Description) {
-#if (!defined(EXTERNAL_RELEASE))
-	int count, count2;
-	char HexData[100], AsciiData[100], Addon[20];
-	LogMessage("\t%s:",Description);			
-	LogMessage("\t------------------------------");
-	for (count = 0; count < 16; count ++ ) {
-		if ((count % 4) == 0) { 
-			sprintf(HexData,"\0"); 
-			sprintf(AsciiData,"\0"); 
-		}
- 		sprintf(Addon,"%02X %02X %02X %02X", 
-			PIF_Ram[(count << 2) + 0], PIF_Ram[(count << 2) + 1], 
-			PIF_Ram[(count << 2) + 2], PIF_Ram[(count << 2) + 3] );
-		strcat(HexData,Addon);
-		if (((count + 1) % 4) != 0) {
-			sprintf(Addon,"-");
-			strcat(HexData,Addon);
-		} 
-		
-		Addon[0] = 0;
-		for (count2 = 0; count2 < 4; count2++) {
-			if (PIF_Ram[(count << 2) + count2] < 30) {
-				strcat(Addon,".");
-			} else {
-				sprintf(Addon,"%s%c",Addon,PIF_Ram[(count << 2) + count2]);
-			}
-		}
-		strcat(AsciiData,Addon);
-		
-		if (((count + 1) % 4) == 0) {
-			LogMessage("\t%s %s",HexData, AsciiData);
-		} 
-	}
-	LogMessage("");
-#endif
 }
 
 void PifRamRead (void) {
@@ -142,7 +103,6 @@ void PifRamRead (void) {
 				CurPos += PIF_Ram[CurPos] + (PIF_Ram[CurPos + 1] & 0x3F) + 1;
 				Channel += 1;
 			} else {
-				if (ShowPifRamErrors) { DisplayError("Unknown Command in PifRamRead(%X)",PIF_Ram[CurPos]); }
 				CurPos = 0x40;
 			}
 			break;
@@ -172,8 +132,6 @@ void PifRamWrite (void) {
 		case 0xC0:
 			memset(PIF_Ram,0,0x40); break;
 		case 0x02: break;	// CIC NUS 6105 Encryption related, already handled in PifRamRead
-		default:
-			if (ShowPifRamErrors) { DisplayError("Unknown PifRam control: %d",PIF_Ram[0x3F]); }
 		}
 		return;
 	}
@@ -197,16 +155,15 @@ void PifRamWrite (void) {
 					}
 				} else if (Channel == 4) {
 					if (RTC_Command(&PIF_Ram[CurPos]) == FALSE)
-						EepromCommand(&PIF_Ram[CurPos]);
+						eepROMCommand(&PIF_Ram[CurPos]);
 				} else {
 #ifndef EXTERNAL_RELEASE
-					DisplayError("Command on channel 5?");
+					DisplayError("Unknown command, possibly channel 5.");
 #endif
 				}
 				CurPos += PIF_Ram[CurPos] + (PIF_Ram[CurPos + 1] & 0x3F) + 1;
 				Channel += 1;
 			} else {
- 				if (ShowPifRamErrors) { DisplayError("Unknown Command in PifRamWrite(%X)",PIF_Ram[CurPos]); }
 				CurPos = 0x40;
 			}
 			break;
@@ -221,10 +178,6 @@ void ProcessControllerCommand ( int Control, BYTE * Command) {
 	case 0x00: // check
 	case 0xFF: // reset & check ?
 		if ((Command[1] & 0x80) != 0) { break; }
-#ifndef EXTERNAL_RELEASE
-		if (Command[0] != 1) { DisplayError("What am I meant to do with this Controller Command"); }
-		if (Command[1] != 3) { DisplayError("What am I meant to do with this Controller Command"); }
-#endif
 		if (Controllers[Control].Present == TRUE) {
 			Command[3] = 0x05;
 			Command[4] = 0x00;
@@ -239,20 +192,11 @@ void ProcessControllerCommand ( int Control, BYTE * Command) {
 		}
 		break;
 	case 0x01: // read controller
-#ifndef EXTERNAL_RELEASE
-		if (Command[0] != 1) { DisplayError("What am I meant to do with this Controller Command"); }
-		if (Command[1] != 4) { DisplayError("What am I meant to do with this Controller Command"); }
-#endif
 		if (Controllers[Control].Present == FALSE) {
 			Command[1] |= 0x80;
 		}
 		break;
 	case 0x02: //read from controller pack
-#ifndef EXTERNAL_RELEASE
-		if (LogOptions.LogControllerPak) { LogControllerPakData("Read: Before Getting Results"); }
-		if (Command[0] != 3) { DisplayError("What am I meant to do with this Controller Command"); }
-		if (Command[1] != 33) { DisplayError("What am I meant to do with this Controller Command"); }
-#endif
 		if (Controllers[Control].Present == TRUE) {
 			DWORD address = ((Command[3] << 8) | Command[4]);
 			switch (Controllers[Control].Plugin) {
@@ -269,16 +213,8 @@ void ProcessControllerCommand ( int Control, BYTE * Command) {
 		} else {
 			Command[1] |= 0x80;
 		}
-#ifndef EXTERNAL_RELEASE
-		if (LogOptions.LogControllerPak) { LogControllerPakData("Read: After Getting Results"); }
-#endif
 		break;
 	case 0x03: //write controller pak
-#ifndef EXTERNAL_RELEASE
-		if (LogOptions.LogControllerPak) { LogControllerPakData("Write: Before Processing"); }
-		if (Command[0] != 35) { DisplayError("What am I meant to do with this Controller Command"); }
-		if (Command[1] != 1) { DisplayError("What am I meant to do with this Controller Command"); }
-#endif
 		
 		if (Controllers[Control].Present == TRUE) {
 			DWORD address = ((Command[3] << 8) | Command[4]);
@@ -305,12 +241,7 @@ void ProcessControllerCommand ( int Control, BYTE * Command) {
 		} else {
 			Command[1] |= 0x80;
 		}
-#ifndef EXTERNAL_RELEASE
-		if (LogOptions.LogControllerPak) { LogControllerPakData("Write: After Processing"); }
-#endif
 		break;
-	default:
-		if (ShowPifRamErrors) { DisplayError("Unknown ControllerCommand %d",Command[2]); }
 	}
 }
 
@@ -318,10 +249,6 @@ void ReadControllerCommand (int Control, BYTE * Command) {
 	switch (Command[2]) {
 	case 0x01: // read controller
 		if (Controllers[Control].Present == TRUE) {
-#ifndef EXTERNAL_RELEASE
-			if (Command[0] != 1) { DisplayError("What am I meant to do with this Controller Command"); }
-			if (Command[1] != 4) { DisplayError("What am I meant to do with this Controller Command"); }
-#endif
 			if (GetKeys) {
 				BUTTONS Keys;
 				

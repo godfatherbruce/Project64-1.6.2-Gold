@@ -26,10 +26,10 @@
 #ifndef __Plugin_h 
 #define __Plugin_h 
 
-#define DefaultGFXDll				"Jabo_Direct3D8_1.6_Plus.dll"
-#define DefaultRSPDll				"RSP_1.6_Plus.dll"
-#define DefaultAudioDll				"AziAudio_Legacy.dll"
-#define DefaultControllerDll		"NRage_Legacy_Input.dll"
+#define DefaultGFXDll				"DefaultVideo.dll"
+#define DefaultRSPDll				"DefaultRSP.dll"
+#define DefaultAudioDll				"DefaultAudio.dll"
+#define DefaultControllerDll		"DefaultInput.dll"
 
 #define PLUGIN_TYPE_RSP				1
 #define PLUGIN_TYPE_GFX				2
@@ -192,53 +192,6 @@ typedef struct {
 	HMENU hRSPMenu;
 	void (__cdecl *ProcessMenuItem) ( int ID );
 
-	/* Break Points */
-	BOOL UseBPoints;
-	char BPPanelName[20];
-	void (__cdecl *Add_BPoint)      ( void );
-	void (__cdecl *CreateBPPanel)   ( HWND hDlg, RECT rcBox );
-	void (__cdecl *HideBPPanel)     ( void );
-	void (__cdecl *PaintBPPanel)    ( PAINTSTRUCT ps );
-	void (__cdecl *ShowBPPanel)     ( void );
-	void (__cdecl *RefreshBpoints)  ( HWND hList );
-	void (__cdecl *RemoveBpoint)    ( HWND hList, int index );
-	void (__cdecl *RemoveAllBpoint) ( void );
-	
-	/* RSP command Window */
-	void (__cdecl *Enter_RSP_Commands_Window) ( void );
-} RSPDEBUG_INFO;
-
-typedef struct {
-	/* Menu */
-	/* Items should have an ID between 5101 and 5200 */
-	HMENU hGFXMenu;
-	void (__cdecl *ProcessMenuItem) ( int ID );
-
-	/* Break Points */
-	BOOL UseBPoints;
-	char BPPanelName[20];
-	void (__cdecl *Add_BPoint)      ( void );
-	void (__cdecl *CreateBPPanel)   ( HWND hDlg, RECT rcBox );
-	void (__cdecl *HideBPPanel)     ( void );
-	void (__cdecl *PaintBPPanel)    ( PAINTSTRUCT ps );
-	void (__cdecl *ShowBPPanel)     ( void );
-	void (__cdecl *RefreshBpoints)  ( HWND hList );
-	void (__cdecl *RemoveBpoint)    ( HWND hList, int index );
-	void (__cdecl *RemoveAllBpoint) ( void );
-	
-	/* GFX command Window */
-	void (__cdecl *Enter_GFX_Commands_Window) ( void );
-} GFXDEBUG_INFO;
-
-typedef struct {
-	void (__cdecl *UpdateBreakPoints)( void );
-	void (__cdecl *UpdateMemory)( void );
-	void (__cdecl *UpdateR4300iRegisters)( void );
-	void (__cdecl *Enter_BPoint_Window)( void );
-	void (__cdecl *Enter_R4300i_Commands_Window)( void );
-	void (__cdecl *Enter_R4300i_Register_Window)( void );
-	void (__cdecl *Enter_RSP_Commands_Window) ( void );
-	void (__cdecl *Enter_Memory_Window)( void );
 } DEBUG_INFO;
 
 typedef struct {
@@ -306,7 +259,6 @@ typedef union {
 void (__cdecl *GetDllInfo)             ( PLUGIN_INFO * PluginInfo );
 
 /********** RSP DLL: Functions *********************/
-void (__cdecl *GetRspDebugInfo)    ( RSPDEBUG_INFO * DebugInfo );
 void (__cdecl *RSPCloseDLL)        ( void );
 void (__cdecl *RSPDllAbout)        ( HWND hWnd );
 void (__cdecl *RSPDllConfig)       ( HWND hWnd );
@@ -314,12 +266,10 @@ void (__cdecl *RSPRomClosed)       ( void );
 DWORD (__cdecl *DoRspCycles)       ( DWORD );
 void (__cdecl *InitiateRSP_1_0)    ( RSP_INFO_1_0 Rsp_Info, DWORD * Cycles);
 void (__cdecl *InitiateRSP_1_1)    ( RSP_INFO_1_1 Rsp_Info, DWORD * Cycles);
-void (__cdecl *InitiateRSPDebugger)( DEBUG_INFO DebugInfo);
 
 /********** GFX DLL: Functions *********************/
 void (__cdecl *CaptureScreen)      ( char * );
 void (__cdecl *ChangeWindow)       ( void );
-void (__cdecl *GetGfxDebugInfo)    ( GFXDEBUG_INFO * GFXDebugInfo );
 void (__cdecl *GFXCloseDLL)        ( void );
 void (__cdecl *GFXDllAbout)        ( HWND hParent );
 void (__cdecl *GFXDllConfig)       ( HWND hParent );
@@ -329,7 +279,6 @@ void (__cdecl *DrawScreen)         ( void );
 void (__cdecl *FrameBufferRead)    ( DWORD addr );
 void (__cdecl *FrameBufferWrite)   ( DWORD addr, DWORD Bytes );
 BOOL (__cdecl *InitiateGFX)        ( GFX_INFO Gfx_Info );
-void (__cdecl *InitiateGFXDebugger)( DEBUG_INFO DebugInfo);
 void (__cdecl *MoveScreen)         ( int xpos, int ypos );
 void (__cdecl *ProcessDList)       ( void );
 void (__cdecl *ProcessRDPList)     ( void );
@@ -346,7 +295,6 @@ void (__cdecl *AiDllAbout)       ( HWND hParent );
 void (__cdecl *AiDllConfig)      ( HWND hParent );
 void (__cdecl *AiDllTest)        ( HWND hParent );
 DWORD (__cdecl *AiReadLength)    ( void );
-void(__cdecl* AiRomOpen)        (void);
 void (__cdecl *AiRomClosed)      ( void );
 void (__cdecl *AiUpdate)         ( BOOL Wait );
 BOOL (__cdecl *InitiateAudio)    ( AUDIO_INFO Audio_Info );
@@ -373,15 +321,13 @@ void GetSnapShotDir      ( char * Directory );
 void PluginConfiguration ( HWND hWnd );
 void SetupPlugins        ( HWND hWnd );
 void SetupPluginScreen   ( HWND hDlg );
+void ResetAudio          ( HWND hWnd );
 void ShutdownPlugins     ( void );
-void ResetAudio(HWND hWnd);
 
 /********** External Global Variables ***************/
 #define MaxDlls	100
 extern char RspDLL[100], GfxDLL[100], AudioDLL[100],ControllerDLL[100], * PluginNames[MaxDlls];
 extern DWORD PluginCount, RspTaskValue, AudioIntrReg;
-extern GFXDEBUG_INFO GFXDebug;
-extern RSPDEBUG_INFO RspDebug;
 extern CONTROL Controllers[4];
 extern WORD RSPVersion;
 extern BOOL PluginsInitilized;

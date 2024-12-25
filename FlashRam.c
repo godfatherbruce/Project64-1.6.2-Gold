@@ -29,33 +29,33 @@
 #include "main.h"
 #include "CPU.h"
 
-typedef enum TFlashRam_Modes {
-	FLASHRAM_MODE_NOPES = 0,
-	FLASHRAM_MODE_ERASE = 1,
-	FLASHRAM_MODE_WRITE,
-	FLASHRAM_MODE_READ,
-	FLASHRAM_MODE_STATUS,
+enum TFlashRAM_Modes {
+	FlashRAM_MODE_NOPES = 0,
+	FlashRAM_MODE_ERASE = 1,
+	FlashRAM_MODE_WRITE,
+	FlashRAM_MODE_READ,
+	FlashRAM_MODE_STATUS,
 };
 
-BOOL LoadFlashram (void);
+BOOL LoadFlashRAM (void);
 
-DWORD FlashRAM_Offset, FlashFlag = FLASHRAM_MODE_NOPES;
-static HANDLE hFlashRamFile = NULL;
-BYTE * FlashRamPointer;
+DWORD FlashRAM_Offset, FlashFlag = FlashRAM_MODE_NOPES;
+static HANDLE hFlashRAMFile = NULL;
+BYTE * FlashRAMPointer;
 QWORD FlashStatus = 0;
 
-void DmaFromFlashram(BYTE * dest, int StartOffset, int len) {
+void DmaFromFlashRAM(BYTE * dest, int StartOffset, int len) {
 	BYTE FlipBuffer[0x10000];
 	DWORD dwRead, count;
 
 	switch (FlashFlag) {
-	case FLASHRAM_MODE_READ:
-		if (hFlashRamFile == NULL) {
-			if (!LoadFlashram()) { return; }
+	case FlashRAM_MODE_READ:
+		if (hFlashRAMFile == NULL) {
+			if (!LoadFlashRAM()) { return; }
 		}
 		if (len > 0x10000) { 
 #ifndef EXTERNAL_RELEASE
-			DisplayError("DmaFromFlashram FlipBuffer to small (len: %d)",len); 
+			DisplayError("DmaFromFlashRAM FlipBuffer to small (len: %d)",len); 
 #endif
 			len = 0x10000;
 		}
@@ -67,8 +67,8 @@ void DmaFromFlashram(BYTE * dest, int StartOffset, int len) {
 		}
 		memset(FlipBuffer,0,sizeof(FlipBuffer));
 		StartOffset = StartOffset << 1;
-		SetFilePointer(hFlashRamFile,StartOffset,NULL,FILE_BEGIN);	
-		ReadFile(hFlashRamFile,FlipBuffer,len,&dwRead,NULL);
+		SetFilePointer(hFlashRAMFile,StartOffset,NULL,FILE_BEGIN);	
+		ReadFile(hFlashRAMFile,FlipBuffer,len,&dwRead,NULL);
 		for (count = dwRead; (int)count < len; count ++) {
 			FlipBuffer[count] = 0xFF;
 		}
@@ -87,7 +87,7 @@ void DmaFromFlashram(BYTE * dest, int StartOffset, int len) {
 			jb memcpyloop
 		}
 		break;
-	case FLASHRAM_MODE_STATUS:
+	case FlashRAM_MODE_STATUS:
 		if (StartOffset != 0 && len != 8) {
 #ifndef EXTERNAL_RELEASE
 			DisplayError("Reading flashstatus not being handled correctly\nStart: %X len: %X",StartOffset,len);
@@ -98,19 +98,19 @@ void DmaFromFlashram(BYTE * dest, int StartOffset, int len) {
 		break;
 #ifndef EXTERNAL_RELEASE
 	default:
-		DisplayError("DmaFromFlashram Start: %X, Offset: %X len: %X",dest - N64MEM,StartOffset,len);
+		DisplayError("DmaFromFlashRAM Start: %X, Offset: %X len: %X",dest - N64MEM,StartOffset,len);
 #endif
 	}
 }
 
-void DmaToFlashram(BYTE * Source, int StartOffset, int len) {
+void DmaToFlashRAM(BYTE * Source, int StartOffset, int len) {
 	switch (FlashFlag) {
-	case FLASHRAM_MODE_WRITE:
-		FlashRamPointer = Source;
+	case FlashRAM_MODE_WRITE:
+		FlashRAMPointer = Source;
 		break;
 #ifndef EXTERNAL_RELEASE
 	default:
-		DisplayError("DmaToFlashram Start: %X, Offset: %X len: %X",Source - N64MEM,StartOffset,len);
+		DisplayError("DmaToFlashRAM Start: %X, Offset: %X len: %X",Source - N64MEM,StartOffset,len);
 #endif
 	}
 }
@@ -127,27 +127,27 @@ DWORD ReadFromFlashStatus (DWORD PAddr) {
 	return (DWORD)(FlashStatus >> 32);
 }
 
-BOOL LoadFlashram (void) {
+BOOL LoadFlashRAM (void) {
 	char File[255], Directory[255];
 
 	GetAutoSaveDir(Directory);
 	sprintf(File,"%s%s.fla",Directory,RomName);
 	
-	hFlashRamFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
+	hFlashRAMFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
-	if (hFlashRamFile == INVALID_HANDLE_VALUE) {
+	if (hFlashRAMFile == INVALID_HANDLE_VALUE) {
 		switch (GetLastError()) {
 		case ERROR_PATH_NOT_FOUND:
 			CreateDirectory(Directory,NULL);
-			hFlashRamFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,
+			hFlashRAMFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,
 				NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
-			if (hFlashRamFile == INVALID_HANDLE_VALUE) {
-				DisplayError(GS(MSG_FAIL_OPEN_FLASH));
+			if (hFlashRAMFile == INVALID_HANDLE_VALUE) {
+                                DisplayError(GS(MSG_FAIL_OPEN_FLASH));
 				return FALSE;
 			}
 			break;
 		default:
-			DisplayError(GS(MSG_FAIL_OPEN_FLASH));
+                        DisplayError(GS(MSG_FAIL_OPEN_FLASH));
 			return FALSE;
 		}
 	}
@@ -161,20 +161,20 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 	switch (FlashRAM_Command & 0xFF000000) {
 	case 0xD2000000: 
 		switch (FlashFlag) {
-		case FLASHRAM_MODE_NOPES: break;
-		case FLASHRAM_MODE_READ: break;
-		case FLASHRAM_MODE_STATUS: break;
-		case FLASHRAM_MODE_ERASE:
+		case FlashRAM_MODE_NOPES: break;
+		case FlashRAM_MODE_READ: break;
+		case FlashRAM_MODE_STATUS: break;
+		case FlashRAM_MODE_ERASE:
 			memset(EmptyBlock,0xFF,sizeof(EmptyBlock));
-			if (hFlashRamFile == NULL) {
-				if (!LoadFlashram()) { return; }
+			if (hFlashRAMFile == NULL) {
+				if (!LoadFlashRAM()) { return; }
 			}
-			SetFilePointer(hFlashRamFile,FlashRAM_Offset,NULL,FILE_BEGIN);	
-			WriteFile(hFlashRamFile,EmptyBlock,128,&dwWritten,NULL);
+			SetFilePointer(hFlashRAMFile,FlashRAM_Offset,NULL,FILE_BEGIN);	
+			WriteFile(hFlashRAMFile,EmptyBlock,128,&dwWritten,NULL);
 			break;
-		case FLASHRAM_MODE_WRITE:
-			if (hFlashRamFile == NULL) {
-				if (!LoadFlashram()) { return; }
+		case FlashRAM_MODE_WRITE:
+			if (hFlashRAMFile == NULL) {
+				if (!LoadFlashRAM()) { return; }
 			}
 			{
 				BYTE FlipBuffer[128];
@@ -183,7 +183,7 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 				memset(FlipBuffer,0,sizeof(FlipBuffer));
 				_asm {
 					lea edi, [FlipBuffer]
-					mov ecx, FlashRamPointer
+					mov ecx, FlashRAMPointer
 					mov edx, 0
 
 				memcpyloop:
@@ -195,32 +195,32 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 					jb memcpyloop
 				}
 
-				SetFilePointer(hFlashRamFile,FlashRAM_Offset,NULL,FILE_BEGIN);	
-				WriteFile(hFlashRamFile,FlipBuffer,128,&dwWritten,NULL);
+				SetFilePointer(hFlashRAMFile,FlashRAM_Offset,NULL,FILE_BEGIN);	
+				WriteFile(hFlashRAMFile,FlipBuffer,128,&dwWritten,NULL);
 			}
 			break;
 		default:
 			DisplayError("Writing %X to flash ram command register\nFlashFlag: %d",FlashRAM_Command,FlashFlag);
 		}
-		FlashFlag = FLASHRAM_MODE_NOPES;
+		FlashFlag = FlashRAM_MODE_NOPES;
 		break;
 	case 0xE1000000: 
-		FlashFlag = FLASHRAM_MODE_STATUS;
+		FlashFlag = FlashRAM_MODE_STATUS;
 		FlashStatus = 0x1111800100C20000;
 		break;
 	case 0xF0000000: 
-		FlashFlag = FLASHRAM_MODE_READ;
+		FlashFlag = FlashRAM_MODE_READ;
 		FlashStatus = 0x11118004F0000000;
 		break;
 	case 0x4B000000:
 		FlashRAM_Offset = (FlashRAM_Command & 0xffff) * 128;
 		break;
 	case 0x78000000:
-		FlashFlag = FLASHRAM_MODE_ERASE;
+		FlashFlag = FlashRAM_MODE_ERASE;
 		FlashStatus = 0x1111800800C20000;
 		break;
 	case 0xB4000000: 
-		FlashFlag = FLASHRAM_MODE_WRITE; //????
+		FlashFlag = FlashRAM_MODE_WRITE; //????
 		break;
 	case 0xA5000000:
 		FlashRAM_Offset = (FlashRAM_Command & 0xffff) * 128;

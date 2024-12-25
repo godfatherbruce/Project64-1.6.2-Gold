@@ -29,7 +29,6 @@
 #include <float.h>
 #include "main.h"
 #include "cpu.h"
-#include "debugger.h"
 #include "plugin.h"
 
 void * R4300i_Opcode[64];
@@ -683,7 +682,7 @@ void ExecuteInterpreterOpCode (void) {
 	} 
 
 	COUNT_REGISTER += CountPerOp;
-	if (CPU_Type != CPU_SyncCores) { Timers.Timer -= CountPerOp; }
+	{ Timers.Timer -= CountPerOp; }
 
 	RANDOM_REGISTER -= 1;
 	if ((int)RANDOM_REGISTER < (int)WIRED_REGISTER) {
@@ -714,23 +713,10 @@ void ExecuteInterpreterOpCode (void) {
 	case JUMP:
 		PROGRAM_COUNTER  = JumpToLocation;
 		NextInstruction = NORMAL;
-		if (CPU_Type != CPU_SyncCores) {
-			if (Profiling) {
-				if (IndvidualBlock) {
-					char Label[100];
-					sprintf(Label,"PC: %X",PROGRAM_COUNTER);
-					StartTimer(Label);
-				} else {
-					StartTimer("r4300i Running");
-				}
-			}
-			if (CPU_Type != CPU_SyncCores) {
 				if ((int)Timers.Timer < 0) {  TimerDone(); }
 				if (CPU_Action.DoSomething) { DoSomething(); }
-			}
 		}
 	}		
-}
 	
 void StartInterpreterCPU (void ) { 
 	//DWORD Value, Value2, Addr = 0x80031000;
@@ -738,7 +724,6 @@ void StartInterpreterCPU (void ) {
 	CoInitialize(NULL);
 	NextInstruction = NORMAL;
 
-	if (AiRomOpen != NULL) { AiRomOpen(); }
 	if (GfxRomOpen != NULL) { GfxRomOpen(); }
 	if (ContRomOpen != NULL) { ContRomOpen(); }
 	//Add_R4300iBPoint(0x802000C8,FALSE);
@@ -749,19 +734,6 @@ void StartInterpreterCPU (void ) {
 				if (CheckForR4300iBPoint(PROGRAM_COUNTER)) {
 					UpdateCurrentR4300iRegisterPanel();
 					Refresh_Memory();
-					if (InR4300iCommandsWindow) {
-						Enter_R4300i_Commands_Window();
-						SetR4300iCommandViewto( PROGRAM_COUNTER );
-						if (CPU_Action.Stepping) {
-							DisplayError ( "Encounted a R4300i Breakpoint" );
-						} else {
-							DisplayError ( "Encounted a R4300i Breakpoint\n\nNow Stepping" );
-							SetR4300iCommandToStepping();
-						}
-					} else {
-						DisplayError ( "Encounted a R4300i Breakpoint\n\nEntering Command Window" );
-						Enter_R4300i_Commands_Window();
-					}					
 				}
 			}
 
@@ -780,7 +752,6 @@ void StartInterpreterCPU (void ) {
 				} while (CPU_Action.Stepping);
 			}
 #endif
-			if ((Profiling || ShowCPUPer) && ProfilingLabel[0] == 0) { StartTimer("r4300i Running"); };
 			ExecuteInterpreterOpCode();
 		}
 	} __except( r4300i_CPU_MemoryFilter( GetExceptionCode(), GetExceptionInformation()) ) {

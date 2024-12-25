@@ -27,7 +27,6 @@
 #include <stdio.h>
 #include "main.h"
 #include "CPU.h"
-#include "Debugger.h"
 #include "plugin.h"
 #include "EmulateAI.h"
 #include "settings.h"

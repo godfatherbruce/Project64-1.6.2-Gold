@@ -26,8 +26,6 @@
 #ifndef __main_h 
 #define __main_h 
 
-#include "MemTest.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -35,49 +33,32 @@ extern "C" {
 #include <objbase.h>
 #include "Types.h"
 #include "win32Timer.h"
-#include "Profiling.h"
 #include "Settings API.h"
 #include "rombrowser.h"
 #include "Language.h"
 
 /********* General Defaults **********/
-#if (!defined(EXTERNAL_RELEASE))
-#define AppVer   "Project64 - Build 57"
-#define AppName  "Project64 (Build 57)"
-#else
-//#define BETA_VERSION
-#define AppVer   "Project64 1.6 Plus"
-#ifdef BETA_VERSION
-#define AppName  "Project64 1.6 Plus (Vunerbility Fix)"
-#else
-#define AppName  "Project64 1.6 Plus"
-#endif
-#endif
-
-#define IniName						"Project64.rdb"
-#define NotesIniName				"Project64.rdn"
-#define ExtIniName					"Project64.rdx"
-#define CheatIniName				"Project64.cht"
-#define CheatDevIniName				"Project64.chtdev"
-#define LangFileName				"Project64.lng"
-#define CacheFileName				"Project64.cache"
-#define ChmFileName					"Project64.chm"
-#define FaqFileName					"PJgameFAQ.chm"
-#define JIniName					"Jabo.ini"
-#define JaboPlugins					"PJ64 DLL"
-#define Default_AdvancedBlockLink	TRUE
+#define AppVer   "1.6.2 (2024)"
+#define AppName  "Project64 Version 1.6.2 (2024)"
+#define IniName						"PJ64.rdb"
+#define NotesIniName				"PJ64.ndb"
+#define ExtIniName					"PJ64.bdb"
+#define CheatIniName				"PJ64.cdb"
+#define CheatDevIniName				"PJ64.cdbdev"
+#define LangFileName				"PJ64.ldb"
+#define CacheFileName				"PJ64.cache"
+#define Default_AdvancedBlockLink	FALSE
 #define Default_AutoStart			TRUE
-#define Default_AutoSleep			FALSE		// Disbled "Pause Emulation when window not active" as default (Gent)
+#define Default_AutoSleep			TRUE		
 #define Default_DisableRegCaching	FALSE
-#define Default_RdramSize			0x800000	// Enabled 8MB (Expansion) as default for Rom Hacks & Prototypes not in RDB  for better compatibility (Gent)
+#define Default_RdramSize			0x800000	
 #define Default_UseIni				TRUE
-#define Default_AutoZip				TRUE
 #define Default_LimitFPS			TRUE
 #define Default_AlwaysOnTop			FALSE
-#define Default_BasicMode			FALSE 	// Enabled Advance Mode as default (Gent)
-#define Default_RememberCheats		TRUE	// Enabled Always remember cheats as default so user don't have to re-enable after every close (Gent)
-#define Default_RomsToRemember		10		// Enabled Max 10 Recent Roms as default (Gent)
-#define Default_RomsDirsToRemember	10		// Enabled Max 10 Recent Rom Dir as default (Gent)
+#define Default_BasicMode			TRUE	
+#define Default_RememberCheats		TRUE	
+#define Default_RomsToRemember		10		
+#define Default_RomsDirsToRemember	10		
 #define LinkBlocks
 #define TLB_HACK
 
@@ -90,7 +71,6 @@ extern "C" {
 #define CPU_Default					-1
 #define CPU_Interpreter				0
 #define CPU_Recompiler				1
-#define CPU_SyncCores				2
 #define Default_CPU					CPU_Recompiler
 
 /*********** GFX Defaults ************/
@@ -105,40 +85,20 @@ extern "C" {
 #define ModCode_ChangeMemory		4
 #define ModCode_CheckMemoryCache	6
 #define ModCode_CheckMemory2		7 // *** Add in Build 53
+#define Default_SelfModCheck		ModCode_CheckMemory2
 
 /********** Counter Factor ***********/
-#define Default_CountPerOp			2
-
-/************ Debugging **************/
-#define Default_HaveDebugger		FALSE
-#define Default_AutoMap				TRUE
-#define Default_ShowUnhandledMemory	FALSE
-#define Default_ShowTLBMisses		FALSE
-#define Default_ShowDlistCount		FALSE
-#define Default_ShowCompileMemory	TRUE
-#define Default_ShowPifRamErrors	FALSE
-#define Default_SelfModCheck		ModCode_CheckMemory2
-//#define Interpreter_StackTest		
-
-/************ Profiling **************/
-#define Default_ShowCPUPer			FALSE
-#define Default_ProfilingOn			FALSE
-#define Default_IndvidualBlock		FALSE
+#define Default_CountPerOp			2	
 
 /********** Rom Browser **************/
 #define Default_UseRB				TRUE
-#define Default_Rercursion			TRUE		// Enabled Rom Dir Recursion as default, this allows sub-directories to be included in rom browser (Gent)
-#define Default_RomStatus			"Unknown"
-
-/************* Logging ***************/
-//#define Log_x86Code
+#define Default_Rercursion			TRUE
 
 /********* Global Variables **********/
 extern LARGE_INTEGER Frequency, Frames[NoOfFrames], LastFrame;
-extern BOOL HaveDebugger, AutoLoadMapFile, ShowUnhandledMemory, ShowTLBMisses, 
-	ShowDListAListCount, ShowCompMem, Profiling, IndvidualBlock, AutoStart, 
+extern BOOL AutoStart, 
 	AutoSleep, DisableRegCaching, UseIni, UseTlb, UseLinking, RomBrowser,
-	IgnoreMove, Rercursion, ShowPifRamErrors, LimitFPS, ShowCPUPer, AutoZip, 
+	IgnoreMove, Rercursion, LimitFPS,
 	AutoFullScreen, SystemABL, AlwaysOnTop, BasicMode, DelaySI, RememberCheats,AudioSignal, 
 	DelayRDP, DelayRSP, EmulateAI;
 extern DWORD CurrentFrame, CPU_Type, SystemCPU_Type, SelfModCheck, SystemSelfModCheck, 
@@ -157,7 +117,6 @@ void ChangeWinSize        ( HWND hWnd, long width, long height, HWND hStatusBar 
 void  DisplayFPS          ( void );
 char* GetExtIniFileName   ( void );
 char* GetIniFileName      ( void );
-char* GetJIniFileName     (void);
 char* GetLangFileName     ( void );
 char* GetNotesIniFileName ( void );
 int   GetStoredWinPos     ( char * WinName, DWORD * X, DWORD * Y );
@@ -167,7 +126,6 @@ void  MenuSetText         ( HMENU hMenu, int MenuPos, char * Title, char * ShotC
 void  RegisterExtension   ( char * Extension, BOOL RegisterWithPj64 );
 void  SetCurrentSaveState ( HWND hWnd, int State);
 void  SetupMenu           ( HWND hWnd );
-//void  SetupMenuTitle      ( HMENU hMenu, int MenuPos, char * ShotCut, char * Title, char * Language, char *  LangFile );
 void  StoreCurrentWinPos  ( char * WinName, HWND hWnd );
 void  StoreCurrentWinSize ( char * WinName, HWND hWnd );
 BOOL  TestExtensionRegistered ( char * Extension );
@@ -181,8 +139,6 @@ void AboutBox (void);
 
 // Building this in Visual Studio 2005 and higher allows us to dump the external manifest file.
 // This line below allows the use of "XP Style" buttons and other stuff on the gui.
-//#ifdef EXTERNAL_RELEASE
 #pragma comment(linker,"\"/manifestdependency:type='win32' \
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
-//#endif

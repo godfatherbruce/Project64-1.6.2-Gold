@@ -28,7 +28,7 @@
 #include "main.h"
 #include "cpu.h"
 #include "x86.h"
-#include "debugger.h"
+
 
 #define PUTDST8(dest,value)  (*((BYTE *)(dest))=(BYTE)(value)); dest += 1;
 #define PUTDST16(dest,value) (*((WORD *)(dest))=(WORD)(value)); dest += 2;

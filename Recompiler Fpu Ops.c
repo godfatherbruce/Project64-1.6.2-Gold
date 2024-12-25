@@ -28,7 +28,6 @@
 #include "main.h"
 #include "cpu.h"
 #include "x86.h"
-#include "debugger.h"
 
 WORD FPU_RoundingMode = 0x0000;//_RC_NEAR
 char Name[50];

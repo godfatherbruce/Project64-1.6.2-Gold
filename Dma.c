@@ -26,7 +26,6 @@
 #include <Windows.h>
 #include <stdio.h>
 #include "main.h"
-#include "debugger.h"
 #include "CPU.h"
 
 int DMAUsed;
@@ -39,9 +38,6 @@ void FirstDMA (void) {
 	case 5: *(DWORD *)&N64MEM[0x3F0] = RdramSize; break;
 	case 6: *(DWORD *)&N64MEM[0x318] = RdramSize; break;
 	case 9: *(DWORD *)&N64MEM[0x318] = RdramSize; break;
-
-		// Disabled Unhandled CicChip(%d) in first DMA Message (Gent)		
-	//default: DisplayError("Unhandled CicChip(%d) in first DMA",GetCicChipID(ROM));
 	}
 }
 
@@ -59,9 +55,9 @@ void PI_DMA_READ (void) {
 	}
 
 	if ( PI_CART_ADDR_REG >= 0x08000000 && PI_CART_ADDR_REG <= 0x08010000) {
-		if (SaveUsing == Auto) { SaveUsing = Sram; }
-		if (SaveUsing == Sram) {
-			DmaToSram(
+		if (SaveUsing == Auto) { SaveUsing = SRAM; }
+		if (SaveUsing == SRAM) {
+			DmaToSRAM(
 				N64MEM+PI_DRAM_ADDR_REG,
 				PI_CART_ADDR_REG - 0x08000000,
 				PI_RD_LEN_REG + 1
@@ -71,8 +67,8 @@ void PI_DMA_READ (void) {
 			CheckInterrupts();
 			return;
 		}
-		if (SaveUsing == FlashRam) {
-			DmaToFlashram(
+		if (SaveUsing == FlashRAM) {
+			DmaToFlashRAM(
 				N64MEM+PI_DRAM_ADDR_REG,
 				PI_CART_ADDR_REG - 0x08000000,
 				PI_WR_LEN_REG + 1
@@ -83,9 +79,9 @@ void PI_DMA_READ (void) {
 			return;
 		}
 	}
-	if (SaveUsing == FlashRam) {
+	if (SaveUsing == FlashRAM) {
 #ifndef EXTERNAL_RELEASE
-		DisplayError("**** FLashRam DMA Read address %X *****",PI_CART_ADDR_REG);
+		DisplayError("**** FlashRAM DMA Read address %X *****",PI_CART_ADDR_REG);
 #endif
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
@@ -116,9 +112,9 @@ void PI_DMA_WRITE (void) {
 	}
 
 	if ( PI_CART_ADDR_REG >= 0x08000000 && PI_CART_ADDR_REG <= 0x08010000) {
-		if (SaveUsing == Auto) { SaveUsing = Sram; }
-		if (SaveUsing == Sram) {
-			DmaFromSram(
+		if (SaveUsing == Auto) { SaveUsing = SRAM; }
+		if (SaveUsing == SRAM) {
+			DmaFromSRAM(
 				N64MEM+PI_DRAM_ADDR_REG,
 				PI_CART_ADDR_REG - 0x08000000,
 				PI_WR_LEN_REG + 1
@@ -128,8 +124,8 @@ void PI_DMA_WRITE (void) {
 			CheckInterrupts();
 			return;
 		}
-		if (SaveUsing == FlashRam) {
-			DmaFromFlashram(
+		if (SaveUsing == FlashRAM) {
+			DmaFromFlashRAM(
 				N64MEM+PI_DRAM_ADDR_REG,
 				PI_CART_ADDR_REG - 0x08000000,
 				PI_WR_LEN_REG + 1
@@ -214,10 +210,6 @@ void PI_DMA_WRITE (void) {
 		CheckTimer();
 		return;
 	}
-	
-#ifndef EXTERNAL_RELEASE
-	if (ShowUnhandledMemory) { DisplayError("PI_DMA_WRITE not in ROM"); }
-#endif
 	PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 	MI_INTR_REG |= MI_INTR_PI;
 	CheckInterrupts();
@@ -269,39 +261,6 @@ void SI_DMA_READ (void) {
 			jb memcpyloop
 		}
 	}
-	
-#if (!defined(EXTERNAL_RELEASE))
-	if (LogOptions.LogPRDMAMemStores) {
-		int count;
-		char HexData[100], AsciiData[100], Addon[20];
-		LogMessage("\tData DMAed to RDRAM:");			
-		LogMessage("\t--------------------");
-		for (count = 0; count < 16; count ++ ) {
-			if ((count % 4) == 0) { 
-				sprintf(HexData,"\0"); 
-				sprintf(AsciiData,"\0"); 
-			}
- 			sprintf(Addon,"%02X %02X %02X %02X", 
-				PIF_Ram[(count << 2) + 0], PIF_Ram[(count << 2) + 1], 
-				PIF_Ram[(count << 2) + 2], PIF_Ram[(count << 2) + 3] );
-			strcat(HexData,Addon);
-			if (((count + 1) % 4) != 0) {
-				sprintf(Addon,"-");
-				strcat(HexData,Addon);
-			} 
-			
-			sprintf(Addon,"%c%c%c%c", 
-				PIF_Ram[(count << 2) + 0], PIF_Ram[(count << 2) + 1], 
-				PIF_Ram[(count << 2) + 2], PIF_Ram[(count << 2) + 3] );
-			strcat(AsciiData,Addon);
-			
-			if (((count + 1) % 4) == 0) {
-				LogMessage("\t%s %s",HexData, AsciiData);
-			} 
-		}
-		LogMessage("");
-	}
-#endif
 
 	if (DelaySI) {
 		ChangeTimer(SiTimer,0x900);
@@ -356,40 +315,6 @@ void SI_DMA_WRITE (void) {
 			jb memcpyloop
 		}
 	}
-	
-#if (!defined(EXTERNAL_RELEASE))
-	if (LogOptions.LogPRDMAMemLoads) {
-		int count;
-		char HexData[100], AsciiData[100], Addon[20];
-		LogMessage("");
-		LogMessage("\tData DMAed to the Pif Ram:");			
-		LogMessage("\t--------------------------");
-		for (count = 0; count < 16; count ++ ) {
-			if ((count % 4) == 0) { 
-				sprintf(HexData,"\0"); 
-				sprintf(AsciiData,"\0"); 
-			}
-			sprintf(Addon,"%02X %02X %02X %02X", 
-				PIF_Ram[(count << 2) + 0], PIF_Ram[(count << 2) + 1], 
-				PIF_Ram[(count << 2) + 2], PIF_Ram[(count << 2) + 3] );
-			strcat(HexData,Addon);
-			if (((count + 1) % 4) != 0) {
-				sprintf(Addon,"-");
-				strcat(HexData,Addon);
-			} 
-			
-			sprintf(Addon,"%c%c%c%c", 
-				PIF_Ram[(count << 2) + 0], PIF_Ram[(count << 2) + 1], 
-				PIF_Ram[(count << 2) + 2], PIF_Ram[(count << 2) + 3] );
-			strcat(AsciiData,Addon);
-			
-			if (((count + 1) % 4) == 0) {
-				LogMessage("\t%s %s",HexData, AsciiData);
-			} 
-		}
-		LogMessage("");
-	}
-#endif
 
 	PifRamWrite();
 	
@@ -424,7 +349,7 @@ void SP_DMA_READ (void) {
 	}
 
 	if ((SP_MEM_ADDR_REG & 3) != 0 || (SP_DRAM_ADDR_REG & 3) != 0 || ((SP_RD_LEN_REG + 1) & 3) != 0) {
-		DisplayErrorFatal("Nonstandard DMA Transfer.\nStopping Emulation.");
+		DisplayErrorFatal("Nonstandard DMA transfer.\n\nEmulation ending");
 		ExitThread(0);
 	}
 	/*

@@ -23,6 +23,6 @@
  * should be forwarded to them so if they want them.
  *
  */
-void CloseSram   ( void );
-void DmaFromSram ( BYTE * dest, int StartOffset, int len);
-void DmaToSram   ( BYTE * Source, int StartOffset, int len);
+void CloseSRAM   ( void );
+void DmaFromSRAM ( BYTE * dest, int StartOffset, int len);
+void DmaToSRAM   ( BYTE * Source, int StartOffset, int len);

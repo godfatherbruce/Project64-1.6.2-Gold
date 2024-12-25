@@ -23,7 +23,7 @@
  * should be forwarded to them so if they want them.
  *
  */
-void CloseEeprom    ( void );
-void EepromCommand  ( BYTE * Command );
-void ReadFromEeprom ( BYTE * Buffer, int line);
-void WriteToEeprom  ( BYTE * Buffer, int line);
+void CloseeepROM    ( void );
+void eepROMCommand  ( BYTE * Command );
+void ReadFromeepROM ( BYTE * Buffer, int line);
+void WriteToeepROM  ( BYTE * Buffer, int line);

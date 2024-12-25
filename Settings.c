@@ -32,7 +32,6 @@
 #include "main.h"
 #include "cpu.h"
 #include "plugin.h"
-#include "debugger.h"
 #include "resource.h"
 
 BOOL CALLBACK DefaultOptionsProc   ( HWND, UINT, WPARAM, LPARAM );
@@ -53,7 +52,7 @@ typedef struct {
 SETTINGS_TAB SettingsTabs[] = {
 	{ TAB_PLUGIN,          IDD_Settings_PlugSel,   PluginSelectProc     },
 	{ TAB_DIRECTORY,       IDD_Settings_Directory, DirSelectProc        },
-	{ TAB_OPTIONS,         IDD_Settings_General,   GeneralOptionsProc   },
+	{ MENU_OPTIONS,         IDD_Settings_General,   GeneralOptionsProc   },
 	{ TAB_ROMSELECTION,    IDD_Settings_RomBrowser,RomBrowserProc       },
 	{ TAB_ADVANCED,        IDD_Settings_Options,   DefaultOptionsProc   },
 	{ TAB_ROMSETTINGS,     IDD_Settings_Rom,       RomSettingsProc      },
@@ -62,8 +61,13 @@ SETTINGS_TAB SettingsTabs[] = {
 };
 
 SETTINGS_TAB SettingsTabsBasic[] = {
-	{ TAB_PLUGIN, IDD_Settings_PlugSel,   PluginSelectProc     },
-	{ TAB_OPTIONS,IDD_Settings_General,   GeneralOptionsProc   },
+	{ TAB_PLUGIN, IDD_Settings_PlugSel,PluginSelectProc               },
+	{ TAB_DIRECTORY,IDD_Settings_Directory,DirSelectProc              },
+	{ MENU_OPTIONS,IDD_Settings_General,GeneralOptionsProc             },
+	{ TAB_ROMSELECTION,IDD_Settings_RomBrowser,RomBrowserProc         },
+	{ TAB_ROMSETTINGS,IDD_Settings_Rom,RomSettingsProc                },
+	{ TAB_ROMNOTES,IDD_Settings_RomNotes,RomNotesProc                 },
+	{ TAB_SHELLINTERGATION,IDD_Settings_ShellInt,ShellIntegrationProc },
 };
 
 SETTINGS_TAB SettingsTabsRom[] = {
@@ -100,7 +104,7 @@ void ChangeRomSettings(HWND hwndOwner) {
     psh.dwFlags = PSH_PROPSHEETPAGE | PSH_NOAPPLYNOW;
     psh.hwndParent = hwndOwner;
     psh.hInstance = hInst;
-    psh.pszCaption = (LPSTR)GS(OPTIONS_TITLE);
+    psh.pszCaption = (LPSTR)GS(MENU_SETTINGS);
     psh.nPages = sizeof(psp) / sizeof(PROPSHEETPAGE);
     psh.nStartPage = 0;
     psh.ppsp = (LPCPROPSHEETPAGE) &psp;
@@ -146,7 +150,7 @@ void ChangeSettings(HWND hwndOwner) {
     psh.dwFlags = PSH_PROPSHEETPAGE | PSH_NOAPPLYNOW;
     psh.hwndParent = hwndOwner;
     psh.hInstance = hInst;
-    psh.pszCaption = (LPSTR)GS(OPTIONS_TITLE);
+    psh.pszCaption = (LPSTR)GS(MENU_SETTINGS);
     psh.nPages = (BasicMode?sizeof(BasicPsp):sizeof(psp)) / sizeof(PROPSHEETPAGE);
     psh.nStartPage = 0;
     psh.ppsp = BasicMode?(LPCPROPSHEETPAGE) &BasicPsp:(LPCPROPSHEETPAGE) &psp;
@@ -179,12 +183,12 @@ BOOL CALLBACK GeneralOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 			DWORD Disposition = 0;
 			char String[200];
 		
-			sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+			sprintf(String,"N64 Software\\%s",AppName);
 			lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 				KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 			if (lResult == ERROR_SUCCESS) {
 				AutoFullScreen = SendMessage(GetDlgItem(hDlg,IDC_LOAD_FULLSCREEN),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"On open rom go full screen",0,REG_DWORD,(BYTE *)&AutoFullScreen,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"On open ROM go full screen",0,REG_DWORD,(BYTE *)&AutoFullScreen,sizeof(DWORD));
 
 				BasicMode = SendMessage(GetDlgItem(hDlg,IDC_BASIC_MODE),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 				RegSetValueEx(hKeyResults,"Basic Mode",0,REG_DWORD,(BYTE *)&BasicMode,sizeof(DWORD));
@@ -221,17 +225,16 @@ BOOL CALLBACK DefaultOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 	case WM_INITDIALOG:		
 		SetDlgItemText(hDlg,IDC_INFO,GS(ADVANCE_INFO));	
 		SetDlgItemText(hDlg,IDC_CORE_DEFAULTS,GS(ADVANCE_DEFAULTS));	
-		SetDlgItemText(hDlg,IDC_TEXT2,GS(ADVANCE_CPU_STYLE));	
-		SetDlgItemText(hDlg,IDC_TEXT3,GS(ADVANCE_SMCM));	
-		SetDlgItemText(hDlg,IDC_TEXT4,GS(ADVANCE_MEM_SIZE));	
-		SetDlgItemText(hDlg,IDC_TEXT5,GS(ADVANCE_ABL));	
+		SetDlgItemText(hDlg,IDC_TEXT2,GS(ROM_CPU_STYLE));	
+		SetDlgItemText(hDlg,IDC_TEXT3,GS(ROM_SMCM));	
+		SetDlgItemText(hDlg,IDC_TEXT4,GS(ROM_MEM_SIZE));	
+		SetDlgItemText(hDlg,IDC_TEXT5,GS(ROM_ABL));	
 		SetFlagControl(hDlg,&AutoStart, IDC_START_ON_ROM_OPEN, ADVANCE_AUTO_START);
 		SetFlagControl(hDlg,&UseIni, IDC_USEINI, ADVANCE_OVERWRITE);
-		SetFlagControl(hDlg,&AutoZip, IDC_ZIP, ADVANCE_COMPRESS);
 
-		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_INTERPTER,CPU_Interpreter,&SystemCPU_Type);
+		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_INTERPRETER,CPU_Interpreter,&SystemCPU_Type);
 		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_RECOMPILER,CPU_Recompiler,&SystemCPU_Type);
-		if (HaveDebugger) { AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_SYNC,CPU_SyncCores,&SystemCPU_Type); }
+		//if (HaveDebugger) { AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_SYNC,CPU_SyncCores,&SystemCPU_Type); }
 
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_NONE,ModCode_None,&SystemSelfModCheck);
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CACHE,ModCode_Cache,&SystemSelfModCheck);
@@ -253,18 +256,15 @@ BOOL CALLBACK DefaultOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 			DWORD Disposition = 0;
 			char String[200];
 		
-			sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+			sprintf(String,"N64 Software\\%s",AppName);
 			lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 				KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 			if (lResult == ERROR_SUCCESS) {
 				AutoStart = SendMessage(GetDlgItem(hDlg,IDC_START_ON_ROM_OPEN),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"Start Emulation when rom is opened",0,REG_DWORD,(BYTE *)&AutoStart,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"Start Emulation when ROM is opened",0,REG_DWORD,(BYTE *)&AutoStart,sizeof(DWORD));
 
 				UseIni = SendMessage(GetDlgItem(hDlg,IDC_USEINI),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 				RegSetValueEx(hKeyResults,"Overwrite default settings with ones from RDB?",0,REG_DWORD,(BYTE *)&UseIni,sizeof(DWORD));
-
-				AutoZip = SendMessage(GetDlgItem(hDlg,IDC_ZIP),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"Automatically compress instant saves",0,REG_DWORD,(BYTE *)&AutoZip,sizeof(DWORD));
 
 				indx = SendMessage(GetDlgItem(hDlg,IDC_CPU_TYPE),CB_GETCURSEL,0,0); 
 				SystemCPU_Type = SendMessage(GetDlgItem(hDlg,IDC_CPU_TYPE),CB_GETITEMDATA,indx,0);
@@ -276,7 +276,7 @@ BOOL CALLBACK DefaultOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 
 				indx = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETCURSEL,0,0); 
 				SystemRdramSize = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETITEMDATA,indx,0);
-				RegSetValueEx(hKeyResults,"Default RDRAM Size",0,REG_DWORD,(BYTE *)&SystemRdramSize,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"RDRAM Size",0,REG_DWORD,(BYTE *)&SystemRdramSize,sizeof(DWORD));
 				
 				indx = SendMessage(GetDlgItem(hDlg,IDC_ABL),CB_GETCURSEL,0,0); 
 				SystemABL = SendMessage(GetDlgItem(hDlg,IDC_ABL),CB_GETITEMDATA,indx,0);
@@ -315,16 +315,12 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			char Directory[255];
 			long lResult;
 		
-			sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+			sprintf(String,"N64 Software\\%s",AppName);
 			lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);	
 			if (lResult == ERROR_SUCCESS) {
 				DWORD Type, Value, Bytes = 4;
-	
-				lResult = RegQueryValueEx(hKeyResults,"Use Default Plugin Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
-				if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Value = TRUE; }
-				SendMessage(GetDlgItem(hDlg,Value?IDC_PLUGIN_DEFAULT:IDC_PLUGIN_OTHER),BM_SETCHECK, BST_CHECKED,0);
 
-				lResult = RegQueryValueEx(hKeyResults,"Use Default Rom Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
+				lResult = RegQueryValueEx(hKeyResults,"Use Default ROM Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
 				if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Value = FALSE; }
 				SendMessage(GetDlgItem(hDlg,Value?IDC_ROM_DEFAULT:IDC_ROM_OTHER),BM_SETCHECK, BST_CHECKED,0);
 
@@ -332,18 +328,13 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Value = TRUE; }
 				SendMessage(GetDlgItem(hDlg,Value?IDC_AUTO_DEFAULT:IDC_AUTO_OTHER),BM_SETCHECK, BST_CHECKED,0);
 
-				lResult = RegQueryValueEx(hKeyResults,"Use Default Instant Save Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
-				if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Value = TRUE; }
-				SendMessage(GetDlgItem(hDlg,Value?IDC_INSTANT_DEFAULT:IDC_INSTANT_OTHER),BM_SETCHECK, BST_CHECKED,0);
-
 				lResult = RegQueryValueEx(hKeyResults,"Use Default Snap Shot Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
 				if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Value = TRUE; }
 				SendMessage(GetDlgItem(hDlg,Value?IDC_SNAP_DEFAULT:IDC_SNAP_OTHER),BM_SETCHECK, BST_CHECKED,0);
 
-				Bytes = sizeof(Directory);
-				lResult = RegQueryValueEx(hKeyResults,"Plugin Directory",0,&Type,(LPBYTE)Directory,&Bytes);
-				if (lResult != ERROR_SUCCESS) { GetPluginDir(Directory ); }
-				SetDlgItemText(hDlg,IDC_PLUGIN_DIR,Directory);
+				lResult = RegQueryValueEx(hKeyResults,"Use Default Instant Save Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
+				if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Value = TRUE; }
+				SendMessage(GetDlgItem(hDlg,Value?IDC_INSTANT_DEFAULT:IDC_INSTANT_OTHER),BM_SETCHECK, BST_CHECKED,0);
 
 				Bytes = sizeof(Directory);
 				lResult = RegQueryValueEx(hKeyResults,"Instant Save Directory",0,&Type,(LPBYTE)Directory,&Bytes);
@@ -356,17 +347,14 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				SetDlgItemText(hDlg,IDC_AUTO_DIR,Directory);
 
 				Bytes = sizeof(Directory);
-				lResult = RegQueryValueEx(hKeyResults,"Snap Shot Directory",0,&Type,(LPBYTE)Directory,&Bytes);
+				lResult = RegQueryValueEx(hKeyResults,"Screenshots Directory",0,&Type,(LPBYTE)Directory,&Bytes);
 				if (lResult != ERROR_SUCCESS) { GetSnapShotDir(Directory); }
 				SetDlgItemText(hDlg,IDC_SNAP_DIR,Directory);
 			} else {
-				SendMessage(GetDlgItem(hDlg,IDC_PLUGIN_DEFAULT),BM_SETCHECK, BST_CHECKED,0);
 				SendMessage(GetDlgItem(hDlg,IDC_ROM_DEFAULT),BM_SETCHECK, BST_CHECKED,0);
 				SendMessage(GetDlgItem(hDlg,IDC_AUTO_DEFAULT),BM_SETCHECK, BST_CHECKED,0);
 				SendMessage(GetDlgItem(hDlg,IDC_INSTANT_DEFAULT),BM_SETCHECK, BST_CHECKED,0);
 				SendMessage(GetDlgItem(hDlg,IDC_SNAP_DEFAULT),BM_SETCHECK, BST_CHECKED,0);
-				GetPluginDir(Directory );
-				SetDlgItemText(hDlg,IDC_PLUGIN_DIR,Directory);
 				GetInstantSaveDir(Directory);
 				SetDlgItemText(hDlg,IDC_INSTANT_DIR,Directory);
 				GetAutoSaveDir(Directory);
@@ -377,7 +365,6 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			GetRomDirectory( Directory );
 			SetDlgItemText(hDlg,IDC_ROM_DIR,Directory);
 
-			SetDlgItemText(hDlg,IDC_DIR_FRAME1,GS(DIR_PLUGIN));
 			SetDlgItemText(hDlg,IDC_DIR_FRAME2,GS(DIR_ROM));
 			SetDlgItemText(hDlg,IDC_DIR_FRAME3,GS(DIR_AUTO_SAVE));
 			SetDlgItemText(hDlg,IDC_DIR_FRAME4,GS(DIR_INSTANT_SAVE));
@@ -387,7 +374,6 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
-		case IDC_SELECT_PLUGIN_DIR:
 		case IDC_SELECT_ROM_DIR:
 		case IDC_SELECT_INSTANT_DIR:
 		case IDC_SELECT_AUTO_DIR:
@@ -398,10 +384,6 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				BROWSEINFO bi;
 
 				switch (LOWORD(wParam)) {
-				case IDC_SELECT_PLUGIN_DIR:
-					strcpy(Title,GS(DIR_SELECT_PLUGIN)); 
-					GetPluginDir(Directory);
-					break;
 				case IDC_SELECT_ROM_DIR: 
 					GetRomDirectory(Directory);
 					strcpy(Title,GS(DIR_SELECT_ROM)); 
@@ -433,11 +415,6 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 						if (Directory[len - 1] != '\\') { strcat(Directory,"\\"); }
 						switch (LOWORD(wParam)) {
-						case IDC_SELECT_PLUGIN_DIR: 
-							SetDlgItemText(hDlg,IDC_PLUGIN_DIR,Directory);
-							SendMessage(GetDlgItem(hDlg,IDC_PLUGIN_DEFAULT),BM_SETCHECK, BST_UNCHECKED,0);
-							SendMessage(GetDlgItem(hDlg,IDC_PLUGIN_OTHER),BM_SETCHECK, BST_CHECKED,0);
-							break;
 						case IDC_SELECT_ROM_DIR: 
 							SetDlgItemText(hDlg,IDC_ROM_DIR,Directory);
 							SendMessage(GetDlgItem(hDlg,IDC_ROM_DEFAULT),BM_SETCHECK, BST_UNCHECKED,0);
@@ -472,21 +449,14 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			DWORD Disposition = 0;
 			char String[200];
 		
-			sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+			sprintf(String,"N64 Software\\%s",AppName);
 			lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 				KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 			if (lResult == ERROR_SUCCESS) {
 				DWORD Value;
-							
-				Value = SendMessage(GetDlgItem(hDlg,IDC_PLUGIN_DEFAULT),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"Use Default Plugin Dir",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
-				if (Value == FALSE) {
-					GetDlgItemText(hDlg,IDC_PLUGIN_DIR,String,sizeof(String));
-					RegSetValueEx(hKeyResults,"Plugin Directory",0,REG_SZ,(CONST BYTE *)String,strlen(String));
-				}
-
+				
 				Value = SendMessage(GetDlgItem(hDlg,IDC_ROM_DEFAULT),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"Use Default Rom Dir",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"Use Default ROM Dir",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
 				if (Value == FALSE) {
 					GetDlgItemText(hDlg,IDC_ROM_DIR,String,sizeof(String));
 					RegSetValueEx(hKeyResults,"Rom Directory",0,REG_SZ,(CONST BYTE *)String,strlen(String));
@@ -504,8 +474,8 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				if (Value == FALSE) {
 					GetDlgItemText(hDlg,IDC_INSTANT_DIR,String,sizeof(String));
 					RegSetValueEx(hKeyResults,"Instant Save Directory",0,REG_SZ,(CONST BYTE *)String,strlen(String));
-				}
-				
+                                }
+
 				Value = SendMessage(GetDlgItem(hDlg,IDC_SNAP_DEFAULT),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 				RegSetValueEx(hKeyResults,"Use Default Snap Shot Dir",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
 				if (Value == FALSE) {
@@ -647,15 +617,7 @@ BOOL CALLBACK PluginSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 			if (PluginsChanged(hDlg) == FALSE) { FreePluginList(); break; }
 
-			if (CPURunning) { 
-				int Response;
-
-				ShowWindow(hDlg,SW_HIDE);
-				Response = MessageBox(hMainWindow,GS(MSG_PLUGIN_CHANGE),GS(MSG_PLUGIN_CHANGE_TITLE),MB_YESNO|MB_ICONQUESTION);
-				if (Response != IDYES) { FreePluginList(); break; }
-			}
-
-			sprintf(String,"Software\\N64 Emulation\\%s\\Dll",AppName);
+			sprintf(String,"N64 Software\\%s\\Dll",AppName);
 			lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 				KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 			if (lResult == ERROR_SUCCESS) {
@@ -685,11 +647,43 @@ BOOL CALLBACK PluginSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 					strlen(String));
 			}
 			RegCloseKey(hKeyResults);
-			if (CPURunning) { 
-				CloseCpu();
+			if (CPURunning) { 	
+				char drive[_MAX_DRIVE],dir[_MAX_DIR], fname[_MAX_FNAME],ext[_MAX_EXT];
+				char SaveFile[255];
+				const char* fixedDir;
+				OSVERSIONINFO osvi;
+				ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+				osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+				GetVersionEx(&osvi);
+    				if (osvi.dwMajorVersion >= 6) {
+        			// Windows Vista and later
+        			fixedDir = "C:\\ProgramData\\";
+    				} else {
+      				// Windows XP
+      				fixedDir = "C:\\Documents and Settings\\All Users\\Application Data\\";
+   				}
+				_splitpath( SaveFile, drive, dir, fname, ext );
+				_makepath(SaveFile, drive, fixedDir, (GS(HOT_SWAP_COMPLETE)), "");
+				strcpy(SaveAsFileName,SaveFile);
+				CPU_Action.SaveState = TRUE;                           
+                                CloseCpu();
+                                SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MSG_PLUGIN_HOT_SWAP));
 				ShutdownPlugins();
-				SetupPlugins(hMainWindow);				
-				StartEmulation();
+				SetupPlugins(hMainWindow);
+				DWORD ThreadID;
+				memset(&CPU_Action,0,sizeof(CPU_Action));
+        			LoadRomOptions();
+				switch (CPU_Type) {
+				case CPU_Interpreter: hCPU = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)StartInterpreterCPU,NULL,0, &ThreadID); break;
+				case CPU_Recompiler: hCPU = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)StartRecompilerCPU,NULL,0, &ThreadID);	break;
+				default:
+				DisplayError("Unhandled CPU %d",CPU_Type);
+				}
+        			CPURunning = TRUE;
+				_splitpath(SaveFile, drive, dir, fname, ext);
+				_makepath(SaveFile, drive, dir, (GS(HOT_SWAP_COMPLETE)), "");
+				strcpy(LoadFileName,SaveFile);
+				CPU_Action.RestoreState = TRUE;
 			} else {
 				ShutdownPlugins();
 				if (!RomBrowser) { SetupPlugins(hMainWindow); }
@@ -746,7 +740,7 @@ BOOL CALLBACK RomBrowserProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			SetDlgItemText(hDlg,IDC_ROMSEL_TEXT4,GS(RB_DIRS));
 			SetDlgItemText(hDlg,IDC_USE_ROMBROWSER,GS(RB_USE));
 			SetDlgItemText(hDlg,IDC_RECURSION,GS(RB_DIR_RECURSION));
-			SetDlgItemText(hDlg,IDC_ROMSEL_TEXT5,GS(RB_AVALIABLE_FIELDS));
+			SetDlgItemText(hDlg,IDC_ROMSEL_TEXT5,GS(RB_AVAILABLE_FIELDS));
 			SetDlgItemText(hDlg,IDC_ROMSEL_TEXT6,GS(RB_SHOW_FIELDS));
 			SetDlgItemText(hDlg,IDC_ADD,GS(RB_ADD));
 			SetDlgItemText(hDlg,IDC_REMOVE,GS(RB_REMOVE));
@@ -835,11 +829,11 @@ BOOL CALLBACK RomBrowserProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			RomBrowser = SendMessage(GetDlgItem(hDlg,IDC_USE_ROMBROWSER),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 			Rercursion = SendMessage(GetDlgItem(hDlg,IDC_RECURSION),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 
-			sprintf(String,"Software\\N64 Emulation\\%s",AppName);
+			sprintf(String,"N64 Software\\%s",AppName);
 			lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 				KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 			if (lResult == ERROR_SUCCESS) {
-				RegSetValueEx(hKeyResults,"Use Rom Browser",0,REG_DWORD,(BYTE *)&RomBrowser,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"Use ROM Browser",0,REG_DWORD,(BYTE *)&RomBrowser,sizeof(DWORD));
 				RegSetValueEx(hKeyResults,"Use Recursion",0,REG_DWORD,(BYTE *)&Rercursion,sizeof(DWORD));
 			}
 									
@@ -864,13 +858,13 @@ BOOL CALLBACK RomBrowserProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			RomsToRemember = GetDlgItemInt(hDlg,IDC_REMEMBER,NULL,FALSE);
 			if (RomsToRemember < 0) { RomsToRemember = 0; }
 			if (RomsToRemember > 10) { RomsToRemember = 10; }
-			RegSetValueEx(hKeyResults,"Roms To Remember",0,REG_DWORD,(BYTE *)&RomsToRemember,sizeof(DWORD));
+			RegSetValueEx(hKeyResults,"ROMs To Remember",0,REG_DWORD,(BYTE *)&RomsToRemember,sizeof(DWORD));
 
 			RemoveRecentList(hMainWindow);
 			RomDirsToRemember = GetDlgItemInt(hDlg,IDC_REMEMBERDIR,NULL,FALSE);
 			if (RomDirsToRemember < 0) { RomDirsToRemember = 0; }
 			if (RomDirsToRemember > 10) { RomDirsToRemember = 10; }
-			RegSetValueEx(hKeyResults,"Rom Dirs To Remember",0,REG_DWORD,(BYTE *)&RomDirsToRemember,sizeof(DWORD));
+			RegSetValueEx(hKeyResults,"ROM Dirs To Remember",0,REG_DWORD,(BYTE *)&RomDirsToRemember,sizeof(DWORD));
 		}
 		break;
 	default:
@@ -894,8 +888,8 @@ BOOL CALLBACK RomNotesProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 				char String[0x3000], RomStatus[100], Status[200], *p;
 				int len, index;
 
-				_GetPrivateProfileString(Identifier,"Status",Default_RomStatus,RomStatus,sizeof(RomStatus),IniFile);
-				GetPrivateProfileSection("Rom Status",String,sizeof(String), IniFile);
+				_GetPrivateProfileString(Identifier,"Status",GS(RB_NOT_IN_RDB),RomStatus,sizeof(RomStatus),IniFile);
+				GetPrivateProfileSection("ROM Status",String,sizeof(String), IniFile);
 				for (p = String; strlen(p) > 0; p += strlen(p) + 1) {
 					strncpy(Status,p,sizeof(Status));
 					if (strrchr(Status,'=') == NULL) { continue; }
@@ -936,7 +930,7 @@ BOOL CALLBACK RomNotesProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 			IniFile = GetIniFileName();
 
 			GetWindowText(GetDlgItem(hDlg, IDC_STATUS), string, sizeof(string));
-			if (strlen(string) == 0) { strcpy(string, Default_RomStatus); }
+			if (strlen(string) == 0) { strcpy(string, GS(RB_NOT_IN_RDB)); }
 			_WritePrivateProfileString(Identifier,"Status",string,IniFile);
 			GetWindowText(GetDlgItem(hDlg, IDC_CORE_NOTES), string, sizeof(string));
 			_WritePrivateProfileString(Identifier,"Core Note",string,IniFile);
@@ -966,9 +960,9 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		SetDlgItemText(hDlg,IDC_COUNTFACT_TEXT,GS(ROM_COUNTER_FACTOR));
 
 		AddDropDownItem(hDlg,IDC_CPU_TYPE,ROM_DEFAULT,CPU_Default,&RomCPUType);
-		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_INTERPTER,CPU_Interpreter,&RomCPUType);
+		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_INTERPRETER,CPU_Interpreter,&RomCPUType);
 		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_RECOMPILER,CPU_Recompiler,&RomCPUType);
-		if (HaveDebugger) { AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_SYNC,CPU_SyncCores,&RomCPUType); }
+		//if (HaveDebugger) { AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_SYNC,CPU_SyncCores,&RomCPUType); }
 
 		AddDropDownItem(hDlg,IDC_SELFMOD,ROM_DEFAULT,ModCode_Default,&RomSelfMod);
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_NONE,ModCode_None,&RomSelfMod);
@@ -987,10 +981,10 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_OFF,1,&RomUseLinking);
 
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_FIRST_USED,Auto,&RomSaveUsing);
-		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_4K_EEPROM,Eeprom_4K,&RomSaveUsing);
-		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_16K_EEPROM,Eeprom_16K,&RomSaveUsing);
-		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_SRAM,Sram,&RomSaveUsing);
-		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_FLASHRAM,FlashRam,&RomSaveUsing);
+		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_4K_eepROM,eepROM_4K,&RomSaveUsing);
+		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_16K_eepROM,eepROM_16K,&RomSaveUsing);
+		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_SRAM,SRAM,&RomSaveUsing);
+		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_FlashRAM,FlashRAM,&RomSaveUsing);
 
 		AddDropDownItem(hDlg,IDC_COUNTFACT,ROM_DEFAULT,-1,&RomCF);
 		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_1,1,&RomCF);
@@ -1043,7 +1037,7 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 			
 			if (strlen(RomName) == 0) { break; }
 			sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-			_WritePrivateProfileString(Identifier, "Game Name", RomName, NotesIniFileName);
+			_WritePrivateProfileString(Identifier, "Internal Name", RomName, NotesIniFileName);
 			GetDlgItemText(hDlg,IDC_NOTES,String,sizeof(String));
 			_WritePrivateProfileString(Identifier,"Note",String,NotesIniFileName);
 

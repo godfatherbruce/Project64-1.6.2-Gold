@@ -265,7 +265,7 @@ int ApplyCheatEntry (GAMESHARK_CODE * Code, BOOL Execute ) {
 	WORD  Memory;
 
 	switch (Code->Command & 0xFF000000) {
-	// Gameshark / AR
+	// Gameshark
 	case 0x50000000:													// Added by Witten (witten@pj64cheats.net)
 		{
 			int numrepeats = (Code->Command & 0x0000FF00) >> 8;
@@ -593,14 +593,14 @@ BOOL CheatActive (char * Name) {
 	long lResult;
 	
 	sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-	sprintf(String,"Software\\N64 Emulation\\%s\\Cheats\\%s",AppName,Identifier);
+	sprintf(String,"N64 Software\\%s\\Cheats\\%s",AppName,Identifier);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults); // check is game ID excists in registry
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Bytes, Active;
 		char GameName[300];
 
 		Bytes = sizeof(GameName);
-		lResult = RegQueryValueEx(hKeyResults,"Name",0,&Type,(LPBYTE)GameName,&Bytes); // get gamename from registry
+		lResult = RegQueryValueEx(hKeyResults,"Internal Name",0,&Type,(LPBYTE)GameName,&Bytes); // get gamename from registry
 		Bytes = sizeof(Active);
 		lResult = RegQueryValueEx(hKeyResults,Name,0,&Type,(LPBYTE)(&Active),&Bytes); // get cheat-state from registry
 		RegCloseKey(hKeyResults);
@@ -629,8 +629,8 @@ LRESULT CALLBACK CheatsCodeExProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM l
 
 			SetWindowText(hDlg, GS(CHEAT_CODE_EXT_TITLE));
 			SetDlgItemText(hDlg,IDC_NOTE, GS(CHEAT_CODE_EXT_TXT));
-			SetDlgItemText(hDlg,IDOK, GS(CHEAT_OK));
-			SetDlgItemText(hDlg,IDCANCEL, GS(CHEAT_CANCEL));
+			IDOK;
+			IDCANCEL;
 			
 			GetCheatName(CheatNo,CheatName,sizeof(CheatName));
 			SetDlgItemText(hDlg,IDC_CHEAT_NAME,CheatName);
@@ -713,11 +713,6 @@ LRESULT CALLBACK CheatsCodeQuantProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARA
 		{
 			char * String = NULL, Identifier[100], CheatName[300],CheatExt[300], * ReadPos;
 			LPSTR IniFileName;
-
-			SetWindowText(hDlg, GS(IDD_Cheats_CodeEx));
-			SetDlgItemText(hDlg, IDC_DIGITAL_TEXT, GS(CHEAT_CHOOSE_VALUE));
-			SetDlgItemText(hDlg, IDC_VALUE_TEXT, GS(CHEAT_VALUE));
-			SetDlgItemText(hDlg, IDC_NOTES_TEXT, GS(CHEAT_NOTES));
 			
 			IniFileName = GetCheatIniFileName();
 			sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
@@ -738,8 +733,6 @@ LRESULT CALLBACK CheatsCodeQuantProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARA
 			SetDlgItemText(hDlg,IDC_CHEAT_NAME,CheatName);
 			LoadCheatExt(CheatName,CheatExt,sizeof(CheatExt));
 			SetDlgItemText(hDlg,IDC_VALUE,CheatExt);
-			sprintf(CheatExt,"%s $%X %s $%X",GS(CHEAT_FROM),Start,GS(CHEAT_TO),Stop);
-			SetDlgItemText(hDlg,IDC_RANGE,CheatExt);
 			if (String) { free(String); }
 		}
 		break;
@@ -1003,7 +996,7 @@ LRESULT CALLBACK CheatAddProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 	switch (uMsg) {
 	case WM_INITDIALOG:
-		SetWindowText(hDlg,GS(CHEAT_ADDCHEAT_FRAME));
+		SetWindowText(hDlg,GS(CHEAT_ADDCHEAT_ADD));
 		SetWindowText(GetDlgItem(hDlg,IDC_NAME),GS(CHEAT_ADDCHEAT_NAME));
 		SetWindowText(GetDlgItem(hDlg,IDC_CODE),GS(CHEAT_ADDCHEAT_CODE));
 		SetWindowText(GetDlgItem(hDlg,IDC_LABEL_OPTIONS),GS(CHEAT_ADDCHEAT_OPT));
@@ -1099,7 +1092,7 @@ LRESULT CALLBACK CheatAddProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 				//Add to ini
 				IniFileName = GetCheatIniFileName();
 				sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-				_WritePrivateProfileString(Identifier,"Name",RomName,IniFileName);
+				_WritePrivateProfileString(Identifier,"Internal Name",RomName,IniFileName);
 				sprintf(NewCheatName,"Cheat%d",CheatNo);
 				_WritePrivateProfileString(Identifier,NewCheatName,cheat,IniFileName);				
 				if (cheat) { free(cheat); cheat = NULL; }
@@ -1302,7 +1295,7 @@ LRESULT CALLBACK CheatEditProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				strcat(cheat, codestring);
 
 				//Add to ini
-				_WritePrivateProfileString(Identifier,"Name",RomName,IniFileName);
+				_WritePrivateProfileString(Identifier,"Internal Name",RomName,IniFileName);
 				sprintf(NewCheatName,"Cheat%d",CheatNo);
 				_WritePrivateProfileString(Identifier,NewCheatName,cheat,IniFileName);				
 				if (cheat) { free(cheat); cheat = NULL; }
@@ -1453,12 +1446,7 @@ LRESULT CALLBACK CheatListProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 			break;
 		case ID_POPUP_DELETE:
 			{
-				TVITEM item;
-
-				int Response = MessageBox(hDlg,GS(MSG_DEL_SURE),GS(MSG_DEL_TITLE),MB_YESNO|MB_ICONQUESTION);
-				if (Response != IDYES) { break; }
-
-				//Delete selected cheat
+                                TVITEM item;
 				item.hItem = hSelectedItem;
 				item.mask = TVIF_PARAM ;
 				TreeView_GetItem(hCheatTree,&item);
@@ -1488,7 +1476,6 @@ LRESULT CALLBACK CheatListProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 					ht.pt.y = GET_Y_LPARAM(dwpos);
 					MapWindowPoints(HWND_DESKTOP, lpnmh->hwndFrom, &ht.pt, 1);
 
-					if (BasicMode) { return TRUE; }
 					TreeView_HitTest(lpnmh->hwndFrom, &ht);
 					hSelectedItem = ht.hItem;
 				}
@@ -1777,9 +1764,7 @@ char * GetCheatIniFileName(void) {
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
 
-	// Moved CHT out of root and into the Config Folder (Gent)
-
-	sprintf(IniFileName,"%s%sConfig\\%s",drive,dir,CheatIniName);
+	sprintf(IniFileName,"%s%sPJ64DB\\%s",drive,dir,CheatIniName);
 	return IniFileName;
 }
 
@@ -1838,7 +1823,7 @@ BOOL LoadCheatExt(char * CheatName, char * CheatExt, int MaxCheatExtLen) {
 	}
 
 	sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-	sprintf(String,"Software\\N64 Emulation\\%s\\Cheats\\%s",AppName,Identifier);
+	sprintf(String,"N64 Software\\%s\\Cheats\\%s",AppName,Identifier);
 
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);	
 	if (lResult == ERROR_SUCCESS) {		
@@ -1924,28 +1909,6 @@ void LoadPermCheats (void)
 	if (String) { free(String); }
 }
 
-void LoadJaboCheats(void)  // Jabo Video PermCheat Specific (Gent)
-{
-	LPSTR IniFileName;
-	char* String = NULL;
-	char Identifier[100];
-	int count;
-
-	IniFileName = GetJIniFileName();
-	sprintf(Identifier, "%08X-%08X-C:%X", *(DWORD*)(&RomHeader[0x10]), *(DWORD*)(&RomHeader[0x14]), RomHeader[0x3D]);
-
-	for (count = 0; count < MaxCheats; count++)
-	{
-		char CheatName[300];
-
-		sprintf(CheatName, "Cheat%d", count);
-		_GetPrivateProfileString2(Identifier, CheatName, "", &String, IniFileName);
-		if (strlen(String) == 0) { break; }
-		LoadCode(NULL, String);
-	}
-	if (String) { free(String); }
-}
-
 /********************************************************************************************
   LoadCheats
 
@@ -1986,28 +1949,6 @@ void LoadCheats (void) {
 		ReadPos = strrchr(String,'"') + 2;
 		LoadCode(CheatName, ReadPos);
 	}
-
-	LoadJaboCheats();
-
-	for (count = 0; count < MaxCheats; count++) {
-		char* ReadPos;
-
-		sprintf(CheatName, "Cheat%d", count);
-		_GetPrivateProfileString2(Identifier, CheatName, "", &String, IniFileName);
-		if (strlen(String) == 0) { break; }
-		if (strchr(String, '"') == NULL) { continue; }
-		len = strrchr(String, '"') - strchr(String, '"') - 1;
-		if ((int)len < 1) { continue; }
-		memset(CheatName, 0, sizeof(CheatName));
-		strncpy(CheatName, strchr(String, '"') + 1, len);
-		if (strlen(CheatName) == 0) { continue; }
-		//if (strrchr(CheatName,'\\') != NULL) {
-		//	strcpy(CheatName,strrchr(CheatName,'\\') + 1);
-		//}		
-		if (!CheatActive(CheatName)) { continue; }
-		ReadPos = strrchr(String, '"') + 2;
-		LoadCode(CheatName, ReadPos);
-	}
 	if (String) { free(String); }
 }
 
@@ -2034,9 +1975,8 @@ void ManageCheats (HWND hParent) {
   		X = (GetSystemMetrics( SM_CXSCREEN ) - WindowWidth) / 2;
 		Y = (GetSystemMetrics( SM_CYSCREEN ) - WindowHeight) / 2;
 	}
-	if (hParent) { Style = WS_SIZEBOX|WS_SYSMENU; }
-	if (!hParent) { Style = WS_SIZEBOX|WS_SYSMENU|WS_MINIMIZEBOX; }
-	hManageWindow = CreateWindow("PJ64.Cheats", GS(CHEAT_TITLE),Style,
+	{ Style = WS_SIZEBOX|WS_SYSMENU; }
+	hManageWindow = CreateWindow("PJ64.Cheats", GS(MENU_CHEAT),Style,
 		X,Y,WindowWidth,WindowHeight,hParent,NULL,hInst,NULL);
 	RefreshCheatManager();
 	ShowWindow(hManageWindow,SW_SHOW);
@@ -2155,7 +2095,7 @@ LRESULT CALLBACK ManageCheatsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM l
 			GetWindowPlacement(hDlg, &WndPlac);
 			rc = &WndPlac.rcNormalPosition;
 
-			SetWindowText(hDlg, GS(CHEAT_TITLE));
+			SetWindowText(hDlg, GS(MENU_CHEAT));
 			hSelectCheat = CreateDialog(hInst, MAKEINTRESOURCE(IDD_Cheats_List),hDlg,(DLGPROC)CheatListProc);
 			SetWindowPos(hSelectCheat,HWND_TOP, 5, 8, 0, 0, SWP_NOSIZE);
 			ShowWindow(hSelectCheat,SW_SHOW);
@@ -2338,11 +2278,11 @@ void SaveCheat(char * CheatName, BOOL Active) {
 	long lResult;
 	
 	sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-	sprintf(String,"Software\\N64 Emulation\\%s\\Cheats\\%s",AppName,Identifier);
+	sprintf(String,"N64 Software\\%s\\Cheats\\%s",AppName,Identifier);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {		
-		RegSetValueEx(hKeyResults,"Name",0,REG_SZ,(CONST BYTE *)RomName,strlen(RomName));							
+		RegSetValueEx(hKeyResults,"Internal Name",0,REG_SZ,(CONST BYTE *)RomName,strlen(RomName));							
 		if (Active) {
 			RegSetValueEx(hKeyResults,CheatName,0, REG_DWORD,(CONST BYTE *)(&Active),sizeof(DWORD));
 		} else {
@@ -2367,12 +2307,12 @@ void SaveCheatExt(char * CheatName, char * CheatExt) {
 	long lResult;
 	
 	sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-	sprintf(String,"Software\\N64 Emulation\\%s\\Cheats\\%s",AppName,Identifier);
+	sprintf(String,"N64 Software\\%s\\Cheats\\%s",AppName,Identifier);
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {		
 		sprintf(String,"%s.exten",CheatName);
-		RegSetValueEx(hKeyResults,"Name",0,REG_SZ,(CONST BYTE *)RomName,strlen(RomName));				
+		RegSetValueEx(hKeyResults,"Internal Name",0,REG_SZ,(CONST BYTE *)RomName,strlen(RomName));				
 		RegSetValueEx(hKeyResults,String,0,REG_SZ,(CONST BYTE *)CheatExt,strlen(CheatExt));
 		RegCloseKey(hKeyResults);
 	}

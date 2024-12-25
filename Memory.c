@@ -29,7 +29,7 @@
 #include "cpu.h"
 #include "x86.h"
 #include "plugin.h"
-#include "debugger.h"
+
 
 
 DWORD *TLB_ReadMap, *TLB_WriteMap, RdramSize, SystemRdramSize;
@@ -163,7 +163,6 @@ void Compile_LB ( int Reg, DWORD Addr, BOOL SignExtend) {
 	if (!TranslateVaddr(&Addr)) {
 		MoveConstToX86reg(0,Reg);
 		CPU_Message("Compile_LB\nFailed to translate address %X",Addr);
-		if (ShowUnhandledMemory) { DisplayError("Compile_LB\nFailed to translate address %X",Addr); }
 		return;
 	}
 
@@ -186,7 +185,6 @@ void Compile_LB ( int Reg, DWORD Addr, BOOL SignExtend) {
 		break;
 	default:
 		MoveConstToX86reg(0,Reg);
-		if (ShowUnhandledMemory) { DisplayError("Compile_LB\nFailed to compile address: %X",Addr); }
 	}
 }
 
@@ -196,7 +194,6 @@ void Compile_LH ( int Reg, DWORD Addr, BOOL SignExtend) {
 	if (!TranslateVaddr(&Addr)) {
 		MoveConstToX86reg(0,Reg);
 		CPU_Message("Compile_LH\nFailed to translate address %X",Addr);
-		if (ShowUnhandledMemory) { DisplayError("Compile_LH\nFailed to translate address %X",Addr); }
 		return;
 	}
 
@@ -219,7 +216,6 @@ void Compile_LH ( int Reg, DWORD Addr, BOOL SignExtend) {
 		break;
 	default:
 		MoveConstToX86reg(0,Reg);
-		if (ShowUnhandledMemory) { DisplayError("Compile_LHU\nFailed to compile address: %X",Addr); }
 	}
 }
 
@@ -229,7 +225,6 @@ void Compile_LW ( int Reg, DWORD Addr ) {
 	if (!TranslateVaddr(&Addr)) {
 		MoveConstToX86reg(0,Reg);
 		CPU_Message("Compile_LW\nFailed to translate address %X",Addr);
-		if (ShowUnhandledMemory) { DisplayError("Compile_LW\nFailed to translate address %X",Addr); }
 	}
 
 	switch (Addr & 0xFFF00000) {
@@ -259,7 +254,6 @@ void Compile_LW ( int Reg, DWORD Addr ) {
 		case 0x04080000: MoveVariableToX86reg(&SP_PC_REG,"SP_PC_REG",Reg); break;
 		default:
 			MoveConstToX86reg(0,Reg);
-			if (ShowUnhandledMemory) { DisplayError("Compile_LW\nFailed to translate address: %X",Addr); }
 		}
 		break;
 	case 0x04100000:
@@ -270,7 +264,6 @@ void Compile_LW ( int Reg, DWORD Addr ) {
 			case 0x04100018: MoveVariableToX86reg(&DPC_PIPEBUSY_REG,"DPC_PIPEBUSY_REG",Reg); break;
 			case 0x0410001C: MoveVariableToX86reg(&DPC_TMEM_REG,"DPC_TMEM_REG",Reg); break;
 			default:
-				if (ShowUnhandledMemory) { DisplayError("Compile_LW\nFailed to translate address: %X",Addr); }
 				sprintf(VarName,"N64MEM + %X",Addr);
 				MoveVariableToX86reg(Addr + N64MEM,VarName,Reg); 
 				break;
@@ -284,7 +277,6 @@ void Compile_LW ( int Reg, DWORD Addr ) {
 		case 0x0430000C: MoveVariableToX86reg(&MI_INTR_MASK_REG,"MI_INTR_MASK_REG",Reg); break;
 		default:
 			MoveConstToX86reg(0,Reg);
-			if (ShowUnhandledMemory) { DisplayError("Compile_LW\nFailed to translate address: %X",Addr); }
 		}
 		break;
 	case 0x04400000: 
@@ -297,7 +289,6 @@ void Compile_LW ( int Reg, DWORD Addr ) {
 			break;
 		default:
 			MoveConstToX86reg(0,Reg);
-			if (ShowUnhandledMemory) { DisplayError("Compile_LW\nFailed to translate address: %X",Addr); }
 		}
 		break;
 	case 0x04500000: /* AI registers */
@@ -316,7 +307,6 @@ void Compile_LW ( int Reg, DWORD Addr ) {
 		case 0x0450000C: MoveVariableToX86reg(&AI_STATUS_REG,"AI_STATUS_REG",Reg); break;
 		default:
 			MoveConstToX86reg(0,Reg);
-			if (ShowUnhandledMemory) { DisplayError("Compile_LW\nFailed to translate address: %X",Addr); }
 		}
 		break;
 	case 0x04600000:
@@ -333,7 +323,6 @@ void Compile_LW ( int Reg, DWORD Addr ) {
 		case 0x04600030: MoveVariableToX86reg(&PI_BSD_DOM2_RLS_REG,"PI_BSD_DOM2_RLS_REG",Reg); break;
 		default:
 			MoveConstToX86reg(0,Reg);
-			if (ShowUnhandledMemory) { DisplayError("Compile_LW\nFailed to translate address: %X",Addr); }
 		}
 		break;
 	case 0x04700000:
@@ -342,7 +331,6 @@ void Compile_LW ( int Reg, DWORD Addr ) {
 		case 0x04700010: MoveVariableToX86reg(&RI_REFRESH_REG,"RI_REFRESH_REG",Reg); break;
 		default:
 			MoveConstToX86reg(0,Reg);
-			if (ShowUnhandledMemory) { DisplayError("Compile_LW\nFailed to translate address: %X",Addr); }
 		}
 		break;
 	case 0x04800000:
@@ -350,12 +338,10 @@ void Compile_LW ( int Reg, DWORD Addr ) {
 		case 0x04800018: MoveVariableToX86reg(&SI_STATUS_REG,"SI_STATUS_REG",Reg); break;
 		default:
 			MoveConstToX86reg(0,Reg);
-			if (ShowUnhandledMemory) { DisplayError("Compile_LW\nFailed to translate address: %X",Addr); }
 		}
 		break;
 	case 0x05000000:
 		MoveConstToX86reg(0,Reg);
-		if (ShowUnhandledMemory) { DisplayError("Compile_LW\nFailed to translate address: %X",Addr); }
 		break;
 	case 0x1FC00000:
 		sprintf(VarName,"N64MEM + %X",Addr);
@@ -363,10 +349,6 @@ void Compile_LW ( int Reg, DWORD Addr ) {
 		break;
 	default:
 		MoveConstToX86reg(((Addr & 0xFFFF) << 16) | (Addr & 0xFFFF),Reg);
-		if (ShowUnhandledMemory) { 
-			CPU_Message("Compile_LW\nFailed to translate address: %X",Addr); 
-			DisplayError("Compile_LW\nFailed to translate address: %X",Addr); 
-		}
 	}
 }
 
@@ -375,7 +357,6 @@ void Compile_SB_Const ( BYTE Value, DWORD Addr ) {
 
 	if (!TranslateVaddr(&Addr)) {
 		CPU_Message("Compile_SB\nFailed to translate address %X",Addr);
-		if (ShowUnhandledMemory) { DisplayError("Compile_SB\nFailed to translate address %X",Addr); }
 		return;
 	}
 
@@ -391,8 +372,6 @@ void Compile_SB_Const ( BYTE Value, DWORD Addr ) {
 		sprintf(VarName,"N64MEM + %X",Addr);
 		MoveConstByteToVariable(Value,Addr + N64MEM,VarName); 
 		break;
-	default:
-		if (ShowUnhandledMemory) { DisplayError("Compile_SB_Const\ntrying to store %X in %X?",Value,Addr); }
 	}
 }
 
@@ -401,7 +380,6 @@ void Compile_SB_Register ( int x86Reg, DWORD Addr ) {
 
 	if (!TranslateVaddr(&Addr)) {
 		CPU_Message("Compile_SB\nFailed to translate address %X",Addr);
-		if (ShowUnhandledMemory) { DisplayError("Compile_SB\nFailed to translate address %X",Addr); }
 		return;
 	}
 
@@ -417,8 +395,6 @@ void Compile_SB_Register ( int x86Reg, DWORD Addr ) {
 		sprintf(VarName,"N64MEM + %X",Addr);
 		MoveX86regByteToVariable(x86Reg,Addr + N64MEM,VarName); 
 		break;
-	default:
-		if (ShowUnhandledMemory) { DisplayError("Compile_SB_Register\ntrying to store in %X?",Addr); }
 	}
 }
 
@@ -427,7 +403,6 @@ void Compile_SH_Const ( WORD Value, DWORD Addr ) {
 
 	if (!TranslateVaddr(&Addr)) {
 		CPU_Message("Compile_SH\nFailed to translate address %X",Addr);
-		if (ShowUnhandledMemory) { DisplayError("Compile_SH\nFailed to translate address %X",Addr); }
 		return;
 	}
 
@@ -443,8 +418,6 @@ void Compile_SH_Const ( WORD Value, DWORD Addr ) {
 		sprintf(VarName,"N64MEM + %X",Addr);
 		MoveConstHalfToVariable(Value,Addr + N64MEM,VarName); 
 		break;
-	default:
-		if (ShowUnhandledMemory) { DisplayError("Compile_SH_Const\ntrying to store %X in %X?",Value,Addr); }
 	}
 }
 
@@ -453,7 +426,6 @@ void Compile_SH_Register ( int x86Reg, DWORD Addr ) {
 
 	if (!TranslateVaddr(&Addr)) {
 		CPU_Message("Compile_SH\nFailed to translate address %X",Addr);
-		if (ShowUnhandledMemory) { DisplayError("Compile_SH\nFailed to translate address %X",Addr); }
 		return;
 	}
 
@@ -469,8 +441,6 @@ void Compile_SH_Register ( int x86Reg, DWORD Addr ) {
 		sprintf(VarName,"N64MEM + %X",Addr);
 		MoveX86regHalfToVariable(x86Reg,Addr + N64MEM,VarName); 
 		break;
-	default:
-		if (ShowUnhandledMemory) { DisplayError("Compile_SH_Register\ntrying to store in %X?",Addr); }
 	}
 }
 
@@ -480,7 +450,6 @@ void Compile_SW_Const ( DWORD Value, DWORD Addr ) {
 
 	if (!TranslateVaddr(&Addr)) {
 		CPU_Message("Compile_SW\nFailed to translate address %X",Addr);
-		if (ShowUnhandledMemory) { DisplayError("Compile_SW\nFailed to translate address %X",Addr); }
 		return;
 	}
 
@@ -514,8 +483,6 @@ void Compile_SW_Const ( DWORD Value, DWORD Addr ) {
 		case 0x03F80008: break;
 		case 0x03F8000C: break;
 		case 0x03F80014: break;
-		default:
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Const\ntrying to store %X in %X?",Value,Addr); }
 		}
 		break;
 	case 0x04000000:
@@ -590,8 +557,6 @@ void Compile_SW_Const ( DWORD Value, DWORD Addr ) {
 			break;
 		case 0x0404001C: MoveConstToVariable(0,&SP_SEMAPHORE_REG,"SP_SEMAPHORE_REG"); break;
 		case 0x04080000: MoveConstToVariable(Value & 0xFFC,&SP_PC_REG,"SP_PC_REG"); break;
-		default:
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Const\ntrying to store %X in %X?",Value,Addr); }
 		}
 		break;
 	case 0x04300000: 
@@ -645,8 +610,6 @@ void Compile_SW_Const ( DWORD Value, DWORD Addr ) {
 				}
 			}
 			break;
-		default:
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Const\ntrying to store %X in %X?",Value,Addr); }
 		}
 		break;
 	case 0x04400000: 
@@ -696,8 +659,6 @@ void Compile_SW_Const ( DWORD Value, DWORD Addr ) {
 		case 0x0440002C: MoveConstToVariable(Value,&VI_V_BURST_REG,"VI_V_BURST_REG"); break;
 		case 0x04400030: MoveConstToVariable(Value,&VI_X_SCALE_REG,"VI_X_SCALE_REG"); break;
 		case 0x04400034: MoveConstToVariable(Value,&VI_Y_SCALE_REG,"VI_Y_SCALE_REG"); break;
-		default:
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Const\ntrying to store %X in %X?",Value,Addr); }
 		}
 		break;
 	case 0x04500000: /* AI registers */
@@ -726,7 +687,6 @@ void Compile_SW_Const ( DWORD Value, DWORD Addr ) {
 		default:
 			sprintf(VarName,"N64MEM + %X",Addr);
 			MoveConstToVariable(Value,Addr + N64MEM,VarName); 
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Const\ntrying to store %X in %X?",Value,Addr); }
 		}
 		break;
 	case 0x04600000:
@@ -758,8 +718,6 @@ void Compile_SW_Const ( DWORD Value, DWORD Addr ) {
 		case 0x0460001C: MoveConstToVariable((Value & 0xFF),&PI_BSD_DOM1_PGS_REG,"PI_BSD_DOM1_PGS_REG"); break;
 		case 0x04600020: MoveConstToVariable((Value & 0xFF),&PI_BSD_DOM1_RLS_REG,"PI_BSD_DOM1_RLS_REG"); break;
 		case 0x04600024: MoveConstToVariable((Value & 0xFF),&PI_DOMAIN2_REG,"PI_DOMAIN2_REG"); break;
-		default:
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Const\ntrying to store %X in %X?",Value,Addr); }
 		}
 		break;
 	case 0x04700000:
@@ -768,8 +726,6 @@ void Compile_SW_Const ( DWORD Value, DWORD Addr ) {
 		case 0x04700004: MoveConstToVariable(Value,&RI_CONFIG_REG,"RI_CONFIG_REG"); break;
 		case 0x04700008: MoveConstToVariable(Value,&RI_CURRENT_LOAD_REG,"RI_CURRENT_LOAD_REG"); break;
 		case 0x0470000C: MoveConstToVariable(Value,&RI_SELECT_REG,"RI_SELECT_REG"); break;
-		default:
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Const\ntrying to store %X in %X?",Value,Addr); }
 		}
 		break;
 	case 0x04800000:
@@ -794,12 +750,8 @@ void Compile_SW_Const ( DWORD Value, DWORD Addr ) {
 			Call_Direct(CheckInterrupts,"CheckInterrupts");
 			Popad();
 			break;
-		default:
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Const\ntrying to store %X in %X?",Value,Addr); }
 		}
 		break;
-	default:
-		if (ShowUnhandledMemory) { DisplayError("Compile_SW_Const\ntrying to store %X in %X?",Value,Addr); }
 	}
 }
 
@@ -809,7 +761,6 @@ void Compile_SW_Register ( int x86Reg, DWORD Addr ) {
 
 	if (!TranslateVaddr(&Addr)) {
 		CPU_Message("Compile_SW_Register\nFailed to translate address %X",Addr);
-		if (ShowUnhandledMemory) { DisplayError("Compile_SW_Register\nFailed to translate address %X",Addr); }
 		return;
 	}
 
@@ -858,7 +809,6 @@ void Compile_SW_Register ( int x86Reg, DWORD Addr ) {
 				MoveX86regToVariable(x86Reg,Addr + N64MEM,VarName); 
 			} else {
 				CPU_Message("    Should be moving %s in to %X ?!?",x86_Name(x86Reg),Addr);
-				if (ShowUnhandledMemory) { DisplayError("Compile_SW_Register\ntrying to store at %X?",Addr); }
 			}
 		}
 		break;
@@ -874,7 +824,6 @@ void Compile_SW_Register ( int x86Reg, DWORD Addr ) {
 			CPU_Message("    Should be moving %s in to %X ?!?",x86_Name(x86Reg),Addr);
 			sprintf(VarName,"N64MEM + %X",Addr);
 			MoveX86regToVariable(x86Reg,Addr + N64MEM,VarName); 
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Register\ntrying to store at %X?",Addr); }
 			break;
 		}
 		break;
@@ -883,7 +832,7 @@ void Compile_SW_Register ( int x86Reg, DWORD Addr ) {
 		case 0x04300000: 
 			MoveX86regToVariable(x86Reg,&RegModValue,"RegModValue");
 			Pushad(); 
-			Call_Direct(ChangeMiIntrMask,"ChangeMiModeReg");
+			Call_Direct(ChangeMiModeReg,"ChangeMiModeReg");
 			Popad();
 			break;
 		case 0x0430000C: 
@@ -894,7 +843,6 @@ void Compile_SW_Register ( int x86Reg, DWORD Addr ) {
 			break;
 		default:
 			CPU_Message("    Should be moving %s in to %X ?!?",x86_Name(x86Reg),Addr);
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Register\ntrying to store at %X?",Addr); }
 		}
 		break;
 	case 0x04400000: 
@@ -949,7 +897,6 @@ void Compile_SW_Register ( int x86Reg, DWORD Addr ) {
 		case 0x04400034: MoveX86regToVariable(x86Reg,&VI_Y_SCALE_REG,"VI_Y_SCALE_REG"); break;
 		default:
 			CPU_Message("    Should be moving %s in to %X ?!?",x86_Name(x86Reg),Addr);
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Register\ntrying to store at %X?",Addr); }
 		}
 		break;
 	case 0x04500000: /* AI registers */
@@ -980,7 +927,7 @@ void Compile_SW_Register ( int x86Reg, DWORD Addr ) {
 		default:
 			sprintf(VarName,"N64MEM + %X",Addr);
 			MoveX86regToVariable(x86Reg,Addr + N64MEM,VarName); 
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Register\ntrying to store at %X?",Addr); }		}
+		}
 		break;
 	case 0x04600000:
 		switch (Addr) {
@@ -999,7 +946,6 @@ void Compile_SW_Register ( int x86Reg, DWORD Addr ) {
 			Popad();
 			break;
 		case 0x04600010: 
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Register\ntrying to store at %X?",Addr); }
 			AndConstToVariable(~MI_INTR_PI,&MI_INTR_REG,"MI_INTR_REG");
 			Pushad();
 			Call_Direct(CheckInterrupts,"CheckInterrupts");
@@ -1041,14 +987,11 @@ void Compile_SW_Register ( int x86Reg, DWORD Addr ) {
 			break;
 		default:
 			CPU_Message("    Should be moving %s in to %X ?!?",x86_Name(x86Reg),Addr);
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Register\ntrying to store at %X?",Addr); }
 		}
 		break;
 	case 0x04700000:
 		switch (Addr) {
 		case 0x04700010: MoveX86regToVariable(x86Reg,&RI_REFRESH_REG,"RI_REFRESH_REG"); break;
-		default:
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Register\ntrying to store at %X?",Addr); }
 		}
 		break;
 	case 0x04800000:
@@ -1073,8 +1016,6 @@ void Compile_SW_Register ( int x86Reg, DWORD Addr ) {
 			Call_Direct(CheckInterrupts,"CheckInterrupts");
 			Popad();
 			break;
-		default:
-			if (ShowUnhandledMemory) { DisplayError("Compile_SW_Register\ntrying to store at %X?",Addr); }
 		}
 		break;
 	case 0x1FC00000:
@@ -1083,7 +1024,6 @@ void Compile_SW_Register ( int x86Reg, DWORD Addr ) {
 		break;
 	default:
 		CPU_Message("    Should be moving %s in to %X ?!?",x86_Name(x86Reg),Addr);
-		if (ShowUnhandledMemory) { DisplayError("Compile_SW_Register\ntrying to store in %X?",Addr); }
 	}
 }
 
@@ -1134,7 +1074,6 @@ int r4300i_Command_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 	DisplayError("Unknown x86 opcode %X\nlocation %X\nN64mem loc: %X\nAddress: %X", 
 		*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)N64MEM, 
 		(char *)exRec.ExceptionInformation[1] - (char *)N64MEM);
-	DisplayError("r4300i: CPU Memory Filter\n\nWTF");
 	return EXCEPTION_CONTINUE_SEARCH;
 }
 
@@ -1158,9 +1097,6 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 		Start = (lpEP->ContextRecord->Edi - (DWORD)N64MEM);
 		End = (Start + (lpEP->ContextRecord->Ecx << 2) - 1);
 		if ((int)Start < 0) { 
-#ifndef EXTERNAL_RELEASE
-			DisplayError("hmmm.... where does this dma start ?");
-#endif
 			return EXCEPTION_CONTINUE_SEARCH;
 		}
 #ifdef CFB_READ
@@ -1210,7 +1146,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 			return EXCEPTION_CONTINUE_EXECUTION;
 		}
 #ifndef EXTERNAL_RELEASE
-		DisplayError("hmmm.... where does this dma End ?\nstart: %X\nend:%X\nlocation %X", 
+		DisplayError("Unknown DMA end.\nstart: %X\nend:%X\nlocation %X", 
 			Start,End,lpEP->ContextRecord->Eip);
 #endif
 		return EXCEPTION_CONTINUE_SEARCH;
@@ -1285,41 +1221,29 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 		switch(*(TypePos + 1)) {
 		case 0xB6:
 			if (!r4300i_LB_NonMemory(MemAddress,Reg,FALSE)) {
-				if (ShowUnhandledMemory) {
-					DisplayError("Failed to load byte\n\nMIPS Address: %X\nX86 Address",
 						(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
-						*(unsigned char *)lpEP->ContextRecord->Eip);
-				}
+						*(unsigned char *)lpEP->ContextRecord->Eip;
 			}
 			lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 			return EXCEPTION_CONTINUE_EXECUTION;		
 		case 0xB7:
 			if (!r4300i_LH_NonMemory(MemAddress,Reg,FALSE)) {
-				if (ShowUnhandledMemory) {
-					DisplayError("Failed to load half word\n\nMIPS Address: %X\nX86 Address",
 						(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
-						*(unsigned char *)lpEP->ContextRecord->Eip);
-				}
+						*(unsigned char *)lpEP->ContextRecord->Eip;
 			}
 			lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 			return EXCEPTION_CONTINUE_EXECUTION;		
 		case 0xBE:
 			if (!r4300i_LB_NonMemory(MemAddress,Reg,TRUE)) {
-				if (ShowUnhandledMemory) {
-					DisplayError("Failed to load byte\n\nMIPS Address: %X\nX86 Address",
 						(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
-						*(unsigned char *)lpEP->ContextRecord->Eip);
-				}
+						*(unsigned char *)lpEP->ContextRecord->Eip;
 			}
 			lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 			return EXCEPTION_CONTINUE_EXECUTION;		
 		case 0xBF:
 			if (!r4300i_LH_NonMemory(MemAddress,Reg,TRUE)) {
-				if (ShowUnhandledMemory) {
-					DisplayError("Failed to load half word\n\nMIPS Address: %X\nX86 Address",
-						(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
-						*(unsigned char *)lpEP->ContextRecord->Eip);
-				}
+				(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
+					*(unsigned char *)lpEP->ContextRecord->Eip;
 			}
 			lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 			return EXCEPTION_CONTINUE_EXECUTION;		
@@ -1333,95 +1257,68 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 		switch(*(TypePos + 1)) {
 		case 0x8B:
 			if (!r4300i_LH_NonMemory(MemAddress,Reg,FALSE)) {
-				if (ShowUnhandledMemory) {
-					DisplayError("Failed to half word\n\nMIPS Address: %X\nX86 Address",
 						(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
-						*(unsigned char *)lpEP->ContextRecord->Eip);
-				}
+						*(unsigned char *)lpEP->ContextRecord->Eip;
 			}
 			lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 			return EXCEPTION_CONTINUE_EXECUTION;		
 		case 0x89:
 			if (!r4300i_SH_NonMemory(MemAddress,*(WORD *)Reg)) {
-				if (ShowUnhandledMemory) {
-					DisplayError("Failed to store half word\n\nMIPS Address: %X\nX86 Address",MemAddress,
-						*(unsigned char *)lpEP->ContextRecord->Eip);
-				}
+						*(unsigned char *)lpEP->ContextRecord->Eip;
 			}
 			lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 			return EXCEPTION_CONTINUE_EXECUTION;		
 		case 0xC7:
 			if (Reg != &lpEP->ContextRecord->Eax) { return EXCEPTION_CONTINUE_SEARCH; }
 			if (!r4300i_SH_NonMemory(MemAddress,*(WORD *)ReadPos)) {
-				if (ShowUnhandledMemory) {
-					DisplayError("Failed to store half word\n\nMIPS Address: %X\nX86 Address",MemAddress,
-						*(unsigned char *)lpEP->ContextRecord->Eip);
-				}
+						*(unsigned char *)lpEP->ContextRecord->Eip;
 			}
 			lpEP->ContextRecord->Eip = (DWORD)(ReadPos + 2);
 			return EXCEPTION_CONTINUE_EXECUTION;		
 		default:
-			DisplayError("Unkown x86 opcode %X\nlocation %X\nloc: %X\nfhfgh2", 
+			DisplayError("Unknown x86 opcode %X\nlocation %X\nloc: %X\nfhfgh2", 
 				*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM);
 			return EXCEPTION_CONTINUE_SEARCH;
 		}
 		break;
 	case 0x88: 
 		if (!r4300i_SB_NonMemory(MemAddress,*(BYTE *)Reg)) {
-			if (ShowUnhandledMemory) {
-				DisplayError("Failed to store byte\n\nMIPS Address: %X\nX86 Address",
 					(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
-					*(unsigned char *)lpEP->ContextRecord->Eip);
-			}
+					*(unsigned char *)lpEP->ContextRecord->Eip;
 		}
 		lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 		return EXCEPTION_CONTINUE_EXECUTION;		
 	case 0x8A: 
 		if (!r4300i_LB_NonMemory(MemAddress,Reg,FALSE)) {
-			if (ShowUnhandledMemory) {
-				DisplayError("Failed to load byte\n\nMIPS Address: %X\nX86 Address",
 					(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
-					*(unsigned char *)lpEP->ContextRecord->Eip);
-			}
+					*(unsigned char *)lpEP->ContextRecord->Eip;
 		}
 		lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 		return EXCEPTION_CONTINUE_EXECUTION;		
 	case 0x8B: 
 		if (!r4300i_LW_NonMemory(MemAddress,Reg)) {
-			if (ShowUnhandledMemory) {
-				DisplayError("Failed to load word\n\nMIPS Address: %X\nX86 Address",
 					(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
-					*(unsigned char *)lpEP->ContextRecord->Eip);
-			}
+					*(unsigned char *)lpEP->ContextRecord->Eip;
 		}
 		lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 		return EXCEPTION_CONTINUE_EXECUTION;		
 	case 0x89:
 		if (!r4300i_SW_NonMemory(MemAddress,*(DWORD *)Reg)) {
-			if (ShowUnhandledMemory) {
-				DisplayError("Failed to store word\n\nMIPS Address: %X\nX86 Address",MemAddress,
-					*(unsigned char *)lpEP->ContextRecord->Eip);
-			}
+					*(unsigned char *)lpEP->ContextRecord->Eip;
 		}
 		lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 		return EXCEPTION_CONTINUE_EXECUTION;		
 	case 0xC6:
 		if (Reg != &lpEP->ContextRecord->Eax) { return EXCEPTION_CONTINUE_SEARCH; }
 		if (!r4300i_SB_NonMemory(MemAddress,*(BYTE *)ReadPos)) {
-			if (ShowUnhandledMemory) {
-				DisplayError("Failed to store byte\n\nMIPS Address: %X\nX86 Address",MemAddress,
-					*(unsigned char *)lpEP->ContextRecord->Eip);
-			}
+					*(unsigned char *)lpEP->ContextRecord->Eip;
 		}
 		lpEP->ContextRecord->Eip = (DWORD)(ReadPos + 1);
 		return EXCEPTION_CONTINUE_EXECUTION;		
 	case 0xC7:
 		if (Reg != &lpEP->ContextRecord->Eax) { return EXCEPTION_CONTINUE_SEARCH; }
 		if (!r4300i_SW_NonMemory(MemAddress,*(DWORD *)ReadPos)) {
-			if (ShowUnhandledMemory) {
-				DisplayError("Failed to store word\n\nMIPS Address: %X\nX86 Address",MemAddress,
-					*(unsigned char *)lpEP->ContextRecord->Eip);
-			}
+					*(unsigned char *)lpEP->ContextRecord->Eip;
 		}
 		lpEP->ContextRecord->Eip = (DWORD)(ReadPos + 4);
 		return EXCEPTION_CONTINUE_EXECUTION;		
@@ -1677,7 +1574,7 @@ int r4300i_LW_NonMemory ( DWORD PAddr, DWORD * Value ) {
 		break;
 	case 0x05000000:
 		switch (PAddr) {
-		case 0x05000508: *Value = 0x0000000000000000; break;	// EEPROM access? Setting to 0 makes N64DD IPL Rom not display Error 41 (Real-Time Clock Related)
+		case 0x05000508: *Value = 0x0000000000000000; break;	// eepROM access? Setting to 0 makes N64DD IPL Rom not display Error 41 (Real-Time Clock Related)
 		default:
 			*Value = PAddr & 0xFFFF;
 			*Value = (*Value << 16) | *Value;
@@ -1685,8 +1582,8 @@ int r4300i_LW_NonMemory ( DWORD PAddr, DWORD * Value ) {
 		}
 		break;
 	case 0x08000000:
-		if (SaveUsing == Auto) { SaveUsing = FlashRam; }
-		if (SaveUsing != FlashRam) { 
+		if (SaveUsing == Auto) { SaveUsing = FlashRAM; }
+		if (SaveUsing != FlashRAM) { 
 			*Value = PAddr & 0xFFFF;
 			*Value = (*Value << 16) | *Value;
 			return FALSE;
@@ -1752,7 +1649,7 @@ int r4300i_SB_NonMemory ( DWORD PAddr, BYTE Value ) {
 			VirtualProtect(N64MEM+(PAddr & ~0xFFF),0xFFC,PAGE_READWRITE, &OldProtect);
 			*(BYTE *)(N64MEM+PAddr) = Value;
 			VirtualProtect(N64MEM+(PAddr & ~0xFFF),0xFFC,OldProtect, &OldProtect);
-			DisplayError("FrameBufferWrite");
+			DisplayError("FrameBufferWrite %X", PAddr);
 			if (FrameBufferWrite) { FrameBufferWrite(PAddr,1); }
 			break;
 		}	
@@ -1949,7 +1846,7 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 				CheckInterrupts();
 			}
 #ifndef EXTERNAL_RELEASE
-			if ( ( Value & SP_SET_INTR ) != 0) { DisplayError("SP_SET_INTR"); }
+			if ( ( Value & SP_SET_INTR ) != 0) { DisplayError("SP SET INTR error"); }
 #endif
 			if ( ( Value & SP_CLR_SSTEP ) != 0) { SP_STATUS_REG &= ~SP_STATUS_SSTEP; }
 			if ( ( Value & SP_SET_SSTEP ) != 0) { SP_STATUS_REG |= SP_STATUS_SSTEP;  }
@@ -2023,12 +1920,6 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 						RunRsp();
 					}
 				}
-			}
-			if (ShowUnhandledMemory) {
-				//if ( ( Value & DPC_CLR_TMEM_CTR ) != 0) { DisplayError("RSP: DPC_STATUS_REG: DPC_CLR_TMEM_CTR"); }
-				//if ( ( Value & DPC_CLR_PIPE_CTR ) != 0) { DisplayError("RSP: DPC_STATUS_REG: DPC_CLR_PIPE_CTR"); }
-				//if ( ( Value & DPC_CLR_CMD_CTR ) != 0) { DisplayError("RSP: DPC_STATUS_REG: DPC_CLR_CMD_CTR"); }
-				//if ( ( Value & DPC_CLR_CLOCK_CTR ) != 0) { DisplayError("RSP: DPC_STATUS_REG: DPC_CLR_CLOCK_CTR"); }
 			}
 			break;
 		default:
@@ -2196,8 +2087,8 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 		break;
 	case 0x08000000:
 		if (PAddr != 0x08010000) { return FALSE; }
-		if (SaveUsing == Auto) { SaveUsing = FlashRam; }
-		if (SaveUsing != FlashRam) { return TRUE; }
+		if (SaveUsing == Auto) { SaveUsing = FlashRAM; }
+		if (SaveUsing != FlashRAM) { return TRUE; }
 		WriteToFlashCommand(Value);
 		break;
 	case 0x1FC00000:
@@ -2231,14 +2122,12 @@ BOOL r4300i_SW_VAddr ( DWORD VAddr, DWORD Value ) {
 }
 
 void Release_Memory ( void ) {
-	FreeSyncMemory();
 	if (OrigMem != NULL) { VirtualFree(OrigMem,0,MEM_RELEASE); }
 	if (ROM != NULL) { 	VirtualFree( ROM, 0 , MEM_RELEASE); }
 	VirtualFree( TLB_ReadMap, 0 , MEM_RELEASE);
 	VirtualFree( TLB_WriteMap, 0 , MEM_RELEASE);
 	VirtualFree( N64MEM, 0 , MEM_RELEASE);
 	VirtualFree( DelaySlotTable, 0 , MEM_RELEASE);
-	VirtualFree( SyncMemory, 0 , MEM_RELEASE);
 	VirtualFree( JumpTable, 0 , MEM_RELEASE);
 	VirtualFree( RecompCode, 0 , MEM_RELEASE);
 }

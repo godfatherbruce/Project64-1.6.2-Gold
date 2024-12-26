@@ -1,0 +1,54 @@
+Archive name
+BruceIV's_Project64_1.6.2_InstallerWizard.exe
+
+RAR4 BEST COMPRESSION
+
+Advanced->SFX options...
+
+Path to extract
+%USERPROFILE%\Desktop
+
+Update->Overwrite all files
+
+Advanced->Shortcuts->
+D, "Project64 1.6.2\Project64.exe", \, "Experimental N64 Emulator", "Project64 1.6.2",
+P, "Project64 1.6.2\Project64.exe", \, "Experimental N64 Emulator", "Project64 1.6.2",
+
+Setup->Run after extraction
+"Project64 1.6.2\Project64.exe"
+
+Text and icon...->Title of SFX window
+BruceIV's Project64 1.6.2 Installer Wizard
+
+Load SFX icon from the file->PJ64.ico
+
+Text to display in SFX window
+Welcome to Project64 1.6.2! This is an unofficial update to Project64 1.6 developed in private by Bruce Shankle IV. Before using this application, please carefully review the following information below.
+
+
+
+
+Windows Security's Virus & threat protection can interfere with this installer wizard and potentially Project64.exe itself. I highly suggest disabling real-time protection under Virus & threat protection settings before installing 1.6.2. After installing 1.6.2 from this InstallerWiz, scroll to the bottom, click "Add or remove exclusions", click "Add an exclusion", click "Folder", then single-click on the Project64 1.6.2 folder and press "Select Folder". Once you have done all that, re-enable real-time protection to turn your antivirus back on.
+
+
+
+On the GitHub repository you can find a CF1 portable which sets Counter Factor to 1 by default and updates the RDB to account for this. Do not apply this patch unless it has a niche benefit for you, such as if the romhacks you play with this emulator are only of Super Mario 64 and it doesn't happen to be SKELUX's Star Road which we already have RDB entries for.
+
+
+Avoid loading decompressed roms into the emulator or they can misbehave/crash. When I say decompressed I don't mean extracted from a .zip/compression format, but when the .z64/.n64 file itself has not been compressed.
+
+
+The default video plugin can have flickering issues with N64 games on modern hardware. Use Legacy's Angrylion's RDP Plus or Mk3 GLideN64 to prevent flickering problems in games like Paper Mario.
+
+
+The default input plugin is just for general-use, if you play on keyboard you should use LINK's DirectInput7 which has key binding on the F and G keys (but does not save its config, you can save its config with Jabo's DirectInput7 though), while controller users should try the Octomino SDL2 plugin and configure it after opening a rom. Try Darkman's DirectInput if trying to play First Person Shooter games with keyboard and mouse.
+
+
+Project64 1.6 was not designed to support romhacks. If you want to use this emulator with romhacks, you may need to use specific rom settings, update your RDB, or use a specific video plugin. Please see the user guide for more info about this.
+
+
+If you plan on using this as your main emulator, I strongly suggest right clicking an N64 rom (.n64, .z64 file), Open with, make sure "Always use this app to open .z64/.n64 files" is checked, More apps, Look for another app on this PC, and then select the Project64.exe. If you already have a different version of Project64 setup to do this, it might just open up inside of the other version of Project64 instead due to a bug in Windows. To fix this Windows' bug, you can rename the Project64.exe that isn't in the Project64 1.6.2 folder. I also advise right clicking on the Project64 1.6.2 icon in your taskbar and pinning it to the taskbar to quickly launch it.
+
+
+
+Assuming you have read all of the above, press the install button to setup and autolaunch Project64 1.6.2 on your PC (in a directory that doesn't require admin permissions such as Desktop).

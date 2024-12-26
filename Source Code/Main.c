@@ -86,12 +86,6 @@ LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 			SetDlgItemText(hDlg,IDC_LAN_VERSION,String);
 			sprintf(String,"%s: %s",GS(INI_DATE),GS(LANGUAGE_DATE));
 			SetDlgItemText(hDlg,IDC_LAN_DATE,String);
-			if (strlen(GS(LANGUAGE_NAME)) == 0) {
-				EnableWindow(GetDlgItem(hDlg,IDC_LAN),FALSE);
-				EnableWindow(GetDlgItem(hDlg,IDC_LAN_AUTHOR),FALSE);
-				EnableWindow(GetDlgItem(hDlg,IDC_LAN_VERSION),FALSE);
-				EnableWindow(GetDlgItem(hDlg,IDC_LAN_DATE),FALSE);
-			}
 
 			//RDB
 			IniFile = GetIniFileName();

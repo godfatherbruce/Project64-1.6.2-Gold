@@ -537,7 +537,7 @@ void CLanguage::LoadStrings  ( char * FileName ) {
 
 
 void CLanguage::FindLangName  ( int Index ) {
-	strcpy(m_LangName[Index],"Unknown");
+	strcpy(m_LangName[Index],"English");
 
 	FILE *file = fopen(m_filenames[Index], "rb");
 	if (file == NULL) { return; }

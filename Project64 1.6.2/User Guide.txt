@@ -156,7 +156,7 @@ For your Information, here's some issues I have experienced with Project64 "Lega
 * Even more unwanted bloat is introduced via 50+ duplicate database entries in the RDS alone. It's as if
   the developers did not even try here. Plus there's a ton of entries for ROMs that don't ever get used.
 * A flurry of several error messages appear when loading the emulator if your PC lacks vcruntime140.dll.
-* Switching from Icespirs8's LLE to OpenGL GFX plugins like GLideN64/Glide64 makes an error message show
+* Switching from Icespirs8's LLE to other OpenGL gfx plugins such as GLideN64 causes an error message to
   appear, and then the emulator will proceed to crash & close. But only if done while a game is running.
 * Jabo's Direct3D8 1.7.0.47 has insane graphical glitches in some games with white stretching across the
   screen, making some games unplayable. See USAMUNE practice ROM 1.93 or Ocarina of Time GZ 0.3.4.
@@ -168,6 +168,9 @@ For the reasons listed above, I consider the legacy project to be a failed exper
 succesful in "finishing" what they started, as they put it. But unfortunately, it doesn't quite hold up.
 Keep in mind that Ver1.6.2 isn't an update to Project64 Legacy in any way, shape or form, and Ver1.6.2's
 an entirely different continuation of Project64 1.6, and I'm not responsible for any of Legacy's issues.
+Note that this section is only left here as a warning to anyone who is currently using Project64 Legacy,
+and to say if you desire an accurate emulator that is also reliable, you should seek alternative options
+like Ares or a properly tested and maintained frontend for Mupen64Plus because they will be more stable.
 --------------------------------------------------------------------------------------------------------
 
 Section#04 Plugin Details
@@ -328,6 +331,7 @@ either the ROM header data above the internal name, or the baseROM's internal na
 
 Section#06 Known Issues
 --------------------------------------------------------------------------------------------------------
+The rom browser is a bit buggy but this shouldn't affect your gaming experience so it's not a big issue.
 Jabo's Direct3D8 can crash the emulator upon entering fullscreen while connected to a TV and while using
 Azimer's Audio plugin. In this situation, you should either enter fullscreen mode before connecting with
 the TV, or you should use Jabo's DirectSound 1.6.1 with Sync game to Audio on after starting up the rom.
@@ -516,10 +520,10 @@ Gent - Despite our differences, I cannot deny that without you, there's no way I
 l0lgamez - For testing Ocarina of Time with the new emulation settings, thank you for saving me my time!
 
 aglab2 - I'm so glad that you researched and documented about the vulnerability inside of N64 emulators.
-         Without you, this project wouldn't have ever existed and I cannot thank people like you enough.
+	 Without you, this project wouldn't have ever existed and I cannot thank people like you enough.
 
 gaudy-twinned0z@icloud.com / clickdevin - Thanks so much for developing the Octomino SDL plugin, and for
-                                          giving me the tip I needed for building. You really rock dude!
+					  giving me the tip I needed for building. You really rock dude!
 
 TrulyNan - "1.6 Shankle's Final Cut Gigachad Version will save us all." I love that enthusiasm of yours!
 
@@ -548,6 +552,7 @@ the following issues with this emulator:
 * Missing debugger support.
 * Missing summercart support.
 * Missing disk drive support.
+* Missing N64 mouse ROMs support.
 * Missing language translations support (but only for languages with english characters).
 * Save data gets deleted when trying to save in ROMhacks like Ultimate Trial.
 * Resetting could be made instantaneous, as evident by aglab2's PJ64Fixups RSP.

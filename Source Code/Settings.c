@@ -705,8 +705,8 @@ void RomAddFieldToList (HWND hDlg, char * Name, int Pos, int ID) {
 	int listCount, index;
 
 	if (Pos < 0) { 
-		index = SendDlgItemMessage(hDlg,IDC_AVALIABLE,LB_ADDSTRING,0,(LPARAM)Name);
-		SendDlgItemMessage(hDlg,IDC_AVALIABLE,LB_SETITEMDATA,index,ID);
+		index = SendDlgItemMessage(hDlg,IDC_AVAILABLE,LB_ADDSTRING,0,(LPARAM)Name);
+		SendDlgItemMessage(hDlg,IDC_AVAILABLE,LB_SETITEMDATA,index,ID);
 		return;
 	}
 	listCount = SendDlgItemMessage(hDlg,IDC_USING,LB_GETCOUNT,0,0);
@@ -755,14 +755,14 @@ BOOL CALLBACK RomBrowserProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 				char String[100];
 				int index, listCount, Data;
 
-				index = SendMessage(GetDlgItem(hDlg,IDC_AVALIABLE),LB_GETCURSEL,0,0);
+				index = SendMessage(GetDlgItem(hDlg,IDC_AVAILABLE),LB_GETCURSEL,0,0);
 				if (index < 0) { break; }
-				SendMessage(GetDlgItem(hDlg,IDC_AVALIABLE),LB_GETTEXT,index,(LPARAM)String);
-				Data = SendMessage(GetDlgItem(hDlg,IDC_AVALIABLE),LB_GETITEMDATA,index,0);
-				SendDlgItemMessage(hDlg,IDC_AVALIABLE,LB_DELETESTRING,index,0);
-				listCount = SendDlgItemMessage(hDlg,IDC_AVALIABLE,LB_GETCOUNT,0,0);
+				SendMessage(GetDlgItem(hDlg,IDC_AVAILABLE),LB_GETTEXT,index,(LPARAM)String);
+				Data = SendMessage(GetDlgItem(hDlg,IDC_AVAILABLE),LB_GETITEMDATA,index,0);
+				SendDlgItemMessage(hDlg,IDC_AVAILABLE,LB_DELETESTRING,index,0);
+				listCount = SendDlgItemMessage(hDlg,IDC_AVAILABLE,LB_GETCOUNT,0,0);
 				if (index >= listCount) { index -= 1;}
-				SendDlgItemMessage(hDlg,IDC_AVALIABLE,LB_SETCURSEL,index,0);
+				SendDlgItemMessage(hDlg,IDC_AVAILABLE,LB_SETCURSEL,index,0);
 				index = SendDlgItemMessage(hDlg,IDC_USING,LB_ADDSTRING,0,(LPARAM)String);
 				SendDlgItemMessage(hDlg,IDC_USING,LB_SETITEMDATA,index,Data);
 			}
@@ -780,8 +780,8 @@ BOOL CALLBACK RomBrowserProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 				listCount = SendDlgItemMessage(hDlg,IDC_USING,LB_GETCOUNT,0,0);
 				if (index >= listCount) { index -= 1;}
 				SendDlgItemMessage(hDlg,IDC_USING,LB_SETCURSEL,index,0);
-				index = SendDlgItemMessage(hDlg,IDC_AVALIABLE,LB_ADDSTRING,0,(LPARAM)String);
-				SendDlgItemMessage(hDlg,IDC_AVALIABLE,LB_SETITEMDATA,index,Data);
+				index = SendDlgItemMessage(hDlg,IDC_AVAILABLE,LB_ADDSTRING,0,(LPARAM)String);
+				SendDlgItemMessage(hDlg,IDC_AVAILABLE,LB_SETITEMDATA,index,Data);
 			}
 			break;
 		case IDC_UP:
@@ -843,10 +843,10 @@ BOOL CALLBACK RomBrowserProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 				index = SendMessage(GetDlgItem(hDlg,IDC_USING),LB_GETITEMDATA,Pos,0);
 				SaveRomBrowserColoumnPosition(index,Pos);
 			}
-			listCount = SendDlgItemMessage(hDlg,IDC_AVALIABLE,LB_GETCOUNT,0,0);
+			listCount = SendDlgItemMessage(hDlg,IDC_AVAILABLE,LB_GETCOUNT,0,0);
 			strcpy(szIndex,"-1");
 			for (Pos = 0; Pos < listCount; Pos ++ ){
-				index = SendMessage(GetDlgItem(hDlg,IDC_AVALIABLE),LB_GETITEMDATA,Pos,0);
+				index = SendMessage(GetDlgItem(hDlg,IDC_AVAILABLE),LB_GETITEMDATA,Pos,0);
 				SaveRomBrowserColoumnPosition(index,-1);
 			}			
 			LoadRomBrowserColoumnInfo();

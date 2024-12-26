@@ -1597,12 +1597,6 @@ LRESULT CALLBACK CheatListProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 			_GetPrivateProfileString2(Identifier,CheatName,"",&String,IniFileName);
 			if (strlen(String) > 0) {
 				DialogBoxParam(hInst, MAKEINTRESOURCE(IDD_Cheats_CodeEx),hDlg,(DLGPROC)CheatsCodeExProc,item.lParam);
-			} else {
-				sprintf(CheatName,"Cheat%d_R",item.lParam);
-				_GetPrivateProfileString2(Identifier,CheatName,"",&String,IniFileName);
-				if (strlen(String) > 0) {
-					DialogBoxParam(hInst, MAKEINTRESOURCE(IDD_Cheats_Range),hDlg,(DLGPROC)CheatsCodeQuantProc,item.lParam);
-				}
 			}
 			if (String) { free(String); }
 			GetCheatName(item.lParam,CheatName,sizeof(CheatName));
@@ -1961,11 +1955,6 @@ void ManageCheats (HWND hParent) {
 		SetForegroundWindow(hManageWindow);
 		return;
 	}
-	/*if (hParent) {
-		DialogBox(hInst, MAKEINTRESOURCE(IDD_MANAGECHEATS), hParent, (DLGPROC)ManageCheatsProc);
-	}else {
-		CreateDialog(hInst, MAKEINTRESOURCE(IDD_MANAGECHEATS), hParent, (DLGPROC)ManageCheatsProc);
-	}*/
 
 	if ( !GetStoredWinSize( "Cheat", &WindowWidth, &WindowHeight ) ) {
   		WindowWidth = DefaultWindowWidth;
@@ -2078,10 +2067,8 @@ LRESULT CALLBACK Cheat_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 LRESULT CALLBACK ManageCheatsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	static int CurrentPanel = SelectCheat;
 	static RECT rcDisp;
-	RECT clientrect;
 	static RECT rcList;
 	static RECT rcAdd;
-	HANDLE hIcon;
 	HANDLE hStateButton;
 
 	switch (uMsg) {
@@ -2116,40 +2103,10 @@ LRESULT CALLBACK ManageCheatsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM l
 			GetClientRect(hDlg, rc);
 			hStateButton = GetDlgItem(hDlg, IDC_STATE);
 			SetWindowPos(hStateButton, HWND_TOP, (rc->right - rc->left) - 16, 0, 16, rc->bottom - rc->top, 0);
-            hIcon = LoadImage(hInst, MAKEINTRESOURCE(IDI_RIGHT),IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
-			SendDlgItemMessage(hDlg, IDC_STATE, BM_SETIMAGE, (WPARAM) IMAGE_ICON, (LPARAM) (HANDLE) hIcon);
 		}
 		hManageWindow = hDlg;
 		RefreshCheatManager();
 		break;
-	//case WM_SIZE:
-	//	GetClientRect( hDlg, &rcDisp);
-	//	TabCtrl_AdjustRect( GetDlgItem(hDlg,IDC_TAB), FALSE, &rcDisp );
-	//	break;
-	/*case WM_NOTIFY:
-		switch (((NMHDR *)lParam)->code) {
-		case TCN_SELCHANGE:
-			{
-				TC_ITEM item;
-				HWND hTab;
-
-				hTab = GetDlgItem(hDlg,IDC_TAB);
-				InvalidateRect( hTab, &rcDisp, TRUE );
-				switch (CurrentPanel) {				
-				case SelectCheat: ShowWindow(hSelectCheat,SW_HIDE); break;
-				case NewCheat: ShowWindow(hAddCheat,SW_HIDE); break;
-				}
-				item.mask = TCIF_PARAM;
-				TabCtrl_GetItem( hTab, TabCtrl_GetCurSel( hTab ), &item );
-				CurrentPanel = item.lParam;
-				switch (CurrentPanel) {
-				case SelectCheat: ShowWindow(hSelectCheat,SW_SHOW); break;
-				case NewCheat: ShowWindow(hAddCheat,SW_SHOW); break;
-				}
-				break;
-			}
-		}
-		break;*/
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
 		case IDCANCEL:
@@ -2161,38 +2118,6 @@ LRESULT CALLBACK ManageCheatsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM l
 				WINDOWPLACEMENT WndPlac;
 				WndPlac.length = sizeof(WndPlac);
 				GetWindowPlacement(hDlg, &WndPlac);
-	
-				if (DialogState == CONTRACTED)
-				{
-					DialogState = EXPANDED;
-					WndPlac.rcNormalPosition.right = WndPlac.rcNormalPosition.left + MaxSizeDlg;
-					SetWindowPlacement(hDlg, &WndPlac);
-
-					GetClientRect(hDlg, &clientrect);
-					hStateButton = GetDlgItem(hDlg, IDC_STATE);
-					SetWindowPos(hStateButton, HWND_TOP, (clientrect.right - clientrect.left) - 16, 0, 16, clientrect.bottom - clientrect.top, 0);
-
-					hIcon = LoadImage(hInst, MAKEINTRESOURCE(IDI_LEFT),IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
-					SendDlgItemMessage(hDlg, IDC_STATE, BM_SETIMAGE, (WPARAM) IMAGE_ICON, (LPARAM) (HANDLE) hIcon);
-		
-					ShowWindow(hAddCheat,SW_SHOW);
-				}
-				else
-				{
-					DialogState = CONTRACTED;
-					WndPlac.rcNormalPosition.right = WndPlac.rcNormalPosition.left + MinSizeDlg;
-					SetWindowPlacement(hDlg, &WndPlac);
-
-		            hIcon = LoadImage(hInst, MAKEINTRESOURCE(IDI_RIGHT),IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
-					SendDlgItemMessage(hDlg, IDC_STATE, BM_SETIMAGE, (WPARAM) IMAGE_ICON, (LPARAM) (HANDLE) hIcon);
-
-					GetClientRect(hDlg, &clientrect);
-					hStateButton = GetDlgItem(hDlg, IDC_STATE);
-					SetWindowPos(hStateButton, HWND_TOP, (clientrect.right - clientrect.left) - 16, 0, 16, clientrect.bottom - clientrect.top, 0);
-		
-					ShowWindow(hAddCheat,SW_HIDE);
-				}
-
 			}
 			break;
 		}

@@ -357,12 +357,11 @@ If your CPU usage is high from screen recording or from your PC being infected w
 the program can misbehave and fail to open up ROMs or have a varying amount of input delay and stutters.
 Saving doesn't work with certain mods and causes the save to get deleted because of an unused save type.
 Shankle's GLideN64 can sometimes get stuck on a black screen when messing with config settings. However,
-the screen returns to normal if you close and reopen the emulator or if you hot swap one of the plugins.
+the screen returns to normal if you enter or exit fullscreen mode or if you hot swap one of the plugins.
+The issue described above is also present with Legacy's Angrylion's RDP x ParaLLel on resolution change.
 The "players" default is "1" instead of "Unknown" when examining ROM's that are missing an entry in RDB.
 If you hold down the F1 key, sometimes it accidentally attempts to load the selected state slot instead.
-The display will be frozen if you put your PC to sleep or lock it when using Jabo's plugin. Hot swapping
-plugins will make this issue go away though. You can also hot swap to fix Legacy's Angrylion's RDP after
-changing resolutions, since it also gets its display similarly frozen when you are changing resolutions.
+The display will be frozen if you either sleep or lock your computer while using Jabo's Direct3D8 video.
 Ocarina of Time romhacks can crash when entering kokiri forest from the lost woods after passing through
 the left passageway area due to a bug in the default CMA self modifying code method. I suggest you don't
 use this emulator for romhacks, or you understand enough about how this emulator functions to be able to

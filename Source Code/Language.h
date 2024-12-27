@@ -39,7 +39,7 @@ char * GS               ( int StringID );
 	#define MENU_RECENT_DIR		21
 	#define MENU_EXIT		22
 
-#define MENU_SYSTEM			23
+	#define MENU_SYSTEM		23
 	#define MENU_RESET		24
 	#define MENU_PAUSE		25
         #define MENU_BITMAP             26

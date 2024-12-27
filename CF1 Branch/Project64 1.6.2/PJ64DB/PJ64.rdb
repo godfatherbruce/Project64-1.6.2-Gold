@@ -238,7 +238,6 @@ Status=Compatible
 Emulate AI=Yes
 Counter Factor=2
 [2DC4FFCC-C8FF5A21-C:50]
-Linking=On
 Game Name=Aidyn Chronicles - The First Mage (E)
 RDRAM Size=8
 CPU Type=Recompiler
@@ -247,7 +246,6 @@ Use TLB=No
 Status=Compatible
 Counter Factor=2
 [E6A95A4F-BAD2EA23-C:45]
-Linking=On
 Game Name=Aidyn Chronicles - The First Mage (U) (v1.0)
 RDRAM Size=8
 CPU Type=Recompiler
@@ -7484,7 +7482,6 @@ Use TLB=No
 Status=Compatible
 Counter Factor=2
 [6D8DF08E-D008C3CF-C:50]
-Linking=On
 Game Name=WWF No Mercy (E) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
@@ -7493,7 +7490,6 @@ Use TLB=No
 Status=Compatible
 Counter Factor=2
 [8CDB94C2-CB46C6F0-C:50]
-Linking=On
 Game Name=WWF No Mercy (E) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
@@ -7502,7 +7498,6 @@ Use TLB=No
 Status=Compatible
 Counter Factor=2
 [4E4B0640-1B49BCFB-C:45]
-Linking=On
 Game Name=WWF No Mercy (U) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
@@ -7510,7 +7505,6 @@ Self-modifying code Method=Change Memory
 Use TLB=No
 Status=Compatible
 [6C80F13B-427EDEAA-C:45]
-Linking=On
 Game Name=WWF No Mercy (U) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
@@ -7519,7 +7513,6 @@ Use TLB=No
 Status=Compatible
 Counter Factor=2
 [C71353BE-AA09A6EE-C:50]
-Linking=On
 Game Name=WWF WrestleMania 2000 (E)
 RDRAM Size=4
 CPU Type=Recompiler
@@ -7529,7 +7522,6 @@ Use Large Buffer=Yes
 Status=Compatible
 Counter Factor=2
 [12737DA5-23969159-C:4A]
-Linking=On
 Game Name=WWF Wrestlemania 2000 (J)
 RDRAM Size=4
 CPU Type=Recompiler
@@ -7539,7 +7531,6 @@ Use Large Buffer=Yes
 Status=Compatible
 Counter Factor=2
 [90A59003-31089864-C:45]
-Linking=On
 Game Name=WWF WrestleMania 2000 (U)
 RDRAM Size=4
 CPU Type=Recompiler

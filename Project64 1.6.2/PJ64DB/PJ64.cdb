@@ -2328,6 +2328,8 @@ Cheat51="Infinite\Timers\All Except Collapse",8011B9A1 0032
 Cheat52="Infinite\Timers\Ganon's Castle Tower Collapse",8011B9A5 00B4
 Cheat53="Always Have Wallet Size",8011A672 00??
 Cheat53_O=$80 Kid Wallet (Holds 99),$90 Adult Wallet (Holds 200),$A0 Giant Wallet (Holds 500)
+Cheat54="RBA Bottled Items on B",8011A638 00??
+Cheat54_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [D43DA81F-021E1E19-C:4A]
 Cheat0="Infinite\Rupees",8111BB5C 0001
 Cheat1="Unrestricted Items",8111B9B2 0000,8111B9B4 0000
@@ -2402,6 +2404,8 @@ Cheat51="Infinite\Timers\All Except Collapse",8011BB61 0032
 Cheat52="Infinite\Timers\Ganon's Castle Tower Collapse",8011BB65 00B4
 Cheat53="Always Have Wallet Size",8011A832 00??
 Cheat53_O=$80 Kid Wallet (Holds 99),$90 Adult Wallet (Holds 200),$A0 Giant Wallet (Holds 500)
+Cheat54="RBA Bottled Items on B",8011A7F8 00??
+Cheat54_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [693BA2AE-B7F14E9F-C:4A]
 Cheat0="Infinite\Rupees",8111C04C 0001
 Cheat1="Unrestricted Items",8111BEA2 0000,8111BEA4 0000
@@ -2476,6 +2480,8 @@ Cheat51="Infinite\Timers\All Except Collapse",8011C051 0032
 Cheat52="Infinite\Timers\Ganon's Castle Tower Collapse",8011C055 00B4
 Cheat53="Always Have Wallet Size",8011AD22 00??
 Cheat53_O=$80 Kid Wallet (Holds 99),$90 Adult Wallet (Holds 200),$A0 Giant Wallet (Holds 500)
+Cheat54="RBA Bottled Items on B",8011ACE8 00??
+Cheat54_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [F611F4BA-C584135C-C:4A]
 Cheat0="Infinite\Rupees",8111C534 0001
 Cheat1="Unrestricted Items",8111C38A 0000,8111C38C 0000
@@ -8255,6 +8261,8 @@ Cheat49="Indefinite Nayru's Love",8111B998 FFFF
 Cheat49_N=Don't bother using other magic-powered items while nayru's love is active.
 Cheat50="Infinite\Timers\All Except Collapse",8011B9A1 0032
 Cheat51="Infinite\Timers\Ganon's Castle Tower Collapse",8011B9A5 00B4
+Cheat52="RBA Bottled Items on B",8011A638 00??
+Cheat52_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [D43DA81F-021E1E19-C:45]
 Cheat0="Infinite\Rupees",8111BB5C 0001
 Cheat1="Unrestricted Items",8111B9B2 0000,8111B9B4 0000
@@ -8326,6 +8334,8 @@ Cheat48_N=Don't bother using other magic-powered items while nayru's love is act
 Cheat49="Infinite\Timers\All Except Collapse",8011BB61 0032
 Cheat50="Infinite\Timers\Ganon's Castle Tower Collapse",8011BB65 00B4
 Cheat51="Press L\To levitate",D01C8675 0020,811DAC50 40CB
+Cheat52="RBA Bottled Items on B",8011A7F8 00??
+Cheat52_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [693BA2AE-B7F14E9F-C:45]
 Cheat0="Infinite\Rupees",8111C04C 0001
 Cheat1="Unrestricted Items",8111BEA2 0000,8111BEA4 0000
@@ -8397,6 +8407,8 @@ Cheat48_N=Don't bother using other magic-powered items while nayru's love is act
 Cheat49="Infinite\Timers\All Except Collapse",8011C211 0032
 Cheat50="Infinite\Timers\Ganon's Castle Tower Collapse",8011C215 00B4
 Cheat51="Press L\To levitate",D01C8D75 0020,811DB350 40CB
+Cheat52="RBA Bottled Items on B",8011ACE8 00??
+Cheat52_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [F034001A-AE47ED06-C:45]
 Cheat0="Infinite\Rupees",8111C4F4 0001
 Cheat1="Unrestricted Items",8111C34A 0000,8111C34C 0000
@@ -15139,6 +15151,8 @@ Cheat42="Bolero of Fire Warp Modifier",8011B965 00??
 Cheat42_O=$03 Castle Courtyard,$0B Dodongo's Cavern Boss,$10 Inside The Deku Tree Boss,$14 Shadow Temple Boss,$17 Water Temple Boss,$1C Ganon's Castle Tower,$1F Ganondorf Pre-final Fight,$28 Ganondorf Boss Room Entrance,$2B Ganon's Castle Tower Pillar Room,$2F Temple of Time Entrance,$33 Mido's House,$37 Saria's House,$4B Zelda 2 Easter Egg Entrance,$40 Top of Ganon's Castle Tower,$4F Shadow Temple Entrance,$57 Kokiri Forest,$5B Magic Fairy Fountain Entrance,$5F Pot Room,$68 Inside Ganon's Castle,$C2 Double Magic Fairy Fountain,$D6 Goron City Shortcut Entrance,$DA Farore Fountain Entrance,$DE Forbidden Woods Entrance,$E3 Goron City Lost Woods Entrance,$FD Ganon's Castle
 Cheat43="Infinite\Ganon's Castle Tower Collapse Timer",8011B9A5 00B4
 Cheat44="Infinite\Timers",8011B9A1 0032
+Cheat45="RBA Bottled Items on B",8011A638 00??
+Cheat45_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [05F2807D-615555AA-C:45]
 Cheat0="Infinite\Rupees",8111B99C 0001
 Cheat1="Time of Day Modifier",8111A5DC ????
@@ -15164,6 +15178,8 @@ Cheat15="Press L\To levitate",D01C84B5 0020,811DAA90 40CB
 Cheat16="Press L\To levitate and hover",D01C84B5 0020,811DAA90 40CB,811DB2B2 000D,D01C84B5 0000,811DB2B2 000D,8011A640 00??
 Cheat16_N=Unpause from the pause menu to activate. Original code by Gent, updated by Bruce IV. Do not use cutscene items while hovering or land in water, and if you do, then you should get out of the hovering state by disabling this cheat, touching a floor, or getting hit by something.
 Cheat16_O=$31 Dawnside Tunic & Hover Boots,$32 Duskside Tunic & Hover Boots,$34 Black Tunic & Hover Boots,$35 White Tunic & Hover Boots,$36 Yellow Tunic & Hover Boots
+Cheat17="RBA Bottled Items on B",8011A638 00??
+Cheat17_O=$14 Empty Bottle,$1C Blue Fire
 [B5E15592-0CA2FE00-C:45]
 Cheat0="Infinite\Rupees",8111B99C 0001
 Cheat1="Time of Day Modifier",8111A5DC ????
@@ -15189,6 +15205,8 @@ Cheat15="Press L\To levitate",D01C84B5 0020,811DAA90 40CB
 Cheat16="Press L\To levitate and hover",D01C84B5 0020,811DAA90 40CB,811DB2B2 000D,D01C84B5 0000,811DB2B2 000D,8011A640 00??
 Cheat16_N=Unpause from the pause menu to activate. Original code by Gent, updated by Bruce IV. Do not use cutscene items while hovering or land in water, and if you do, then you should get out of the hovering state by disabling this cheat, touching a floor, or getting hit by something.
 Cheat16_O=$31 Dawnside Tunic & Hover Boots,$32 Duskside Tunic & Hover Boots,$34 Black Tunic & Hover Boots,$35 White Tunic & Hover Boots,$36 Yellow Tunic & Hover Boots
+Cheat17="RBA Bottled Items on B",8011A638 0014
+Cheat17_O=$14 Empty Bottle,$1C Blue Fire
 [1E3E437F-5F1C663A-C:45]
 Cheat0="Infinite\Rupees",8111B99C 0001
 Cheat1="Infinite\Energy",8111A600 0140
@@ -15289,6 +15307,8 @@ Cheat48="Indefinite Nayru's Love",8111B998 FFFF
 Cheat48_N=Don't bother using other magic-powered items while nayru's love is active.
 Cheat49="Infinite\Timers\All Except Collapse",8011B9A1 0032
 Cheat50="Infinite\Timers\Ganon's Castle Tower Collapse",8011B9A5 00B4
+Cheat51="RBA Bottled Items on B",8011A638 00??
+Cheat51_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [D1E7C5D7-17CAC125-C:45]
 Cheat0="Infinite\Rupees",8111BB5C 0001
 Cheat1="Unrestricted Items",8111B9B2 0000,8111B9B4 0000
@@ -15359,6 +15379,8 @@ Cheat48="Indefinite Nayru's Love",8111BB58 FFFF
 Cheat48_N=Don't bother using other magic-powered items while nayru's love is active.
 Cheat49="Infinite\Timers\All Except Collapse",8011BB61 0032
 Cheat50="Infinite\Timers\Ganon's Castle Tower Collapse",8011BB65 00B4
+Cheat51="RBA Bottled Items on B",8011A7F8 00??
+Cheat51_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [2CE1A4BD-C9DC765A-C:45]
 Cheat0="Infinite\Rupees",8111C04C 0001
 Cheat1="Unrestricted Items",8111BEA2 0000,8111BEA4 0000
@@ -15429,6 +15451,8 @@ Cheat48="Indefinite Nayru's Love",8111C048 FFFF
 Cheat48_N=Don't bother using other magic-powered items while nayru's love is active.
 Cheat49="Infinite\Timers\All Except Collapse",8011C211 0032
 Cheat50="Infinite\Timers\Ganon's Castle Tower Collapse",8011C215 00B4
+Cheat51="RBA Bottled Items on B",8011ACE8 00??
+Cheat51_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [D1AA799D-489144F5-C:4A]
 Cheat0="Infinite\Rupees",8111B99C 0001
 Cheat1="Unrestricted Items",8111B7F2 0000,8111B7F4 0000
@@ -15499,6 +15523,8 @@ Cheat48="Indefinite Nayru's Love",8111B998 FFFF
 Cheat48_N=Don't bother using other magic-powered items while nayru's love is active.
 Cheat49="Infinite\Timers\All Except Collapse",8011B9A1 0032
 Cheat50="Infinite\Timers\Ganon's Castle Tower Collapse",8011B9A5 00B4
+Cheat51="RBA Bottled Items on B",8011A638 00??
+Cheat51_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [D1E7C5D7-17CAC125-C:4A]
 Cheat0="Infinite\Rupees",8111BB5C 0001
 Cheat1="Unrestricted Items",8111B9B2 0000,8111B9B4 0000
@@ -15569,6 +15595,8 @@ Cheat48="Indefinite Nayru's Love",8111BB58 FFFF
 Cheat48_N=Don't bother using other magic-powered items while nayru's love is active.
 Cheat49="Infinite\Timers\All Except Collapse",8011BB61 0032
 Cheat50="Infinite\Timers\Ganon's Castle Tower Collapse",8011BB65 00B4
+Cheat51="RBA Bottled Items on B",8011A7F8 00??
+Cheat51_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [2CE1A4BD-C9DC765A-C:4A]
 Cheat0="Infinite\Rupees",8111C04C 0001
 Cheat1="Unrestricted Items",8111BEA2 0000,8111BEA4 0000
@@ -15639,6 +15667,8 @@ Cheat48="Indefinite Nayru's Love",8111C048 FFFF
 Cheat48_N=Don't bother using other magic-powered items while nayru's love is active.
 Cheat49="Infinite\Timers\All Except Collapse",8011C211 0032
 Cheat50="Infinite\Timers\Ganon's Castle Tower Collapse",8011C215 00B4
+Cheat51="RBA Bottled Items on B",8011ACE8 00??
+Cheat51_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [55194B11-551010B5-C:45]
 Cheat0="Infinite\Health",811EF6A6 0140
 Cheat1="Infinite\Rupees",811EF6AA 03E7
@@ -15715,6 +15745,8 @@ Cheat36_O=$03 Abello Field,$0B ?,$10 ?,$14 ?,$1F Mine,$28 Temple of Strength (En
 Cheat37="Indefinite Divine Shield",8111B998 FFFF
 Cheat37_N=Don't bother using other magic-powered items while divine shield is active.
 Cheat38="Infinite\Timers",8011B9A1 0032
+Cheat39="RBA Bottled Items on B",8011A638 00??
+Cheat39_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [F0B7CBCC-0ABE720A-C:45]
 Cheat0="Infinite\Rupees",8111B99C 0001
 Cheat1="Unrestricted Items",8111B7F2 0000,8111B7F4 0000
@@ -15768,6 +15800,8 @@ Cheat36_O=$03 Abello Field,$0B ?,$10 ?,$14 ?,$1F Mine,$28 Temple of Strength (En
 Cheat37="Indefinite Divine Shield",8111B998 FFFF
 Cheat37_N=Don't bother using other magic-powered items while divine shield is active.
 Cheat38="Infinite\Timers",8011B9A1 0032
+Cheat39="RBA Bottled Items on B",8011A638 00??
+Cheat39_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk
 [85A772F1-D5E7CDCA-C:45]
 Cheat0="Press GS For 255 Coins",8933B218 00FF
 Cheat1="Have\Level Select",A032D58C 00??
@@ -15869,3 +15903,5 @@ Cheat49="Indefinite Nayru's Love",8111B998 FFFF
 Cheat49_N=Don't bother using other magic-powered items while nayru's love is active.
 Cheat50="Infinite\Timers\All Except Collapse",8011B9A1 0032
 Cheat51="Infinite\Timers\Ganon's Castle Tower Collapse",8011B9A5 00B4
+Cheat52="RBA Bottled Items on B",8011A638 00??
+Cheat52_O=$14 Empty Bottle,$1D Bug,$19 Fish,$1A Lon Lon Milk

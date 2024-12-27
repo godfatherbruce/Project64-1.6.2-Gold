@@ -62,7 +62,7 @@ Added file name to title bar after opening a ROM, just in case the internal name
 
 Added Linking=Off for all entries w/ Protect Memory to prevent excessive stutters that happen otherwise.
 
-Added Linking=On for all entries w/ Change Memory and not defined Linking to prevent unecessary crashes.
+Added Linking=On for all entries w/ Change Memory and not defined Linking or UseTLB=No to stop crashing.
 
 Added new plugin hot swap handling, wherein plugins can be seamlessly swapped on the fly without issues.
 

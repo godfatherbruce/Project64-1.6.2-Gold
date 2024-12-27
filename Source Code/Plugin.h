@@ -187,14 +187,6 @@ typedef struct {
 } RSP_INFO_1_1;
 
 typedef struct {
-	/* Menu */
-	/* Items should have an ID between 5001 and 5100 */
-	HMENU hRSPMenu;
-	void (__cdecl *ProcessMenuItem) ( int ID );
-
-} DEBUG_INFO;
-
-typedef struct {
 	HWND hwnd;
 	HINSTANCE hinst;
 

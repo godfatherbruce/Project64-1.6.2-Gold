@@ -281,7 +281,7 @@ Status=Compatible
 [B6951A94-63C849AF-C:4A]
 Game Name=Akumajou Dracula Mokushiroku - Real Action Adventure (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
@@ -291,7 +291,7 @@ Counter Factor=2
 Linking=On
 Game Name=Akumajou Dracula Mokushiroku Gaiden - Legend of Cornell (J)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
 Status=Compatible
@@ -493,7 +493,7 @@ Counter Factor=2
 [514B6900-B4B19881-C:4A]
 Game Name=Banjo to Kazooie no Daibouken 2 (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Use TLB=No
@@ -530,7 +530,7 @@ Counter Factor=2
 [155B7CDF-F0DA7325-C:55]
 Game Name=Banjo-Tooie (A)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Use TLB=No
@@ -539,7 +539,7 @@ Counter Factor=2
 Plugin Note=Angrylion's RDP or PR2GLN suggested for F4 Usage (crashes otherwise)
 [C9176D39-EA4779D1-C:50]
 Game Name=Banjo-Tooie (E) (M4)
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Use TLB=No
@@ -550,7 +550,7 @@ Plugin Note=Angrylion's RDP or PR2GLN suggested for F4 Usage (crashes otherwise)
 [C2E9AA9A-475D70AA-C:45]
 Game Name=Banjo-Tooie (U)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Use TLB=No
@@ -1216,7 +1216,7 @@ Counter Factor=2
 [373F5889-9A6CA80A-C:50]
 Game Name=Conker's Bad Fur Day (E)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Use Large Buffer=Yes
@@ -1227,7 +1227,7 @@ Counter Factor=2
 [30C7AC50-7704072D-C:45]
 Game Name=Conker's Bad Fur Day (U)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Use Large Buffer=Yes
@@ -1292,7 +1292,7 @@ Counter Factor=2
 [83F3931E-CB72223D-C:50]
 Game Name=Cruis'n World (E) (v1.0)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=None
 Status=Compatible
@@ -1308,7 +1308,7 @@ Counter Factor=2
 [DFE61153-D76118E6-C:45]
 Game Name=Cruis'n World (U)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=None
 Status=Compatible
@@ -1323,7 +1323,7 @@ Counter Factor=2
 [079501B9-AB0232AB-C:4A]
 Game Name=Custom Robo V2 (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -1548,7 +1548,7 @@ Plugin Note=Graphic issues with Jabo plugins
 [0DD4ABAB-B5A2A91E-C:45]
 Game Name=Donkey Kong 64 (U) (Demo)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Linking=Off
@@ -1561,7 +1561,7 @@ Status=Incompatible
 [11936D8C-6F2C4B43-C:50]
 Game Name=Donkey Kong 64 (E)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Linking=Off
@@ -1571,7 +1571,7 @@ Plugin Note=Graphic issues with Jabo plugins
 [053C89A7-A5064302-C:4A]
 Game Name=Donkey Kong 64 (J)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Linking=Off
@@ -1581,7 +1581,7 @@ Plugin Note=Graphic issues with Jabo plugins
 [EC58EABF-AD7C7169-C:45]
 Game Name=Donkey Kong 64 (U)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Linking=Off
@@ -1635,7 +1635,7 @@ Counter Factor=2
 [B6306E99-B63ED2B2-C:4A]
 Game Name=Doraemon 2 - Nobita to Hikari no Shinden (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -1644,7 +1644,7 @@ Counter Factor=2
 [A8275140-B9B056E8-C:4A]
 Game Name=Doraemon 3 - Nobita no Machi SOS! (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Use TLB=No
@@ -1838,7 +1838,7 @@ Counter Factor=2
 [AF754F7B-1DD17381-C:45]
 Game Name=Excitebike 64 (U)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
@@ -1847,7 +1847,7 @@ Counter Factor=2
 [202A8EE4-83F88B89-C:50]
 Game Name=Excitebike 64 (E)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
@@ -1855,7 +1855,7 @@ Plugin Note=Graphic issues with Jabo plugins
 [861C3519-F6091CE5-C:4A]
 Game Name=Excitebike 64 (J)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
@@ -1863,7 +1863,7 @@ Plugin Note=Graphic issues with Jabo plugins
 [07861842-A12EBC9F-C:45]
 Game Name=Excitebike 64 (U) (v1.0)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
@@ -1871,7 +1871,7 @@ Plugin Note=Graphic issues with Jabo plugins
 [F9D411E3-7CB29BC0-C:45]
 Game Name=Excitebike 64 (U) (v1.1)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
@@ -2697,7 +2697,7 @@ Counter Factor=2
 [77DA3B8D-162B0D7C-C:4A]
 Game Name=Ide Yousuke no Mahjong Juku (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
@@ -3105,7 +3105,7 @@ Self-modifying code Method=Check Memory & cache
 Status=Compatible
 Counter Factor=2
 [0F743195-D8A6DB95-C:50]
-Game Name=John ROMero's Daikatana (E) (M3)
+Game Name=John Romero's Daikatana (E) (M3)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
@@ -3113,7 +3113,7 @@ Linking=Off
 Status=Compatible
 Counter Factor=2
 [9D7E3C4B-E60F4A6C-C:4A]
-Game Name=John ROMero's Daikatana (J)
+Game Name=John Romero's Daikatana (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
@@ -3121,7 +3121,7 @@ Linking=Off
 Status=Compatible
 Counter Factor=2
 [D0151AB0-FE5CA14B-C:45]
-Game Name=John ROMero's Daikatana (U)
+Game Name=John Romero's Daikatana (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
@@ -3246,7 +3246,7 @@ Counter Factor=2
 [1739EFBA-D0B43A68-C:50]
 Game Name=Kobe Bryant in NBA Courtside (E)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=None
 Status=Compatible
@@ -3254,7 +3254,7 @@ Counter Factor=2
 [616B8494-8A509210-C:45]
 Game Name=Kobe Bryant's NBA Courtside (U)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=None
 Status=Compatible
@@ -3412,7 +3412,7 @@ Status=Compatible
 [D7134F8D-C11A00B5-C:45]
 Game Name=Madden NFL 2002 (U)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
@@ -3635,7 +3635,7 @@ Plugin Note=Graphic issues with Jabo plugins
 [C5674160-0F5F453C-C:50]
 Game Name=Mario Party 3 (E) (M4)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
@@ -3644,7 +3644,7 @@ Plugin Note=Graphic issues with Jabo plugins
 [0B0AB4CD-7B158937-C:4A]
 Game Name=Mario Party 3 (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
@@ -3653,7 +3653,7 @@ Plugin Note=Graphic issues with Jabo plugins
 [7C3829D9-6E8247CE-C:45]
 Game Name=Mario Party 3 (U)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
@@ -3670,7 +3670,7 @@ Cheat0=81027B2A 0000//Subscreen Delay Fix
 [839F3AD5-406D15FA-C:50]
 Game Name=Mario Tennis (E)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
 Linking=Off
@@ -3680,7 +3680,7 @@ Counter Factor=2
 [3A6C42B5-1ACADA1B-C:4A]
 Game Name=Mario Tennis 64 (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
 Linking=Off
@@ -3690,7 +3690,7 @@ Counter Factor=2
 [5001CF4F-F30CB3BD-C:45]
 Game Name=Mario Tennis (U)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
 Linking=Off
@@ -4252,7 +4252,7 @@ Audio Signal=Yes
 [147E0EDB-36C5B12C-C:4A]
 Game Name=Neon Genesis Evangelion (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Semicompatible
@@ -4608,7 +4608,7 @@ Counter Factor=2
 [CFE2CB31-4D6B1E1D-C:4A]
 Game Name=Parlor! Pro 64 - Pachinko Jikki Simulation Game (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Semicompatible
@@ -4617,7 +4617,7 @@ Counter Factor=2
 [F468118C-E32EE44E-C:4A]
 Game Name=PD Ultraman Battle Collection 64 (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
@@ -4642,7 +4642,7 @@ Counter Factor=2
 [E4B08007-A602FF33-C:50]
 Game Name=Perfect Dark (E) (M5)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Use Large Buffer=Yes
@@ -4653,7 +4653,7 @@ Counter Factor=2
 [96747EB4-104BB243-C:4A]
 Game Name=Perfect Dark (J)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Use Large Buffer=Yes
@@ -4664,7 +4664,7 @@ Counter Factor=2
 [DDF460CC-3CA634C0-C:45]
 Game Name=Perfect Dark (U) (v1.0)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Use Large Buffer=Yes
@@ -4675,7 +4675,7 @@ Counter Factor=2
 [41F2B98F-B458B466-C:45]
 Game Name=Perfect Dark (U) (v1.1)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Use Large Buffer=Yes
@@ -5372,7 +5372,7 @@ Plugin Note=Graphic issues with Jabo plugins
 [272B690F-AD0A7A77-C:4A]
 Game Name=Robot Ponkottsu 64 - 7tsu no Umi no Caramel (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
 Use TLB=No
@@ -5422,7 +5422,7 @@ Counter Factor=2
 [FEE97010-4E94A9A0-C:50]
 Game Name=RR64 - Ridge Racer 64 (E)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
@@ -5430,7 +5430,7 @@ Counter Factor=2
 [2500267E-2A7EC3CE-C:45]
 Game Name=RR64 - Ridge Racer 64 (U)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
@@ -6014,7 +6014,7 @@ Counter Factor=2
 [53ED2DC4-06258002-C:50]
 Game Name=Star Wars Episode I - Racer (E) (M3)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Use TLB=No
@@ -6023,7 +6023,7 @@ Counter Factor=2
 [61F5B152-046122AB-C:4A]
 Game Name=Star Wars Episode I - Racer (J)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Use TLB=No
@@ -6032,7 +6032,7 @@ Counter Factor=2
 [72F70398-6556A98B-C:45]
 Game Name=Star Wars Episode I - Racer (U)
 RDRAM Size=8
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Use TLB=No
@@ -7577,7 +7577,7 @@ Delay RDP=Yes
 [D3F97D49-6924135B-C:50]
 Game Name=Yoshi's Story (E) (M3)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -7586,7 +7586,7 @@ Counter Factor=2
 [2DCFCA60-8354B147-C:4A]
 Game Name=Yoshi Story (J)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -7595,7 +7595,7 @@ Counter Factor=2
 [2337D8E8-6B8E7CEC-C:45]
 Game Name=Yoshi's Story (U) (M2)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -7698,7 +7698,7 @@ Counter Factor=2
 //Debug
 [F9864452-890A5EA3-C:50]
 Game Name=Perfect Dark (E) (Debug)
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Use Large Buffer=Yes
@@ -7710,7 +7710,7 @@ Counter Factor=2
 [2CE75AEF-E16825BC-C:45]
 Game Name=Perfect Dark (U) (Debug)
 CPU Type=Recompiler
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 Self-modifying code Method=Protected Memory
 Linking=Off
 Status=Compatible
@@ -7718,7 +7718,7 @@ Counter Factor=2
 [8BC3A47A-74221294-C:45]
 Game Name=Conker's Bad Fur Day (U) (V_ECTS_Decrypted) (Debug)
 RDRAM Size=4
-Save Type=16kbit EepROM
+Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Use Large Buffer=Yes

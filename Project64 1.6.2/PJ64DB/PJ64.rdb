@@ -5848,7 +5848,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
-Use TLB=No
 [E97955C6-BC338D38-C:50]
 Game Name=The Legend of Zelda - Majora's Mask (E) (M4) (v1.0)
 RDRAM Size=8
@@ -7323,7 +7322,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Plugin Note=Graphic issues with Jabo plugins
 Status=Compatible
-Use TLB=No
 [CDD9E9E1-ED4EEF35-C:45]
 Game Name=(Hack) Indigo Chapter 2
 RDRAM Size=8

@@ -6314,7 +6314,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [0A5D8F83-98C5371A-C:50]
 Game Name=The Legend of Zelda - Majora's Mask (E) (M4) (v1.1)
 RDRAM Size=8
@@ -6322,7 +6321,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Plugin Note=Graphic issues with Jabo plugins
 Status=Compatible
-Use TLB=No
 [5354631C-03A2DEF0-C:45]
 Game Name=The Legend of Zelda - Majora's Mask (U)
 RDRAM Size=8
@@ -6339,7 +6337,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [B044B569-373C1985-C:50]
 Game Name=The Legend of Zelda - Ocarina of Time (E) (M3) (v1.0)
 RDRAM Size=4
@@ -6349,7 +6346,6 @@ Linking=On
 Status=Compatible
 Counter Factor=2
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [B2055FBD-0BAB4E0C-C:50]
 Game Name=The Legend of Zelda - Ocarina of Time (E) (M3) (v1.1)
 RDRAM Size=4
@@ -6359,7 +6355,6 @@ Linking=On
 Status=Compatible
 Counter Factor=2
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [EC7011B7-7616D72B-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time (U) (v1.0)
 RDRAM Size=4
@@ -6370,7 +6365,6 @@ Status=Compatible
 Counter Factor=2
 Cheat0=D109C5AC 0C02,8109C5AC 2400//Subscreen Delay Fix
 Cheat1=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
-Use TLB=No
 [D43DA81F-021E1E19-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time (U) (v1.1)
 RDRAM Size=4
@@ -6381,7 +6375,6 @@ Status=Compatible
 Counter Factor=2
 Cheat0=D109C5BC 0C02,8109C5BC 2400//Subscreen Delay Fix
 Cheat1=D138EA6C 0C0E,8138EA6C 2400//Equipment Screen Delay Fix
-Use TLB=No
 [693BA2AE-B7F14E9F-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time (U) (v1.2)
 RDRAM Size=4
@@ -6392,7 +6385,6 @@ Status=Compatible
 Counter Factor=2
 Cheat0=D109CC9C 0C02,8109CC9C 2400//Subscreen Delay Fix
 Cheat1=D138F07C 0C0E,8138F07C 2400//Equipment Screen Delay Fix
-Use TLB=No
 [09465AC3-F8CB501B-C:50]
 Game Name=The Legend of Zelda - Ocarina of Time GC (E)
 RDRAM Size=4
@@ -6402,7 +6394,6 @@ Status=Compatible
 Counter Factor=2
 Cheat0=D109A8E4 0320,8109A8E4 0000,D109A8E6 F809,8109A8E6 0000//End Credits Fix
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [F3DD35BA-4152E075-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time GC (U)
 RDRAM Size=4
@@ -6412,7 +6403,6 @@ Status=Compatible
 Counter Factor=2
 Cheat0=D109A814 0320,8109A814 0000,D109A816 F809,8109A816 0000//End Credits Fix
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [B443EB08-4DB31193-C:45]
 Game Name=The Legend of Zelda - Majora's Mask - Collector's Edition (U)
 RDRAM Size=8
@@ -6420,7 +6410,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [BF799345-39FF7A02-C:45]
 Game Name=The Legend of Zelda - Majora's Mask (U) (Demo)
 RDRAM Size=8
@@ -6428,7 +6417,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [1D4136F3-AF63EEA9-C:50]
 Game Name=The Legend of Zelda - Ocarina of Time - Master Quest GC (E)
 RDRAM Size=4
@@ -6438,7 +6426,6 @@ Status=Compatible
 Counter Factor=2
 Cheat0=D109A8C4 0320,8109A8C4 0000,D109A8C6 F809,8109A8C6 0000//End Credits Fix
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [1D4136F3-AF63EEA9-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time - Master Quest GC (E) [h1C]
 RDRAM Size=4
@@ -6448,7 +6435,6 @@ Status=Compatible
 Cheat0=D109A8C4 0320,8109A8C4 0000,D109A8C6 F809,8109A8C6 0000 //End Credits Fix
 Plugin Note=Graphic issues with Jabo plugins
 Counter Factor=2
-Use TLB=No
 [F034001A-AE47ED06-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time - Master Quest GC (U)
 RDRAM Size=4
@@ -6458,7 +6444,6 @@ Status=Compatible
 Counter Factor=2
 Cheat0=D109A7F4 0320,8109A7F4 0000,D109A7F6 F809,8109A7F6 0000//End Credits Fix
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [254E6038-B4CF2485-C:45]
 Game Name=Legend of Zelda, The - Ocarina of Time - Master Quest GC (U) [Fix]
 RDRAM Size=4
@@ -6467,7 +6452,6 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Counter Factor=2
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [2778A458-71FD3BBC-C:45]
 Game Name=Legend of Zelda - Ocarina of Time - Master Quest GC (U) [T-Bra]
 RDRAM Size=4
@@ -6477,7 +6461,6 @@ Status=Compatible
 Cheat0=D109A7F4 0320,8109A7F4 0000,D109A7F6 F809,8109A7F6 0000//End Credits Fix
 Plugin Note=Graphic issues with Jabo plugins
 Counter Factor=2
-Use TLB=No
 [E61CFF0A-CE1C0D71-C:50]
 Game Name=The New Tetris (E)
 RDRAM Size=4
@@ -7636,7 +7619,6 @@ Status=Compatible
 Cheat0=D109C5AC 0C02,8109C5AC 2400//Subscreen Delay Fix
 Cheat1=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [D43DA81F-021E1E19-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina (J) (v1.1)
 RDRAM Size=4
@@ -7647,7 +7629,6 @@ Status=Compatible
 Cheat0=D109C5BC 0C02,8109C5BC 2400//Subscreen Delay Fix
 Cheat1=D138EA6C 0C0E,8138EA6C 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [693BA2AE-B7F14E9F-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina (J) (v1.2)
 RDRAM Size=4
@@ -7658,7 +7639,6 @@ Status=Compatible
 Cheat0=D109CC9C 0C02,8109CC9C 2400//Subscreen Delay Fix
 Cheat1=D138F07C 0C0E,8138F07C 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [F611F4BA-C584135C-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina GC (J)
 RDRAM Size=4
@@ -7668,7 +7648,6 @@ Status=Compatible
 Cheat0=D109A834 0320,8109A834 0000,D109A836 F809,8109A836 0000//End Credits Fix
 Counter Factor=2
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [F43B45BA-2F0E9B6F-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina Master Quest GC (J)
 RDRAM Size=4
@@ -7678,7 +7657,6 @@ Status=Compatible
 Cheat0=D109A814 0320,8109A814 0000,D109A816 F809,8109A816 0000//End Credits Fix
 Counter Factor=2
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [F7F52DB8-2195E636-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina - Zelda Collection Version GC (J)
 RDRAM Size=4
@@ -7688,7 +7666,6 @@ Status=Compatible
 Cheat0=D109A814 0320,8109A814 0000,D109A816 F809,8109A816 0000//End Credits Fix
 Counter Factor=2
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [EC417312-EB31DE5F-C:4A]
 Game Name=Zelda no Densetsu - Mujura no Kamen (J) (v1.0)
 RDRAM Size=8
@@ -7696,7 +7673,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [69AE0438-2C63F3F3-C:4A]
 Game Name=Zelda no Densetsu - Mujura no Kamen (J) (v1.1)
 RDRAM Size=8
@@ -7704,7 +7680,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [8473D0C1-23120666-C:4A]
 Game Name=Zelda no Densetsu - Mujura no Kamen - Zelda Collection Version GC (J)
 RDRAM Size=8
@@ -7712,7 +7687,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Use TLB=No
 [1C010CCD-22D3B7FA-C:4A]
 Game Name=Zool - Majuu Tsukai Densetsu (J)
 RDRAM Size=4
@@ -7781,7 +7755,6 @@ Cheat0=D109C5AC 0C02,8109C5AC 2400//Subscreen Delay Fix
 Cheat1=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 Status=Compatible
 Counter Factor=2
-Use TLB=No
 [533F7113-55FAC7F2-C:45]
 Game Name=(Hack) Shifting Sand Temple
 RDRAM Size=4
@@ -7791,7 +7764,6 @@ Cheat0=D109C5AC 0C02,8109C5AC 2400//Subscreen Delay Fix
 Cheat1=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 Status=Compatible
 Counter Factor=2
-Use TLB=No
 [F099270C-B3639549-C:45]
 Game Name=(Hack) Master of Time
 RDRAM Size=4
@@ -7801,7 +7773,6 @@ Status=Compatible
 Plugin Note=Use Jabo 1.6.1, possible display list error?
 Cheat0=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [F0B7CBCC-0ABE720A-C:45]
 Game Name=(Hack) Master of Time Updated
 RDRAM Size=4
@@ -7810,7 +7781,6 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Cheat0=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [DDFC36FA-8F164F91-C:45]
 Game Name=(Hack) Puzzling
 RDRAM Size=4
@@ -7819,7 +7789,6 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Cheat0=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [1E3E437F-5F1C663A-C:45]
 Game Name=(Hack) The Fate of the Bombiwa
 RDRAM Size=4
@@ -7828,7 +7797,6 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Cheat0=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [05F2807D-615555AA-C:45]
 Game Name=(Hack) Dawn & Dusk
 RDRAM Size=4
@@ -7837,7 +7805,6 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Cheat0=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [B5E15592-0CA2FE00-C:45]
 Game Name=(Hack) Dawn & Dusk Practice ROM
 RDRAM Size=8
@@ -7845,7 +7812,6 @@ CPU Type=Interpreter
 Status=Compatible
 Cheat0=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [1EDEA0DE-4C0056DE-C:45]
 Game Name=(Hack) Cosmic Goddess
 RDRAM Size=8
@@ -7854,7 +7820,6 @@ Plugin Note=ANGLE GLideN64 ONLY
 Status=Compatible
 Core Note=Uses Interpreter CPU w/custom F3DEX3 microcode spec baked into modern GLideN64
 Counter Factor=2
-Use TLB=No
 [EC340D12-EA9AD3F3-C:45]
 Game Name=(Hack) Super Mario Star Road Multiplayer
 RDRAM Size=8
@@ -7911,7 +7876,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Plugin Note=Graphic issues with Jabo plugins
 Status=Compatible
-Use TLB=No
 [CDD9E9E1-ED4EEF35-C:45]
 Game Name=(Hack) Indigo Chapter 2
 RDRAM Size=8
@@ -7922,7 +7886,6 @@ Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
 Status=Semicompatible
 Core Note=Broken saving, requires FlashRam save type
 Counter Factor=2
-Use TLB=No
 [FDDAA882-1EF1AB5C-C:45]
 Game Name=(Hack) Ultimate Trial
 RDRAM Size=8
@@ -7932,7 +7895,6 @@ Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
 Status=Semicompatible
 Core Note=Broken saving, broken with change mem
 Counter Factor=2
-Use TLB=No
 [D1AA799D-489144F5-C:45]
 Game Name=(Hack) Ocarina of Time 1.0 (U) GZ Practice ROM
 RDRAM Size=8
@@ -7941,7 +7903,6 @@ Status=Compatible
 Cheat0=D109C5AC 0C02,8109C5AC 2400//Subscreen Delay Fix
 Cheat1=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [D1E7C5D7-17CAC125-C:45]
 Game Name=(Hack) Ocarina of Time 1.1 (U) GZ Practice ROM
 RDRAM Size=8
@@ -7950,7 +7911,6 @@ Status=Compatible
 Cheat0=D109C5BC 0C02,8109C5BC 2400//Subscreen Delay Fix
 Cheat1=D138EA6C 0C0E,8138EA6C 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [2CE1A4BD-C9DC765A-C:45]
 Game Name=(Hack) Ocarina of Time 1.2 (U) GZ Practice ROM
 RDRAM Size=8
@@ -7959,7 +7919,6 @@ Status=Compatible
 Cheat0=D109CC9C 0C02,8109CC9C 2400//Subscreen Delay Fix
 Cheat1=D138F07C 0C0E,8138F07C 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [D1AA799D-489144F5-C:4A]
 Game Name=(Hack) Ocarina of Time 1.0 (J) GZ Practice ROM
 RDRAM Size=8
@@ -7968,7 +7927,6 @@ Status=Compatible
 Cheat0=D109C5AC 0C02,8109C5AC 2400//Subscreen Delay Fix
 Cheat1=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [D1E7C5D7-17CAC125-C:4A]
 Game Name=(Hack) Ocarina of Time 1.1 (J) GZ Practice ROM
 RDRAM Size=8
@@ -7977,7 +7935,6 @@ Status=Compatible
 Cheat0=D109C5BC 0C02,8109C5BC 2400//Subscreen Delay Fix
 Cheat1=D138EA6C 0C0E,8138EA6C 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [2CE1A4BD-C9DC765A-C:4A]
 Game Name=(Hack) Ocarina of Time 1.2 (J) GZ Practice ROM
 RDRAM Size=8
@@ -7986,7 +7943,6 @@ Status=Compatible
 Cheat0=D109CC9C 0C02,8109CC9C 2400//Subscreen Delay Fix
 Cheat1=D138F07C 0C0E,8138F07C 2400//Equipment Screen Delay Fix
 Counter Factor=2
-Use TLB=No
 [55194B11-551010B5-C:45]
 Game Name=(Hack) Zelda Revival
 RDRAM Size=8
@@ -7994,7 +7950,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Plugin Note=Graphic issues with Jabo plugins
 Status=Compatible
-Use TLB=No
 [8CDD7051-8FE39E38-C:45]
 Game Name=(Hack) The Missing Link
 RDRAM Size=8
@@ -8003,7 +7958,6 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Counter Factor=2
 Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
-Use TLB=No
 [A7C17E96-56D0B621-C:45]
 Game Name=(Hack) The Sealed Palace
 RDRAM Size=8
@@ -8012,7 +7966,6 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Counter Factor=2
 Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
-Use TLB=No
 [7B70336C-C8DBA8F7-C:45]
 Game Name=(Hack) Time Lost
 RDRAM Size=8
@@ -8021,7 +7974,6 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Counter Factor=2
 Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
-Use TLB=No
 [C24AB09A-6873FECC-C:45]
 Game Name=(Hack) 3rd Quest Patch 0.5
 RDRAM Size=8
@@ -8029,7 +7981,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Jabo's Direct3D8 1.6 ONLY
-Use TLB=No
 [CF2E9419-6F97E25D-C:45]
 Game Name=(Hack) Dark Hyrule Fantasy
 RDRAM Size=8
@@ -8038,7 +7989,6 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Jabo's Direct3D8 1.6 ONLY
 Counter Factor=2
-Use TLB=No
 [57CB1765-06320872-C:45]
 Game Name=(Hack) Sands of Time
 RDRAM Size=8
@@ -8047,7 +7997,6 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Counter Factor=2
 Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
-Use TLB=No
 [EA2E4F77-FA26FF84-C:45]
 Game Name=(Hack) Ocarina of Time 60fps Italian
 RDRAM Size=8
@@ -8056,7 +8005,6 @@ Self-modifying code Method=Change Memory
 Linking=On
 Status=Compatible
 Cheat0=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
-Use TLB=No
 [85A772F1-D5E7CDCA-C:45]
 Game Name=(Hack) Mario 64 60fps Widescreen
 RDRAM Size=8

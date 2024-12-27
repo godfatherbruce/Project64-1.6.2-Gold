@@ -122,8 +122,6 @@ Fixed TLB vulnerability (thanks and shoutouts to Gent on that one!).
 
 Massive updates to databases.
 
-TLB RDB framerate optimization for N64 Zelda (however, it won't get applied to ROMhacks not in the RDB).
-
 ***TONS more other stuff has been changed, but it would be too much to explain all of it here, sorry!***
 --------------------------------------------------------------------------------------------------------
 

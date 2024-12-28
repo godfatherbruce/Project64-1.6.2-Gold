@@ -347,8 +347,6 @@ class CLanguage  {
 	void FindLangName  ( int Index );
 	void LoadStrings   ( char * FileName );
 	void SaveCurrentLang ( char * String );
-    
-	friend LRESULT CALLBACK LangSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 public:
 	CLanguage();
@@ -372,8 +370,6 @@ private:
 	int m_NoOfStrings;
 	int m_BaseMenuID;
 };
-
-LRESULT CALLBACK LangSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 /*******************************************************************************
 * Variables                                                                    *
@@ -422,11 +418,8 @@ void CLanguage::LoadLanguage  ( char * RegLocation ) {
 			break;
 		}
 	}
-
-        if (!Found) {
-		strcpy(m_CurrentLangName,"");
-		//Do Dialog box to choose language
-		DialogBoxParam(hInst,MAKEINTRESOURCE(IDD_LangSelect),NULL,(DLGPROC)LangSelectProc, (LPARAM)this);
+	if (!Found) {
+		strcpy(m_CurrentLangName, "English");
 	}
 }
 
@@ -608,48 +601,6 @@ void CLanguage::SetCurrentLang ( HMENU hMenu, int MenuIndx ) {
 	menuinfo.cch = sizeof(String);
 	GetMenuItemInfo(hMenu,MenuIndx,FALSE,&menuinfo);
 	SaveCurrentLang(String);
-}
-
-LRESULT CALLBACK LangSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	static CLanguage * lngClass;
-
-	switch (uMsg) {
-	case WM_INITDIALOG:
-		SetWindowPos(hDlg,HWND_TOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOREPOSITION|SWP_NOSIZE);
-		{
-			lngClass = (CLanguage *)lParam;
-			
-			if (lngClass->m_NoOflangs == 0) { EndDialog(hDlg,0); }
-			for (int count = 0; count < lngClass->m_NoOflangs; count ++) {
-				int index = SendMessage(GetDlgItem(hDlg,IDC_LANG_SEL),CB_ADDSTRING,0,(WPARAM)&lngClass->m_LangName[count][0]);
-				if (strcmp(&lngClass->m_LangName[count][0],"English") == 0) {
-					SendMessage(GetDlgItem(hDlg,IDC_LANG_SEL),CB_SETCURSEL,index,0);
-				}
-			}
-			int Index = SendMessage(GetDlgItem(hDlg,IDC_LANG_SEL),CB_GETCURSEL,0,0);
-			if (Index < 0) { SendMessage(GetDlgItem(hDlg,IDC_LANG_SEL),CB_SETCURSEL,0,0); }
-		}
-		break;
-	case WM_COMMAND:
-		switch (LOWORD(wParam)) {
-		case IDOK:
-			{
-				int Index = SendMessage(GetDlgItem(hDlg,IDC_LANG_SEL),CB_GETCURSEL,0,0);
-				
-				if (Index >= 0) { 
-					char String[255];
-					SendMessage(GetDlgItem(hDlg,IDC_LANG_SEL),CB_GETLBTEXT,Index,(LPARAM)String);
-					lngClass->SaveCurrentLang(String);
-				}
-			}
-
-			EndDialog(hDlg,0);
-			break;
-		}
-	default:
-		return FALSE;
-	}
-	return TRUE;
 }
 
 char * GS (int StringID) {

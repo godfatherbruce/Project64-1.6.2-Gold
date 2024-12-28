@@ -22,7 +22,6 @@
 #define IDR_POPUP                       155
 #define IDR_CHEAT_MENU                  160
 #define IDD_Cheats_Edit                 160
-#define IDD_LangSelect                  161
 #define IDB_BITMAP1                     167
 #define IDC_CLOSE_BUTTON                1001
 #define RSP_LIST                        1004

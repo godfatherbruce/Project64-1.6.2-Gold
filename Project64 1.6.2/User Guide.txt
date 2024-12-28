@@ -568,21 +568,39 @@ the following issues with this emulator:
 
 
 Also, if you develop the ROM database, please do not ever include any of the following lines in your RDB
-entries, because if you do, then you are just wasting space, assuming you leave the core defaults alone:
+entries, because if you do, then you are just wasting space, assuming you leave internal defaults alone:
 
-Counter Factor=Default
-Save Type=First Save Type
-Reg Cache=Yes
-Use TLB=Yes
-Delay SI=No
-Delay RDP=No
-Delay RSP=No
-Emulate AI=No
-Audio Signal=No
-SP Hack=No
-Use Large Buffer=No
-Linking=Global
+(In paranthesis, I am telling you what the setting is set to when it is left blank like this as a guide)
 
-However, if you use counter factor 1 by default, then of course now you need to clarify Counter Factor=2
-for all game entries that could crash if using counter factor 1 by default, like Zelda: Ocarina of Time.
+Internal Name=ROMNAME (Internal Name is only printed to help RDB developers differentiate entries)
+RDRAM Size=
+(User's Selected Core Setting)
+Counter Factor=
+(2, 1 if using -CF1)
+Save Type=
+(First Save Type)
+CPU Type=
+(User's Selected Core Setting)
+Self-modifying code Method=
+(User's Selected Core Setting)
+Reg Cache=
+(Yes)
+Use TLB=
+(Yes)
+Delay SI=
+(No)
+Delay RDP=
+(No)
+Delay RSP=
+(No)
+Emulate AI=
+(No)
+Audio Signal=
+(No)
+SP Hack=
+(No)
+Use Large Buffer=
+(No)
+Linking=
+(User's Selected Core Setting)
 --------------------------------------------------------------------------------------------------------⠀⠀

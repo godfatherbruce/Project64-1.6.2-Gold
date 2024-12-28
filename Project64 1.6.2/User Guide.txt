@@ -77,7 +77,7 @@ Added vcruntime140 from MS VC Redistributable 2022 to support one of the new plu
 Changed a few error messages to be more informative so that they are actually helpful, instead of saying
 that something is wrong and not giving the user any idea on how to fix the problem they're experiencing.
 
-Changed CloseCpu to run at 50% faster and temp set system timer resolution for consistent functionality.
+Changed CloseCpu to run twice as fast and temp set system timer resolution for consistent functionality.
 
 Changed databases besides the ROM database to print Internal Name= (previously was only printing Name=).
 

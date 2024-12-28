@@ -161,7 +161,7 @@ void CloseCpu (void) {
 		CPU_Action.DoSomething = TRUE;
 		PulseEvent( CPU_Action.hStepping );
 		timeBeginPeriod(16);
-                Sleep(66); // timeBeginPeriod rounds the timer resolution to Windows 10's 15.625, Sleep 20 reliably functions on my 3.3ghz CPU, I want this to work on a 1ghz CPU because that's Windows 7's minimum clock speed, 3.3*20=66 with rounding buffer, timeEndPeriod restores the system's timer resolution
+                Sleep(50);
 		timeEndPeriod(16);
 		GetExitCodeThread(hCPU,&ExitCode);
 		if (ExitCode != STILL_ACTIVE) {

@@ -530,7 +530,7 @@ void CLanguage::LoadStrings  ( char * FileName ) {
 
 
 void CLanguage::FindLangName  ( int Index ) {
-	strcpy(m_LangName[Index],"English");
+	strcpy(m_LangName[Index],GS(RB_NOT_IN_RDB));
 
 	FILE *file = fopen(m_filenames[Index], "rb");
 	if (file == NULL) { return; }

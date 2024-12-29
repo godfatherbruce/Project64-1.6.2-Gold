@@ -228,6 +228,7 @@ Self-modifying code Method=Check Memory Advance
 Linking=Off
 Status=Compatible
 Emulate AI=Yes
+Cheat0=81068FCE 0000//freeze fix by Jelta
 [2DC4FFCC-C8FF5A21-C:50]
 Game Name=Aidyn Chronicles - The First Mage (E)
 RDRAM Size=8
@@ -1285,19 +1286,19 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Linking=Off
 Status=Compatible
-Cheat0=81046576 0000//Game Fix
+Cheat0=81046576 0000//freeze fix by Jelta
 [726537C2-9D6F813B-C:5A]
 Game Name=Densha de Go! 64 (J) [T-Eng]
 Status=Incompatible
 [A5F667E1-DA1FBD1F-C:4A]
 Game Name=Derby Stallion 64 (J)
 RDRAM Size=4
-Save Type=FlashRam
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
+Cheat0=D10C21A2 3021,810C21A0 2406,D10C21A2 3021,810C21A2 0001//save fix
 [630AA37D-896BD7DB-C:50]
 Game Name=Destruction Derby 64 (E) (M3)
 RDRAM Size=4
@@ -1529,7 +1530,7 @@ Use TLB=No
 Linking=Off
 Reg Cache=No
 Status=Compatible
-Cheat0=8104ECD6 0000//Game Fix
+Cheat0=8104ECD6 0000//freeze fix by Jelta
 [BD8E206D-98C35E1C-C:4A]
 Game Name=Doubutsu no Mori (J)
 RDRAM Size=4
@@ -1922,7 +1923,7 @@ Reg Cache=No
 Status=Compatible
 Audio Signal=Yes
 Emulate AI=Yes
-Cheat0=810C1102 2400//Game Fix Nekokabu
+Cheat0=810C1102 2400//Nekokabu Game Fix
 [C3F19159-65D2BC5A-C:45]
 Game Name=FIFA Soccer 64 (U) (M3)
 RDRAM Size=4
@@ -1933,7 +1934,7 @@ Reg Cache=No
 Status=Compatible
 Audio Signal=Yes
 Emulate AI=Yes
-Cheat0=810C1104 2400//Game Fix Nekokabu
+Cheat0=810C1104 2400//Nekokabu Game Fix
 [36F1C74B-F2029939-C:50]
 Game Name=Fighter's Destiny (E)
 RDRAM Size=4
@@ -2520,7 +2521,7 @@ CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
 Status=Compatible
-Cheat0=81000470 2400,810005D0 2400//Game Fix Nekokabu
+Cheat0=81000470 2400,810005D0 2400//Nekokabu Game Fix
 //IROMs
 [77DA3B8D-162B0D7C-C:4A]
 Game Name=Ide Yousuke no Mahjong Juku (J)
@@ -2756,11 +2757,8 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Delay SI=Yes
 Status=Compatible
-Delay RDP=Yes
-Delay RSP=Yes
-Cheat0=D101BDA6 1FFF,8101BDA6 107F//Game Fix
+Cheat0=D101BDA6 1FFF,8101BDA6 107F//Nekokabu Game Fix
 [69256460-B9A3F586-C:45]
 Game Name=Jeopardy! (U)
 RDRAM Size=4
@@ -3771,12 +3769,15 @@ CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
 Status=Compatible
+Cheat0=81000484 2400,810005F0 2400
 [8D2BAE98-D73725BF-C:45]
 Game Name=Nagano Winter Olympics '98 (U)
 RDRAM Size=4
 CPU Type=Recompiler
-Self-modifying code Method=Check Memory & cache
+Self-modifying code Method=Protected Memory
+Linking=Off
 Status=Compatible
+Cheat0=81000470 2400,810005B8 2400
 [5129B6DA-9DEF3C8C-C:45]
 Game Name=Namco Museum 64 (U)
 RDRAM Size=4
@@ -4466,7 +4467,7 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
 Cheat0=D1381BDC 802C,80381BCF 0000//Pass 1st Level and Controller Fix
-Cheat2=D11E3744 2881,811E3744 2001,D11E3746 0098,811E3746 0001//Make Picture selectable
+Cheat1=D11E3744 2881,811E3744 2001,D11E3746 0098,811E3746 0001//Make Picture selectable
 [C0C85046-61051B05-C:49]
 Game Name=Pokemon Snap (I)
 RDRAM Size=4
@@ -5962,14 +5963,6 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Cheat0=D109A8C4 0320,8109A8C4 0000,D109A8C6 F809,8109A8C6 0000//End Credits Fix
 Plugin Note=Graphic issues with Jabo plugins
-[1D4136F3-AF63EEA9-C:45]
-Game Name=The Legend of Zelda - Ocarina of Time - Master Quest GC (E) [h1C]
-RDRAM Size=4
-CPU Type=Recompiler
-Self-modifying code Method=Check Memory Advance
-Status=Compatible
-Cheat0=D109A8C4 0320,8109A8C4 0000,D109A8C6 F809,8109A8C6 0000 //End Credits Fix
-Plugin Note=Graphic issues with Jabo plugins
 [F034001A-AE47ED06-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time - Master Quest GC (U)
 RDRAM Size=4
@@ -6133,6 +6126,7 @@ Self-modifying code Method=Check Memory & cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 Delay RDP=Yes
+Cheat0=D10021EE 0001,810021EE 0000//Game Fix
 [845B0269-57DE9502-C:4A]
 Game Name=Top Gear Hyper Bike (J)
 RDRAM Size=4
@@ -6141,6 +6135,7 @@ Self-modifying code Method=Check Memory & cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 Delay RDP=Yes
+Cheat0=D100225A 0001,8100225A 0000//Game Fix
 [8ECC02F0-7F8BDE81-C:45]
 Game Name=Top Gear Hyper Bike (U)
 RDRAM Size=4
@@ -6149,6 +6144,7 @@ Self-modifying code Method=Check Memory & cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 Delay RDP=Yes
+Cheat0=D10021EA 0001,810021EA 0000//Game Fix
 [D09BA538-1C1A5489-C:50]
 Game Name=Top Gear Overdrive (E)
 RDRAM Size=4
@@ -7164,6 +7160,14 @@ Self-modifying code Method=Check Memory Advance
 Use Large Buffer=Yes
 Linking=Off
 Status=Compatible
+[9FC385E5-3ECC05C7-C:50]
+Game Name=Majora's Mask (E) (M3) (Debug)
+RDRAM Size=8
+CPU Type=Recompiler
+Self-modifying code Method=Check Memory Advance
+Status=Compatible
+Plugin Note=Graphic issues with Jabo plugins
+Core Note=Extreme lag
 [917D18F6-69BC5453-C:45]
 Game Name=Ocarina of Time Master Quest GC (Debug)
 RDRAM Size=8

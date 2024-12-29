@@ -237,7 +237,7 @@ Legend of Zelda Majora's Mask: fixed day transition borders and lens of truth in
 Legacy's Angrylion's RDP Plus x ParaLLel -  An excellent fork of Angrylion's RDP Plus which comes with a
 					    builtin ParaLLel RSP and an option to render using DirectX8.
 					    Originally created by Icepir8 for Project64 Legacy emulator.
-					   *Swap plugin after changing resolution to fix frozen display.
+					***Entering fullscreen after changing resolution fixes freezing.
 
 Mk3 GLideN64#42d6569 - The last stable release of GLideN64 I am able to find before the bad regressions.
 		       Use this if you want something that generally works but it has high requirements.
@@ -247,7 +247,7 @@ Shankle's AntiFbffr ANGLE GLideN64 (1.0) - Use ANGLE GLideN64 for ROMhacks using
 					   or for (most) SM64 hacks. You can enable framebuffer from the
 					   ini file if you want to play an F3DEX3 hack with framebuffer,
 					   but it will be disabled upon ui config save to prevent crash.
-					   *Swap plugin after changing resolution to fix frozen display.
+					***Entering fullscreen after changing resolution fixes freezing.
 
 
 Audio (sound) plugin:
@@ -570,7 +570,7 @@ the following issues with this emulator:
 Also, if you develop the ROM database, please do not ever include any of the following lines in your RDB
 entries, because if you do, then you are just wasting space, assuming you leave internal defaults alone:
 
-(In paranthesis, I am telling you what the setting is set to when it is left blank like this as a guide)
+(In paranthesis, I am telling you what the setting is set to when it is left empty like this as a guide)
 
 Internal Name=ROMNAME (Internal Name is only printed to help RDB developers differentiate entries)
 RDRAM Size=

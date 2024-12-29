@@ -36,7 +36,7 @@ void CompileReadTLBMiss (BLOCK_SECTION * Section, int AddressReg, int LookUpReg 
 	TestX86RegToX86Reg(LookUpReg,LookUpReg);
 	CompileExit(Section->CompilePC,Section->RegWorking,TLBReadMiss,FALSE,JeLabel32);
 }
-void CompileWriteTLBMiss(BLOCK_SECTION* Section, int AddressReg, int LookUpReg) {
+void CompileWriteTLBMiss(BLOCK_SECTION * Section, int AddressReg, int LookUpReg) {
 	MoveX86regToVariable(AddressReg, &TLBLoadAddress, "TLBLoadAddress");
 	TestX86RegToX86Reg(LookUpReg, LookUpReg);
 	CompileExit(Section->CompilePC, Section->RegWorking, TLBWriteMiss, FALSE, JeLabel32);

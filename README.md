@@ -1,6 +1,8 @@
 See release video here: https://youtu.be/uTH-rQExkDU?feature=shared
 To see what has changed with each new release, please examine the GitHub commit history if a changelog is not provided.
-Please always download the release marked as "Latest" and carefully read any left notes for your own sake.
+Please always download the latest release and carefully read any left notes for your own sake.
+
+Project64 1.6.2 is my unofficial update/spiritual successor to Project64 1.6/1.6.1 developed using PJ64Team's vulnerability fixed (but kinda bugged) version known as 1.6 Plus as it stood at this time: https://github.com/pj64team/Project64-1.6-Plus/tree/7ff51997c16e35a1c0685cc076b085ee6eda1b64 (Plus is based on the source code for 1.6.1, hence my rebranding to 1.6.2)
 
 
 Project64 1.x License Agreement:

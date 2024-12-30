@@ -7821,7 +7821,7 @@ RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
 Status=Compatible
-Plugin Note=ANGLE GLideN64 or Jabo's Direct3D8 Suggested
+Plugin Note=Use GLideN64 or Direct3D8
 Cheat0=802473A7 00BC,802473B3 0000,8024748E 0000,80247966 0000,80247996 0000,8027B4F6 0000,8027B46A 0000,8027B4AA 0000,8027B582 0000,8027C99F 00BC,8027C9AB 0000//Cropfix
 [FAADE031-7BA332DC-C:45]
 Game Name=(Hack) Super Mario Star Road Original
@@ -7829,7 +7829,7 @@ RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
 Status=Compatible
-Plugin Note=ANGLE GLideN64 or Jabo's Direct3D8 Suggested
+Plugin Note=Use GLideN64 or Direct3D8
 Cheat0=802473A7 00BC,802473B3 0000,8024748E 0000,80247966 0000,80247996 0000,8027B4F6 0000,8027B46A 0000,8027B4AA 0000,8027B582 0000,8027C99F 00BC,8027C9AB 0000//Cropfix
 [D9DBF5ED-F58A4E97-C:45]
 Game Name=(Hack) Super Mario Star Road Beta
@@ -7837,7 +7837,7 @@ RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
 Status=Compatible
-Plugin Note=ANGLE GLideN64 or Jabo's Direct3D8 Suggested
+Plugin Note=Use GLideN64 or Direct3D8
 Cheat0=802473A7 00BC,802473B3 0000,8024748E 0000,80247966 0000,80247996 0000,8027B4F6 0000,8027B46A 0000,8027B4AA 0000,8027B582 0000,8027C99F 00BC,8027C9AB 0000//Cropfix
 [56CA3E01-7364C208-C:45]
 Game Name=(Hack) Super Mario Star Road French
@@ -7845,7 +7845,7 @@ RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
 Status=Compatible
-Plugin Note=ANGLE GLideN64 or Jabo's Direct3D8 Suggested
+Plugin Note=Use GLideN64 or Direct3D8
 Cheat0=802473A7 00BC,802473B3 0000,8024748E 0000,80247966 0000,80247996 0000,8027B4F6 0000,8027B46A 0000,8027B4AA 0000,8027B582 0000,8027C99F 00BC,8027C9AB 0000//Cropfix
 [9CC44345-D6DF4426-C:45]
 Game Name=(Hack) Super Mario Star Road Final
@@ -7853,7 +7853,7 @@ RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
 Status=Compatible
-Plugin Note=ANGLE GLideN64 or Jabo's Direct3D8 Suggested
+Plugin Note=Use GLideN64 or Direct3D8
 Cheat0=802473A7 00BC,802473B3 0000,8024748E 0000,80247966 0000,80247996 0000,8027B4F6 0000,8027B46A 0000,8027B4AA 0000,8027B582 0000,8027C99F 00BC,8027C9AB 0000//Cropfix
 [79BC362E-C7C8B112-C:45]
 Game Name=(Hack) Super Mario Star Road Deluxe
@@ -7861,7 +7861,7 @@ RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
 Status=Compatible
-Plugin Note=ANGLE GLideN64 or Jabo's Direct3D8 Suggested
+Plugin Note=Use GLideN64 or Direct3D8
 Cheat0=802473A7 00BC,802473B3 0000,8024748E 0000,80247966 0000,80247996 0000,8027B4F6 0000,8027B46A 0000,8027B4AA 0000,8027B582 0000,8027C99F 00BC,8027C9AB 0000//Cropfix
 [36F2DB16-DF63D3BE-C:45]
 Game Name=(Hack) Pumkin Tower
@@ -7876,7 +7876,7 @@ RDRAM Size=8
 Save Type=FlashRam
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
+Plugin Note=Use GLideN64 or D3D8 1.6
 Status=Semicompatible
 Core Note=Broken saving, requires FlashRam save type
 Counter Factor=2
@@ -7885,7 +7885,7 @@ Game Name=(Hack) Ultimate Trial
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
+Plugin Note=Use GLideN64 or D3D8 1.6
 Status=Semicompatible
 Core Note=Broken saving, broken with change mem
 Counter Factor=2
@@ -7951,7 +7951,7 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Counter Factor=2
-Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
+Plugin Note=Use GLideN64 or D3D8 1.6
 [A7C17E96-56D0B621-C:45]
 Game Name=(Hack) The Sealed Palace
 RDRAM Size=8
@@ -7959,7 +7959,7 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Counter Factor=2
-Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
+Plugin Note=Use GLideN64 or D3D8 1.6
 [7B70336C-C8DBA8F7-C:45]
 Game Name=(Hack) Time Lost
 RDRAM Size=8
@@ -7967,7 +7967,7 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Counter Factor=2
-Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
+Plugin Note=Use GLideN64 or D3D8 1.6
 [C24AB09A-6873FECC-C:45]
 Game Name=(Hack) 3rd Quest Patch 0.5
 RDRAM Size=8
@@ -7990,15 +7990,7 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Counter Factor=2
-Plugin Note=GLideN64 or Jabo's Direct3D8 1.6 suggested
-[EA2E4F77-FA26FF84-C:45]
-Game Name=(Hack) Ocarina of Time 60fps Italian
-RDRAM Size=8
-CPU Type=Recompiler
-Self-modifying code Method=Change Memory
-Linking=On
-Status=Compatible
-Cheat0=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
+Plugin Note=Use GLideN64 or D3D8 1.6
 [85A772F1-D5E7CDCA-C:45]
 Game Name=(Hack) Mario 64 60fps Widescreen
 RDRAM Size=8

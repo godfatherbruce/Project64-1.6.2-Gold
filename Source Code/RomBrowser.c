@@ -50,7 +50,6 @@ typedef struct {
 	char     CartID[3];
 	char     PluginNotes[250];
 	char     CoreNotes[250];
-	char     UserNotes[250];
 	char     Developer[30];
 	char     ReleaseDate[30];
 	char     Genre[15];
@@ -111,18 +110,17 @@ typedef struct {
 #define RB_RomSize			4
 #define RB_CoreNotes		5
 #define RB_PluginNotes		6
-#define RB_UserNotes		7
-#define RB_CartridgeID		8
-#define RB_Manufacturer		9
-#define RB_Country			10
-#define RB_Developer		11
-#define RB_Crc1				12
-#define RB_Crc2				13
-#define RB_CICChip			14
-#define RB_ReleaseDate		15
-#define RB_Genre			16
-#define RB_Players			17
-#define RB_ForceFeedback	18
+#define RB_CartridgeID		7
+#define RB_Manufacturer		8
+#define RB_Country			9
+#define RB_Developer		10
+#define RB_Crc1				11
+#define RB_Crc2				12
+#define RB_CICChip			13
+#define RB_ReleaseDate		14
+#define RB_Genre			15
+#define RB_Players			16
+#define RB_ForceFeedback	17
 
 char * GetSortField          ( int Index );
 void LoadRomList             ( void );
@@ -154,9 +152,8 @@ ROMBROWSER_FIELDS RomBrowserFields[] =
 	"File Name",               2, RB_FileName,      101,RB_FILENAME,
 	"1st CRC",                 3, RB_Crc1,           71,RB_CRC1,
 	"Size",                    4, RB_RomSize,        58,RB_ROMSIZE,
-	"Core Note",              -1, RB_CoreNotes,     273,RB_NOTES_CORE,
+	"Core Note",              -1, RB_CoreNotes,     333,RB_NOTES_CORE,
 	"Plugin Note",            -1, RB_PluginNotes,   173,RB_NOTES_PLUGIN,
-	"Note",                   -1, RB_UserNotes,      49,RB_NOTES_USER,
 	"Status",                 -1, RB_Status,         93,RB_STATUS,
 	"2nd CRC",                -1, RB_Crc2,           71,RB_CRC2,
 	"ID",                     -1, RB_CartridgeID,    23,RB_CART_ID,
@@ -389,18 +386,13 @@ void LoadRomBrowserColoumnInfo (void) {
 }
 
 void FillRomExtensionInfo(ROM_INFO * pRomInfo) {
-	LPSTR IniFileName, ExtIniFileName, NotesIniFileName;
+	LPSTR IniFileName, ExtIniFileName;
 	char Identifier[100];
 
 	IniFileName = GetIniFileName();
-	NotesIniFileName = GetNotesIniFileName();
 	ExtIniFileName = GetExtIniFileName();
 
 	sprintf(Identifier,"%08X-%08X-C:%X", pRomInfo->CRC1, pRomInfo->CRC2, pRomInfo->Country);
-	
-	//Rom Notes
-	if (RomBrowserFields[RB_UserNotes].Pos >= 0)
-		GetString(Identifier, "Note", "", pRomInfo->UserNotes,sizeof(pRomInfo->UserNotes),NotesIniFileName);
 	
 	//Rom Extension info
 	if (RomBrowserFields[RB_Developer].Pos >= 0)
@@ -628,7 +620,6 @@ int CALLBACK RomList_CompareItems2(LPARAM lParam1, LPARAM lParam2, LPARAM lParam
 		case RB_RomSize: result =  (int)pRomInfo1->RomSize - (int)pRomInfo2->RomSize; break;
 		case RB_CoreNotes: result =  (int)lstrcmpi(pRomInfo1->CoreNotes, pRomInfo2->CoreNotes); break;
 		case RB_PluginNotes: result =  (int)lstrcmpi(pRomInfo1->PluginNotes, pRomInfo2->PluginNotes); break;
-		case RB_UserNotes: result =  (int)lstrcmpi(pRomInfo1->UserNotes, pRomInfo2->UserNotes); break;
 		case RB_CartridgeID: result =  (int)lstrcmpi(pRomInfo1->CartID, pRomInfo2->CartID); break;
 		case RB_Manufacturer: result =  (int)pRomInfo1->Manufacturer - (int)pRomInfo2->Manufacturer; break;
 		case RB_Country: {
@@ -688,7 +679,6 @@ void RomList_GetDispInfo(LPNMHDR pnmh) {
 		}
 
 		break;
-	case RB_UserNotes: strncpy(lpdi->item.pszText, pRomInfo->UserNotes, lpdi->item.cchTextMax); break;
 	case RB_Developer: strncpy(lpdi->item.pszText, pRomInfo->Developer, lpdi->item.cchTextMax); break;
 	case RB_ReleaseDate: strncpy(lpdi->item.pszText, pRomInfo->ReleaseDate, lpdi->item.cchTextMax); break;
 	case RB_Genre: strncpy(lpdi->item.pszText, pRomInfo->Genre, lpdi->item.cchTextMax); break;

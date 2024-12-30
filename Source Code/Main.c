@@ -369,18 +369,6 @@ char * GetLangFileName(void) {
 	return IniFileName;
 }
 
-char * GetNotesIniFileName(void) {
-	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
-	char fname[_MAX_FNAME],ext[_MAX_EXT];
-	static char IniFileName[_MAX_PATH];
-
-	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
-	_splitpath( path_buffer, drive, dir, fname, ext );
-
-	sprintf(IniFileName,"%s%sPJ64DB\\%s",drive,dir,NotesIniName);
-	return IniFileName;
-}
-
 int GetStoredWinPos( char * WinName, DWORD * X, DWORD * Y ) {
 	long lResult;
 	HKEY hKeyResults = 0;

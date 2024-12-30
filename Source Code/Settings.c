@@ -896,7 +896,6 @@ BOOL CALLBACK RomNotesProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 					len = strlen(Status);
 					if (len > 4 && _strnicmp(&Status[len-4],".Sel",4) == 0) { continue; }
 					if (len > 8 && _strnicmp(&Status[len-8],".Seltext",8) == 0) { continue; }
-					if (len > 15 && _strnicmp(&Status[len-15],".AutoFullScreen",15) == 0) { continue; }
 					index = SendMessage(GetDlgItem(hDlg,IDC_STATUS),CB_ADDSTRING,0,(LPARAM)Status);
 					if (strcmp(Status,RomStatus) == 0) { SendMessage(GetDlgItem(hDlg,IDC_STATUS),CB_SETCURSEL,index,0); }
 					if (SendMessage(GetDlgItem(hDlg,IDC_STATUS),CB_GETCOUNT,0,0) == 0) { SendMessage(GetDlgItem(hDlg,IDC_STATUS),CB_SETCURSEL,0,0); }
@@ -944,7 +943,6 @@ BOOL CALLBACK RomNotesProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 }
 
 BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	char String[256];
 	int indx;
 
 	switch (uMsg) {
@@ -1030,15 +1028,7 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		break;
 	case WM_NOTIFY:
 		if (((NMHDR FAR *) lParam)->code == PSN_APPLY) { 
-			LPSTR NotesIniFileName = GetNotesIniFileName();
-			char Identifier[100];
-			
 			if (strlen(RomName) == 0) { break; }
-			sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-			_WritePrivateProfileString(Identifier, "Internal Name", RomName, NotesIniFileName);
-			GetDlgItemText(hDlg,IDC_NOTES,String,sizeof(String));
-			_WritePrivateProfileString(Identifier,"Note",String,NotesIniFileName);
-
 			if (!UseIni) { break; }
 			indx = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETCURSEL,0,0); 
 			RomRamSize = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETITEMDATA,indx,0);

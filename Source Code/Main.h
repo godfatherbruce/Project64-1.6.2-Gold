@@ -41,7 +41,6 @@ extern "C" {
 #define AppVer   "1.6.2 (2024)"
 #define AppName  "Project64 Version 1.6.2 (2024)"
 #define IniName						"PJ64.rdb"
-#define NotesIniName				"PJ64.ndb"
 #define ExtIniName					"PJ64.bdb"
 #define CheatIniName				"PJ64.cdb"
 #define CheatDevIniName				"PJ64.cdbdev"
@@ -118,7 +117,6 @@ void  DisplayFPS          ( void );
 char* GetExtIniFileName   ( void );
 char* GetIniFileName      ( void );
 char* GetLangFileName     ( void );
-char* GetNotesIniFileName ( void );
 int   GetStoredWinPos     ( char * WinName, DWORD * X, DWORD * Y );
 int   GetStoredWinSize    ( char * WinName, DWORD * Width, DWORD * Height );
 void  LoadSettings        ( void );

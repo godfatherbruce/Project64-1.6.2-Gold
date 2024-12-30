@@ -78,8 +78,8 @@ LANG_STR DefaultString[] = {
 // Menu Descriptions
         { MENUDES_OPEN, "Lets you open N64 ROMs" },    
         { MENUDES_ROM_INFO, "Displays ROM-specific information about a running ROM" }, 
-        { MENUDES_START, "Starts emulation of the previously opened ROM within this instance" }, 
-        { MENUDES_END, "Ends emulation of a running ROM" }, 
+        { MENUDES_START, "Starts emulation of the most recently opened ROM within this instance" }, 
+        { MENUDES_END, "Ends emulation of the most recently opened ROM within this instance" }, 
         { MENUDES_CHOOSE_ROM, "Lets you choose a ROM directory (ROMs folder by default)" }, 
         { MENUDES_REFRESH, "Refreshes current list of ROMs in the ROM browser" }, 
         { MENUDES_EXIT, "Closes Project64" }, 
@@ -122,7 +122,6 @@ LANG_STR DefaultString[] = {
 	{ RB_ROMSIZE,      "Size" },
 	{ RB_NOTES_CORE,   "Core Note" },
 	{ RB_NOTES_PLUGIN, "Plugin Note" },
-	{ RB_NOTES_USER,   "Note" },
 	{ RB_CART_ID,      "ID" },
 	{ RB_MANUFACTURER,  "Manufacturer" },
 	{ RB_COUNTRY,      "Country" },
@@ -194,8 +193,8 @@ LANG_STR DefaultString[] = {
 //Advanced Options
 	{ ADVANCE_INFO,        "Check Memory Advance = High FPS Low Compatibility\nProtect Memory = Medium FPS Medium Compatibility\nInterpreter = Low FPS High Compatibility\nNote Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register caching"},
 	{ ADVANCE_DEFAULTS,    "Core Defaults"},
-	{ ADVANCE_AUTO_START,  "Start Emulation when ROM is opened"},
-	{ ADVANCE_OVERWRITE,   "Overwrite default settings with ones from RDB"},
+	{ ADVANCE_AUTO_START,  "Start Emulation Upon ROM Open"},
+	{ ADVANCE_OVERWRITE,   "RDB ROM Settings"},
 
 //ROM Options
 	{ ROM_CPU_STYLE,       "CPU Core Style:"},

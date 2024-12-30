@@ -117,227 +117,226 @@ char * GS               ( int StringID );
 #define RB_ROMSIZE			88
 #define RB_NOTES_CORE			89
 #define RB_NOTES_PLUGIN			90
-#define RB_NOTES_USER			91
-#define RB_CART_ID			92
-#define RB_MANUFACTURER			93
-#define RB_COUNTRY			94
-#define RB_DEVELOPER			95
-#define RB_CRC1				96
-#define RB_CRC2				97
-#define RB_CICCHIP			98
-#define RB_RELEASE_DATE			99
-#define RB_GENRE			100
-#define RB_PLAYERS			101
-#define RB_FORCE_FEEDBACK		102
-#define SELECT_ROM_DIR			103
+#define RB_CART_ID			91
+#define RB_MANUFACTURER			92
+#define RB_COUNTRY			93
+#define RB_DEVELOPER			94
+#define RB_CRC1				95
+#define RB_CRC2				96
+#define RB_CICCHIP			97
+#define RB_RELEASE_DATE			98
+#define RB_GENRE			99
+#define RB_PLAYERS			100
+#define RB_FORCE_FEEDBACK		101
+#define SELECT_ROM_DIR			102
 
 //Messages
-#define RB_NOT_IN_RDB		        104
-#define RB_HACK                         105
+#define RB_NOT_IN_RDB		        103
+#define RB_HACK                         104
 
 /*********************************************************************************
 * Options                                                                        *
 *********************************************************************************/
 //Tabs
-#define TAB_PLUGIN			106
-#define TAB_DIRECTORY			107
-#define TAB_ROMSELECTION		108
-#define TAB_ADVANCED			109
-#define TAB_ROMSETTINGS			110
-#define TAB_SHELLINTERGATION	        111
-#define TAB_ROMNOTES			112
+#define TAB_PLUGIN			105
+#define TAB_DIRECTORY			106
+#define TAB_ROMSELECTION		107
+#define TAB_ADVANCED			108
+#define TAB_ROMSETTINGS			109
+#define TAB_SHELLINTERGATION	        110
+#define TAB_ROMNOTES			111
 
 //Plugin Dialog
-#define PLUG_ABOUT			113
-#define PLUG_RSP			114
-#define PLUG_GFX			115
-#define PLUG_AUDIO			116
-#define PLUG_CTRL			117
+#define PLUG_ABOUT			112
+#define PLUG_RSP			113
+#define PLUG_GFX			114
+#define PLUG_AUDIO			115
+#define PLUG_CTRL			116
 
 //Directory Dialog
-#define DIR_ROM				118
-#define DIR_AUTO_SAVE			119
-#define DIR_INSTANT_SAVE		120
-#define DIR_SCREEN_SHOT                 121
-#define DIR_ROM_DEFAULT			122
-#define DIR_SELECT_ROM			123
-#define DIR_SELECT_AUTO			124
-#define DIR_SELECT_INSTANT		125
-#define DIR_SELECT_SCREEN               126
+#define DIR_ROM				117
+#define DIR_AUTO_SAVE			118
+#define DIR_INSTANT_SAVE		119
+#define DIR_SCREEN_SHOT                 120
+#define DIR_ROM_DEFAULT			121
+#define DIR_SELECT_ROM			122
+#define DIR_SELECT_AUTO			123
+#define DIR_SELECT_INSTANT		124
+#define DIR_SELECT_SCREEN               125
 
 //Options (general) Tab
-#define OPTION_AUTO_SLEEP		127
-#define OPTION_AUTO_FULLSCREEN	        128
-#define OPTION_BASIC_MODE		129
-#define OPTION_REMEMBER_CHEAT	        130
+#define OPTION_AUTO_SLEEP		126
+#define OPTION_AUTO_FULLSCREEN	        127
+#define OPTION_BASIC_MODE		128
+#define OPTION_REMEMBER_CHEAT	        129
 
 //Rom Browser Tab
-#define RB_MAX_ROMS			131
-#define RB_ROMS				132
-#define RB_MAX_DIRS			133
-#define RB_DIRS				134
-#define RB_USE				135
-#define RB_DIR_RECURSION		136
-#define RB_AVAILABLE_FIELDS		137
-#define RB_SHOW_FIELDS			138
-#define RB_ADD				139
-#define RB_REMOVE			140
-#define RB_UP				141
-#define RB_DOWN				142
+#define RB_MAX_ROMS			130
+#define RB_ROMS				131
+#define RB_MAX_DIRS			132
+#define RB_DIRS				133
+#define RB_USE				134
+#define RB_DIR_RECURSION		135
+#define RB_AVAILABLE_FIELDS		136
+#define RB_SHOW_FIELDS			137
+#define RB_ADD				138
+#define RB_REMOVE			139
+#define RB_UP				140
+#define RB_DOWN				141
 
 //Advanced Options
-#define ADVANCE_INFO			143
-#define ADVANCE_DEFAULTS		144
-#define ADVANCE_AUTO_START		145
-#define ADVANCE_OVERWRITE		146
+#define ADVANCE_INFO			142
+#define ADVANCE_DEFAULTS		143
+#define ADVANCE_AUTO_START		144
+#define ADVANCE_OVERWRITE		145
 
 //Rom Options
-#define ROM_CPU_STYLE			147
-#define ROM_SMCM			148
-#define ROM_MEM_SIZE			149
-#define ROM_ABL				150
-#define ROM_SAVE_TYPE			151
-#define ROM_COUNTER_FACTOR		152
-#define ROM_LARGE_BUFFER		153
-#define ROM_USE_TLB			154
-#define ROM_REG_CACHE			155
-#define ROM_DELAY_SI			156
-#define ROM_SP_HACK			157
-#define ROM_DEFAULT			158
-#define ROM_AUDIO_SIGNAL		159
-#define ROM_DELAY_RDP			160
-#define ROM_DELAY_RSP			161
-#define ROM_EMULATE_AI                  162
+#define ROM_CPU_STYLE			146
+#define ROM_SMCM			147
+#define ROM_MEM_SIZE			148
+#define ROM_ABL				149
+#define ROM_SAVE_TYPE			150
+#define ROM_COUNTER_FACTOR		151
+#define ROM_LARGE_BUFFER		152
+#define ROM_USE_TLB			153
+#define ROM_REG_CACHE			154
+#define ROM_DELAY_SI			155
+#define ROM_SP_HACK			156
+#define ROM_DEFAULT			157
+#define ROM_AUDIO_SIGNAL		158
+#define ROM_DELAY_RDP			159
+#define ROM_DELAY_RSP			160
+#define ROM_EMULATE_AI                  161
 
 //Core Styles
-#define CORE_INTERPRETER		163
-#define CORE_RECOMPILER			164
+#define CORE_INTERPRETER		162
+#define CORE_RECOMPILER			163
 
 //RDRAM Size
-#define RDRAM_4MB			165
-#define RDRAM_8MB			166
+#define RDRAM_4MB			164
+#define RDRAM_8MB			165
 
 //Core Styles
-#define SMCM_NONE			167
-#define SMCM_CACHE			168
-#define SMCM_PROECTED			169
-#define SMCM_CHECK_MEM			170
-#define SMCM_CHANGE_MEM			171
-#define SMCM_CHECK_ADV			172
+#define SMCM_NONE			166
+#define SMCM_CACHE			167
+#define SMCM_PROECTED			168
+#define SMCM_CHECK_MEM			169
+#define SMCM_CHANGE_MEM			170
+#define SMCM_CHECK_ADV			171
 
 //Advanced Block Linking
-#define ABL_ON				173
-#define ABL_OFF				174
+#define ABL_ON				172
+#define ABL_OFF				173
 
 //Save Type
-#define SAVE_FIRST_USED			175
-#define SAVE_4K_eepROM			176
-#define SAVE_16K_eepROM			177
-#define SAVE_SRAM			178
-#define SAVE_FlashRAM			179
+#define SAVE_FIRST_USED			174
+#define SAVE_4K_eepROM			175
+#define SAVE_16K_eepROM			176
+#define SAVE_SRAM			177
+#define SAVE_FlashRAM			178
 
 //Shell Intergration Tab
-#define SHELL_TEXT			180
+#define SHELL_TEXT			179
 
 //Rom Notes
-#define NOTE_STATUS			181
-#define NOTE_CORE			182
-#define NOTE_PLUGIN			183
+#define NOTE_STATUS			180
+#define NOTE_CORE			181
+#define NOTE_PLUGIN			182
 
 /*********************************************************************************
 * ROM Information                                                                *
 *********************************************************************************/
 //Rom Info Title Title
-#define INFO_TITLE			184
+#define INFO_TITLE			183
 
 //Rom Info Text
-#define INFO_ROM_NAME_TEXT		185
-#define INFO_FILE_NAME_TEXT		186
-#define INFO_LOCATION_TEXT		187
-#define INFO_SIZE_TEXT			188
-#define INFO_CART_ID_TEXT		189
-#define INFO_MANUFACTURER_TEXT	        190
-#define INFO_COUNTRY_TEXT		191
-#define INFO_CRC1_TEXT			192
-#define INFO_CRC2_TEXT			193
-#define INFO_CIC_CHIP_TEXT		194
+#define INFO_ROM_NAME_TEXT		184
+#define INFO_FILE_NAME_TEXT		185
+#define INFO_LOCATION_TEXT		186
+#define INFO_SIZE_TEXT			187
+#define INFO_CART_ID_TEXT		188
+#define INFO_MANUFACTURER_TEXT	        189
+#define INFO_COUNTRY_TEXT		190
+#define INFO_CRC1_TEXT			191
+#define INFO_CRC2_TEXT			192
+#define INFO_CIC_CHIP_TEXT		193
 
 /*********************************************************************************
 * Cheats                                                                         *
 *********************************************************************************/
 //Cheat List
-#define CHEAT_LIST_FRAME		195
-#define CHEAT_NOTES_FRAME		196
-#define CHEAT_MARK_NONE			197
+#define CHEAT_LIST_FRAME		194
+#define CHEAT_NOTES_FRAME		195
+#define CHEAT_MARK_NONE			196
 
 //Add Cheat
-#define CHEAT_ADDCHEAT_NAME		198
-#define CHEAT_ADDCHEAT_CODE		199
-#define CHEAT_ADDCHEAT_NOTES	        200
-#define CHEAT_ADDCHEAT_ADD 		201
-#define CHEAT_ADDCHEAT_NEW 		202
-#define CHEAT_ADDCHEAT_CODEDES 	        203
-#define CHEAT_ADDCHEAT_OPT 		204
-#define CHEAT_ADDCHEAT_OPTDES 	        205
+#define CHEAT_ADDCHEAT_NAME		197
+#define CHEAT_ADDCHEAT_CODE		198
+#define CHEAT_ADDCHEAT_NOTES	        199
+#define CHEAT_ADDCHEAT_ADD 		200
+#define CHEAT_ADDCHEAT_NEW 		201
+#define CHEAT_ADDCHEAT_CODEDES 	        202
+#define CHEAT_ADDCHEAT_OPT 		203
+#define CHEAT_ADDCHEAT_OPTDES 	        204
 
 //Code extension
-#define CHEAT_CODE_EXT_TITLE	        206
-#define CHEAT_CODE_EXT_TXT		207
+#define CHEAT_CODE_EXT_TITLE	        205
+#define CHEAT_CODE_EXT_TXT		206
 
 //Edit Cheat
-#define CHEAT_EDITCHEAT_WINDOW	        208
-#define CHEAT_EDITCHEAT_UPDATE	        209
+#define CHEAT_EDITCHEAT_WINDOW	        207
+#define CHEAT_EDITCHEAT_UPDATE	        208
 
 //Cheat Popup Menu
-#define CHEAT_ADDNEW			210
-#define CHEAT_EDIT			211
-#define CHEAT_DELETE			212
+#define CHEAT_ADDNEW			209
+#define CHEAT_EDIT			210
+#define CHEAT_DELETE			211
 
 /*********************************************************************************
 * Messages                                                                       *
 *********************************************************************************/
-#define MSG_CPU_PAUSED			213
-#define MSG_CPU_RESUMED			214
-#define MSG_PERM_LOOP                   215
-#define MSG_MEM_ALLOC_ERROR             216
-#define MSG_FAIL_INIT_GFX               217
-#define MSG_FAIL_INIT_AUDIO             218
-#define MSG_FAIL_INIT_RSP               219
-#define MSG_FAIL_INIT_CONTROL           220
-#define MSG_FAIL_LOAD_PLUGIN            221
-#define MSG_FAIL_LOAD_WORD              222
-#define MSG_FAIL_OPEN_SAVE              223
-#define MSG_FAIL_OPEN_FLASH             224
-#define MSG_FAIL_OPEN_MEMPAK            225
-#define MSG_FAIL_OPEN_ZIP               226
-#define MSG_FAIL_OPEN_IMAGE             227
-#define MSG_FAIL_ZIP                    228
-#define MSG_FAIL_IMAGE                  229
-#define MSG_UNKNOWN_COUNTRY             230
-#define MSG_UNKNOWN_FILE_FORMAT         231
-#define MSG_UNKNOWN_MEM_ACTION          232
-#define MSG_UNHANDLED_OP                233
-#define MSG_UNHANDLED_OP_IDEAS          234
-#define MSG_NONMAPPED_SPACE             235
-#define MSG_MSGBOX_TITLE                236
-#define MSG_PIF2_ERROR                  237
-#define MSG_PIF2_TITLE                  238
-#define MSG_EMULATION_STARTED           239
-#define MSG_UNABLED_LOAD_STATE          240
-#define MSG_EMULATION_ENDED             241
-#define MSG_PLUGIN_NOT_INIT             242
-#define MSG_CHEAT_NAME_IN_USE           243
-#define MSG_MAX_CHEATS                  244
-#define MSG_DELETE_SETTINGS_FAILED      245
-#define MSG_CONFIRMATION_UNINSTALL      246
-#define MSG_PLUGIN_HOT_SWAP             247
-#define PLUG_HOT_SWAP_DOUBLE            248
-#define HOT_SWAP_COMPLETE               249
-#define FULLSCREEN_TOGGLE               250
-#define GS_PRESS                        251
-#define NUMBER_1		        252
-#define NUMBER_2		        253
-#define NUMBER_3		        254
-#define NUMBER_4		        255
-#define NUMBER_5		        256
-#define NUMBER_6		        257
+#define MSG_CPU_PAUSED			212
+#define MSG_CPU_RESUMED			213
+#define MSG_PERM_LOOP                   214
+#define MSG_MEM_ALLOC_ERROR             215
+#define MSG_FAIL_INIT_GFX               216
+#define MSG_FAIL_INIT_AUDIO             217
+#define MSG_FAIL_INIT_RSP               218
+#define MSG_FAIL_INIT_CONTROL           219
+#define MSG_FAIL_LOAD_PLUGIN            220
+#define MSG_FAIL_LOAD_WORD              221
+#define MSG_FAIL_OPEN_SAVE              222
+#define MSG_FAIL_OPEN_FLASH             223
+#define MSG_FAIL_OPEN_MEMPAK            224
+#define MSG_FAIL_OPEN_ZIP               225
+#define MSG_FAIL_OPEN_IMAGE             226
+#define MSG_FAIL_ZIP                    227
+#define MSG_FAIL_IMAGE                  228
+#define MSG_UNKNOWN_COUNTRY             229
+#define MSG_UNKNOWN_FILE_FORMAT         230
+#define MSG_UNKNOWN_MEM_ACTION          231
+#define MSG_UNHANDLED_OP                232
+#define MSG_UNHANDLED_OP_IDEAS          233
+#define MSG_NONMAPPED_SPACE             234
+#define MSG_MSGBOX_TITLE                235
+#define MSG_PIF2_ERROR                  236
+#define MSG_PIF2_TITLE                  237
+#define MSG_EMULATION_STARTED           238
+#define MSG_UNABLED_LOAD_STATE          239
+#define MSG_EMULATION_ENDED             240
+#define MSG_PLUGIN_NOT_INIT             241
+#define MSG_CHEAT_NAME_IN_USE           242
+#define MSG_MAX_CHEATS                  243
+#define MSG_DELETE_SETTINGS_FAILED      244
+#define MSG_CONFIRMATION_UNINSTALL      245
+#define MSG_PLUGIN_HOT_SWAP             246
+#define PLUG_HOT_SWAP_DOUBLE            247
+#define HOT_SWAP_COMPLETE               248
+#define FULLSCREEN_TOGGLE               249
+#define GS_PRESS                        250
+#define NUMBER_1		        251
+#define NUMBER_2		        252
+#define NUMBER_3		        253
+#define NUMBER_4		        254
+#define NUMBER_5		        255
+#define NUMBER_6		        256

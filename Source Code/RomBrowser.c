@@ -33,7 +33,6 @@
 #include "cpu.h"
 #include "plugin.h"
 #include "resource.h"
-#include "RomTools_Common.h"
 #include "Settings Api_2.h"
 
 #define NoOfSortKeys	3
@@ -111,16 +110,9 @@ typedef struct {
 #define RB_CoreNotes		5
 #define RB_PluginNotes		6
 #define RB_CartridgeID		7
-#define RB_Manufacturer		8
-#define RB_Country			9
-#define RB_Developer		10
-#define RB_Crc1				11
-#define RB_Crc2				12
-#define RB_CICChip			13
-#define RB_ReleaseDate		14
-#define RB_Genre			15
-#define RB_Players			16
-#define RB_ForceFeedback	17
+#define RB_Crc1				8
+#define RB_Crc2				9
+#define RB_CICChip			10
 
 char * GetSortField          ( int Index );
 void LoadRomList             ( void );
@@ -152,19 +144,12 @@ ROMBROWSER_FIELDS RomBrowserFields[] =
 	"File Name",               2, RB_FileName,      101,RB_FILENAME,
 	"1st CRC",                 3, RB_Crc1,           71,RB_CRC1,
 	"Size",                    4, RB_RomSize,        58,RB_ROMSIZE,
-	"Core Note",              -1, RB_CoreNotes,     333,RB_NOTES_CORE,
-	"Plugin Note",            -1, RB_PluginNotes,   173,RB_NOTES_PLUGIN,
+	"Core Note",              -1, RB_CoreNotes,     507,RB_NOTES_CORE,
+	"Plugin Note",            -1, RB_PluginNotes,   507,RB_NOTES_PLUGIN,
 	"Status",                 -1, RB_Status,         93,RB_STATUS,
 	"2nd CRC",                -1, RB_Crc2,           71,RB_CRC2,
 	"ID",                     -1, RB_CartridgeID,    23,RB_CART_ID,
-	"Manufacturer",           -1, RB_Manufacturer,   84,RB_MANUFACTURER,
-	"Country",                -1, RB_Country,        55,RB_COUNTRY,
 	"CIC Chip",               -1, RB_CICChip,        79,RB_CICCHIP,
-	"Developer",              -1, RB_Developer,      65,RB_DEVELOPER,
-	"Force Feedback",         -1, RB_ForceFeedback,  94,RB_FORCE_FEEDBACK,
-	"Genre",                  -1, RB_Genre,          98,RB_GENRE,
-	"Player",                 -1, RB_Players,        44,RB_PLAYERS,
-	"Release Date",           -1, RB_ReleaseDate,    78,RB_RELEASE_DATE,
 };
 
 HWND hRomList= NULL;
@@ -386,32 +371,12 @@ void LoadRomBrowserColoumnInfo (void) {
 }
 
 void FillRomExtensionInfo(ROM_INFO * pRomInfo) {
-	LPSTR IniFileName, ExtIniFileName;
+	LPSTR IniFileName;
 	char Identifier[100];
 
 	IniFileName = GetIniFileName();
-	ExtIniFileName = GetExtIniFileName();
 
 	sprintf(Identifier,"%08X-%08X-C:%X", pRomInfo->CRC1, pRomInfo->CRC2, pRomInfo->Country);
-	
-	//Rom Extension info
-	if (RomBrowserFields[RB_Developer].Pos >= 0)
-		GetString(Identifier, "Developer", GS(RB_NOT_IN_RDB), pRomInfo->Developer, sizeof(pRomInfo->Developer), ExtIniFileName);
-	
-	if (RomBrowserFields[RB_ReleaseDate].Pos >= 0)
-		GetString(Identifier, "ReleaseDate", GS(RB_NOT_IN_RDB), pRomInfo->ReleaseDate, sizeof(pRomInfo->ReleaseDate), ExtIniFileName);
-	
-	if (RomBrowserFields[RB_Genre].Pos >= 0)
-		GetString(Identifier, "Genre", GS(RB_NOT_IN_RDB), pRomInfo->Genre, sizeof(pRomInfo->Genre), ExtIniFileName);
-
-	if (RomBrowserFields[RB_Players].Pos >= 0) {
-		char junk[10];
-		GetString(Identifier, "Player", "1", junk, sizeof(junk), ExtIniFileName);
-		pRomInfo->Players = atoi(junk);
-	}
-		
-	if (RomBrowserFields[RB_ForceFeedback].Pos >= 0)
-		GetString(Identifier, "ForceFeedback", GS(RB_NOT_IN_RDB), pRomInfo->ForceFeedback, sizeof(pRomInfo->ForceFeedback), ExtIniFileName);
 
 	//Rom Settings
 	if (RomBrowserFields[RB_GameName].Pos >= 0)
@@ -621,21 +586,9 @@ int CALLBACK RomList_CompareItems2(LPARAM lParam1, LPARAM lParam2, LPARAM lParam
 		case RB_CoreNotes: result =  (int)lstrcmpi(pRomInfo1->CoreNotes, pRomInfo2->CoreNotes); break;
 		case RB_PluginNotes: result =  (int)lstrcmpi(pRomInfo1->PluginNotes, pRomInfo2->PluginNotes); break;
 		case RB_CartridgeID: result =  (int)lstrcmpi(pRomInfo1->CartID, pRomInfo2->CartID); break;
-		case RB_Manufacturer: result =  (int)pRomInfo1->Manufacturer - (int)pRomInfo2->Manufacturer; break;
-		case RB_Country: {
-			char junk1[50], junk2[50];
-			CountryCodeToString(junk1, pRomInfo1->Country, 50);
-			CountryCodeToString(junk2, pRomInfo2->Country, 50);
-			result = lstrcmpi(junk1, junk2);
-			break; }
-		case RB_Developer: result =  (int)lstrcmpi(pRomInfo1->Developer, pRomInfo2->Developer); break;
 		case RB_Crc1: result =  (int)pRomInfo1->CRC1 - (int)pRomInfo2->CRC1; break;
 		case RB_Crc2: result =  (int)pRomInfo1->CRC2 - (int)pRomInfo2->CRC2; break;
 		case RB_CICChip: result =  (int)pRomInfo1->CicChip - (int)pRomInfo2->CicChip; break;
-		case RB_ReleaseDate: result =  (int)lstrcmpi(pRomInfo1->ReleaseDate, pRomInfo2->ReleaseDate); break;
-		case RB_Players: result =  (int)pRomInfo1->Players - (int)pRomInfo2->Players; break;
-		case RB_ForceFeedback: result = (int)lstrcmpi(pRomInfo1->ForceFeedback, pRomInfo2->ForceFeedback); break;
-		case RB_Genre: result =  (int)lstrcmpi(pRomInfo1->Genre, pRomInfo2->Genre); break;
 		default: result = 0; break;
 		}
 		if (result != 0) { return result; }
@@ -656,18 +609,6 @@ void RomList_GetDispInfo(LPNMHDR pnmh) {
 	case RB_Status: strncpy(lpdi->item.pszText, pRomInfo->Status, lpdi->item.cchTextMax); break;
 	case RB_RomSize: sprintf(lpdi->item.pszText,"%.1f MBit",(float)pRomInfo->RomSize/0x20000); break;
 	case RB_CartridgeID: strncpy(lpdi->item.pszText, pRomInfo->CartID, lpdi->item.cchTextMax); break;
-	case RB_Manufacturer:
-		switch (pRomInfo->Manufacturer) {
-		case 'N':strncpy(lpdi->item.pszText, "Nintendo", lpdi->item.cchTextMax); break;
-		case 0:  strncpy(lpdi->item.pszText, "None", lpdi->item.cchTextMax); break;
-		default: sprintf(lpdi->item.pszText, GS(RB_NOT_IN_RDB), pRomInfo->Manufacturer,pRomInfo->Manufacturer); break;
-		}
-		break;
-	case RB_Country: {
-		char junk[50];
-		CountryCodeToString(junk, pRomInfo->Country, 50);
-		strncpy(lpdi->item.pszText, junk, lpdi->item.cchTextMax);
-		break; }
 	case RB_Crc1: sprintf(lpdi->item.pszText,"0x%08X",pRomInfo->CRC1); break;
 	case RB_Crc2: sprintf(lpdi->item.pszText,"0x%08X",pRomInfo->CRC2); break;
 
@@ -679,11 +620,6 @@ void RomList_GetDispInfo(LPNMHDR pnmh) {
 		}
 
 		break;
-	case RB_Developer: strncpy(lpdi->item.pszText, pRomInfo->Developer, lpdi->item.cchTextMax); break;
-	case RB_ReleaseDate: strncpy(lpdi->item.pszText, pRomInfo->ReleaseDate, lpdi->item.cchTextMax); break;
-	case RB_Genre: strncpy(lpdi->item.pszText, pRomInfo->Genre, lpdi->item.cchTextMax); break;
-	case RB_Players: sprintf(lpdi->item.pszText,"%d",pRomInfo->Players); break;
-	case RB_ForceFeedback: strncpy(lpdi->item.pszText, pRomInfo->ForceFeedback, lpdi->item.cchTextMax); break;
 	default: strncpy(lpdi->item.pszText, " ", lpdi->item.cchTextMax);
 	}
 	if (strlen(lpdi->item.pszText) == 0) { strcpy(lpdi->item.pszText," "); }

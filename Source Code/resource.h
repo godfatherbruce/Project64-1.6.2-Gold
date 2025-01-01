@@ -5,7 +5,6 @@
 #define MAIN_MENU                       116
 #define IDD_Settings_PlugSel            121
 #define IDR_WINDOWMODE                  122
-#define IDB_PJ64LOGO                    128
 #define IDD_Settings_Directory          131
 #define IDD_Settings_Options            132
 #define IDD_Settings_Rom                133
@@ -23,7 +22,6 @@
 #define IDR_CHEAT_MENU                  160
 #define IDD_Cheats_Edit                 160
 #define IDB_BITMAP1                     167
-#define IDC_CLOSE_BUTTON                1001
 #define RSP_LIST                        1004
 #define RSP_ABOUT                       1006
 #define IDC_INFO_FILENAME               1007
@@ -31,8 +29,6 @@
 #define IDC_INFO_CARTID                 1009
 #define IDC_INFO_ROMSIZE                1010
 #define IDC_INFO_CIC                    1011
-#define IDC_INFO_MANUFACTURER           1012
-#define IDC_INFO_COUNTRY                1013
 #define IDC_INFO_CRC1                   1014
 #define IDC_INFO_CRC2                   1015
 #define GFX_LIST                        1016
@@ -129,7 +125,6 @@
 #define IDC_SHELL_INT_TEXT              1149
 #define IDC_RDB_HOME                    1150
 #define IDC_CHT_HOME                    1151
-#define IDC_RDX_HOME                    1152
 #define IDC_LAN                         1154
 #define IDC_LAN_AUTHOR                  1155
 #define IDC_LAN_VERSION                 1156
@@ -142,10 +137,6 @@
 #define IDC_CHT_AUTHOR                  1163
 #define IDC_CHT_VERSION                 1164
 #define IDC_CHT_DATE                    1165
-#define IDC_RDX                         1166
-#define IDC_RDX_AUTHOR                  1167
-#define IDC_RDX_VERSION                 1168
-#define IDC_RDX_DATE                    1169
 #define IDC_NEWCHEAT                    1172
 #define IDC_INFO_LOCATION               1178
 #define IDC_CHEAT_CODES                 1178
@@ -161,8 +152,6 @@
 #define IDC_LOCATION                    1193
 #define IDC_ROM_SIZE                    1194
 #define IDC_CART_ID                     1195
-#define IDC_MANUFACTURER                1196
-#define IDC_COUNTRY                     1197
 #define IDC_CRC1                        1198
 #define IDC_CRC2                        1199
 #define IDC_CIC_CHIP                    1200

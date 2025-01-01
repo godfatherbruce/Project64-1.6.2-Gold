@@ -977,9 +977,8 @@ void OpenChosenFile ( void ) {
 	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"");
 	if (AutoStart) {
 		StartEmulation();
-		if (AutoFullScreen) {
+		if (AutoFullScreen)
 				SendMessage(hMainWindow,WM_COMMAND,ID_OPTIONS_FULLSCREEN,0);
-		}
 	}
 }
 

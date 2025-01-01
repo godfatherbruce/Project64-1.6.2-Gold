@@ -1,20 +1,23 @@
 ********************************************************************************************************
----------------------------
-|||||Table of Contents|||||
----------------------------
-Section#00 Hardware Compatibility
-Section#01 IP Notice
-Section#02 Notable Changes Between Project64 Version 1.6.1 & Project64 Version 1.6.2
-Section#03 Project64 Legacy is an unfinished emulator with concerning issues to be aware of if using it.
-Section#04 Plugin Details
-Section#05 RUNNING ROMHACKS
-Section#06 Known Issues
-Section#07 Tips and Tricks
-Section#08 Credits
-Section#09 Donations
-Section#10 Special Thanks & Shoutouts
-Section#11 The End
-(just ctrl-f the name to navigate to your desired section)
+********************************************************************************************************
+---------------------------									       *
+|||||Table of Contents|||||									       *
+---------------------------									       *
+Section#00 Hardware Compatibility								       *
+Section#01 IP Notice										       *
+Section#02 Notable Changes Between Project64 Version 1.6.1 & Project64 Version 1.6.2		       *
+Section#03 Project64 Legacy is an unfinished emulator with concerning issues to be aware of if using it*
+Section#04 Plugin Details									       *
+Section#05 RUNNING ROMHACKS									       *
+Section#06 Known Issues										       *
+Section#07 Tips and Tricks									       *
+Section#08 Credits										       *
+Section#09 Donations										       *
+Section#10 Special Thanks & Shoutouts								       *
+Section#11 The End										       *
+Section#12 Extra										       *
+(just ctrl-f the name to navigate to your desired section)					       *
+********************************************************************************************************
 ********************************************************************************************************
 
 Section#00 Hardware Compatibility
@@ -35,7 +38,7 @@ really terrible unintended side effects so I would strongly suggest you get a be
 Section#01 IP Notice
 --------------------------------------------------------------------------------------------------------
 This emulator doesn't infringe on intellectual property of, nor is it endorsed by Nintendo or Project64.
-This emulator, which I refer to as my Project64 1.6.2, is my unofficial update to Project64 Version 1.6.
+This emulator which I refer to as my Project64 1.6.2, is my unofficial update and successor to PJ64 1.6.
 Emulators are legal provided that they do not violate copyright, and my Project64 1.6.2 is legal because
 it does not come with ROM's (.z64, .n64) nor is it compiled with code that I can't legally use for this.
 This emulator also won't circumvent any encryption whatsoever, further attesting to its legality status.
@@ -43,6 +46,60 @@ This emulator also won't circumvent any encryption whatsoever, further attesting
 
 Section#02 Notable Changes Between Project64 Version 1.6.1 and Project64 Version 1.6.2
 --------------------------------------------------------------------------------------------------------
+This section will be divided into two parts to give fair credit where it is due: one part is for changes
+from Plus (https://github.com/pj64team/Project64-1.6-Plus/tree/7ff51997c16e35a1c0685cc076b085ee6eda1b64)
+while the other part lists a sample of only some of the changes from 1.6.2. There are so many changes in
+my Project64 1.6.2 that it would simply be too much to list so I will only touch on the important stuff.
+
+
+
+Project64 1.6 Plus:
+
+
+Arbitrary code vulnerability fix.
+
+TLB miss in write opcodes are now generating exceptions as expected. This solves a vulnerability that
+can allow ROMs to run arbitrary code in previous releases.
+
+Adds an extra check for user mapping TLB further than allowed buffer size.
+
+Good Name replaced by Game Name in RDB & Browser Tab.
+
+Always remember cheats as default so user don't have to re-enable after every close
+
+Max 10 Recent ROMs as default
+
+Max 10 Recent ROM Dir as default
+
+ROM Dir Recursion as default, this allows sub-directories to be included in ROM browser
+
+Help/Uninstall Application Settings
+
+Uninstall application registry settings from windows registry and deletes Project64.cache
+
+(Undocumented) Checksum mismatch bypassment to allow Jabo video to apply per game hacks for romhacks.
+
+
+
+^All of the above was kept in for 1.6.2 besides the uninstall application settings, which no longer will
+delete the cache (now renamed as .bdb as in browser database since that's what it used for) because that
+introduced a regression and wasn't even needed. 1.6 Plus also introduced many regressions that have been
+fixed such as: Project64 frequently crashing, CIC Chip not showing up in ROM browser, Really poor plugin
+support for what was included, causing all sorts of problems especially with their rendition of D3D8 1.7
+which is prone to all issues mentioned below in the list of Legacy's concerning issues, like screenshots
+crashing, insane graphical glitches, emulator crashes, while the icepir8 RSP was very bad, causing black
+screen when trying to open ROMs and having overall worse performance and being unneeded which I consider
+to be bloat, and there was lots of it. The icepir8 gfx plugin was also crashing the emulator right after
+bootup with some games. It's like nobody on the Project64 team did any testing or had any heart for what
+they were developing unfortunately. It's too much to describe the huge number of issues and bugs present
+in Plus that was fixed in 1.6.2 because when I truly got to looking at the source and its given package,
+there were so many things that were fixed I've lost count. Anyways, time to list notable V1.6.2 changes:
+
+
+
+Project64 1.6.2:
+
+
 *Added 60FPS ROM Frame Advance feature via the Caps Lock key after pausing. This is an excellent feature
 *if you have your controller setup in front of your keyboard with right pinky on shift and left on caps.
 *(shift+caps lock will allow you to pause, and you can press caps lock and watch the caps light in order
@@ -54,9 +111,6 @@ Added and removed plugins (too much to list the specifics here, please see later
 Added cheat support for a ton of Zelda64 ROMhacks as well as a great mod known as Super Mario Star Road.
 
 Added drag-n-drop support when opening ROMs so there is no need to go through file explorer's interface.
-
-Added "Factory Reset" option under the Help tab to assist with resetting all Ver1.6.2 registries/config.
-(Thank PJ64Team for this!)
 
 Added file name to title bar after opening a ROM, just in case the internal name isn't updated w/ a mod.
 
@@ -89,6 +143,8 @@ Changed Good Name->Game Name in the browser and in what word it uses to identify
 
 Changed maximum savestate count per game from 10 to 50 to account for games that share the same ROMname.
 
+Disabled ROM database extension (RDX) because it does not improve gameplay experience and adds to bloat.
+
 Disable savestate ROMheader mismatch prompt, this allows for loading a savestate with an unintended ROM
 but this is beneficial when playing ROMhacks that have hacked checksums to utilize jabo per-game hacks.
 
@@ -114,20 +170,16 @@ Fixed ROM-loading delay.
 
 Fixed slot states not being able to manually load.
 
-Fixed startup delay.
-
 Fixed multiple crashes in start emulation.
-
-Fixed TLB vulnerability (thanks and shoutouts to Gent on that one!).
 
 Massive updates to databases.
 
 ***TONS more other stuff has been changed, but it would be too much to explain all of it here, sorry!***
 --------------------------------------------------------------------------------------------------------
 
-Section#03 Project64 Legacy is an unfinished emulator with concerning issues to be aware of if using it.
+Section#03 Project64 Legacy is an unfinished emulator with concerning issues to be aware of if using it
 --------------------------------------------------------------------------------------------------------
-For your Information, here's some issues I have experienced with Project64 "Legacy" as of version 1.6.4:
+For your information, here's some issues I have experienced with Project64 "Legacy" as of version 1.6.4:
 
 * Resetting will straight-up crash the emulator with some games, ROMhack or not (Mario Party, or Conker,
   ROMhacks like, "That Time I Became Friends With The Royal Scuttlebug Family And Fell from Space.z64").
@@ -160,7 +212,7 @@ For your Information, here's some issues I have experienced with Project64 "Lega
   screen, making some games unplayable. See USAMUNE practice ROM 1.93 or Ocarina of Time GZ 0.3.4.
 * Jabo's Direct3D8 1.7.0.47 can get an infinite number of microcode error messages when booting up ROMs.
 * Star manager is no longer compatible out of the gate due to a regression with the executable filename.
-* Loading a savestate can ruin all of the graphics if you try to load states just after a rom is opened.
+* Loading a savestate can ruin all of the graphics if you try to load states just after a ROM is opened.
 
 For the reasons listed above, I consider the legacy project to be a failed experiment that could've been
 succesful in "finishing" what they started, as they put it. But unfortunately, it doesn't quite hold up.
@@ -169,6 +221,9 @@ an entirely different continuation of Project64 1.6, and I'm not responsible for
 Note that this section is only left here as a warning to anyone who is currently using Project64 Legacy,
 and to say if you desire an accurate emulator that is also reliable, you should seek alternative options
 like Ares or a properly tested and maintained frontend for Mupen64Plus because they will be more stable.
+Additionally, the developers responsible for Project64 Legacy have started a new project called "MiB64".
+This project is based on Project64 Legacy's source code so beware of potential issues, and make sure you
+inform the MiB64 team about any unknown issues you come across so that it can be fixed to improve MiB64.
 --------------------------------------------------------------------------------------------------------
 
 Section#04 Plugin Details
@@ -185,7 +240,7 @@ Jabo's Direct3D8 1.6 -   **Note: This is the previous version of the plugin foun
 Jabo's Direct3D8 1.6.1 - This is the default gfx plugin due to low requirements and minimal regressions.
 			 However, it also has many graphics emulation issues, and if your PC can support
 			 Mk3 GLideN64 or Legacy's Angrylion's RDP Plus, I would suggest trying those out
-			 if you experience bad graphic issues with the roms/hacks you're trying to play.
+			 if you experience bad graphic issues with the ROMs/hacks you're trying to play.
 			 Do not enable "Copy framebuffer to RDRAM" or you will suffer evil consequences.
 			 Avoid enabling full-scene anti aliasing if possible because it causes problems.
 			 If you want try out native widescreen, try enabling this from the Advanced tab:
@@ -333,7 +388,7 @@ GLideN64 is missing microcode support for some games which will crash at some po
 The rom browser is a bit buggy but this shouldn't affect your gaming experience so it's not a big issue.
 Jabo's Direct3D8 can crash the emulator upon entering fullscreen while connected to a TV and while using
 Azimer's Audio plugin. In this situation, you should either enter fullscreen mode before connecting with
-the TV, or you should use Jabo's DirectSound 1.6.1 with Sync game to Audio on after starting up the rom.
+the TV, or you should use Jabo's DirectSound 1.6.1 with Sync game to Audio on after starting up the ROM.
 GLideN64 is prone to crashing upon using "End Emulation". It seems to be related to a lack of threading.
 Lots of tearing in fullscreen mode if VSync is not set and initialized (hot swap will initialize Vsync).
 Special characters aren't supported when it comes to language database translations for other languages.
@@ -342,11 +397,11 @@ The .exe shall fail to properly close if you leave Octomino SDL2 config window o
 There are some controllers which are not supported by any known input plugins and will mandate keyboard.
 Some error messages do not get translated into other languages due to them being part of the exe or dll.
 Pressing F4 to unlimit FPS can crash the game depending on the video plugin getting used, unfortunately.
-Some cheats act up in ROMhacks with shared CRC values (sometimes needed to get Direct3D8 per rom hacks).
+Some cheats act up in ROMhacks with shared CRC values (sometimes needed to get Direct3D8 per ROM hacks).
 In some ROMhacks, they never get a save data file even made for them and they do not ever save progress.
 Having protected memory self modifying code method enabled causes stuttering on certain weaker machines.
 ^ Note that Ocarina of Time is using Change Memory & cache, you can change it to Protected Memory method
-with advanced block linking turned off from the rom settings tab after opening the rom to fix suttering,
+with advanced block linking turned off from the ROM settings tab after opening the ROM to fix suttering,
 but only on some computers! Which is why it's set to Change Memory & Cache, better framerate on CMC too.
 Having advanced block linking and protected memory self modifying code method enabled causes stuttering.
 Having advanced block linking enabled causes some ROMs to not boot up at all and get stuck on blackness.
@@ -363,10 +418,10 @@ The issue described above is also present with Legacy's Angrylion's RDP x ParaLL
 The "players" default is "1" instead of "Unknown" when examining ROM's that are missing an entry in RDB.
 If you hold down the F1 key, sometimes it accidentally attempts to load the selected state slot instead.
 The display will be frozen if you either sleep or lock your computer while using Jabo's Direct3D8 video.
-Ocarina of Time romhacks can crash when entering kokiri forest from the lost woods after passing through
+Ocarina of Time ROMhacks can crash when entering kokiri forest from the lost woods after passing through
 the left passageway area due to a bug in the default CMA self modifying code method. I suggest you don't
-use this emulator for romhacks, or you understand enough about how this emulator functions to be able to
-fine tune the core and/or rom settings, or you understand enough about how the N64 works to pull request
+use this emulator for ROMhacks, or you understand enough about how this emulator functions to be able to
+fine tune the core and/or ROM settings, or you understand enough about how the N64 works to pull request
 a fix on github, and then I'll be happy to compile a new executable with your fix in it for you to test.
 In addition to all of this, if the game didn't work in Project64 1.6, it probably still won't work here.
 Likewise, if the game worked in Project64 1.6, it should still (most likely) work using Project64 1.6.2,
@@ -424,15 +479,14 @@ l0lgamez - RC/Beta Tester
 theluigidude2007 - RC/Beta Tester
 woot - RC/Beta Tester
 Alcaro and idc8580 - Flips en masse patch applying (Alcaro made flips, idc made en masse patch applying)
-Project64 Team - Database Development
-Zilmar - Project64 1.6 Programming, Vulnerability Fix
-Gent - Project64 1.6.1 Programming, Vulnerability Fix, 1.6 plus/1.6.1 but with improvement + regressions
-Witten - Project64 1.6 Programming
-icepir8 - Legacy's Angrylion RDP x ParaLLel Video Plugin, also known as icepir8's Legacy LLE
+
+Project64 1.6 Plus Project64 Team:
+raw.githubusercontent.com/BruceShankleIV/Project64-1.6.2/7ff51997c16e35a1c0685cc076b085ee6eda1b64/About
+.bmp
+
 DarkMan - Input Plugin
 N-Rage - Input Plugin
 clickdevin & wermi - Octomino SDL2 Input Plugin
-Jabo - Audio, Input, AND Video Plugin Developmen
 Gonetz - GLideN64 Plugin Development
 Azimer - Azimer's Audio Plugin and the original Mupen RSP which M64P RSP is based off of
 Hacktaurux - The original Mupen RSP which M64P RSP is based off of
@@ -440,6 +494,7 @@ Clements, Rice, Gonetz, Malcolm, Dave2001, cryhlove, icepir8, zilmar, Azimer, St
 (glN64 served as the foundation for projects like Direct64, bettergln64, GLideN64, and ANGLE GLideN64)
 Denis Kopyrin/aglab2 - Azimer's Audio config fix and ANGLE GLideN64, ACE Security Vulnerability Insight
 weinerschnitzel, bsmiles32, ecsv, richard42, and rlabrecque - Mupen64Plus HLE RSP Plugin
+Jelta and Nekokabu - RDB Codes
 Microsoft - Visual Studio Versions 2013 and 2022, Windows OS
 All of the contributors of MSYS2, SDL 2.0.12 Library, etc. - Octomino SDL builds toolchain
 Maël Hörz - HxD
@@ -511,10 +566,6 @@ Bruce Shankle III - For helping me learn to use Visual Studio when I first start
 
 z64me - For being supportive and addressing issues during the project's primitive stages when I started.
 
-Gent - Despite our differences, I cannot deny that without you, there's no way I would have been able to
-       complete this project without the Project64 1.6.1 source code you recovered from Jabo and all the
-       additional work you put in afterwards. Thank you so much for all of your work, it was not wasted!
-
 l0lgamez - For testing Ocarina of Time with the new emulation settings, thank you for saving me my time!
 
 aglab2 - I'm so glad that you researched and documented about the vulnerability inside of N64 emulators.
@@ -540,8 +591,10 @@ the save issue present in ROMhacks like Indigo Chapter 2 and Ultimate Trial inst
 Peace! ✌
 
 - Edwin Bruce Shankle IV
+--------------------------------------------------------------------------------------------------------
 
-P.S.
+Section#12 Extra
+--------------------------------------------------------------------------------------------------------
 Additionally, if you decide to develop a new revision of Ver1.6.2 or make a Ver1.6.3, I'd suggest fixing
 the following issues with this emulator:
 
@@ -551,7 +604,7 @@ the following issues with this emulator:
 * Missing summercart support.
 * Missing disk drive support.
 * Missing N64 mouse ROMs support.
-* Missing language translations support (but only for languages with english characters).
+* Missing language translations support besides spanish (but only for languages w/ english characters).
 * Save data gets deleted when trying to save in ROMhacks like Ultimate Trial.
 * Resetting could be made instantaneous, as evident by aglab2's PJ64Fixups RSP.
 * Save data never gets created when playing newer versions of Ocarina of Time GZ.
@@ -573,35 +626,36 @@ entries, because if you do, then you are just wasting space, assuming you leave 
 
 (In paranthesis, I am telling you what the setting is set to when it is left empty like this as a guide)
 
-Internal Name=ROMNAME (Internal Name is only printed to help RDB developers differentiate entries)
-RDRAM Size=
-(User's Selected Core Setting)
-Counter Factor=
+Internal Name=ROMNAME
+(Internal Name is only printed to help RDB developers differentiate between entries)
+RDRAM Size= 
+(User's Selected Core Setting, 8 by default)
+Counter Factor= 
 (2, 1 if using -CF1)
-Save Type=
+Save Type= 
 (First Save Type)
-CPU Type=
-(User's Selected Core Setting)
-Self-modifying code Method=
-(User's Selected Core Setting)
-Reg Cache=
+CPU Type= 
+(User's Selected Core Setting, Recompiler by default)
+Self-modifying code Method= 
+(User's Selected Core Setting, Check Memory Advance by default)
+Reg Cache= 
 (Yes)
-Use TLB=
+Use TLB= 
 (Yes)
-Delay SI=
+Delay SI= 
 (No)
-Delay RDP=
+Delay RDP= 
 (No)
-Delay RSP=
+Delay RSP= 
 (No)
-Emulate AI=
+Emulate AI= 
 (No)
-Audio Signal=
+Audio Signal= 
 (No)
-SP Hack=
+SP Hack= 
 (No)
-Use Large Buffer=
+Use Large Buffer= 
 (No)
-Linking=
-(User's Selected Core Setting)
+Linking= 
+(User's Selected Core Setting, Off by default)
 --------------------------------------------------------------------------------------------------------⠀⠀

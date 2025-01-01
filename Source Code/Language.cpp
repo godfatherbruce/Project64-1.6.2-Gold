@@ -21,8 +21,8 @@ typedef struct {
 
 LANG_STR DefaultString[] = {
     { LANGUAGE_AUTHOR,     "PJ64Team x Bruce Shankle IV"  },
-    { LANGUAGE_VERSION,    "1.6.2 (2024)"                 },
-    { LANGUAGE_DATE,       "December 2024"                },
+    { LANGUAGE_VERSION,    "1.6.2 (2025)"                 },
+    { LANGUAGE_DATE,       "January 2025"                 },
 	{ INI_CURRENT_LANG,    "Language Database (.LDB)" },
 	{ INI_AUTHOR,          "Author"                   },
 	{ INI_VERSION,         "Version"                  },
@@ -30,7 +30,6 @@ LANG_STR DefaultString[] = {
 	{ INI_HOMEPAGE,        "Visit Home Page"          },
 	{ INI_CURRENT_RDB,     "ROM Database (.RDB)"      },
 	{ INI_CURRENT_CHT,     "Cheat Database (.CDB)"    },
-	{ INI_CURRENT_RDX,     "Browser Database (.BDB)"  },
 	{ NUMBER_1,             "1"                       },
 	{ NUMBER_2,             "2"                       },
 	{ NUMBER_3,             "3"                       },
@@ -123,16 +122,9 @@ LANG_STR DefaultString[] = {
 	{ RB_NOTES_CORE,   "Core Note" },
 	{ RB_NOTES_PLUGIN, "Plugin Note" },
 	{ RB_CART_ID,      "ID" },
-	{ RB_MANUFACTURER,  "Manufacturer" },
-	{ RB_COUNTRY,      "Country" },
-	{ RB_DEVELOPER,    "Developer" },
 	{ RB_CRC1,         "1st CRC" },
 	{ RB_CRC2,         "2nd CRC" },
 	{ RB_CICCHIP,      "CIC Chip" },
-	{ RB_RELEASE_DATE, "Release Date" },
-	{ RB_GENRE,        "Genre" },
-	{ RB_PLAYERS,      "Player" },
-	{ RB_FORCE_FEEDBACK,"Force Feedback" },
 	{ SELECT_ROM_DIR,  "Choose your ROM directory" },
 
 //Messages
@@ -150,7 +142,7 @@ LANG_STR DefaultString[] = {
 	{ TAB_ADVANCED,"Advanced"},
 	{ TAB_ROMSETTINGS,"ROM Settings"},
 	{ TAB_SHELLINTERGATION,"Shell Integration"},
-	{ TAB_ROMNOTES,"ROM Note"},
+	{ TAB_ROMNOTES,"ROM Notes"},
 
 //Plugin Dialog
 	{ PLUG_ABOUT, "About"},
@@ -193,7 +185,7 @@ LANG_STR DefaultString[] = {
 //Advanced Options
 	{ ADVANCE_INFO,        "Check Memory Advance = High FPS Low Compatibility\nProtect Memory = Medium FPS Medium Compatibility\nInterpreter = Low FPS High Compatibility\nNote Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register caching"},
 	{ ADVANCE_DEFAULTS,    "Core Defaults"},
-	{ ADVANCE_AUTO_START,  "Start Emulation Upon ROM Open"},
+	{ ADVANCE_AUTO_START,  "Start Emulation Upon ROM Opening"},
 	{ ADVANCE_OVERWRITE,   "RDB ROM Settings"},
 
 //ROM Options
@@ -261,8 +253,6 @@ LANG_STR DefaultString[] = {
 	{ INFO_LOCATION_TEXT,     "Location:"},
 	{ INFO_SIZE_TEXT,         "Size:"},
 	{ INFO_CART_ID_TEXT,      "ID:"},
-	{ INFO_MANUFACTURER_TEXT, "Manufacturer:"},
-	{ INFO_COUNTRY_TEXT,      "Country:"},
 	{ INFO_CRC1_TEXT,         "1st CRC:"},
 	{ INFO_CRC2_TEXT,         "2nd CRC:"},
 	{ INFO_CIC_CHIP_TEXT,     "CIC Chip:"},

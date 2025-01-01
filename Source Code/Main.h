@@ -39,13 +39,11 @@ extern "C" {
 
 /********* General Defaults **********/
 #define AppVer   "1.6.2 (2024)"
-#define AppName  "Project64 Version 1.6.2 (2024)"
+#define AppName  "Project64 Version 1.6.2 (2025)"
 #define IniName						"PJ64.rdb"
-#define ExtIniName					"PJ64.bdb"
 #define CheatIniName				"PJ64.cdb"
-#define CheatDevIniName				"PJ64.cdbdev"
 #define LangFileName				"PJ64.ldb"
-#define CacheFileName				"PJ64.cache"
+#define CacheFileName				"PJ64.bdb"
 #define Default_AdvancedBlockLink	FALSE
 #define Default_AutoStart			TRUE
 #define Default_AutoSleep			TRUE		
@@ -114,7 +112,6 @@ void  __cdecl DisplayError       ( char * Message, ... );
 void  __cdecl DisplayErrorFatal  ( char * Message, ... );
 void ChangeWinSize        ( HWND hWnd, long width, long height, HWND hStatusBar );
 void  DisplayFPS          ( void );
-char* GetExtIniFileName   ( void );
 char* GetIniFileName      ( void );
 char* GetLangFileName     ( void );
 int   GetStoredWinPos     ( char * WinName, DWORD * X, DWORD * Y );

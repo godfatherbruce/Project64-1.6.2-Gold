@@ -2,62 +2,6 @@
 #include <stdio.h>
 #include "RomTools_Common.h"
 
-void CountryCodeToString (char string[], BYTE Country, int length) {
-	switch (Country) {
-	case '7': strncpy(string, "Beta", length); break;
-	case 'A': strncpy(string, "NTSC", length); break;
-	case 'B': strncpy(string, "Brazil", length); break;
-	case 'C': strncpy(string, "China", length); break;
-	case 'D': strncpy(string, "Germany", length); break;
-	case 'E': strncpy(string, "USA", length); break;
-	case 'F': strncpy(string, "France", length); break;
-	case 'G': strncpy(string, "Gateway (NTSC)", length); break;
-	case 'I': strncpy(string, "Italy", length); break;
-	case 'J': strncpy(string, "Japan", length); break;
-	case 'K': strncpy(string, "Korea", length); break;
-	case 'L': strncpy(string, "Lodgenet (PAL)", length); break;
-	case 'P': strncpy(string, "Europe", length); break;
-	case 'S': strncpy(string, "Spain", length); break;
-	case 'U': strncpy(string, "Australia", length); break;
-	case 'W': strncpy(string, "Taiwan", length); break;
-	case 'X': strncpy(string, "PAL", length); break;
-	case 'Y': strncpy(string, "PAL", length); break;
-	case ' ': strncpy(string, "None (PD by NAN)", length); break;
-	case 0: strncpy(string, "None (PD)", length); break;
-		default:
-			if (length > 20)
-				sprintf(string, "Unknown %c (%02X)", Country, Country);
-			break;
-	}
-}
-
-void CountryCodeToShortString(char string[], BYTE Country, int length) {
-	switch (Country) {
-	case '7': strncpy(string, "(Beta)", length); break;
-	case 'A': strncpy(string, "(NTSC)", length); break;
-	case 'B': strncpy(string, "(B)", length); break;
-	case 'C': strncpy(string, "(C)", length); break;
-	case 'D': strncpy(string, "(G)", length); break;
-	case 'E': strncpy(string, "(U)", length); break;
-	case 'F': strncpy(string, "(F)", length); break;
-	case 'I': strncpy(string, "(I)", length); break;
-	case 'J': strncpy(string, "(J)", length); break;
-	case 'K': strncpy(string, "(K)", length); break;
-	case 'P': strncpy(string, "(E)", length); break;
-	case 'S': strncpy(string, "(S)", length); break;
-	case 'U': strncpy(string, "(A)", length); break;
-	case 'W': strncpy(string, "(TW)", length); break;
-	case 'X': strncpy(string, "(PAL)", length); break;
-	case 'Y': strncpy(string, "(PAL)", length); break;
-	case ' ': strncpy(string, "(PD by NAN)", length); break;
-	case 0: strncpy(string, "(PD)", length); break;
-	default:
-		if (length > 20)
-			sprintf(string, "Unknown %c (%02X)", Country, Country);
-		break;
-	}
-}
-
 int RomRegion (BYTE Country) {
 	switch(Country)
 	{

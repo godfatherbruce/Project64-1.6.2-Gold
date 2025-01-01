@@ -23,7 +23,7 @@ BruceIV's Project64 1.6.2 Installer Wizard
 Load SFX icon from the file->PJ64.ico
 
 Text to display in SFX window
-Welcome to Project64 1.6.2! This is an unofficial update to Project64 1.6 developed in private by Bruce Shankle IV. Before using this application, please carefully review the following information below.
+Welcome to Project64 1.6.2! This is my unofficial update and spiritual successor to Project64 Versions 1.6 and 1.6.1. Before using this application, please carefully review the following information below.
 
 
 

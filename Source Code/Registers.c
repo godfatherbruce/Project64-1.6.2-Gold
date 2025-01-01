@@ -28,7 +28,6 @@
 #include "main.h"
 #include "cpu.h"
 #include "x86.h"
-
 #include "RomTools_Common.h"
 
 char *GPR_Name[32] = {"r0","at","v0","v1","a0","a1","a2","a3",

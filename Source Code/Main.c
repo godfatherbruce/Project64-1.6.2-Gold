@@ -39,7 +39,6 @@
 #include "Settings.h"
 #include "htmlHelp.h"
 #include "resource.h"
-#include "RomTools_Common.h"
 #include "Registry.h"
 
 LARGE_INTEGER Frequency, Frames[NoOfFrames], LastFrame;
@@ -69,7 +68,7 @@ void AboutIniBox (void) {
 }
 
 LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	static char RDBHomePage[300], CHTHomePage[300], RDXHomePage[300];
+	static char RDBHomePage[300], CHTHomePage[300];
 
 	switch (uMsg) {
 	case WM_INITDIALOG:
@@ -136,31 +135,6 @@ LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 			if (strlen(CHTHomePage) == 0) {
 				EnableWindow(GetDlgItem(hDlg,IDC_CHT_HOME),FALSE);
 			}
-
-			//Extended Info
-			SetDlgItemText(hDlg,IDC_RDX,GS(INI_CURRENT_RDX));
-			IniFile = GetExtIniFileName();
-			_GetPrivateProfileString("Meta","Author","",String,sizeof(String),IniFile);
-			if (strlen(String) == 0) {
-				EnableWindow(GetDlgItem(hDlg,IDC_RDX),FALSE);
-				EnableWindow(GetDlgItem(hDlg,IDC_RDX_AUTHOR),FALSE);
-				EnableWindow(GetDlgItem(hDlg,IDC_RDX_VERSION),FALSE);
-				EnableWindow(GetDlgItem(hDlg,IDC_RDX_DATE),FALSE);
-				EnableWindow(GetDlgItem(hDlg,IDC_RDX_HOME),FALSE);
-			}
-			sprintf(String2,"%s: %s",GS(INI_AUTHOR),String);
-			SetDlgItemText(hDlg,IDC_RDX_AUTHOR,String2);
-			_GetPrivateProfileString("Meta","Version","",String,sizeof(String),IniFile);
-			sprintf(String2,"%s: %s",GS(INI_VERSION),String);
-			SetDlgItemText(hDlg,IDC_RDX_VERSION,String2);
-			_GetPrivateProfileString("Meta","Date","",String,sizeof(String),IniFile);
-			sprintf(String2,"%s: %s",GS(INI_DATE),String);
-			SetDlgItemText(hDlg,IDC_RDX_DATE,String2);
-			_GetPrivateProfileString("Meta","Homepage","",RDXHomePage,sizeof(CHTHomePage),IniFile);
-			SetDlgItemText(hDlg,IDC_RDX_HOME,GS(INI_HOMEPAGE));
-			if (strlen(RDXHomePage) == 0) {
-				EnableWindow(GetDlgItem(hDlg,IDC_RDX_HOME),FALSE);
-			}
 		}
 		break;
 	case WM_COMMAND: {
@@ -168,7 +142,6 @@ LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 			switch (LOWORD(wParam)) {
 			case IDC_RDB_HOME: sprintf(String, "https://%s", RDBHomePage); ShellExecute(NULL,"open",String,NULL,NULL,SW_SHOWNORMAL); break;
 			case IDC_CHT_HOME: sprintf(String, "https://%s", CHTHomePage); ShellExecute(NULL,"open",String,NULL,NULL,SW_SHOWNORMAL); break;
-			case IDC_RDX_HOME: sprintf(String, "https://%s", RDXHomePage); ShellExecute(NULL,"open",String,NULL,NULL,SW_SHOWNORMAL); break;
 
 			case IDOK:
 			case IDCANCEL:
@@ -332,18 +305,6 @@ void FixMenuLang (HMENU hMenu) {
 	MenuSetText(hSubMenu, 1, GS(MENU_ABOUT_INI), NULL);
 	MenuSetText(hSubMenu, 2, GS(MENU_GITHUB), NULL);
 	MenuSetText(hSubMenu, 3, GS(MENU_USER_GUIDE), NULL);
-}
-
-char * GetExtIniFileName(void) {
-	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
-	char fname[_MAX_FNAME],ext[_MAX_EXT];
-	static char IniFileName[_MAX_PATH];
-
-	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
-	_splitpath( path_buffer, drive, dir, fname, ext );
-
-	sprintf(IniFileName,"%s%sPJ64DB\\%s",drive,dir,ExtIniName);
-	return IniFileName;
 }
 
 char * GetIniFileName(void) {
@@ -1514,8 +1475,6 @@ LRESULT CALLBACK RomInfoProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 		SetDlgItemText(hDlg, IDC_LOCATION, GS(INFO_LOCATION_TEXT));
 		SetDlgItemText(hDlg, IDC_ROM_SIZE, GS(INFO_SIZE_TEXT));
 		SetDlgItemText(hDlg, IDC_CART_ID, GS(INFO_CART_ID_TEXT));
-		SetDlgItemText(hDlg, IDC_MANUFACTURER, GS(INFO_MANUFACTURER_TEXT));
-		SetDlgItemText(hDlg, IDC_COUNTRY, GS(INFO_COUNTRY_TEXT));
 		SetDlgItemText(hDlg, IDC_CRC1, GS(INFO_CRC1_TEXT));
 		SetDlgItemText(hDlg, IDC_CRC2, GS(INFO_CRC2_TEXT));
 		SetDlgItemText(hDlg, IDC_CIC_CHIP, GS(INFO_CIC_CHIP_TEXT));
@@ -1550,15 +1509,6 @@ LRESULT CALLBACK RomInfoProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 		String[2] = RomHeader[0x3E];
 		String[3] = '\0';
 		SetDlgItemText(hDlg,IDC_INFO_CARTID,String);
-
-		switch (RomHeader[0x38]) {
-		case 'N': SetDlgItemText(hDlg,IDC_INFO_MANUFACTURER," Nintendo"); break;
-		case 0: SetDlgItemText(hDlg,IDC_INFO_MANUFACTURER," None"); break;
-		default: SetDlgItemText(hDlg,IDC_INFO_MANUFACTURER,"(Unknown)"); break;
-		}
-
-		CountryCodeToString(&String[1], RomHeader[0x3D], 255 - 1);
-		SetDlgItemText(hDlg,IDC_INFO_COUNTRY, String);
 		
 		sprintf(&String[1],"0x%08X",*(DWORD *)(&RomHeader[0x10]));
 		SetDlgItemText(hDlg,IDC_INFO_CRC1,String);
@@ -1567,7 +1517,7 @@ LRESULT CALLBACK RomInfoProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 		SetDlgItemText(hDlg,IDC_INFO_CRC2,String);
 
 		if (GetCicChipID(RomHeader) < 0) {
-			sprintf(&String[1],"Unknown");
+			sprintf(&String[1],GS(RB_NOT_IN_RDB));
 		} else {
 			sprintf(&String[1],"CIC-NUS-610%d",GetCicChipID(RomHeader));
 		}
@@ -1576,9 +1526,6 @@ LRESULT CALLBACK RomInfoProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
 		case IDCANCEL:
-			EndDialog(hDlg,0);
-			break;
-		case IDC_CLOSE_BUTTON:
 			EndDialog(hDlg,0);
 			break;
 		}
@@ -2109,6 +2056,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgs,
 	} else {
 		if (RomBrowser) {
 			ShowRomList(hMainWindow);
+			RefreshRomBrowser();
 		} else {
 			SetupPlugins(hMainWindow);
 			SetupMenu(hMainWindow);

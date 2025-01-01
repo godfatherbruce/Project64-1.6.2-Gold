@@ -494,13 +494,11 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 BOOL PluginsChanged ( HWND hDlg ) {
 	DWORD index;
 
-//#ifndef EXTERNAL_RELEASE
 	index = SendMessage(GetDlgItem(hDlg,RSP_LIST),CB_GETCURSEL,0,0);
 	index = SendMessage(GetDlgItem(hDlg,RSP_LIST),CB_GETITEMDATA,(WPARAM)index,0);
 	if ((int)index >= 0) {
 		if(_stricmp(RspDLL,PluginNames[index]) != 0) { return TRUE; }
 	}
-//#endif
 
 	index = SendMessage(GetDlgItem(hDlg,GFX_LIST),CB_GETCURSEL,0,0);
 	index = SendMessage(GetDlgItem(hDlg,GFX_LIST),CB_GETITEMDATA,(WPARAM)index,0);
@@ -541,7 +539,6 @@ BOOL CALLBACK PluginSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 		break;
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {		
-//#ifndef EXTERNAL_RELEASE
 		case RSP_LIST:
 			if (HIWORD(wParam) == CBN_SELCHANGE) {				
 				index = SendMessage(GetDlgItem(hDlg,RSP_LIST),CB_GETCURSEL,0,0);				
@@ -556,7 +553,6 @@ BOOL CALLBACK PluginSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				EnableWindow(GetDlgItem(hDlg,RSP_ABOUT),RSPDllAbout != NULL ? TRUE:FALSE);
 			}
 			break;
-//#endif
 		case GFX_LIST:
 			if (HIWORD(wParam) == CBN_SELCHANGE) {
 				index = SendMessage(GetDlgItem(hDlg,GFX_LIST),CB_GETCURSEL,0,0);
@@ -599,9 +595,7 @@ BOOL CALLBACK PluginSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				EnableWindow(GetDlgItem(hDlg,CONT_ABOUT),ContDllAbout != NULL ? TRUE:FALSE);
 			}
 			break;
-//#ifndef EXTERNAL_RELEASE
 		case RSP_ABOUT: RSPDllAbout(hDlg); break;
-//#endif
 		case GFX_ABOUT: GFXDllAbout(hDlg); break;
 		case CONT_ABOUT: ContDllAbout(hDlg); break;
 		case AUDIO_ABOUT: AiDllAbout(hDlg); break;
@@ -622,13 +616,11 @@ BOOL CALLBACK PluginSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 			if (lResult == ERROR_SUCCESS) {
 				DWORD index;
 
-//#ifndef EXTERNAL_RELEASE
 				index = SendMessage(GetDlgItem(hDlg,RSP_LIST),CB_GETCURSEL,0,0);
 				index = SendMessage(GetDlgItem(hDlg,RSP_LIST),CB_GETITEMDATA,(WPARAM)index,0);
 				sprintf(String,"%s",PluginNames[index]);
 				RegSetValueEx(hKeyResults,"RSP Dll",0,REG_SZ,(CONST BYTE *)String,
 					strlen(String));
-//#endif
 				index = SendMessage(GetDlgItem(hDlg,GFX_LIST),CB_GETCURSEL,0,0);
 				index = SendMessage(GetDlgItem(hDlg,GFX_LIST),CB_GETITEMDATA,(WPARAM)index,0);
 				sprintf(String,"%s",PluginNames[index]);

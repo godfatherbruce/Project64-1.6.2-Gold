@@ -41,7 +41,7 @@
 #include "resource.h"
 #include "Registry.h"
 
-LARGE_INTEGER Frequency, Frames[NoOfFrames], LastFrame;
+LARGE_INTEGER Frequency, Frames[1], LastFrame;
 BOOL 	AutoStart,
 	AutoSleep, DisableRegCaching, UseIni, UseTlb, UseLinking, RomBrowser,
 	IgnoreMove, Rercursion, LimitFPS,
@@ -240,16 +240,16 @@ void __cdecl DisplayErrorFatal (char * Message, ...) {
 }
 
 void DisplayFPS (void) {
-	if (CurrentFrame > (NoOfFrames << 3)) {
+	if (CurrentFrame > (1 << 3)) {
 		LARGE_INTEGER Total;
 		char Message[100];
 		int count;
 
 		Total.QuadPart = 0;
-		for (count = 0; count < NoOfFrames; count ++) {
+		for (count = 0; count < 1; count ++) {
 			Total.QuadPart += Frames[count].QuadPart;
 		}
-		sprintf(Message, "Frames Per Second: ~~ %.0f", Frequency.QuadPart/ ((double)Total.QuadPart / (NoOfFrames << 3)));
+		sprintf(Message, "Frames Per Second: ~~ %.0f", Frequency.QuadPart/ ((double)Total.QuadPart / (1 << 3)));
 		SendMessage( hStatusWnd, SB_SETTEXT, 1, (LPARAM)Message );
 	}
 }
@@ -549,13 +549,6 @@ void CheckedMenuItem(UINT uMenuID, BOOL * Flag, char * FlagName) {
 
 
 LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-#if (!defined(EXTERNAL_RELEASE))
-	char String[256];
-	DWORD Disposition;
-	HKEY hKeyResults;
-	long lResult;
-	UINT uState;
-#endif
 	HMENU hMenu;
 
 	switch (uMsg) {

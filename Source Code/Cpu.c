@@ -49,35 +49,6 @@ HANDLE hCPU;
 BOOL inFullScreen, CPURunning, SPHack;
 DWORD MemoryStack;
 
-#ifdef CFB_READ
-DWORD CFBStart = 0, CFBEnd = 0;
-#endif
-
-#ifdef Interpreter_StackTest
-DWORD StackValue;
-#endif
-
-#ifdef CFB_READ
-void __cdecl SetFrameBuffer (DWORD Address, DWORD Length) {
-	DWORD NewStart, NewLength, OldProtect;
-
-	NewStart = Address;
-	NewLength = Length;
-	
-	if (CFBStart != 0) {
-		VirtualProtect(N64MEM + CFBStart,CFBEnd - CFBStart,PAGE_READWRITE,&OldProtect);
-	}
-	if (Length == 0) {
-		CFBStart = 0; 
-		CFBEnd   = 0;
-		return;
-	}
-	CFBStart = Address & ~0xFFF;
-	CFBEnd = ((CFBStart + Length + 0xFFC) & ~0xFFF) - 1;
-	VirtualProtect(N64MEM + CFBStart,CFBEnd - CFBStart,PAGE_READONLY,&OldProtect);
-}
-#endif
-
 char *TimeName[MaxTimers] = { "CompareTimer","SiTimer","PiTimer","ViTimer" };
 
 void INITIALIZECPUFlags (void) {
@@ -954,9 +925,6 @@ int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 				case R4300i_COP0_CO_TLBWR: break;
 				case R4300i_COP0_CO_TLBP: break;
 				default: 
-/*#ifndef EXTERNAL_RELEASE
-					DisplayError("Does %s effect Delay slot at %X?\n6",R4300iOpcodeName(Command.Hex,PC+4), PC);
-#endif*/
 					return TRUE;
 				}
 			}
@@ -976,10 +944,6 @@ int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 		case R4300i_COP1_D: break;
 		case R4300i_COP1_W: break;
 		case R4300i_COP1_L: break;
-/*#ifndef EXTERNAL_RELEASE
-		default:
-			DisplayError("Does %s effect Delay slot at %X?",R4300iOpcodeName(Command.Hex,PC+4), PC);
-#endif*/
 			return TRUE;
 		}
 		break;
@@ -1019,9 +983,6 @@ int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 	case R4300i_SDC1: break;
 	case R4300i_SD: break;
 	default:
-/*#ifndef EXTERNAL_RELEASE
-		DisplayError("Does %s effect Delay slot at %X?",R4300iOpcodeName(Command.Hex,PC+4), PC);
-#endif*/
 		return TRUE;
 	}
 	return FALSE;
@@ -1330,27 +1291,15 @@ BOOL Machine_LoadState(void) {
 			if (SaveRDRAMSize != RdramSize) {
 				if (RdramSize == 0x400000) { 
 					if (VirtualAlloc(N64MEM + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
-#ifndef EXTERNAL_RELEASE
-						DisplayError("Failed to extend memory to 8MB.\n\nEmulation ending");
-#else
 						DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-#endif
 						ExitThread(0);
 					}
 					if (VirtualAlloc((BYTE *)JumpTable + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
-#ifndef EXTERNAL_RELEASE
-						DisplayError("Failed to extend jump table to 8MB.\n\nEmulation ending");
-#else
 						DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-#endif
 						ExitThread(0);
 					}
 					if (VirtualAlloc((BYTE *)DelaySlotTable + (0x400000 >> 0xA), (0x400000 >> 0xA), MEM_COMMIT, PAGE_READWRITE)==NULL) {
-#ifndef EXTERNAL_RELEASE
-						DisplayError("Failed to extend delay slot table to 8MB.\n\nEmulation ending");
-#else
 						DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-#endif
 						ExitThread(0);
 					}
 				} else {
@@ -1418,27 +1367,15 @@ BOOL Machine_LoadState(void) {
 		if (SaveRDRAMSize != RdramSize) {
 			if (RdramSize == 0x400000) { 
 				if (VirtualAlloc(N64MEM + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
-#ifndef EXTERNAL_RELEASE
-					DisplayError("Failed to extend memory to 8MB.\n\nEmulation ending");
-#else
 					DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-#endif
 					ExitThread(0);
 				}
 				if (VirtualAlloc((BYTE *)JumpTable + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
-#ifndef EXTERNAL_RELEASE
-					DisplayError("Failed to extend jump table to 8MB.\n\nEmulation ending");
-#else
 					DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-#endif
 					ExitThread(0);
 				}
 				if (VirtualAlloc((BYTE *)DelaySlotTable + (0x400000 >> 0xA), (0x400000 >> 0xA), MEM_COMMIT, PAGE_READWRITE)==NULL) {
-#ifndef EXTERNAL_RELEASE
-					DisplayError("Failed to extend delay slot table to 8MB.\n\nEmulation ending");
-#else
 					DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-#endif
 					ExitThread(0);
 				}
 			} else {
@@ -1672,7 +1609,7 @@ void RefreshScreen (void ){
 		//mouse_event(MOUSEEVENTF_MOVE,-1,-1,0,GetMessageExtraInfo());
 
 		QueryPerformanceCounter(&Time);
-		Frames[(CurrentFrame >> 3) % NoOfFrames].QuadPart = Time.QuadPart - LastFrame.QuadPart;
+		Frames[(CurrentFrame >> 3) % 1].QuadPart = Time.QuadPart - LastFrame.QuadPart;
 		LastFrame.QuadPart = Time.QuadPart;	
 		DisplayFPS();
 	}
@@ -1714,11 +1651,6 @@ void RunRsp (void) {
 			} else {
 				DoRspCycles(100);
 			}
-#ifdef CFB_READ
-			if (VI_ORIGIN_REG > 0x280) {
-				SetFrameBuffer(VI_ORIGIN_REG, (DWORD)(VI_WIDTH_REG * (VI_WIDTH_REG *.75)));
-			}
-#endif
 		} 
 	}
 

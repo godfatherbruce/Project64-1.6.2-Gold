@@ -1,4 +1,3 @@
-#ifndef SETTINGS_API_2
 #define SETTINGS_API_2
 
 int IndexNames(const char *FileName);
@@ -13,5 +12,3 @@ void GetString (
   );
 
 void FreeIndex();
-
-#endif

@@ -108,32 +108,12 @@ void _fastcall r4300i_BGTZ (void) {
 }
 
 void _fastcall r4300i_ADDI (void) {
-#ifdef Interpreter_StackTest
-	if (Opcode.rs == 29 && Opcode.rt == 29) {
-		StackValue += (short)Opcode.immediate;
-	}
-#endif
 	if (Opcode.rt == 0) { return; }
 	GPR[Opcode.rt].DW = (GPR[Opcode.rs].W[0] + ((short)Opcode.immediate));
-#ifdef Interpreter_StackTest
-	if (Opcode.rt == 29 && Opcode.rs != 29) {
-		StackValue = GPR[Opcode.rt].W[0];		
-	}
-#endif
 }
 
 void _fastcall r4300i_ADDIU (void) {
-#ifdef Interpreter_StackTest
-	if (Opcode.rs == 29 && Opcode.rt == 29) {
-		StackValue += (short)Opcode.immediate;
-	}
-#endif
 	GPR[Opcode.rt].DW = (GPR[Opcode.rs].W[0] + ((short)Opcode.immediate));
-#ifdef Interpreter_StackTest
-	if (Opcode.rt == 29 && Opcode.rs != 29) {
-		StackValue = GPR[Opcode.rt].W[0];		
-	}
-#endif
 }
 
 void _fastcall r4300i_SLTI (void) {
@@ -159,11 +139,6 @@ void _fastcall r4300i_XORI (void) {
 void _fastcall r4300i_LUI (void) {
 	if (Opcode.rt == 0) { return; }
 	GPR[Opcode.rt].DW = (long)((short)Opcode.offset << 16);
-#ifdef Interpreter_StackTest
-	if (Opcode.rt == 29) {
-		StackValue = GPR[Opcode.rt].W[0];
-	}
-#endif
 }
 
 void _fastcall r4300i_BEQL (void) {
@@ -226,9 +201,6 @@ void _fastcall r4300i_LDL (void) {
 	Offset  = Address & 7;
 
 	if (!r4300i_LD_VAddr((Address & ~7),&Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("LDL TLB: %X",Address);
-#endif
 		return;
 	}
 	GPR[Opcode.rt].DW = GPR[Opcode.rt].DW & LDL_MASK[Offset];
@@ -249,9 +221,6 @@ void _fastcall r4300i_LDR (void) {
 	Offset  = Address & 7;
 
 	if (!r4300i_LD_VAddr((Address & ~7),&Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("LDL TLB: %X",Address);
-#endif
 		return;
 	}
 
@@ -290,9 +259,6 @@ void _fastcall r4300i_LWL (void) {
 	Offset  = Address & 3;
 
 	if (!r4300i_LW_VAddr((Address & ~3),&Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("LDL TLB: %X",Address);
-#endif
 		return;
 	}
 	
@@ -345,9 +311,6 @@ void _fastcall r4300i_LWR (void) {
 	Offset  = Address & 3;
 
 	if (!r4300i_LW_VAddr((Address & ~3),&Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("LDL TLB: %X",Address);
-#endif
 		return;
 	}
 	
@@ -370,9 +333,6 @@ void _fastcall r4300i_LWU (void) {
 void _fastcall r4300i_SB (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if (!r4300i_SB_VAddr(Address,GPR[Opcode.rt].UB[0])) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SB TLB: %X",Address);
-#endif
 	}
 }
 
@@ -380,9 +340,6 @@ void _fastcall r4300i_SH (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if ((Address & 1) != 0) { ADDRESS_ERROR_EXCEPTION(Address,FALSE); }
 	if (!r4300i_SH_VAddr(Address,GPR[Opcode.rt].UHW[0])) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SH TLB: %X",Address);
-#endif
 	}
 }
 
@@ -396,9 +353,6 @@ void _fastcall r4300i_SWL (void) {
 	Offset  = Address & 3;
 
 	if (!r4300i_LW_VAddr((Address & ~3),&Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SWL TLB: %X",Address);
-#endif
 		return;
 	}
 	
@@ -406,9 +360,6 @@ void _fastcall r4300i_SWL (void) {
 	Value += GPR[Opcode.rt].UW[0] >> SWL_SHIFT[Offset];
 
 	if (!r4300i_SW_VAddr((Address & ~0x03),Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SWL TLB: %X",Address);
-#endif
 	}
 }
 
@@ -416,9 +367,6 @@ void _fastcall r4300i_SWL (void) {
 void _fastcall r4300i_SW (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if ((Address & 3) != 0) { ADDRESS_ERROR_EXCEPTION(Address,FALSE); }
-#if (!defined(EXTERNAL_RELEASE))
-	Log_SW(PROGRAM_COUNTER,Address,GPR[Opcode.rt].UW[0]);
-#endif
 	if (!r4300i_SW_VAddr(Address,GPR[Opcode.rt].UW[0])) {
 		DisplayError("SW TLB: %X",Address);
 	}
@@ -446,9 +394,6 @@ void _fastcall r4300i_SDL (void) {
 	Offset  = Address & 7;
 
 	if (!r4300i_LD_VAddr((Address & ~7),&Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SDL TLB: %X",Address);
-#endif
 		return;
 	}
 	
@@ -456,9 +401,6 @@ void _fastcall r4300i_SDL (void) {
 	Value += GPR[Opcode.rt].UDW >> SDL_SHIFT[Offset];
 
 	if (!r4300i_SD_VAddr((Address & ~7),Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SDL TLB: %X",Address);
-#endif
 	}
 }
 
@@ -481,9 +423,6 @@ void _fastcall r4300i_SDR (void) {
 	Offset  = Address & 7;
 
 	if (!r4300i_LD_VAddr((Address & ~7),&Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SDL TLB: %X",Address);
-#endif
 		return;
 	}
 	
@@ -491,9 +430,6 @@ void _fastcall r4300i_SDR (void) {
 	Value += GPR[Opcode.rt].UDW << SDR_SHIFT[Offset];
 
 	if (!r4300i_SD_VAddr((Address & ~7),Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SDL TLB: %X",Address);
-#endif
 	}
 }
 
@@ -507,9 +443,6 @@ void _fastcall r4300i_SWR (void) {
 	Offset  = Address & 3;
 
 	if (!r4300i_LW_VAddr((Address & ~3),&Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SWL TLB: %X",Address);
-#endif
 		return;
 	}
 	
@@ -517,9 +450,6 @@ void _fastcall r4300i_SWR (void) {
 	Value += GPR[Opcode.rt].UW[0] << SWR_SHIFT[Offset];
 
 	if (!r4300i_SW_VAddr((Address & ~0x03),Value)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SWL TLB: %X",Address);
-#endif
 	}
 }
 void _fastcall r4300i_CACHE (void) {}
@@ -551,9 +481,6 @@ void _fastcall r4300i_LWC1 (void) {
 void _fastcall r4300i_SC (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if ((Address & 3) != 0) { ADDRESS_ERROR_EXCEPTION(Address,FALSE); }
-#if (!defined(EXTERNAL_RELEASE))
-	Log_SW(PROGRAM_COUNTER,Address,GPR[Opcode.rt].UW[0]);
-#endif
 	if (LLBit == 1) {
 		if (!r4300i_SW_VAddr(Address,GPR[Opcode.rt].UW[0])) {
 			DisplayError("SW TLB: %X",Address);
@@ -566,15 +493,7 @@ void _fastcall r4300i_LD (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if ((Address & 7) != 0) { ADDRESS_ERROR_EXCEPTION(Address,TRUE); }
 	if (!r4300i_LD_VAddr(Address,&GPR[Opcode.rt].UDW)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("LD TLB: %X",Address);
-#endif
 	}
-#ifdef Interpreter_StackTest
-	if (Opcode.rt == 29) {
-		StackValue = GPR[Opcode.rt].W[0];
-	}
-#endif
 }
 
 
@@ -584,9 +503,6 @@ void _fastcall r4300i_LDC1 (void) {
 	TEST_COP1_USABLE_EXCEPTION
 	if ((Address & 7) != 0) { ADDRESS_ERROR_EXCEPTION(Address,TRUE); }
 	if (!r4300i_LD_VAddr(Address,&*(unsigned __int64 *)FPRDoubleLocation[Opcode.ft])) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("LD TLB: %X",Address);
-#endif
 	}
 }
 
@@ -596,9 +512,6 @@ void _fastcall r4300i_SWC1 (void) {
 	if ((Address & 3) != 0) { ADDRESS_ERROR_EXCEPTION(Address,FALSE); }
 
 	if (!r4300i_SW_VAddr(Address,*(DWORD *)FPRFloatLocation[Opcode.ft])) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SWC1 TLB: %X",Address);
-#endif
 	}
 }
 
@@ -608,9 +521,6 @@ void _fastcall r4300i_SDC1 (void) {
 	TEST_COP1_USABLE_EXCEPTION
 	if ((Address & 7) != 0) { ADDRESS_ERROR_EXCEPTION(Address,FALSE); }
 	if (!r4300i_SD_VAddr(Address,*(__int64 *)FPRDoubleLocation[Opcode.ft])) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SDC1 TLB: %X",Address);
-#endif
 	}
 }
 
@@ -618,9 +528,6 @@ void _fastcall r4300i_SD (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;	
 	if ((Address & 7) != 0) { ADDRESS_ERROR_EXCEPTION(Address,FALSE); }
 	if (!r4300i_SD_VAddr(Address,GPR[Opcode.rt].UDW)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SD TLB: %X",Address);
-#endif
 	}
 }
 /********************** R4300i OpCodes: Special **********************/
@@ -719,10 +626,6 @@ void _fastcall r4300i_SPECIAL_DIV (void) {
 	if ( GPR[Opcode.rt].UDW != 0 ) {
 		LO.DW = GPR[Opcode.rs].W[0] / GPR[Opcode.rt].W[0];
 		HI.DW = GPR[Opcode.rs].W[0] % GPR[Opcode.rt].W[0];
-	} else {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("DIV by 0 ???");
-#endif
 	}
 }
 
@@ -730,10 +633,6 @@ void _fastcall r4300i_SPECIAL_DIVU (void) {
 	if ( GPR[Opcode.rt].UDW != 0 ) {
 		LO.DW = (int)(GPR[Opcode.rs].UW[0] / GPR[Opcode.rt].UW[0]);
 		HI.DW = (int)(GPR[Opcode.rs].UW[0] % GPR[Opcode.rt].UW[0]);
-	} else {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("DIVU by 0 ???");
-#endif
 	}
 }
 
@@ -767,10 +666,6 @@ void _fastcall r4300i_SPECIAL_DDIV (void) {
 	if ( GPR[Opcode.rt].UDW != 0 ) {
 		LO.DW = GPR[Opcode.rs].DW / GPR[Opcode.rt].DW;
 		HI.DW = GPR[Opcode.rs].DW % GPR[Opcode.rt].DW;
-	} else {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("DDIV by 0 ???");
-#endif
 	}
 }
 
@@ -778,10 +673,6 @@ void _fastcall r4300i_SPECIAL_DDIVU (void) {
 	if ( GPR[Opcode.rt].UDW != 0 ) {
 		LO.UDW = GPR[Opcode.rs].UDW / GPR[Opcode.rt].UDW;
 		HI.UDW = GPR[Opcode.rs].UDW % GPR[Opcode.rt].UDW;
-	} else {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("DDIVU by 0 ???");
-#endif
 	}
 }
 
@@ -807,11 +698,6 @@ void _fastcall r4300i_SPECIAL_AND (void) {
 
 void _fastcall r4300i_SPECIAL_OR (void) {
 	GPR[Opcode.rd].DW = GPR[Opcode.rs].DW | GPR[Opcode.rt].DW;
-#ifdef Interpreter_StackTest
-	if (Opcode.rd == 29) {
-		StackValue = GPR[Opcode.rd].W[0];
-	}
-#endif
 }
 
 void _fastcall r4300i_SPECIAL_XOR (void) {
@@ -856,9 +742,6 @@ void _fastcall r4300i_SPECIAL_DSUBU (void) {
 
 void _fastcall r4300i_SPECIAL_TEQ (void) {
 	if (GPR[Opcode.rs].DW == GPR[Opcode.rt].DW) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("Should trap this ???");
-#endif
 	}
 }
 
@@ -992,17 +875,11 @@ void _fastcall r4300i_COP0_MT (void) {
 			CP0[Opcode.rd] = GPR[Opcode.rt].UW[0];
 		}
 		if ((CP0[Opcode.rd] & 0x18) != 0) { 
-#ifndef EXTERNAL_RELEASE
-			DisplayError("Left kernel mode ??");
-#endif
 		}
 		CheckInterrupts();
 		break;		
 	case 13: //cause
 		CP0[Opcode.rd] &= 0xFFFFCFF;
-#ifndef EXTERNAL_RELEASE
-		if ((GPR[Opcode.rt].UW[0] & 0x300) != 0 ){ DisplayError("Set IP0 or IP1"); }
-#endif
 		break;
 	default:
 		R4300i_UnknownOpcode();
@@ -1063,9 +940,6 @@ void _fastcall r4300i_COP1_DMF (void) {
 void _fastcall r4300i_COP1_CF (void) {
 	TEST_COP1_USABLE_EXCEPTION
 	if (Opcode.fs != 31 && Opcode.fs != 0) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("CFC1 what register are you writing to ?");
-#endif
 		return;
 	}
 	GPR[Opcode.rt].DW = (int)FPCR[Opcode.fs];
@@ -1093,9 +967,6 @@ void _fastcall r4300i_COP1_CT (void) {
 		}
 		return;
 	}
-#ifndef EXTERNAL_RELEASE
-	DisplayError("CTC1 what register are you writing to ?");
-#endif
 }
 
 /************************* COP1: BC1 functions ***********************/
@@ -1277,17 +1148,10 @@ void _fastcall r4300i_COP1_S_CMP (void) {
 	Temp1 = *(float *)FPRFloatLocation[Opcode.ft];
 
 	if (_isnan(Temp0) || _isnan(Temp1)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("Nan ?");
-#endif
 		less = FALSE;
 		equal = FALSE;
 		unorded = TRUE;
 		if ((Opcode.funct & 8) != 0) {
-#ifndef EXTERNAL_RELEASE
-			DisplayError("Signal InvalidOperationException\nin r4300i_COP1_S_CMP\n%X  %ff\n%X  %ff",
-				Temp0,Temp0,Temp1,Temp1);
-#endif
 		}
 	} else {
 		less = Temp0 < Temp1;
@@ -1435,16 +1299,10 @@ void _fastcall r4300i_COP1_D_CMP (void) {
 	Temp1.DW = *(__int64 *)FPRDoubleLocation[Opcode.ft];
 
 	if (_isnan(Temp0.D) || _isnan(Temp1.D)) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("Nan ?");
-#endif
 		less = FALSE;
 		equal = FALSE;
 		unorded = TRUE;
 		if ((Opcode.funct & 8) != 0) {
-#ifndef EXTERNAL_RELEASE
-			DisplayError("Signal InvalidOperationException\nin r4300i_COP1_D_CMP");
-#endif
 		}
 	} else {
 		less = Temp0.D < Temp1.D;

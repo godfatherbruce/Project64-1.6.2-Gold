@@ -7322,7 +7322,7 @@ RDRAM Size=8
 Save Type=FlashRam
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Plugin Note=Use GLideN64 or D3D8 1.6
+Plugin Note=Use GLideN64
 Status=Semicompatible
 Core Note=Broken saving, requires FlashRam save type
 [FDDAA882-1EF1AB5C-C:45]
@@ -7330,7 +7330,7 @@ Game Name=(Hack) Ultimate Trial
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Plugin Note=Use GLideN64 or D3D8 1.6
+Plugin Note=Use GLideN64
 Status=Semicompatible
 Core Note=Broken saving, broken with change mem
 [D1AA799D-489144F5-C:45]

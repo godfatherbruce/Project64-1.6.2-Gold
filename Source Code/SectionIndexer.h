@@ -1,4 +1,3 @@
-#ifndef SI_FILEINDEX
 #define SI_FILEINDEX
 
 typedef struct {
@@ -19,5 +18,3 @@ int FindID(FileIndexer *fi, const char *ID);
 
 void FreeIndexEntry(FileIndexer *fi);
 void FreeIndices(FileIndexer *files, int count);
-
-#endif

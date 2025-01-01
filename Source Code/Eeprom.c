@@ -64,17 +64,9 @@ void eepROMCommand ( BYTE * Command) {
 		}
 		break;
 	case 4: // Read from eepROM
-#ifndef EXTERNAL_RELEASE
-		if (Command[0] != 2) { DisplayError("What am I meant to do with this eepROM Command"); }
-		if (Command[1] != 8) { DisplayError("What am I meant to do with this eepROM Command"); }
-#endif
 		ReadFromeepROM(&Command[4],Command[3]);
 		break;
 	case 5:
-#ifndef EXTERNAL_RELEASE
-		if (Command[0] != 10) { DisplayError("What am I meant to do with this eepROM Command"); }
-		if (Command[1] != 1) { DisplayError("What am I meant to do with this eepROM Command"); }
-#endif
 		WriteToeepROM(&Command[4],Command[3]);
 		break;
 	}

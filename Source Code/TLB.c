@@ -195,7 +195,4 @@ void _fastcall WriteTLBEntry (int index) {
 	tlb[index].EntryLo1.Value = ENTRYLO1_REGISTER;
 	tlb[index].EntryDefined = TRUE;
 	SetupTLB_Entry(index);
-#if (!defined(EXTERNAL_RELEASE))
-	RefreshTLBWindow();
-#endif
 }

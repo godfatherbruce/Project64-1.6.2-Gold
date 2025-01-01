@@ -928,12 +928,6 @@ void OpenChosenFile ( void ) {
 	ByteSwapRom(ROM, RomFileSize);
 	memcpy(RomHeader,ROM,sizeof(RomHeader));
 	RecalculateCRCs();
-#ifdef ROM_IN_MAPSPACE
-	{
-		DWORD OldProtect;
-		VirtualProtect(ROM,RomFileSize,PAGE_READONLY, &OldProtect);
-	}
-#endif
 	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"" );
 
 	memcpy(&RomName[0],(void *)(ROM + 0x20),20);
@@ -1171,9 +1165,6 @@ void RecalculateCRCs ( void ) {
 	}
 	
 	if (*(DWORD *)&ROM[0x10] != crc[0] || *(DWORD *)&ROM[0x14] != crc[1]) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("Calculated CRC mismatches CRC1 and CRC2.");
-#endif
 		ROM[0x13] = (crc[0] & 0xFF000000) >> 24;
 		ROM[0x12] = (crc[0] & 0x00FF0000) >> 16;
 		ROM[0x11] = (crc[0] & 0x0000FF00) >> 8;

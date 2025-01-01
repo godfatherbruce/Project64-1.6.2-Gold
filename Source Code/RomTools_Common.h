@@ -1,4 +1,3 @@
-#ifndef ROMTOOLS_H
 #define ROMTOOLS_H
 
 #define Unknown_Region 0
@@ -6,5 +5,3 @@
 #define PAL_Region 2
 
 int RomRegion (BYTE Country);
-
-#endif

@@ -1,0 +1,36 @@
+Project 64 - A Nintendo 64 emulator.
+(c) Copyright 2001 zilmar (zilmar@emulation64.com) and Jabo (jabo@emulation64.com)
+pj64 homepage: www.pj64.net
+
+Permission to use, copy, modify and distribute Project64 in both binary and
+source form, for non-commercial purposes, is hereby granted without fee,
+providing that this license information and copyright notice appear with
+all copies and any derived work.
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event shall the authors be held liable for any damages
+arising from the use of this software.
+
+Project64 is freeware for PERSONAL USE only. Commercial users should
+seek permission of the copyright holders first. Commercial use includes
+charging money for Project64 or software derived from Project64.
+
+The copyright holders request that bug fixes and improvements to the code
+should be forwarded to them so if they want them.
+
+
+GitHub Terms of Service Section 5. License Grant to Other Users
+
+Any User-Generated Content you post publicly, including issues, comments, and
+contributions to other Users' repositories, may be viewed by others. By setting
+your repositories to be viewed publicly, you agree to allow others to view and
+"fork" your repositories (this means that others may make their own copies of
+Content from your repositories in repositories they control).
+
+If you set your pages and repositories to be viewed publicly, you grant each User
+of GitHub a nonexclusive, worldwide license to use, display, and perform Your 
+Content through the GitHub Service and to reproduce Your Content solely on GitHub
+as permitted through GitHub's functionality (for example, through forking). You
+may grant further rights if you adopt a license. If you are uploading Content you 
+did not create or own, you are responsible for ensuring that the Content you 
+upload is licensed under terms that grant these permissions to other GitHub Users.

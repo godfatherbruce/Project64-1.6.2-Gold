@@ -87,12 +87,8 @@
  *
  *   -= X-Scale =- (#n64dev@EFnet)
  */
-
-#ifndef N64_CIC_NUS_6105_H
 #define N64_CIC_NUS_6105_H
 
 #define CHL_LEN 0x20
 
 void n64_cic_nus_6105(char chl[], char rsp[], int len);
-
-#endif /* N64_CIC_NUS_6105_H */

@@ -39,7 +39,7 @@ void CloseMempak (void) {
 }
 
 void LoadMempak (void) {
-	char File[256], Directory[256];
+	char File[256], Directory[256], drive[_MAX_DRIVE], dir[_MAX_DIR];
 	DWORD dwRead, count, count2;
 
 	BYTE Initilize[] = { 
@@ -69,8 +69,7 @@ void LoadMempak (void) {
 		memcpy(&Mempak[count][0],Initilize,sizeof(Initilize));
 	}
 
-	GetAutoSaveDir(Directory);
-	sprintf(File,"%s%s.mpk",Directory,RomName);
+	sprintf(File,"%s%sMemPaks\\%s.mpk",drive,dir,RomName);
 	
 	hMempakFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);

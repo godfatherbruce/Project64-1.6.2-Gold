@@ -118,10 +118,6 @@ Added Linking=Off for all entries w/ Protect Memory to prevent excessive stutter
 
 Added Linking=On for all entries w/ Change Memory and not defined Linking or UseTLB=No to stop crashing.
 
-Added new plugin hot swap handling, wherein plugins can be seamlessly swapped on the fly without issues.
-
-Added new reset handling which allows Jabo's Direct3D8 to correctly display on fullscreen resets + FSAA.
-
 Added plugin hot swapping support which allows the user to change plugins in real-time without problems.
 
 Added shortcuts for Graphics, Audio, Controller, and RSP plugins, CPU Pause, and a Frame advance option.

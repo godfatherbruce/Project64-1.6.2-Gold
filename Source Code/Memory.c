@@ -42,29 +42,10 @@ DWORD WroteToRom;
 DWORD TempValue;
 
 int Allocate_ROM ( void ) {	
-#ifdef ROM_IN_MAPSPACE
-	if (ROM != NULL) { 	VirtualFree( ROM, 0x0F000000 , MEM_DECOMMIT); }
-	if(VirtualAlloc(N64MEM + 0x10000000, RomFileSize, MEM_COMMIT, PAGE_READWRITE)==NULL) {
-		ROM = NULL;
-		DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-		return FALSE;
-	}
-//	if(VirtualAlloc((BYTE *)JumpTable + 0x10000000, RomFileSize, MEM_COMMIT, PAGE_READWRITE)==NULL) {
-//		DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-//		return FALSE;
-//	}
-	if (VirtualAlloc((BYTE *)DelaySlotTable + (0x10000000 >> 0xA), (RomFileSize >> 0xA), MEM_COMMIT, PAGE_READWRITE)==NULL) {
-		DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-		return FALSE;
-	}
-	ROM  = (unsigned char *)(N64MEM+0x10000000);
-	return TRUE;
-#else
 	if (ROM != NULL) { 	VirtualFree( ROM, 0 , MEM_RELEASE); }
 	ROM = (BYTE *)VirtualAlloc(NULL,RomFileSize,MEM_RESERVE|MEM_COMMIT|MEM_TOP_DOWN,PAGE_READWRITE);
 	WrittenToRom = FALSE;
 	return ROM == NULL?FALSE:TRUE;
-#endif
 }
 
 int Allocate_Memory ( void ) {	
@@ -81,10 +62,6 @@ int Allocate_Memory ( void ) {
 		DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 		return FALSE;
 	}
-
-#ifndef EXTERNAL_RELEASE
-	SyncMemory = (unsigned char *) VirtualAlloc( NULL, 0x20000000, MEM_RESERVE | MEM_TOP_DOWN, PAGE_READWRITE );
-#endif
 
 	/* Recomp code */
 	RecompCode=(BYTE *) VirtualAlloc( NULL, LargeCompileBufferSize + 4, MEM_RESERVE|MEM_TOP_DOWN, PAGE_EXECUTE_READWRITE);
@@ -1099,15 +1076,6 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 		if ((int)Start < 0) { 
 			return EXCEPTION_CONTINUE_SEARCH;
 		}
-#ifdef CFB_READ
-		if (Start >= CFBStart && End < CFBEnd) {
-			for ( count = Start; count < End; count += 0x1000 ) {
-				VirtualProtect(N64MEM+count,4,PAGE_READONLY, &OldProtect);
-				if (FrameBufferRead) { FrameBufferRead(count & ~0xFFF); }
-			}
-			return EXCEPTION_CONTINUE_EXECUTION;
-		}	
-#endif
 		if ((int)End < RdramSize) {
 			for ( count = Start; count < End; count += 0x1000 ) {
 				if (N64_Blocks.NoOfRDRamBlocks[(count >> 12)] > 0) {
@@ -1115,9 +1083,6 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 					memset(JumpTable + ((count & 0x00FFFFF0) >> 2),0,0x1000);
 					*(DelaySlotTable + count) = NULL;
 					if (VirtualProtect(N64MEM + count, 4, PAGE_READWRITE, &OldProtect) == 0) {
-#ifndef EXTERNAL_RELEASE
-						DisplayError("Failed to unprotect %X\n1", count);
-#endif
 					}
 				}
 			}			
@@ -1128,9 +1093,6 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 			memset(JumpTable + (0x04000000 >> 2),0,0x1000);
 			*(DelaySlotTable + (0x04000000 >> 12)) = NULL;
 			if (VirtualProtect(N64MEM + 0x04000000, 4, PAGE_READWRITE, &OldProtect) == 0) {
-#ifndef EXTERNAL_RELEASE
-				DisplayError("Failed to unprotect %X\n7", 0x04000000);
-#endif
 			}
 			return EXCEPTION_CONTINUE_EXECUTION;
 		}
@@ -1139,16 +1101,9 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 			memset(JumpTable + (0x04001000 >> 2),0,0x1000);
 			*(DelaySlotTable + (0x04001000 >> 12)) = NULL;
 			if (VirtualProtect(N64MEM + 0x04001000, 4, PAGE_READWRITE, &OldProtect) == 0) {
-#ifndef EXTERNAL_RELEASE
-				DisplayError("Failed to unprotect %X\n6", 0x04001000);
-#endif
 			}
 			return EXCEPTION_CONTINUE_EXECUTION;
 		}
-#ifndef EXTERNAL_RELEASE
-		DisplayError("Unknown DMA end.\nstart: %X\nend:%X\nlocation %X", 
-			Start,End,lpEP->ContextRecord->Eip);
-#endif
 		return EXCEPTION_CONTINUE_SEARCH;
 	}
 
@@ -1385,26 +1340,11 @@ BOOL r4300i_LH_VAddr ( DWORD VAddr, WORD * Value ) {
 }
 
 int r4300i_LW_NonMemory ( DWORD PAddr, DWORD * Value ) {
-#ifdef CFB_READ
-	if (PAddr >= CFBStart && PAddr < CFBEnd) {
-		DWORD OldProtect;
-		VirtualProtect(N64MEM+(PAddr & ~0xFFF),0xFFC,PAGE_READONLY, &OldProtect);
-		if (FrameBufferRead) { FrameBufferRead(PAddr & ~0xFFF); }
-		*Value = *(DWORD *)(N64MEM+PAddr);
-		return TRUE;
-	}	
-#endif
 
 	if (PAddr >= 0x06000000 && PAddr < 0x08000000) { 
 		if (WrittenToRom) { 
 			*Value = WroteToRom;
 			WrittenToRom = FALSE;
-#ifdef ROM_IN_MAPSPACE
-			{
-				DWORD OldProtect;
-				VirtualProtect(ROM, RomFileSize, PAGE_READONLY, &OldProtect);
-			}
-#endif
 			return TRUE;
 		}
 		if ((PAddr - 0x06000000) < RomFileSize) {
@@ -1422,12 +1362,6 @@ int r4300i_LW_NonMemory ( DWORD PAddr, DWORD * Value ) {
 			*Value = WroteToRom;
 			//LogMessage("%X: Read crap from Rom %X from %X",PROGRAM_COUNTER,*Value,PAddr);
 			WrittenToRom = FALSE;
-#ifdef ROM_IN_MAPSPACE
-			{
-				DWORD OldProtect;
-				VirtualProtect(ROM,RomFileSize,PAGE_READONLY, &OldProtect);
-			}
-#endif
 			return TRUE;
 		}
 		if ((PAddr - 0x10000000) < RomFileSize) {
@@ -1643,17 +1577,6 @@ int r4300i_SB_NonMemory ( DWORD PAddr, BYTE Value ) {
 	case 0x00500000:
 	case 0x00600000:
 	case 0x00700000:
-#ifdef CFB_READ
-		if (PAddr >= CFBStart && PAddr < CFBEnd) {
-			DWORD OldProtect;
-			VirtualProtect(N64MEM+(PAddr & ~0xFFF),0xFFC,PAGE_READWRITE, &OldProtect);
-			*(BYTE *)(N64MEM+PAddr) = Value;
-			VirtualProtect(N64MEM+(PAddr & ~0xFFF),0xFFC,OldProtect, &OldProtect);
-			DisplayError("FrameBufferWrite %X", PAddr);
-			if (FrameBufferWrite) { FrameBufferWrite(PAddr,1); }
-			break;
-		}	
-#endif
 		if (PAddr < RdramSize) {
 			DWORD OldProtect;
 			
@@ -1690,18 +1613,6 @@ int r4300i_SH_NonMemory ( DWORD PAddr, WORD Value ) {
 	case 0x00500000:
 	case 0x00600000:
 	case 0x00700000:
-#ifdef CFB_READ
-		if (PAddr >= CFBStart && PAddr < CFBEnd) {
-			DWORD OldProtect;
-			VirtualProtect(N64MEM+(PAddr & ~0xFFF),0xFFC,PAGE_READWRITE, &OldProtect);
-			*(WORD *)(N64MEM+PAddr) = Value;
-			if (FrameBufferWrite) { FrameBufferWrite(PAddr & ~0xFFF,2); }
-			//*(WORD *)(N64MEM+PAddr) = 0xFFFF;
-			//VirtualProtect(N64MEM+(PAddr & ~0xFFF),0xFFC,PAGE_NOACCESS, &OldProtect);
-			DisplayError("PAddr = %x",PAddr);
-			break;
-		}	
-#endif
 		if (PAddr < RdramSize) {
 			DWORD OldProtect;
 			
@@ -1740,13 +1651,6 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 		if ((PAddr - 0x10000000) < RomFileSize) {
 			WrittenToRom = TRUE;
 			WroteToRom = Value;
-#ifdef ROM_IN_MAPSPACE
-			{
-				DWORD OldProtect;
-				VirtualProtect(ROM,RomFileSize,PAGE_NOACCESS, &OldProtect);
-			}
-#endif
-			//LogMessage("%X: Wrote To Rom %X from %X",PROGRAM_COUNTER,Value,PAddr);
 		} else {
 			return FALSE;
 		}
@@ -1761,17 +1665,6 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 	case 0x00500000:
 	case 0x00600000:
 	case 0x00700000:
-#ifdef CFB_READ
-		if (PAddr >= CFBStart && PAddr < CFBEnd) {
-			DWORD OldProtect;
-			VirtualProtect(N64MEM+(PAddr & ~0xFFF),0xFFC,PAGE_READWRITE, &OldProtect);
-			*(DWORD *)(N64MEM+PAddr) = Value;
-			VirtualProtect(N64MEM+(PAddr & ~0xFFF),0xFFC,OldProtect, &OldProtect);
-			DisplayError("FrameBufferWrite %X",PAddr);
-			if (FrameBufferWrite) { FrameBufferWrite(PAddr,4); }
-			break;
-		}	
-#endif
 		if (PAddr < RdramSize) {
 			DWORD OldProtect;
 			
@@ -1845,9 +1738,6 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 				MI_INTR_REG &= ~MI_INTR_SP; 
 				CheckInterrupts();
 			}
-#ifndef EXTERNAL_RELEASE
-			if ( ( Value & SP_SET_INTR ) != 0) { DisplayError("SP SET INTR error"); }
-#endif
 			if ( ( Value & SP_CLR_SSTEP ) != 0) { SP_STATUS_REG &= ~SP_STATUS_SSTEP; }
 			if ( ( Value & SP_SET_SSTEP ) != 0) { SP_STATUS_REG |= SP_STATUS_SSTEP;  }
 			if ( ( Value & SP_CLR_INTR_BREAK ) != 0) { SP_STATUS_REG &= ~SP_STATUS_INTR_BREAK; }
@@ -1969,11 +1859,6 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 			}
 			break;
 		case 0x04400004: 
-#ifdef CFB_READ
-			if (VI_ORIGIN_REG > 0x280) {
-				SetFrameBuffer(VI_ORIGIN_REG, (DWORD)(VI_WIDTH_REG * (VI_WIDTH_REG *.75)));
-			}
-#endif
 			VI_ORIGIN_REG = (Value & 0xFFFFFF); 
 			//if (UpdateScreen != NULL ) { UpdateScreen(); }
 			break;

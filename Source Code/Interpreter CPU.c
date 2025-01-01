@@ -691,16 +691,8 @@ void ExecuteInterpreterOpCode (void) {
 
 	((void (_fastcall *)()) R4300i_Opcode[ Opcode.op ])();
 	if (GPR[0].DW != 0) {
-#if (!defined(EXTERNAL_RELEASE))
-		DisplayError("GPR[0].DW has been written to");
-#endif
 		GPR[0].DW = 0;
 	}
-#ifdef Interpreter_StackTest
-	if (StackValue != GPR[29].UW[0]) {
-		DisplayError("Stack has Been changed");
-	} 
-#endif
 
 	switch (NextInstruction) {
 	case NORMAL: 
@@ -729,29 +721,6 @@ void StartInterpreterCPU (void ) {
 	//Add_R4300iBPoint(0x802000C8,FALSE);
 	__try {
 		for (;;) {
-#if (!defined(EXTERNAL_RELEASE))
-			if (NoOfBpoints != 0) {
-				if (CheckForR4300iBPoint(PROGRAM_COUNTER)) {
-					UpdateCurrentR4300iRegisterPanel();
-					Refresh_Memory();
-				}
-			}
-
-			//r4300i_LW_VAddr(Addr,&Value);
-			//if (Value2 != Value) {
-			//	DisplayError("%X changed",Addr);
-			//}
-			//Value2 = Value;
-			if (CPU_Action.Stepping) {
-				do {
-					SetR4300iCommandViewto (PROGRAM_COUNTER);
-					UpdateCurrentR4300iRegisterPanel();
-					Refresh_Memory();
-					WaitForSingleObject( CPU_Action.hStepping, INFINITE );
-					if (CPU_Action.Stepping) { ExecuteInterpreterOpCode(); }
-				} while (CPU_Action.Stepping);
-			}
-#endif
 			ExecuteInterpreterOpCode();
 		}
 	} __except( r4300i_CPU_MemoryFilter( GetExceptionCode(), GetExceptionInformation()) ) {

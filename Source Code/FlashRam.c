@@ -54,15 +54,9 @@ void DmaFromFlashRAM(BYTE * dest, int StartOffset, int len) {
 			if (!LoadFlashRAM()) { return; }
 		}
 		if (len > 0x10000) { 
-#ifndef EXTERNAL_RELEASE
-			DisplayError("DmaFromFlashRAM FlipBuffer to small (len: %d)",len); 
-#endif
 			len = 0x10000;
 		}
 		if ((len & 3) != 0) {
-#ifndef EXTERNAL_RELEASE
-			DisplayError("Unaligned flash ram read ???");
-#endif
 			return;
 		}
 		memset(FlipBuffer,0,sizeof(FlipBuffer));
@@ -89,17 +83,10 @@ void DmaFromFlashRAM(BYTE * dest, int StartOffset, int len) {
 		break;
 	case FlashRAM_MODE_STATUS:
 		if (StartOffset != 0 && len != 8) {
-#ifndef EXTERNAL_RELEASE
-			DisplayError("Reading flashstatus not being handled correctly\nStart: %X len: %X",StartOffset,len);
-#endif
 		}
 		*((DWORD *)(dest)) = (DWORD)(FlashStatus >> 32);
 		*((DWORD *)(dest) + 1) = (DWORD)(FlashStatus);
 		break;
-#ifndef EXTERNAL_RELEASE
-	default:
-		DisplayError("DmaFromFlashRAM Start: %X, Offset: %X len: %X",dest - N64MEM,StartOffset,len);
-#endif
 	}
 }
 
@@ -108,10 +95,6 @@ void DmaToFlashRAM(BYTE * Source, int StartOffset, int len) {
 	case FlashRAM_MODE_WRITE:
 		FlashRAMPointer = Source;
 		break;
-#ifndef EXTERNAL_RELEASE
-	default:
-		DisplayError("DmaToFlashRAM Start: %X, Offset: %X len: %X",Source - N64MEM,StartOffset,len);
-#endif
 	}
 }
 
@@ -119,9 +102,6 @@ DWORD ReadFromFlashStatus (DWORD PAddr) {
 	switch (PAddr) {
 	case 0x08000000: return (DWORD)(FlashStatus >> 32);
 	default:
-#ifndef EXTERNAL_RELEASE
-		DisplayError("Reading from flash ram status (%X)",PAddr);
-#endif
 		break;
 	}
 	return (DWORD)(FlashStatus >> 32);
@@ -226,10 +206,6 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 		FlashRAM_Offset = (FlashRAM_Command & 0xffff) * 128;
 		FlashStatus = 0x1111800400C20000;
 		break;
-#ifndef EXTERNAL_RELEASE
-	default:
-		DisplayError("Writing %X to flash ram command register",FlashRAM_Command);
-#endif
 	}
 }
 

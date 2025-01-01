@@ -23,7 +23,6 @@
  * should be forwarded to them so if they want them.
  *
  */
-#ifndef __main_h 
 #define __main_h 
 
 #ifdef __cplusplus
@@ -70,10 +69,6 @@ extern "C" {
 #define CPU_Recompiler				1
 #define Default_CPU					CPU_Recompiler
 
-/*********** GFX Defaults ************/
-#define NoOfFrames	7
-//#define CFB_READ
-
 /******* Self modifying code *********/
 #define ModCode_Default				-1
 #define ModCode_None				0
@@ -92,7 +87,7 @@ extern "C" {
 #define Default_Rercursion			TRUE
 
 /********* Global Variables **********/
-extern LARGE_INTEGER Frequency, Frames[NoOfFrames], LastFrame;
+extern LARGE_INTEGER Frequency, Frames[1], LastFrame;
 extern BOOL AutoStart, 
 	AutoSleep, DisableRegCaching, UseIni, UseTlb, UseLinking, RomBrowser,
 	IgnoreMove, Rercursion, LimitFPS,
@@ -125,11 +120,8 @@ void  StoreCurrentWinPos  ( char * WinName, HWND hWnd );
 void  StoreCurrentWinSize ( char * WinName, HWND hWnd );
 BOOL  TestExtensionRegistered ( char * Extension );
 
-void AboutBox (void);
-
 #ifdef __cplusplus
 }
-#endif
 #endif
 
 // Building this in Visual Studio 2005 and higher allows us to dump the external manifest file.

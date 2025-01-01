@@ -258,14 +258,3 @@
 #define ID_CURRENTSAVE_49               40243
 #define ID_CURRENTSAVE_50               40244
 #define IDC_PLUGHOTSWAPDOUBLE           20245
-
-// Next default values for new objects
-// 
-#ifdef APSTUDIO_INVOKED
-#ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        179
-#define _APS_NEXT_COMMAND_VALUE         40167
-#define _APS_NEXT_CONTROL_VALUE         1249
-#define _APS_NEXT_SYMED_VALUE           101
-#endif
-#endif

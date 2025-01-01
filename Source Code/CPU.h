@@ -114,14 +114,6 @@ enum SaveType {
 	SRAM,
 	FlashRAM
 };
-
-#ifdef CFB_READ
-extern DWORD CFBStart, CFBEnd;
-
-void __cdecl SetFrameBuffer (DWORD Address, DWORD Length);
-#endif
-
-
 extern int NextInstruction, JumpToLocation, ManualPaused, CPU_Paused, CountPerOp;
 extern char SaveAsFileName[255], LoadFileName[255];
 extern int DlistCount, AlistCount, CurrentSaveSlot;
@@ -132,8 +124,4 @@ extern HANDLE hPauseMutex;
 extern OPCODE Opcode;
 extern HANDLE hCPU;
 extern BOOL inFullScreen, CPURunning, SPHack;
-
-#ifdef Interpreter_StackTest
-extern DWORD StackValue;
-#endif
 extern DWORD MemoryStack;

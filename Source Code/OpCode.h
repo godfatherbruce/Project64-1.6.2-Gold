@@ -23,7 +23,6 @@
  * should be forwarded to them so if they want them.
  *
  */
-#ifndef __OpCode 
 #define __OpCode
 
 #include "Types.h"
@@ -268,5 +267,3 @@ typedef struct {
 #define R4300i_COP1_FUNCT_C_NGE		61
 #define R4300i_COP1_FUNCT_C_LE		62
 #define R4300i_COP1_FUNCT_C_NGT		63
-
-#endif

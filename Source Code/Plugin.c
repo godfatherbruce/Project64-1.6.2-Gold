@@ -279,10 +279,6 @@ BOOL LoadGFXDll(char * RspDll) {
 		CaptureScreen = NULL;
 		ShowCFB = NULL;
 	}
-#ifdef CFB_READ
-	FrameBufferRead = (void (__cdecl *)(DWORD))GetProcAddress( hGfxDll, "FBRead" );
-	FrameBufferWrite = (void (__cdecl *)(DWORD, DWORD))GetProcAddress( hGfxDll, "FBWrite" );
-#endif
 	return TRUE;
 }
 
@@ -585,9 +581,6 @@ void SetupPlugins (HWND hWnd) {
 			ControlInfo.MemoryBswaped = TRUE;
 			InitiateControllers_1_1(ControlInfo);
 		}
-#ifndef EXTERNAL_RELEASE
-//		Controllers[0].Plugin  = PLUGIN_RUMBLE_PAK;
-#endif
 	}
 	if (!PluginsInitilized) { ChangeSettings(hMainWindow); }
 }
@@ -600,11 +593,6 @@ void SetupPluginScreen (HWND hDlg) {
 	HMODULE hLib;
 	int index;
 
-/*#ifdef EXTERNAL_RELEASE
-	ShowWindow(GetDlgItem(hDlg,IDC_RSP_NAME),SW_HIDE);
-	ShowWindow(GetDlgItem(hDlg,RSP_LIST),SW_HIDE);
-	ShowWindow(GetDlgItem(hDlg,RSP_ABOUT),SW_HIDE);
-#endif*/
 	SetDlgItemText(hDlg,RSP_ABOUT,GS(PLUG_ABOUT));
 	SetDlgItemText(hDlg,GFX_ABOUT,GS(PLUG_ABOUT));
 	SetDlgItemText(hDlg,AUDIO_ABOUT,GS(PLUG_ABOUT));
@@ -656,7 +644,6 @@ void SetupPluginScreen (HWND hDlg) {
 
 
 		switch(PluginInfo.Type) {
-//#ifndef EXTERNAL_RELEASE
 		case PLUGIN_TYPE_RSP:
 			index = SendMessage(GetDlgItem(hDlg,RSP_LIST),CB_ADDSTRING,(WPARAM)0, (LPARAM)&PluginInfo.Name);		
 			SendMessage(GetDlgItem(hDlg,RSP_LIST),CB_SETITEMDATA ,(WPARAM)index, (LPARAM)PluginCount);		
@@ -668,7 +655,6 @@ void SetupPluginScreen (HWND hDlg) {
 				FreeLibrary(hLib);
 			}
 			break;
-//#endif
 		case PLUGIN_TYPE_GFX:
 			index = SendMessage(GetDlgItem(hDlg,GFX_LIST),CB_ADDSTRING,(WPARAM)0, (LPARAM)&PluginInfo.Name);		
 			SendMessage(GetDlgItem(hDlg,GFX_LIST),CB_SETITEMDATA ,(WPARAM)index, (LPARAM)PluginCount);		

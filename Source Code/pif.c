@@ -156,10 +156,6 @@ void PifRamWrite (void) {
 				} else if (Channel == 4) {
 					if (RTC_Command(&PIF_Ram[CurPos]) == FALSE)
 						eepROMCommand(&PIF_Ram[CurPos]);
-				} else {
-#ifndef EXTERNAL_RELEASE
-					DisplayError("Unknown command, possibly channel 5.");
-#endif
 				}
 				CurPos += PIF_Ram[CurPos] + (PIF_Ram[CurPos + 1] & 0x3F) + 1;
 				Channel += 1;
@@ -287,9 +283,9 @@ int LoadPifRom(int country) {
 
 	switch(RomRegion(country)) {
 	case PAL_Region:
-		sprintf(PifRomName,"%s%sPifrom\\pifpal.raw",drive,dir); break;
+		sprintf(PifRomName,"%s%sPif\\pal.raw",drive,dir); break;
 	case NTSC_Region:
-		sprintf(PifRomName,"%s%sPifrom\\pifntsc.raw",drive,dir); break;
+		sprintf(PifRomName,"%s%sPif\\ntsc.raw",drive,dir); break;
 	default:
 		DisplayError(GS(MSG_UNKNOWN_COUNTRY)); break;
 	}	

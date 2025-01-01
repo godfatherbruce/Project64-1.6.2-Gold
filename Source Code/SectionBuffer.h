@@ -1,4 +1,3 @@
-#ifndef SI_FILEBUFFER
 #define SI_FILEBUFFER
 
 typedef struct {
@@ -15,5 +14,3 @@ typedef struct {
 char* TrimString(char *start, char *end);
 void FillBuffer(char *string, Buffer *SectionBuffer);
 void FreeBuffer(Buffer *SectionBuffer);
-
-#endif

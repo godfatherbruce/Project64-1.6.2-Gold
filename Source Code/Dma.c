@@ -45,9 +45,6 @@ void PI_DMA_READ (void) {
 //	PI_STATUS_REG |= PI_STATUS_DMA_BUSY;
 
 	if ( PI_DRAM_ADDR_REG + PI_RD_LEN_REG + 1 > RdramSize) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("PI_DMA_READ not in Memory");
-#endif
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
 		CheckInterrupts();
@@ -80,17 +77,11 @@ void PI_DMA_READ (void) {
 		}
 	}
 	if (SaveUsing == FlashRAM) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("**** FlashRAM DMA Read address %X *****",PI_CART_ADDR_REG);
-#endif
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
 		CheckInterrupts();
 		return;
 	}
-#ifndef EXTERNAL_RELEASE
-	DisplayError("PI_DMA_READ where are you dmaing to ?");
-#endif	
 	PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 	MI_INTR_REG |= MI_INTR_PI;
 	CheckInterrupts();
@@ -102,9 +93,6 @@ void PI_DMA_WRITE (void) {
 
 	PI_STATUS_REG |= PI_STATUS_DMA_BUSY;
 	if ( PI_DRAM_ADDR_REG + PI_WR_LEN_REG + 1 > RdramSize) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("PI_DMA_WRITE not in Memory");
-#endif	
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
 		CheckInterrupts();
@@ -138,12 +126,6 @@ void PI_DMA_WRITE (void) {
 	}
 	
 	if ( PI_CART_ADDR_REG >= 0x06000000 && PI_CART_ADDR_REG < 0x08000000) {
-#ifdef ROM_IN_MAPSPACE
-		if (WrittenToRom) { 
-			DWORD OldProtect;
-			VirtualProtect(ROM,RomFileSize,PAGE_READONLY, &OldProtect);
-		}
-#endif
 		PI_CART_ADDR_REG -= 0x06000000;
 		if (PI_CART_ADDR_REG + PI_WR_LEN_REG + 1 < RomFileSize) {
 			for (i = 0; i < PI_WR_LEN_REG + 1; i ++) {
@@ -175,12 +157,6 @@ void PI_DMA_WRITE (void) {
 	}
 
 	if ( PI_CART_ADDR_REG >= 0x10000000 && PI_CART_ADDR_REG <= 0x1FBFFFFF) {
-#ifdef ROM_IN_MAPSPACE
-		if (WrittenToRom) { 
-			DWORD OldProtect;
-			VirtualProtect(ROM,RomFileSize,PAGE_READONLY, &OldProtect);
-		}
-#endif
 		PI_CART_ADDR_REG -= 0x10000000;
 		if (PI_CART_ADDR_REG + PI_WR_LEN_REG + 1 < RomFileSize) {
 			for (i = 0; i < PI_WR_LEN_REG + 1; i ++) {
@@ -220,9 +196,6 @@ void SI_DMA_READ (void) {
 	BYTE * PifRamPos = &PIF_Ram[0];
 	
 	if ((int)SI_DRAM_ADDR_REG > (int)RdramSize) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SI DMA\nSI_DRAM_ADDR_REG not in RDRam space");
-#endif
 		return;
 	}
 	
@@ -275,9 +248,6 @@ void SI_DMA_WRITE (void) {
 	BYTE * PifRamPos = &PIF_Ram[0];
 	
 	if ((int)SI_DRAM_ADDR_REG > (int)RdramSize) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SI DMA\nSI_DRAM_ADDR_REG not in RDRam space");
-#endif
 		return;
 	}
 	
@@ -331,20 +301,12 @@ void SP_DMA_READ (void) {
 	SP_DRAM_ADDR_REG &= 0x1FFFFFFF;
 
 	if (SP_DRAM_ADDR_REG > RdramSize) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SP DMA\nSP_DRAM_ADDR_REG not in RDRam space");
-#endif
 		SP_DMA_BUSY_REG = 0;
 		SP_STATUS_REG  &= ~SP_STATUS_DMA_BUSY;
 		return;
 	}
 	
 	if (SP_RD_LEN_REG + 1  + (SP_MEM_ADDR_REG & 0xFFF) > 0x1000) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SP DMA\ncould not fit copy in memory segement");
-		SP_DMA_BUSY_REG = 0;
-		SP_STATUS_REG  &= ~SP_STATUS_DMA_BUSY;
-#endif
 		return;		
 	}
 
@@ -366,16 +328,10 @@ void SP_DMA_READ (void) {
 
 void SP_DMA_WRITE (void) { 
 	if (SP_DRAM_ADDR_REG > RdramSize) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SP DMA WRITE\nSP_DRAM_ADDR_REG not in RDRam space");
-#endif
 		return;
 	}
 	
 	if (SP_WR_LEN_REG + 1 + (SP_MEM_ADDR_REG & 0xFFF) > 0x1000) {
-#ifndef EXTERNAL_RELEASE
-		DisplayError("SP DMA WRITE\ncould not fit copy in memory segement");
-#endif
 		return;		
 	}
 

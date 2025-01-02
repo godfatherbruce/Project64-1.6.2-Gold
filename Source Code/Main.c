@@ -41,7 +41,7 @@
 #include "resource.h"
 #include "Registry.h"
 
-LARGE_INTEGER Frequency, Frames[1], LastFrame;
+LARGE_INTEGER Frequency, Frames[3], LastFrame;
 BOOL 	AutoStart,
 	AutoSleep, DisableRegCaching, UseIni, UseTlb, UseLinking, RomBrowser,
 	IgnoreMove, Rercursion, LimitFPS,
@@ -240,16 +240,16 @@ void __cdecl DisplayErrorFatal (char * Message, ...) {
 }
 
 void DisplayFPS (void) {
-	if (CurrentFrame > (1 << 3)) {
+	if (CurrentFrame > (3 << 3)) {
 		LARGE_INTEGER Total;
 		char Message[100];
 		int count;
 
 		Total.QuadPart = 0;
-		for (count = 0; count < 1; count ++) {
+		for (count = 0; count < 3; count ++) {
 			Total.QuadPart += Frames[count].QuadPart;
 		}
-		sprintf(Message, "Frames Per Second: ~~ %.0f", Frequency.QuadPart/ ((double)Total.QuadPart / (1 << 3)));
+		sprintf(Message, "Frames Per Second: ~~ %.0f", Frequency.QuadPart/ ((double)Total.QuadPart / (3 << 3)));
 		SendMessage( hStatusWnd, SB_SETTEXT, 1, (LPARAM)Message );
 	}
 }

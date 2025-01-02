@@ -1609,7 +1609,7 @@ void RefreshScreen (void ){
 		//mouse_event(MOUSEEVENTF_MOVE,-1,-1,0,GetMessageExtraInfo());
 
 		QueryPerformanceCounter(&Time);
-		Frames[(CurrentFrame >> 3) % 1].QuadPart = Time.QuadPart - LastFrame.QuadPart;
+		Frames[(CurrentFrame >> 3) % 3].QuadPart = Time.QuadPart - LastFrame.QuadPart;
 		LastFrame.QuadPart = Time.QuadPart;	
 		DisplayFPS();
 	}

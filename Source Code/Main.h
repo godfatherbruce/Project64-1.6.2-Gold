@@ -87,7 +87,7 @@ extern "C" {
 #define Default_Rercursion			TRUE
 
 /********* Global Variables **********/
-extern LARGE_INTEGER Frequency, Frames[3], LastFrame;
+extern LARGE_INTEGER Frequency, Frames[8], LastFrame;
 extern BOOL AutoStart, 
 	AutoSleep, DisableRegCaching, UseIni, UseTlb, UseLinking, RomBrowser,
 	IgnoreMove, Rercursion, LimitFPS,

@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -33,10 +33,9 @@
 #include "cheats.h"
 #include "plugin.h"
 #include "EmulateAI.h"
-#include "resource.h" 
+#include "resource.h"
 char CommandName[100];
 char strLabelName[100];
-
 int NextInstruction, JumpToLocation, ManualPaused, CPU_Paused, CountPerOp;
 char SaveAsFileName[255], LoadFileName[255];
 int DlistCount, AlistCount, CurrentSaveSlot;
@@ -48,37 +47,31 @@ OPCODE Opcode;
 HANDLE hCPU;
 BOOL inFullScreen, CPURunning, SPHack;
 DWORD MemoryStack;
-
 char *TimeName[MaxTimers] = { "CompareTimer","SiTimer","PiTimer","ViTimer" };
-
 void INITIALIZECPUFlags (void) {
 	inFullScreen = FALSE;
 	CPURunning   = FALSE;
 	CurrentSaveSlot = ID_CURRENTSAVE_DEFAULT;
 	SPHack       = FALSE;
 }
-
 void ChangeCompareTimer(void) {
 	DWORD NextCompare = COMPARE_REGISTER - COUNT_REGISTER;
 	if ((NextCompare & 0x80000000) != 0) {  NextCompare = 0x7FFFFFFF; }
-	if (NextCompare == 0) { NextCompare = 0x1; }	
-	ChangeTimer(CompareTimer,NextCompare);	
+	if (NextCompare == 0) { NextCompare = 0x1; }
+	ChangeTimer(CompareTimer,NextCompare);
 }
-
 void ChangeTimer(int Type, int Value) {
-	if (Value == 0) { 
+	if (Value == 0) {
 		Timers.NextTimer[Type] = 0;
-		Timers.Active[Type] = FALSE; 
+		Timers.Active[Type] = FALSE;
 		return;
 	}
 	Timers.NextTimer[Type] = Value - Timers.Timer;
 	Timers.Active[Type] = TRUE;
 	CheckTimer();
 }
-
 void CheckTimer (void) {
 	int count;
-
 	for (count = 0; count < MaxTimers; count++) {
 		if (!Timers.Active[count]) { continue; }
 		if (!(count == CompareTimer && Timers.NextTimer[count] == 0x7FFFFFFF)) {
@@ -103,7 +96,6 @@ void CheckTimer (void) {
 			Timers.NextTimer[count] -= Timers.Timer;
 		}
 	}
-	
 	if (Timers.NextTimer[CompareTimer] == 0x7FFFFFFF) {
 		DWORD NextCompare = COMPARE_REGISTER - COUNT_REGISTER;
 		if ((NextCompare & 0x80000000) == 0 && NextCompare != 0x7FFFFFFF) {
@@ -111,21 +103,17 @@ void CheckTimer (void) {
 		}
 	}
 }
-
 void CloseCpu (void) {
 	DWORD ExitCode, count, OldProtect;
-	
 	if (!CPURunning) { return; }
 	ManualPaused = FALSE;
 	if (CPU_Paused) { PauseCpu (); }
-	
 	{
 		BOOL Temp = AlwaysOnTop;
 		AlwaysOnTop = FALSE;
 		AlwaysOnTopWindow(hMainWindow);
 		AlwaysOnTop = Temp;
 	}
-
 	for (count = 0; count < 20; count ++ ) {
 		CPU_Action.CloseCPU = TRUE;
 		CPU_Action.Stepping = FALSE;
@@ -154,16 +142,13 @@ void CloseCpu (void) {
 	if (RSPRomClosed) { RSPRomClosed(); }
 	CloseHandle(CPU_Action.hStepping);
 }
-
 char * LabelName (DWORD Address) {
 	sprintf(strLabelName,"0x%08X",Address);
 	return strLabelName;
 }
-
 char * R4300iRegImmName ( DWORD OpCode, DWORD PC ) {
 	OPCODE command;
 	command.Hex = OpCode;
-
 	switch (command.rt) {
 	case R4300i_REGIMM_BLTZ:
 		sprintf(CommandName,"bltz\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
@@ -215,17 +200,15 @@ char * R4300iRegImmName ( DWORD OpCode, DWORD PC ) {
 	case R4300i_REGIMM_BGEZALL:
 		sprintf(CommandName,"bgezall\t%s, %s",GPR_Name[command.rs], LabelName(PC + ((short)command.offset << 2) + 4));
 		break;
-	default:	
+	default:
 		sprintf(CommandName,"Unknown\t%02X %02X %02X %02X",
 			command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
 	}
 	return CommandName;
 }
-
 char * R4300iSpecialName ( DWORD OpCode, DWORD PC ) {
 	OPCODE command;
 	command.Hex = OpCode;
-
 	switch (command.funct) {
 	case R4300i_SPECIAL_SLL:
 		if (command.Hex != 0) {
@@ -413,17 +396,15 @@ char * R4300iSpecialName ( DWORD OpCode, DWORD PC ) {
 	case R4300i_SPECIAL_DSRA32:
 		sprintf(CommandName,"dsra32\t%s, %s, 0x%X",GPR_Name[command.rd], GPR_Name[command.rt], command.sa);
 		break;
-	default:	
+	default:
 		sprintf(CommandName,"Unknown\t%02X %02X %02X %02X",
 			command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
 	}
 	return CommandName;
 }
-
 char * R4300iCop1Name ( DWORD OpCode, DWORD PC ) {
 	OPCODE command;
 	command.Hex = OpCode;
-
 	switch (command.fmt) {
 	case R4300i_COP1_MF:
 		sprintf(CommandName,"mfc1\t%s, %s",GPR_Name[command.rt], FPR_Name[command.fs]);
@@ -466,153 +447,153 @@ char * R4300iCop1Name ( DWORD OpCode, DWORD PC ) {
 	case R4300i_COP1_D:
 	case R4300i_COP1_W:
 	case R4300i_COP1_L:
-		switch (command.funct) {			
+		switch (command.funct) {
 		case R4300i_COP1_FUNCT_ADD:
-			sprintf(CommandName,"ADD.%s\t%s, %s, %s",FPR_Type(command.fmt),  
-				FPR_Name[command.fd], FPR_Name[command.fs], 
+			sprintf(CommandName,"ADD.%s\t%s, %s, %s",FPR_Type(command.fmt),
+				FPR_Name[command.fd], FPR_Name[command.fs],
 				FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_SUB:
-			sprintf(CommandName,"SUB.%s\t%s, %s, %s",FPR_Type(command.fmt),  
-				FPR_Name[command.fd], FPR_Name[command.fs], 
+			sprintf(CommandName,"SUB.%s\t%s, %s, %s",FPR_Type(command.fmt),
+				FPR_Name[command.fd], FPR_Name[command.fs],
 				FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_MUL:
-			sprintf(CommandName,"MUL.%s\t%s, %s, %s",FPR_Type(command.fmt),  
-				FPR_Name[command.fd], FPR_Name[command.fs], 
+			sprintf(CommandName,"MUL.%s\t%s, %s, %s",FPR_Type(command.fmt),
+				FPR_Name[command.fd], FPR_Name[command.fs],
 				FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_DIV:
-			sprintf(CommandName,"DIV.%s\t%s, %s, %s",FPR_Type(command.fmt),  
-				FPR_Name[command.fd], FPR_Name[command.fs], 
+			sprintf(CommandName,"DIV.%s\t%s, %s, %s",FPR_Type(command.fmt),
+				FPR_Name[command.fd], FPR_Name[command.fs],
 				FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_SQRT:
-			sprintf(CommandName,"SQRT.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"SQRT.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_ABS:
-			sprintf(CommandName,"ABS.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"ABS.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_MOV:
-			sprintf(CommandName,"MOV.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"MOV.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_NEG:
-			sprintf(CommandName,"NEG.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"NEG.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_ROUND_L:
-			sprintf(CommandName,"ROUND.L.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"ROUND.L.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_TRUNC_L:
-			sprintf(CommandName,"TRUNC.L.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"TRUNC.L.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_CEIL_L:
-			sprintf(CommandName,"CEIL.L.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"CEIL.L.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_FLOOR_L:
-			sprintf(CommandName,"FLOOR.L.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"FLOOR.L.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_ROUND_W:
-			sprintf(CommandName,"ROUND.W.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"ROUND.W.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_TRUNC_W:
-			sprintf(CommandName,"TRUNC.W.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"TRUNC.W.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_CEIL_W:
-			sprintf(CommandName,"CEIL.W.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"CEIL.W.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_FLOOR_W:
-			sprintf(CommandName,"FLOOR.W.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"FLOOR.W.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_CVT_S:
-			sprintf(CommandName,"CVT.S.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"CVT.S.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_CVT_D:
-			sprintf(CommandName,"CVT.D.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"CVT.D.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_CVT_W:
-			sprintf(CommandName,"CVT.W.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"CVT.W.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_CVT_L:
-			sprintf(CommandName,"CVT.L.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"CVT.L.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fd], FPR_Name[command.fs]);
 			break;
 		case R4300i_COP1_FUNCT_C_F:
-			sprintf(CommandName,"C.F.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.F.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_UN:
-			sprintf(CommandName,"C.UN.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.UN.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_EQ:
-			sprintf(CommandName,"C.EQ.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.EQ.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_UEQ:
-			sprintf(CommandName,"C.UEQ.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.UEQ.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_OLT:
-			sprintf(CommandName,"C.OLT.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.OLT.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_ULT:
-			sprintf(CommandName,"C.ULT.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.ULT.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_OLE:
-			sprintf(CommandName,"C.OLE.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.OLE.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_ULE:
-			sprintf(CommandName,"C.ULE.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.ULE.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_SF:
-			sprintf(CommandName,"C.SF.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.SF.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_NGLE:
-			sprintf(CommandName,"C.NGLE.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.NGLE.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_SEQ:
-			sprintf(CommandName,"C.SEQ.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.SEQ.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_NGL:
-			sprintf(CommandName,"C.NGL.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.NGL.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_LT:
-			sprintf(CommandName,"C.LT.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.LT.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_NGE:
-			sprintf(CommandName,"C.NGE.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.NGE.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_LE:
-			sprintf(CommandName,"C.LE.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.LE.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		case R4300i_COP1_FUNCT_C_NGT:
-			sprintf(CommandName,"C.NGT.%s\t%s, %s",FPR_Type(command.fmt),  
+			sprintf(CommandName,"C.NGT.%s\t%s, %s",FPR_Type(command.fmt),
 				FPR_Name[command.fs], FPR_Name[command.ft]);
 			break;
 		default:
@@ -626,11 +607,9 @@ char * R4300iCop1Name ( DWORD OpCode, DWORD PC ) {
 	}
 	return CommandName;
 }
-
 char * R4300iOpcodeName ( DWORD OpCode, DWORD PC ) {
 	OPCODE command;
 	command.Hex = OpCode;
-		
 	switch (command.op) {
 	case R4300i_SPECIAL:
 		return R4300iSpecialName ( OpCode, PC );
@@ -710,7 +689,7 @@ char * R4300iOpcodeName ( DWORD OpCode, DWORD PC ) {
 				case R4300i_COP0_CO_TLBWR: sprintf(CommandName,"tlbwr"); break;
 				case R4300i_COP0_CO_TLBP:  sprintf(CommandName,"tlbp"); break;
 				case R4300i_COP0_CO_ERET:  sprintf(CommandName,"eret"); break;
-				default:	
+				default:
 					sprintf(CommandName,"Unknown\t%02X %02X %02X %02X",
 						command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
 				}
@@ -833,29 +812,24 @@ char * R4300iOpcodeName ( DWORD OpCode, DWORD PC ) {
 	case R4300i_SD:
 		sprintf(CommandName,"sd\t%s, 0x%X (%s)",GPR_Name[command.rt], command.offset, GPR_Name[command.base]);
 		break;
-	default:	
+	default:
 		sprintf(CommandName,"Unknown\t%02X %02X %02X %02X",
 			command.Ascii[3],command.Ascii[2],command.Ascii[1],command.Ascii[0]);
 	}
-
 	return CommandName;
 }
-
 int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 	OPCODE Command;
-
 	if (!r4300i_LW_VAddr(PC + 4, &Command.Hex)) {
 		DisplayError("Failed to load word 2.\n\nEmulation ending");
 		ExitThread(0);
 		return TRUE;
 	}
-
 	if (SelfModCheck == ModCode_ChangeMemory) {
 		if ( (Command.Hex >> 16) == 0x7C7C) {
 			Command.Hex = OrigMem[(Command.Hex & 0xFFFF)].OriginalValue;
 		}
 	}
-
 	switch (Command.op) {
 	case R4300i_SPECIAL:
 		switch (Command.funct) {
@@ -924,7 +898,7 @@ int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 				case R4300i_COP0_CO_TLBWI: break;
 				case R4300i_COP0_CO_TLBWR: break;
 				case R4300i_COP0_CO_TLBP: break;
-				default: 
+				default:
 					return TRUE;
 				}
 			}
@@ -987,17 +961,14 @@ int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 	}
 	return FALSE;
 }
-
 int DelaySlotEffectsJump (DWORD JumpPC) {
 	OPCODE Command;
-
 	if (!r4300i_LW_VAddr(JumpPC, &Command.Hex)) { return TRUE; }
 	if (SelfModCheck == ModCode_ChangeMemory) {
 		if ( (Command.Hex >> 16) == 0x7C7C) {
 			Command.Hex = OrigMem[(Command.Hex & 0xFFFF)].OriginalValue;
 		}
 	}
-
 	switch (Command.op) {
 	case R4300i_SPECIAL:
 		switch (Command.funct) {
@@ -1016,13 +987,13 @@ int DelaySlotEffectsJump (DWORD JumpPC) {
 			return DelaySlotEffectsCompare(JumpPC,Command.rs,0);
 		}
 		break;
-	case R4300i_JAL: 
+	case R4300i_JAL:
 	case R4300i_SPECIAL_JALR: return DelaySlotEffectsCompare(JumpPC,31,0); break;
 	case R4300i_J: return FALSE;
-	case R4300i_BEQ: 
-	case R4300i_BNE: 
-	case R4300i_BLEZ: 
-	case R4300i_BGTZ: 
+	case R4300i_BEQ:
+	case R4300i_BNE:
+	case R4300i_BLEZ:
+	case R4300i_BGTZ:
 		return DelaySlotEffectsCompare(JumpPC,Command.rs,Command.rt);
 	case R4300i_CP1:
 		switch (Command.fmt) {
@@ -1035,38 +1006,34 @@ int DelaySlotEffectsJump (DWORD JumpPC) {
 				{
 					int EffectDelaySlot;
 					OPCODE NewCommand;
-
 					if (!r4300i_LW_VAddr(JumpPC + 4, &NewCommand.Hex)) { return TRUE; }
-					
 					EffectDelaySlot = FALSE;
 					if (NewCommand.op == R4300i_CP1) {
 						if (NewCommand.fmt == R4300i_COP1_S && (NewCommand.funct & 0x30) == 0x30 ) {
 							EffectDelaySlot = TRUE;
-						} 
+						}
 						if (NewCommand.fmt == R4300i_COP1_D && (NewCommand.funct & 0x30) == 0x30 ) {
 							EffectDelaySlot = TRUE;
-						} 
+						}
 					}
 					return EffectDelaySlot;
-				} 
+				}
 				break;
 			}
 			break;
 		}
 		break;
-	case R4300i_BEQL: 
-	case R4300i_BNEL: 
-	case R4300i_BLEZL: 
-	case R4300i_BGTZL: 
+	case R4300i_BEQL:
+	case R4300i_BNEL:
+	case R4300i_BLEZL:
+	case R4300i_BGTZL:
 		return DelaySlotEffectsCompare(JumpPC,Command.rs,Command.rt);
 	}
 	return TRUE;
 }
-
 void ProcessMessages (void) {
 	HANDLE hEvent;
 	MSG msg;
-
 	hEvent =  CreateEvent(NULL,FALSE,FALSE,NULL);
 	MsgWaitForMultipleObjects(1,&hEvent,FALSE,1000,QS_ALLINPUT);
 	CloseHandle(hEvent);
@@ -1079,11 +1046,10 @@ void ProcessMessages (void) {
 		}
 	}
 }
-
 void DoSomething ( void ) {
-	if (CPU_Action.CloseCPU) { 
+	if (CPU_Action.CloseCPU) {
 		CoUninitialize();
-		ExitThread(0); 
+		ExitThread(0);
 	}
 	if (CPU_Action.CheckInterrupts) {
 		CPU_Action.CheckInterrupts = FALSE;
@@ -1093,21 +1059,18 @@ void DoSomething ( void ) {
 		CPU_Action.DoInterrupt = FALSE;
 		DoIntrException(FALSE);
 	}
-
 	if (CPU_Action.ChangeWindow) {
 		CPU_Action.ChangeWindow = FALSE;
 		CPU_Paused = TRUE;
 		SendMessage(hMainWindow,WM_COMMAND,ID_OPTIONS_FULLSCREEN,0);
 		CPU_Paused = FALSE;
 	}
-
 	if (CPU_Action.Pause) {
 		WaitForSingleObject(hPauseMutex, INFINITE);
 		if (CPU_Action.Pause) {
 			HMENU hMenu = GetMenu(hMainWindow);
 			HMENU hSubMenu = GetSubMenu(hMenu,1);
 			MenuSetText(hSubMenu, 1, GS(MENU_RESUME),"F2");
-
 			CurrentFrame = 0;
 			CPU_Paused = TRUE;
 			CPU_Action.Pause = FALSE;
@@ -1116,9 +1079,9 @@ void DoSomething ( void ) {
 			DisplayFPS ();
 			if (DrawScreen != NULL) { DrawScreen(); }
 			WaitForSingleObject(hPauseMutex, INFINITE);
-			if (CPU_Paused) { 
+			if (CPU_Paused) {
 				ReleaseMutex(hPauseMutex);
-				SuspendThread(hCPU); 
+				SuspendThread(hCPU);
 			} else {
 				ReleaseMutex(hPauseMutex);
 			}
@@ -1127,7 +1090,6 @@ void DoSomething ( void ) {
 		}
 	}
 	CPU_Action.DoSomething = FALSE;
-	
 	if (CPU_Action.SaveState) {
 		//test if allowed
 		CPU_Action.SaveState = FALSE;
@@ -1142,84 +1104,67 @@ void DoSomething ( void ) {
 	}
 	if (CPU_Action.DoInterrupt == TRUE) { CPU_Action.DoSomething = TRUE; }
 }
-
 void GetAutoSaveDir( char * Directory ) {
 	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
 	char fname[_MAX_FNAME],ext[_MAX_EXT];
 	char Dir[255], Group[200];
 	long lResult;
 	HKEY hKeyResults = 0;
-
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
-
 	sprintf(Directory,"%s%sSave Data\\",drive,dir);
-
 	sprintf(Group,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,Group,0,KEY_ALL_ACCESS,
 		&hKeyResults);
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Value, Bytes;
-
 		Bytes = 4;
 		lResult = RegQueryValueEx(hKeyResults,"Use Default Auto Save Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
-		if (lResult == ERROR_SUCCESS && Value == FALSE) {					
+		if (lResult == ERROR_SUCCESS && Value == FALSE) {
 			Bytes = sizeof(Dir);
 			lResult = RegQueryValueEx(hKeyResults,"Auto Save Directory",0,&Type,(LPBYTE)Dir,&Bytes);
 			if (lResult == ERROR_SUCCESS) { strcpy(Directory,Dir); }
 		}
 	}
-	RegCloseKey(hKeyResults);	
-
+	RegCloseKey(hKeyResults);
 }
-
 void GetInstantSaveDir( char * Directory ) {
 	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
 	char fname[_MAX_FNAME],ext[_MAX_EXT];
 	char Dir[255], Group[200];
 	long lResult;
 	HKEY hKeyResults = 0;
-
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
-
 	sprintf(Directory,"%s%sSave States\\",drive,dir);
-
 	sprintf(Group,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,Group,0,KEY_ALL_ACCESS,
 		&hKeyResults);
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Value, Bytes;
-
 		Bytes = 4;
 		lResult = RegQueryValueEx(hKeyResults,"Use Default Instant Save Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
-		if (lResult == ERROR_SUCCESS && Value == FALSE) {					
+		if (lResult == ERROR_SUCCESS && Value == FALSE) {
 			Bytes = sizeof(Dir);
 			lResult = RegQueryValueEx(hKeyResults,"Instant Save Directory",0,&Type,(LPBYTE)Dir,&Bytes);
 			if (lResult == ERROR_SUCCESS) { strcpy(Directory,Dir); }
 		}
 	}
-	RegCloseKey(hKeyResults);	
-
+	RegCloseKey(hKeyResults);
 }
-
 void InPermLoop (void) {
 	// *** Changed ***/
 	if (CPU_Action.DoInterrupt) { return; }
-
 	//Timers.Timer -= 5;
 	//COUNT_REGISTER +=5;
 	//if (CPU_Type == CPU_SyncCores) { SyncRegisters.CP0[9] +=5; }
-
 	/* Interrupts enabled */
 	if (( STATUS_REGISTER & STATUS_IE  ) == 0 ) { goto InterruptsDisabled; }
 	if (( STATUS_REGISTER & STATUS_EXL ) != 0 ) { goto InterruptsDisabled; }
 	if (( STATUS_REGISTER & STATUS_ERL ) != 0 ) { goto InterruptsDisabled; }
 	if (( STATUS_REGISTER & 0xFF00) == 0) { goto InterruptsDisabled; }
-	
 	/* check sound playing */
 	//if (AiReadLength() != 0) { return; }
-
 	/* check RSP running */
 	/* check RDP running */
 	if (Timers.Timer > 0) {
@@ -1227,7 +1172,6 @@ void InPermLoop (void) {
 		Timers.Timer = -1;
 	}
 	return;
-
 InterruptsDisabled:
 	if (UpdateScreen != NULL) { UpdateScreen(); }
 	CurrentFrame = 0;
@@ -1235,7 +1179,6 @@ InterruptsDisabled:
 	DisplayError(GS(MSG_PERM_LOOP));
 	ExitThread(0);
 }
-
 BOOL Machine_LoadState(void) {
 	char Directory[255], FileName[255], ZipFile[255], LoadHeader[64], String[100];
 	char drive[_MAX_DRIVE] ,dir[_MAX_DIR], ext[_MAX_EXT];
@@ -1243,7 +1186,6 @@ BOOL Machine_LoadState(void) {
 	BOOL LoadedZipFile = FALSE;
 	HANDLE hSaveFile;
 	unzFile file;
-
 	if (strlen(LoadFileName) == 0) {
 		GetInstantSaveDir(Directory);
 		sprintf(FileName,"%s%s",Directory,CurrentSave);
@@ -1251,13 +1193,11 @@ BOOL Machine_LoadState(void) {
 		strcpy(FileName,LoadFileName);
 		strcpy(ZipFile,LoadFileName);
 	}
-
 	file = unzOpen(ZipFile);
 	if (file != NULL) {
 	    unz_file_info info;
 		char zname[132];
 		int port = 0;
-
 		port = unzGoToFirstFile(file);
 		while (port == UNZ_OK && LoadedZipFile == FALSE) {
 			unzGetCurrentFileInfo(file, &info, zname, 128, NULL,0, NULL,0);
@@ -1272,24 +1212,21 @@ BOOL Machine_LoadState(void) {
 				continue;
 			}
 			unzReadCurrentFile(file,&Value,4);
-			if (Value != 0x23D8A6C8) { 
+			if (Value != 0x23D8A6C8) {
 				unzCloseCurrentFile(file);
-				continue; 
+				continue;
 			}
-			unzReadCurrentFile(file,&SaveRDRAMSize,sizeof(SaveRDRAMSize));	
-			unzReadCurrentFile(file,LoadHeader,0x40);			
-
-			if (CPU_Type != CPU_Interpreter) { 
-				ResetRecompCode(); 
+			unzReadCurrentFile(file,&SaveRDRAMSize,sizeof(SaveRDRAMSize));
+			unzReadCurrentFile(file,LoadHeader,0x40);
+			if (CPU_Type != CPU_Interpreter) {
+				ResetRecompCode();
 			}
-
 			Timers.CurrentTimerType = -1;
 			Timers.Timer = 0;
 			for (count = 0; count < MaxTimers; count ++) { Timers.Active[count] = FALSE; }
-
 			//fix rdram size
 			if (SaveRDRAMSize != RdramSize) {
-				if (RdramSize == 0x400000) { 
+				if (RdramSize == 0x400000) {
 					if (VirtualAlloc(N64MEM + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
 						DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 						ExitThread(0);
@@ -1340,7 +1277,6 @@ BOOL Machine_LoadState(void) {
 		}
 	}
 	if (!LoadedZipFile) {
-		
 		hSaveFile = CreateFile(FileName,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_EXISTING,
 			FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
 		if (hSaveFile == INVALID_HANDLE_VALUE) {
@@ -1348,24 +1284,21 @@ BOOL Machine_LoadState(void) {
 			sprintf(String,"%s %s%s",GS(MSG_UNABLED_LOAD_STATE),ZipFile,ext);
 			SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)String );
 			return FALSE;
-		}	
-		SetFilePointer(hSaveFile,0,NULL,FILE_BEGIN);	
+		}
+		SetFilePointer(hSaveFile,0,NULL,FILE_BEGIN);
 		ReadFile( hSaveFile,&Value,sizeof(Value),&dwRead,NULL);
 		if (Value != 0x23D8A6C8) { return FALSE; }
-		ReadFile( hSaveFile,&SaveRDRAMSize,sizeof(SaveRDRAMSize),&dwRead,NULL);	
-		ReadFile( hSaveFile,LoadHeader,0x40,&dwRead,NULL);	
-
-		if (CPU_Type != CPU_Interpreter) { 
-			ResetRecompCode(); 
+		ReadFile( hSaveFile,&SaveRDRAMSize,sizeof(SaveRDRAMSize),&dwRead,NULL);
+		ReadFile( hSaveFile,LoadHeader,0x40,&dwRead,NULL);
+		if (CPU_Type != CPU_Interpreter) {
+			ResetRecompCode();
 		}
-
 		Timers.CurrentTimerType = -1;
 		Timers.Timer = 0;
 		for (count = 0; count < MaxTimers; count ++) { Timers.Active[count] = FALSE; }
-
 		//fix rdram size
 		if (SaveRDRAMSize != RdramSize) {
-			if (RdramSize == 0x400000) { 
+			if (RdramSize == 0x400000) {
 				if (VirtualAlloc(N64MEM + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
 					DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 					ExitThread(0);
@@ -1385,7 +1318,6 @@ BOOL Machine_LoadState(void) {
 			}
 		}
 		RdramSize = SaveRDRAMSize;
-
 		ReadFile( hSaveFile,&Value,sizeof(Value),&dwRead,NULL);
 		ChangeTimer(ViTimer,Value);
 		ReadFile( hSaveFile,&PROGRAM_COUNTER,sizeof(PROGRAM_COUNTER),&dwRead,NULL);
@@ -1420,7 +1352,7 @@ BOOL Machine_LoadState(void) {
 	//if (ContRomClosed != NULL) { ContRomClosed(); }
 	if (RSPRomClosed) { RSPRomClosed(); }
 	//if (GfxRomOpen != NULL) { GfxRomOpen(); }
-	//if (ContRomOpen != NULL) { ContRomOpen(); }	
+	//if (ContRomOpen != NULL) { ContRomOpen(); }
 	DlistCount = 0;
 	AlistCount = 0;
 	AI_STATUS_REG = 0;
@@ -1429,28 +1361,23 @@ BOOL Machine_LoadState(void) {
 	ViStatusChanged();
 	ViWidthChanged();
 	SetupTLB();
-	
 	//Fix up Memory stack location
 	MemoryStack = GPR[29].W[0];
 	TranslateVaddr(&MemoryStack);
 	MemoryStack += (DWORD)N64MEM;
-
 	CheckInterrupts();
 	DMAUsed = TRUE;
 	strcpy(SaveAsFileName,"");
 	strcpy(LoadFileName,"");
-
 	sprintf(String,"%s",FileName);
 	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)String );
 	return TRUE;
 }
-
 BOOL Machine_SaveState(void) {
 	char Directory[255], FileName[255], ZipFile[255], String[100];
 	char drive[_MAX_DRIVE] ,dir[_MAX_DIR], ext[_MAX_EXT];
 	DWORD dwWritten, Value;
 	HANDLE hSaveFile;
-
 	//LogMessage("SaveState");
 	if (Timers.CurrentTimerType != CompareTimer &&  Timers.CurrentTimerType != ViTimer) {
 		return FALSE;
@@ -1461,7 +1388,6 @@ BOOL Machine_SaveState(void) {
 	} else {
 		sprintf(FileName,"%s",SaveAsFileName);
 	}
-
 	if (SelfModCheck == ModCode_ChangeMemory) { ResetRecompCode(); }
 {
 		hSaveFile = CreateFile(FileName,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
@@ -1482,18 +1408,15 @@ BOOL Machine_SaveState(void) {
 				return TRUE;
 			}
 		}
-
 		while ((int)Registers.CP0[1] < (int)Registers.CP0[6]) {
 			Registers.CP0[1] += 32 - Registers.CP0[6];
-		}	
+		}
 		//if fake cause set then do not save ????
-
-
-		SetFilePointer(hSaveFile,0,NULL,FILE_BEGIN);	
+		SetFilePointer(hSaveFile,0,NULL,FILE_BEGIN);
 		Value = 0x23D8A6C8;
 		WriteFile( hSaveFile,&Value,sizeof(Value),&dwWritten,NULL);
 		WriteFile( hSaveFile,&RdramSize,sizeof(RdramSize),&dwWritten,NULL);
-		WriteFile( hSaveFile,RomHeader,0x40,&dwWritten,NULL);	
+		WriteFile( hSaveFile,RomHeader,0x40,&dwWritten,NULL);
 		Value = Timers.NextTimer[ViTimer] + Timers.Timer;
 		WriteFile( hSaveFile,&Value,sizeof(Value),&dwWritten,NULL);
 		WriteFile( hSaveFile,&PROGRAM_COUNTER,sizeof(PROGRAM_COUNTER),&dwWritten,NULL);
@@ -1506,7 +1429,6 @@ BOOL Machine_SaveState(void) {
 		WriteFile( hSaveFile,RegRDRAM,sizeof(DWORD)*10,&dwWritten,NULL);
 		WriteFile( hSaveFile,RegSP,sizeof(DWORD)*10,&dwWritten,NULL);
 		WriteFile( hSaveFile,RegDPC,sizeof(DWORD)*10,&dwWritten,NULL);
-
 		Value = MI_INTR_REG;
 		if (AiReadLength() != 0) { MI_INTR_REG |= MI_INTR_AI; }
 		WriteFile( hSaveFile,RegMI,sizeof(DWORD)*4,&dwWritten,NULL);
@@ -1521,7 +1443,6 @@ BOOL Machine_SaveState(void) {
 		WriteFile( hSaveFile,RDRAM,RdramSize,&dwWritten,NULL);
 		WriteFile( hSaveFile,DMEM,0x1000,&dwWritten,NULL);
 		WriteFile( hSaveFile,IMEM,0x1000,&dwWritten,NULL);
-
 		CloseHandle(hSaveFile);
 		DeleteFile(ZipFile);
 		_splitpath( FileName, drive, dir, ZipFile, ext );
@@ -1533,27 +1454,22 @@ BOOL Machine_SaveState(void) {
 	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)String );
 	return TRUE;
 }
-
 void PauseCpu (void) {
 	DWORD Result;
 	if (!CPURunning) { return; }
-		
 	do {
 		Result = MsgWaitForMultipleObjects(1,&hPauseMutex,FALSE,INFINITE,QS_ALLINPUT);
 		if (Result != WAIT_OBJECT_0) {
 			MSG msg;
-
 			while (PeekMessage(&msg,NULL,0,0,PM_REMOVE) != 0) {
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
 		}
 	} while (Result != WAIT_OBJECT_0);
-
 	if (CPU_Paused || CPU_Action.Pause) {
 		HMENU hMenu = GetMenu(hMainWindow);
 		HMENU hSubMenu = GetSubMenu(hMenu,1);
-
 		if (CPU_Action.Pause) {
 			CPU_Action.Pause = FALSE;
 			CPU_Paused = FALSE;
@@ -1563,7 +1479,7 @@ void PauseCpu (void) {
 			return;
 		}
 		ResumeThread(hCPU);
-		SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MSG_CPU_RESUMED));	
+		SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MSG_CPU_RESUMED));
 		MenuSetText(hSubMenu, 1, GS(MENU_PAUSE),"F2");
 		ManualPaused = FALSE;
 		CPU_Paused = FALSE;
@@ -1573,12 +1489,9 @@ void PauseCpu (void) {
 	}
 	ReleaseMutex(hPauseMutex);
 }
-
-void RefreshScreen (void ){ 
+void RefreshScreen (void ){
 	static DWORD OLD_VI_V_SYNC_REG = 0, VI_INTR_TIME = 500000;
 	LARGE_INTEGER Time;
-
-
 	if (OLD_VI_V_SYNC_REG != VI_V_SYNC_REG) {
 		if (VI_V_SYNC_REG == 0) {
 			VI_INTR_TIME = 500000;
@@ -1591,7 +1504,6 @@ void RefreshScreen (void ){
 	}
 	ChangeTimer(ViTimer,Timers.Timer + Timers.NextTimer[ViTimer] + VI_INTR_TIME);
 	EmuAI_SetVICountPerFrame(VI_INTR_TIME);
-	
 	if ((VI_STATUS_REG & 0x10) != 0) {
 		if (ViFieldNumber == 0) {
 			ViFieldNumber = 1;
@@ -1601,16 +1513,14 @@ void RefreshScreen (void ){
 	} else {
 		ViFieldNumber = 0;
 	}
-	
 	if (LimitFPS) {	Timer_Process(NULL); }
 	if ((CurrentFrame & 7) == 0) {
 		//Disables Screen saver
 		//mouse_event(MOUSEEVENTF_MOVE,1,1,0,GetMessageExtraInfo());
 		//mouse_event(MOUSEEVENTF_MOVE,-1,-1,0,GetMessageExtraInfo());
-
 		QueryPerformanceCounter(&Time);
 		Frames[(CurrentFrame >> 3) % 8].QuadPart = Time.QuadPart - LastFrame.QuadPart;
-		LastFrame.QuadPart = Time.QuadPart;	
+		LastFrame.QuadPart = Time.QuadPart;
 		DisplayFPS();
 	}
         CurrentFrame += 1;
@@ -1622,61 +1532,52 @@ void RefreshScreen (void ){
 	}
 	if ((STATUS_REGISTER & STATUS_IE) != 0 ) { ApplyCheats(); }
 }
-
 void RunRsp (void) {
 	if ( ( SP_STATUS_REG & SP_STATUS_HALT ) == 0) {
 		if ( ( SP_STATUS_REG & SP_STATUS_BROKE ) == 0 ) {
 			DWORD Task = *( DWORD *)(DMEM + 0xFC0);
-
-			if (Task == 1 && (DPC_STATUS_REG & DPC_STATUS_FREEZE) != 0) 
+			if (Task == 1 && (DPC_STATUS_REG & DPC_STATUS_FREEZE) != 0)
 			{
 				return;
 			}
-			
 			switch (Task) {
-			case 1:  
-				DlistCount += 1; 
-				/*if ((DlistCount % 2) == 0) { 
+			case 1:
+				DlistCount += 1;
+				/*if ((DlistCount % 2) == 0) {
 					SP_STATUS_REG |= (0x0203 );
 					MI_INTR_REG |= MI_INTR_SP | MI_INTR_DP;
 					CheckInterrupts();
-					return; 
+					return;
 				}*/
 				break;
-			case 2:  
-				AlistCount += 1; 
+			case 2:
+				AlistCount += 1;
 				break;
 			}
 				DoRspCycles(100);
 			} else {
 				DoRspCycles(100);
 			}
-		} 
+		}
 	}
-
 void SetCoreToRunning  ( void ) {
 	CPU_Action.Stepping = FALSE;
 	PulseEvent( CPU_Action.hStepping );
 }
-
 void SetCoreToStepping ( void ) {
 	CPU_Action.Stepping = TRUE;
 }
-
 void StartEmulation ( void ) {
 	char drive[_MAX_DRIVE],dir[_MAX_DIR], fname[_MAX_FNAME],ext[_MAX_EXT];
 	char SaveFile[255];
 	DWORD ThreadID, count;
-
 	memset(&CPU_Action,0,sizeof(CPU_Action));
 	CPU_Action.hStepping = CreateEvent( NULL, FALSE, FALSE, NULL);
 	WrittenToRom = FALSE;
-
+	memset(N64MEM, 0, RdramSize);
 	InitilizeTLB();
 	InitalizeR4300iRegisters(LoadPifRom(*(ROM + 0x3D)),*(ROM + 0x3D),GetCicChipID(ROM));
-
 	BuildInterpreter();
-
 	RecompPos = RecompCode;
 	Timers.CurrentTimerType = -1;
 	Timers.Timer = 0;
@@ -1722,13 +1623,10 @@ void StartEmulation ( void ) {
 	CPU_Action.SaveState = TRUE;
 	}
 }
-
 void StepOpcode        ( void ) {
 	PulseEvent( CPU_Action.hStepping );
 }
-
 void TimerDone (void) {
-
 	switch (Timers.CurrentTimerType) {
 	case CompareTimer:
 		FAKE_CAUSE_REGISTER |= CAUSE_IP7;

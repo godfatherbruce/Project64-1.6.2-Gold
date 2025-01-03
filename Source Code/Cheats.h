@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -24,18 +24,14 @@
  *
  */
 #define MaxGSEntries	100
-
 typedef struct {
 	DWORD Command;
 	WORD  Value;
 } GAMESHARK_CODE;
-
 typedef struct {
 	GAMESHARK_CODE Code[MaxGSEntries];
 } CHEAT_CODES;
-
 char * GetCheatIniFileName ( void );
-
 void ChangeRomCheats	( HWND hParent );
 void CloseCheatWindow	( void );
 void DisableAllCheats   ( void );
@@ -43,8 +39,6 @@ void ApplyCheats		( void );
 void LoadCheats			( void );
 void ManageCheats		( HWND hParent );
 void ApplyGSButton		(void);
-
 LRESULT CALLBACK Cheat_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
 // *** Add in Build 53
 extern HWND hManageWindow;

@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -26,27 +26,22 @@
 enum x86RegValues {
 	x86_Any	= 0,x86_EAX,x86_EBX,x86_ECX,x86_EDX,x86_ESI,x86_EDI,x86_EBP, x86_ESP, x86_Any8Bit
 };
-
 enum x86FpuValues {
 	x86_ST0,x86_ST1,x86_ST2,x86_ST3,x86_ST4,x86_ST5,x86_ST6,x86_ST7
 };
-
 #define x86_Name(Reg)   (Reg) == x86_EAX  ? "eax" : (Reg) == x86_EBX  ? "ebx" :\
 						(Reg) == x86_ECX  ? "ecx" : (Reg) == x86_EDX  ? "edx" :\
 						(Reg) == x86_ESI  ? "esi" :	(Reg) == x86_EDI  ? "edi" :\
 						(Reg) == x86_ESP  ? "esp" : (Reg) == x86_EBP  ? "ebp" :\
 						"Unknown x86 Register"
-
 #define x86Byte_Name(Reg)	(Reg) == x86_EAX  ? "al" : (Reg) == x86_EBX  ? "bl" :\
 							(Reg) == x86_ECX  ? "cl" : (Reg) == x86_EDX  ? "dl" :\
 							"Unknown x86 Register"
-
 #define x86Half_Name(Reg)   (Reg) == x86_EAX  ? "ax" : (Reg) == x86_EBX  ? "bx" :\
 							(Reg) == x86_ECX  ? "cx" : (Reg) == x86_EDX  ? "dx" :\
 							(Reg) == x86_ESI  ? "si" :	(Reg) == x86_EDI  ? "di" :\
 							(Reg) == x86_ESP  ? "sp" : (Reg) == x86_EBP  ? "bp" :\
 							"Unknown x86 Register"
-
 void AdcX86regToVariable             ( int x86reg, void * Variable, char * VariableName );
 void AdcConstToVariable              ( void *Variable, char *VariableName, BYTE Constant );
 void AdcConstToX86Reg                ( int x86Reg, DWORD Const );
@@ -199,8 +194,6 @@ void TestX86RegToX86Reg              ( int Destination, int Source );
 void XorConstToX86Reg                ( int x86Reg, DWORD Const );
 void XorX86RegToX86Reg               ( int Source, int Destination );
 void XorVariableToX86reg             ( void *Variable, char *VariableName, int x86reg );
-
-
 void fpuAbs					         ( void );
 void fpuAddDword			         ( void *Variable, char *VariableName );
 void fpuAddDwordRegPointer           ( int x86Pointer );
@@ -264,4 +257,3 @@ void fpuSubQwordRegPointer           ( int x86Pointer );
 void fpuSubQwordReverse              ( void *Variable, char *VariableName );
 void fpuSubReg				         ( int x86reg );
 void fpuSubRegPop			         ( int x86reg );
-

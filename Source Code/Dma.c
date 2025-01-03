@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -27,9 +27,7 @@
 #include <stdio.h>
 #include "main.h"
 #include "CPU.h"
-
 int DMAUsed;
-
 void FirstDMA (void) {
 	switch (GetCicChipID(ROM)) {
 	case 1: *(DWORD *)&N64MEM[0x318] = RdramSize; break;
@@ -40,17 +38,14 @@ void FirstDMA (void) {
 	case 9: *(DWORD *)&N64MEM[0x318] = RdramSize; break;
 	}
 }
-
 void PI_DMA_READ (void) {
 //	PI_STATUS_REG |= PI_STATUS_DMA_BUSY;
-
 	if ( PI_DRAM_ADDR_REG + PI_RD_LEN_REG + 1 > RdramSize) {
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
 		CheckInterrupts();
 		return;
 	}
-
 	if ( PI_CART_ADDR_REG >= 0x08000000 && PI_CART_ADDR_REG <= 0x08010000) {
 		if (SaveUsing == Auto) { SaveUsing = SRAM; }
 		if (SaveUsing == SRAM) {
@@ -87,10 +82,8 @@ void PI_DMA_READ (void) {
 	CheckInterrupts();
 	return;
 }
-
 void PI_DMA_WRITE (void) {
-	DWORD i;	
-
+	DWORD i;
 	PI_STATUS_REG |= PI_STATUS_DMA_BUSY;
 	if ( PI_DRAM_ADDR_REG + PI_WR_LEN_REG + 1 > RdramSize) {
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
@@ -98,7 +91,6 @@ void PI_DMA_WRITE (void) {
 		CheckInterrupts();
 		return;
 	}
-
 	if ( PI_CART_ADDR_REG >= 0x08000000 && PI_CART_ADDR_REG <= 0x08010000) {
 		if (SaveUsing == Auto) { SaveUsing = SRAM; }
 		if (SaveUsing == SRAM) {
@@ -124,7 +116,6 @@ void PI_DMA_WRITE (void) {
 		}
 		return;
 	}
-	
 	if ( PI_CART_ADDR_REG >= 0x06000000 && PI_CART_ADDR_REG < 0x08000000) {
 		PI_CART_ADDR_REG -= 0x06000000;
 		if (PI_CART_ADDR_REG + PI_WR_LEN_REG + 1 < RomFileSize) {
@@ -142,10 +133,9 @@ void PI_DMA_WRITE (void) {
 			}
 		}
 		PI_CART_ADDR_REG += 0x06000000;
-
-		if (!DMAUsed) { 
+		if (!DMAUsed) {
 			DMAUsed = TRUE;
-			FirstDMA(); 
+			FirstDMA();
 		}
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
@@ -155,7 +145,6 @@ void PI_DMA_WRITE (void) {
 		CheckTimer();
 		return;
 	}
-
 	if ( PI_CART_ADDR_REG >= 0x10000000 && PI_CART_ADDR_REG <= 0x1FBFFFFF) {
 		PI_CART_ADDR_REG -= 0x10000000;
 		if (PI_CART_ADDR_REG + PI_WR_LEN_REG + 1 < RomFileSize) {
@@ -173,10 +162,9 @@ void PI_DMA_WRITE (void) {
 			}
 		}
 		PI_CART_ADDR_REG += 0x10000000;
-
-		if (!DMAUsed) { 
+		if (!DMAUsed) {
 			DMAUsed = TRUE;
-			FirstDMA(); 
+			FirstDMA();
 		}
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
@@ -189,21 +177,16 @@ void PI_DMA_WRITE (void) {
 	PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 	MI_INTR_REG |= MI_INTR_PI;
 	CheckInterrupts();
-
 }
-
 void SI_DMA_READ (void) {
 	BYTE * PifRamPos = &PIF_Ram[0];
-	
 	if ((int)SI_DRAM_ADDR_REG > (int)RdramSize) {
 		return;
 	}
-	
 	PifRamRead();
 	SI_DRAM_ADDR_REG &= 0xFFFFFFF8;
 	if ((int)SI_DRAM_ADDR_REG < 0) {
 		int count, RdramPos;
-
 		RdramPos = (int)SI_DRAM_ADDR_REG;
 		for (count = 0; count < 0x40; count++, RdramPos++) {
 			if (RdramPos < 0) { continue; }
@@ -215,7 +198,7 @@ void SI_DMA_READ (void) {
 			mov edi, dword ptr [edi]
 			add edi, N64MEM
 			mov ecx, PifRamPos
-			mov edx, 0		
+			mov edx, 0
 	memcpyloop:
 			mov eax, dword ptr [ecx + edx]
 			bswap eax
@@ -234,7 +217,6 @@ void SI_DMA_READ (void) {
 			jb memcpyloop
 		}
 	}
-
 	if (DelaySI) {
 		ChangeTimer(SiTimer,0x900);
 	} else {
@@ -243,18 +225,14 @@ void SI_DMA_READ (void) {
 		CheckInterrupts();
 	}
 }
-
 void SI_DMA_WRITE (void) {
 	BYTE * PifRamPos = &PIF_Ram[0];
-	
 	if ((int)SI_DRAM_ADDR_REG > (int)RdramSize) {
 		return;
 	}
-	
 	SI_DRAM_ADDR_REG &= 0xFFFFFFF8;
 	if ((int)SI_DRAM_ADDR_REG < 0) {
 		int count, RdramPos;
-
 		RdramPos = (int)SI_DRAM_ADDR_REG;
 		for (count = 0; count < 0x40; count++, RdramPos++) {
 			if (RdramPos < 0) { PIF_Ram[count] = 0; continue; }
@@ -266,7 +244,7 @@ void SI_DMA_WRITE (void) {
 			mov ecx, dword ptr [ecx]
 			add ecx, N64MEM
 			mov edi, PifRamPos
-			mov edx, 0		
+			mov edx, 0
 	memcpyloop:
 			mov eax, dword ptr [ecx + edx]
 			bswap eax
@@ -285,9 +263,7 @@ void SI_DMA_WRITE (void) {
 			jb memcpyloop
 		}
 	}
-
 	PifRamWrite();
-	
 	if (DelaySI) {
 		ChangeTimer(SiTimer,0x900);
 	} else {
@@ -296,20 +272,16 @@ void SI_DMA_WRITE (void) {
 		CheckInterrupts();
 	}
 }
-
-void SP_DMA_READ (void) { 
+void SP_DMA_READ (void) {
 	SP_DRAM_ADDR_REG &= 0x1FFFFFFF;
-
 	if (SP_DRAM_ADDR_REG > RdramSize) {
 		SP_DMA_BUSY_REG = 0;
 		SP_STATUS_REG  &= ~SP_STATUS_DMA_BUSY;
 		return;
 	}
-	
 	if (SP_RD_LEN_REG + 1  + (SP_MEM_ADDR_REG & 0xFFF) > 0x1000) {
-		return;		
+		return;
 	}
-
 	if ((SP_MEM_ADDR_REG & 3) != 0 || (SP_DRAM_ADDR_REG & 3) != 0 || ((SP_RD_LEN_REG + 1) & 3) != 0) {
 		DisplayErrorFatal("Nonstandard DMA transfer.\n\nEmulation ending");
 		ExitThread(0);
@@ -321,27 +293,21 @@ void SP_DMA_READ (void) {
 	*/
 	memcpy( DMEM + (SP_MEM_ADDR_REG & 0x1FFF), N64MEM + SP_DRAM_ADDR_REG,
 		SP_RD_LEN_REG + 1 );
-		
 	SP_DMA_BUSY_REG = 0;
 	SP_STATUS_REG  &= ~SP_STATUS_DMA_BUSY;
 }
-
-void SP_DMA_WRITE (void) { 
+void SP_DMA_WRITE (void) {
 	if (SP_DRAM_ADDR_REG > RdramSize) {
 		return;
 	}
-	
 	if (SP_WR_LEN_REG + 1 + (SP_MEM_ADDR_REG & 0xFFF) > 0x1000) {
-		return;		
+		return;
 	}
-
 	if ((SP_MEM_ADDR_REG & 3) != 0) { _asm int 3 }
 	if ((SP_DRAM_ADDR_REG & 3) != 0) { _asm int 3 }
 	if (((SP_WR_LEN_REG + 1) & 3) != 0) { _asm int 3 }
-
 	memcpy( N64MEM + SP_DRAM_ADDR_REG, DMEM + (SP_MEM_ADDR_REG & 0x1FFF),
 		SP_WR_LEN_REG + 1);
-		
 	SP_DMA_BUSY_REG = 0;
 	SP_STATUS_REG  &= ~SP_STATUS_DMA_BUSY;
 }

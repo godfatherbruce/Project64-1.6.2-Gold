@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -23,12 +23,10 @@
  * should be forwarded to them so if they want them.
  *
  */
-
 #include <windows.h>
 #include <stdio.h>
 #include "main.h"
 #include "CPU.h"
-
 enum TFlashRAM_Modes {
 	FlashRAM_MODE_NOPES = 0,
 	FlashRAM_MODE_ERASE = 1,
@@ -36,24 +34,20 @@ enum TFlashRAM_Modes {
 	FlashRAM_MODE_READ,
 	FlashRAM_MODE_STATUS,
 };
-
 BOOL LoadFlashRAM (void);
-
 DWORD FlashRAM_Offset, FlashFlag = FlashRAM_MODE_NOPES;
 static HANDLE hFlashRAMFile = NULL;
 BYTE * FlashRAMPointer;
 QWORD FlashStatus = 0;
-
 void DmaFromFlashRAM(BYTE * dest, int StartOffset, int len) {
 	BYTE FlipBuffer[0x10000];
 	DWORD dwRead, count;
-
 	switch (FlashFlag) {
 	case FlashRAM_MODE_READ:
 		if (hFlashRAMFile == NULL) {
 			if (!LoadFlashRAM()) { return; }
 		}
-		if (len > 0x10000) { 
+		if (len > 0x10000) {
 			len = 0x10000;
 		}
 		if ((len & 3) != 0) {
@@ -61,7 +55,7 @@ void DmaFromFlashRAM(BYTE * dest, int StartOffset, int len) {
 		}
 		memset(FlipBuffer,0,sizeof(FlipBuffer));
 		StartOffset = StartOffset << 1;
-		SetFilePointer(hFlashRAMFile,StartOffset,NULL,FILE_BEGIN);	
+		SetFilePointer(hFlashRAMFile,StartOffset,NULL,FILE_BEGIN);
 		ReadFile(hFlashRAMFile,FlipBuffer,len,&dwRead,NULL);
 		for (count = dwRead; (int)count < len; count ++) {
 			FlipBuffer[count] = 0xFF;
@@ -71,7 +65,6 @@ void DmaFromFlashRAM(BYTE * dest, int StartOffset, int len) {
 			lea ecx, [FlipBuffer]
 			mov edx, 0
 			mov ebx, len
-
 		memcpyloop:
 			mov eax, dword ptr [ecx + edx]
 			;bswap eax
@@ -89,7 +82,6 @@ void DmaFromFlashRAM(BYTE * dest, int StartOffset, int len) {
 		break;
 	}
 }
-
 void DmaToFlashRAM(BYTE * Source, int StartOffset, int len) {
 	switch (FlashFlag) {
 	case FlashRAM_MODE_WRITE:
@@ -97,7 +89,6 @@ void DmaToFlashRAM(BYTE * Source, int StartOffset, int len) {
 		break;
 	}
 }
-
 DWORD ReadFromFlashStatus (DWORD PAddr) {
 	switch (PAddr) {
 	case 0x08000000: return (DWORD)(FlashStatus >> 32);
@@ -106,13 +97,10 @@ DWORD ReadFromFlashStatus (DWORD PAddr) {
 	}
 	return (DWORD)(FlashStatus >> 32);
 }
-
 BOOL LoadFlashRAM (void) {
 	char File[255], Directory[255];
-
 	GetAutoSaveDir(Directory);
 	sprintf(File,"%s%s.fla",Directory,RomName);
-	
 	hFlashRAMFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
 	if (hFlashRAMFile == INVALID_HANDLE_VALUE) {
@@ -133,13 +121,11 @@ BOOL LoadFlashRAM (void) {
 	}
 	return TRUE;
 }
-
 void WriteToFlashCommand(DWORD FlashRAM_Command) {
 	BYTE EmptyBlock[128];
 	DWORD dwWritten;
-
 	switch (FlashRAM_Command & 0xFF000000) {
-	case 0xD2000000: 
+	case 0xD2000000:
 		switch (FlashFlag) {
 		case FlashRAM_MODE_NOPES: break;
 		case FlashRAM_MODE_READ: break;
@@ -149,7 +135,7 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 			if (hFlashRAMFile == NULL) {
 				if (!LoadFlashRAM()) { return; }
 			}
-			SetFilePointer(hFlashRAMFile,FlashRAM_Offset,NULL,FILE_BEGIN);	
+			SetFilePointer(hFlashRAMFile,FlashRAM_Offset,NULL,FILE_BEGIN);
 			WriteFile(hFlashRAMFile,EmptyBlock,128,&dwWritten,NULL);
 			break;
 		case FlashRAM_MODE_WRITE:
@@ -159,13 +145,11 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 			{
 				BYTE FlipBuffer[128];
 				DWORD dwWritten;
-
 				memset(FlipBuffer,0,sizeof(FlipBuffer));
 				_asm {
 					lea edi, [FlipBuffer]
 					mov ecx, FlashRAMPointer
 					mov edx, 0
-
 				memcpyloop:
 					mov eax, dword ptr [ecx + edx]
 					;bswap eax
@@ -174,8 +158,7 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 					cmp edx, 128
 					jb memcpyloop
 				}
-
-				SetFilePointer(hFlashRAMFile,FlashRAM_Offset,NULL,FILE_BEGIN);	
+				SetFilePointer(hFlashRAMFile,FlashRAM_Offset,NULL,FILE_BEGIN);
 				WriteFile(hFlashRAMFile,FlipBuffer,128,&dwWritten,NULL);
 			}
 			break;
@@ -184,11 +167,11 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 		}
 		FlashFlag = FlashRAM_MODE_NOPES;
 		break;
-	case 0xE1000000: 
+	case 0xE1000000:
 		FlashFlag = FlashRAM_MODE_STATUS;
 		FlashStatus = 0x1111800100C20000;
 		break;
-	case 0xF0000000: 
+	case 0xF0000000:
 		FlashFlag = FlashRAM_MODE_READ;
 		FlashStatus = 0x11118004F0000000;
 		break;
@@ -199,7 +182,7 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 		FlashFlag = FlashRAM_MODE_ERASE;
 		FlashStatus = 0x1111800800C20000;
 		break;
-	case 0xB4000000: 
+	case 0xB4000000:
 		FlashFlag = FlashRAM_MODE_WRITE; //????
 		break;
 	case 0xA5000000:
@@ -208,4 +191,3 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 		break;
 	}
 }
-

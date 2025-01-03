@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -23,52 +23,42 @@
  * should be forwarded to them so if they want them.
  *
  */
-#ifndef __Plugin_h 
-#define __Plugin_h 
-
+#ifndef __Plugin_h
+#define __Plugin_h
 #define DefaultGFXDll				"DefaultVideo.dll"
 #define DefaultRSPDll				"DefaultRSP.dll"
 #define DefaultAudioDll				"DefaultAudio.dll"
 #define DefaultControllerDll		"DefaultInput.dll"
-
 #define PLUGIN_TYPE_RSP				1
 #define PLUGIN_TYPE_GFX				2
 #define PLUGIN_TYPE_AUDIO			3
 #define PLUGIN_TYPE_CONTROLLER		4
-
 #define SYSTEM_NTSC					0
 #define SYSTEM_PAL					1
 #define SYSTEM_MPAL					2
-
 typedef struct {
 	WORD Version;        /* Should be set to 1 */
 	WORD Type;           /* Set to PLUGIN_TYPE_GFX */
 	char Name[100];      /* Name of the DLL */
-
 	/* If DLL supports memory these memory options then set them to TRUE or FALSE
 	   if it does not support it */
-	BOOL NormalMemory;   /* a normal BYTE array */ 
+	BOOL NormalMemory;   /* a normal BYTE array */
 	BOOL MemoryBswaped;  /* a normal BYTE array where the memory has been pre
 	                          bswap on a dword (32 bits) boundry */
 } PLUGIN_INFO;
-
 typedef struct {
 	HWND hWnd;			/* Render window */
 	HWND hStatusBar;    /* if render window does not have a status bar then this is NULL */
-
 	BOOL MemoryBswaped;    // If this is set to TRUE, then the memory has been pre
-	                       //   bswap on a dword (32 bits) boundry 
+	                       //   bswap on a dword (32 bits) boundry
 						   //	eg. the first 8 bytes are stored like this:
 	                       //        4 3 2 1   8 7 6 5
-
 	BYTE * HEADER;	// This is the rom header (first 40h bytes of the rom
 					// This will be in the same memory format as the rest of the memory.
 	BYTE * RDRAM;
 	BYTE * DMEM;
 	BYTE * IMEM;
-
 	DWORD * MI__INTR_REG;
-
 	DWORD * DPC__START_REG;
 	DWORD * DPC__END_REG;
 	DWORD * DPC__CURRENT_REG;
@@ -77,7 +67,6 @@ typedef struct {
 	DWORD * DPC__BUFBUSY_REG;
 	DWORD * DPC__PIPEBUSY_REG;
 	DWORD * DPC__TMEM_REG;
-
 	DWORD * VI__STATUS_REG;
 	DWORD * VI__ORIGIN_REG;
 	DWORD * VI__WIDTH_REG;
@@ -92,10 +81,8 @@ typedef struct {
 	DWORD * VI__V_BURST_REG;
 	DWORD * VI__X_SCALE_REG;
 	DWORD * VI__Y_SCALE_REG;
-
 	void (__cdecl *CheckInterrupts)( void );
 } GFX_INFO;
-
 typedef struct {
 	HINSTANCE hInst;
 	BOOL MemoryBswaped;    /* If this is set to TRUE, then the memory has been pre
@@ -103,9 +90,7 @@ typedef struct {
 	BYTE * RDRAM;
 	BYTE * DMEM;
 	BYTE * IMEM;
-
 	DWORD * MI__INTR_REG;
-
 	DWORD * SP__MEM_ADDR_REG;
 	DWORD * SP__DRAM_ADDR_REG;
 	DWORD * SP__RD_LEN_REG;
@@ -115,7 +100,6 @@ typedef struct {
 	DWORD * SP__DMA_BUSY_REG;
 	DWORD * SP__PC_REG;
 	DWORD * SP__SEMAPHORE_REG;
-
 	DWORD * DPC__START_REG;
 	DWORD * DPC__END_REG;
 	DWORD * DPC__CURRENT_REG;
@@ -124,32 +108,27 @@ typedef struct {
 	DWORD * DPC__BUFBUSY_REG;
 	DWORD * DPC__PIPEBUSY_REG;
 	DWORD * DPC__TMEM_REG;
-
 	void ( __cdecl *CheckInterrupts)( void );
 	void (__cdecl *ProcessDlist)( void );
 	void (__cdecl *ProcessAlist)( void );
 	void (__cdecl *ProcessRdpList)( void );
 } RSP_INFO_1_0;
-
 typedef struct {
 	BOOL Present;
 	BOOL RawData;
 	int  Plugin;
 } CONTROL;
-
 typedef struct {
 	HWND hMainWindow;
 	HINSTANCE hinst;
-
 	BOOL MemoryBswaped;		// If this is set to TRUE, then the memory has been pre
-							//   bswap on a dword (32 bits) boundry, only effects header. 
+							//   bswap on a dword (32 bits) boundry, only effects header.
 							//	eg. the first 8 bytes are stored like this:
 							//        4 3 2 1   8 7 6 5
 	BYTE * HEADER;			// This is the rom header (first 40h bytes of the rom)
 	CONTROL *Controls;		// A pointer to an array of 4 controllers .. eg:
 							// CONTROL Controls[4];
 } CONTROL_INFO;
-
 typedef struct {
 	HINSTANCE hInst;
 	BOOL MemoryBswaped;    /* If this is set to TRUE, then the memory has been pre
@@ -157,9 +136,7 @@ typedef struct {
 	BYTE * RDRAM;
 	BYTE * DMEM;
 	BYTE * IMEM;
-
 	DWORD * MI__INTR_REG;
-
 	DWORD * SP__MEM_ADDR_REG;
 	DWORD * SP__DRAM_ADDR_REG;
 	DWORD * SP__RD_LEN_REG;
@@ -169,7 +146,6 @@ typedef struct {
 	DWORD * SP__DMA_BUSY_REG;
 	DWORD * SP__PC_REG;
 	DWORD * SP__SEMAPHORE_REG;
-
 	DWORD * DPC__START_REG;
 	DWORD * DPC__END_REG;
 	DWORD * DPC__CURRENT_REG;
@@ -178,20 +154,17 @@ typedef struct {
 	DWORD * DPC__BUFBUSY_REG;
 	DWORD * DPC__PIPEBUSY_REG;
 	DWORD * DPC__TMEM_REG;
-
 	void ( __cdecl *CheckInterrupts)( void );
 	void (__cdecl *ProcessDlist)( void );
 	void (__cdecl *ProcessAlist)( void );
 	void (__cdecl *ProcessRdpList)( void );
 	void (__cdecl *ShowCFB)( void );
 } RSP_INFO_1_1;
-
 typedef struct {
 	HWND hwnd;
 	HINSTANCE hinst;
-
 	BOOL MemoryBswaped;    // If this is set to TRUE, then the memory has been pre
-	                       //   bswap on a dword (32 bits) boundry 
+	                       //   bswap on a dword (32 bits) boundry
 						   //	eg. the first 8 bytes are stored like this:
 	                       //        4 3 2 1   8 7 6 5
 	BYTE * HEADER;	// This is the rom header (first 40h bytes of the rom
@@ -199,20 +172,15 @@ typedef struct {
 	BYTE * RDRAM;
 	BYTE * DMEM;
 	BYTE * IMEM;
-
 	DWORD * MI__INTR_REG;
-
 	DWORD * AI__DRAM_ADDR_REG;
 	DWORD * AI__LEN_REG;
 	DWORD * AI__CONTROL_REG;
 	DWORD * AI__STATUS_REG;
 	DWORD * AI__DACRATE_REG;
 	DWORD * AI__BITRATE_REG;
-
 	void (__cdecl *CheckInterrupts)( void );
 } AUDIO_INFO;
-
-
 typedef union {
 	DWORD Value;
 	struct {
@@ -224,7 +192,6 @@ typedef union {
 		unsigned Z_TRIG       : 1;
 		unsigned B_BUTTON     : 1;
 		unsigned A_BUTTON     : 1;
-
 		unsigned R_CBUTTON    : 1;
 		unsigned L_CBUTTON    : 1;
 		unsigned D_CBUTTON    : 1;
@@ -233,23 +200,18 @@ typedef union {
 		unsigned L_TRIG       : 1;
 		unsigned Reserved1    : 1;
 		unsigned Reserved2    : 1;
-
 		signed   Y_AXIS       : 8;
-
 		signed   X_AXIS       : 8;
 	};
 } BUTTONS;
-
 /*** Conteroller plugin's ****/
 #define PLUGIN_NONE					1
 #define PLUGIN_MEMPAK				2
-#define PLUGIN_RUMBLE_PAK			3 
+#define PLUGIN_RUMBLE_PAK			3
 #define PLUGIN_TANSFER_PAK			4 // not implemeted for non raw data
 #define PLUGIN_RAW					5 // the controller plugin is passed in raw data
-
 /******** All DLLs have this function **************/
 void (__cdecl *GetDllInfo)             ( PLUGIN_INFO * PluginInfo );
-
 /********** RSP DLL: Functions *********************/
 void (__cdecl *RSPCloseDLL)        ( void );
 void (__cdecl *RSPDllAbout)        ( HWND hWnd );
@@ -258,7 +220,6 @@ void (__cdecl *RSPRomClosed)       ( void );
 DWORD (__cdecl *DoRspCycles)       ( DWORD );
 void (__cdecl *InitiateRSP_1_0)    ( RSP_INFO_1_0 Rsp_Info, DWORD * Cycles);
 void (__cdecl *InitiateRSP_1_1)    ( RSP_INFO_1_1 Rsp_Info, DWORD * Cycles);
-
 /********** GFX DLL: Functions *********************/
 void (__cdecl *CaptureScreen)      ( char * );
 void (__cdecl *ChangeWindow)       ( void );
@@ -278,7 +239,6 @@ void (__cdecl *ShowCFB)			   ( void );
 void (__cdecl *UpdateScreen)       ( void );
 void (__cdecl *ViStatusChanged)    ( void );
 void (__cdecl *ViWidthChanged)     ( void );
-
 /************ Audio DLL: Functions *****************/
 void (__cdecl *AiCloseDLL)       ( void );
 void (__cdecl *AiDacrateChanged) ( int SystemType );
@@ -291,7 +251,6 @@ void (__cdecl *AiRomClosed)      ( void );
 void (__cdecl *AiUpdate)         ( BOOL Wait );
 BOOL (__cdecl *InitiateAudio)    ( AUDIO_INFO Audio_Info );
 void (__cdecl *ProcessAList)     ( void );
-
 /********** Controller DLL: Functions **************/
 void (__cdecl *ContCloseDLL)     ( void );
 void (__cdecl *ControllerCommand)( int Control, BYTE * Command );
@@ -306,7 +265,6 @@ void (__cdecl *ContRomClosed)    ( void );
 void (__cdecl *WM_KeyDown)       ( WPARAM wParam, LPARAM lParam );
 void (__cdecl *WM_KeyUp)         ( WPARAM wParam, LPARAM lParam );
 void (__cdecl *RumbleCommand)	 ( int Control, BOOL bRumble );
-
 /********** Plugin: Functions *********************/
 void GetPluginDir        ( char * Directory );
 void GetSnapShotDir      ( char * Directory );
@@ -315,7 +273,6 @@ void SetupPlugins        ( HWND hWnd );
 void SetupPluginScreen   ( HWND hDlg );
 void ResetAudio          ( HWND hWnd );
 void ShutdownPlugins     ( void );
-
 /********** External Global Variables ***************/
 #define MaxDlls	100
 extern char RspDLL[100], GfxDLL[100], AudioDLL[100],ControllerDLL[100], * PluginNames[MaxDlls];
@@ -323,5 +280,4 @@ extern DWORD PluginCount, RspTaskValue, AudioIntrReg;
 extern CONTROL Controllers[4];
 extern WORD RSPVersion;
 extern BOOL PluginsInitilized;
-
 #endif

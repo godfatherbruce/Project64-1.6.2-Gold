@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -69,7 +69,6 @@ void _fastcall r4300i_SC             ( void );
 void _fastcall r4300i_SWC1           ( void );
 void _fastcall r4300i_SDC1           ( void );
 void _fastcall r4300i_SD             ( void );
-
 /********************** R4300i OpCodes: Special **********************/
 void _fastcall r4300i_SPECIAL_SLL    ( void );
 void _fastcall r4300i_SPECIAL_SRL    ( void );
@@ -118,7 +117,6 @@ void _fastcall r4300i_SPECIAL_DSRA   ( void );
 void _fastcall r4300i_SPECIAL_DSLL32 ( void );
 void _fastcall r4300i_SPECIAL_DSRL32 ( void );
 void _fastcall r4300i_SPECIAL_DSRA32 ( void );
-
 /********************** R4300i OpCodes: RegImm **********************/
 void _fastcall r4300i_REGIMM_BLTZ    ( void );
 void _fastcall r4300i_REGIMM_BGEZ    ( void );
@@ -126,18 +124,15 @@ void _fastcall r4300i_REGIMM_BLTZL   ( void );
 void _fastcall r4300i_REGIMM_BGEZL   ( void );
 void _fastcall r4300i_REGIMM_BLTZAL  ( void );
 void _fastcall r4300i_REGIMM_BGEZAL  ( void );
-
 /************************** COP0 functions **************************/
 void _fastcall r4300i_COP0_MF        ( void );
 void _fastcall r4300i_COP0_MT        ( void );
-
 /************************** COP0 CO functions ***********************/
 void _fastcall r4300i_COP0_CO_TLBR   ( void );
 void _fastcall r4300i_COP0_CO_TLBWI  ( void );
 void _fastcall r4300i_COP0_CO_TLBWR  ( void );
 void _fastcall r4300i_COP0_CO_TLBP   ( void );
 void _fastcall r4300i_COP0_CO_ERET   ( void );
-
 /************************** COP1 functions **************************/
 void _fastcall r4300i_COP1_MF        ( void );
 void _fastcall r4300i_COP1_DMF       ( void );
@@ -145,13 +140,11 @@ void _fastcall r4300i_COP1_CF        ( void );
 void _fastcall r4300i_COP1_MT        ( void );
 void _fastcall r4300i_COP1_DMT       ( void );
 void _fastcall r4300i_COP1_CT        ( void );
-
 /************************* COP1: BC1 functions ***********************/
 void _fastcall r4300i_COP1_BCF       ( void );
 void _fastcall r4300i_COP1_BCT       ( void );
 void _fastcall r4300i_COP1_BCFL      ( void );
 void _fastcall r4300i_COP1_BCTL      ( void );
-
 /************************** COP1: S functions ************************/
 void _fastcall r4300i_COP1_S_ADD     ( void );
 void _fastcall r4300i_COP1_S_SUB     ( void );
@@ -172,7 +165,6 @@ void _fastcall r4300i_COP1_S_CVT_D   ( void );
 void _fastcall r4300i_COP1_S_CVT_W   ( void );
 void _fastcall r4300i_COP1_S_CVT_L   ( void );
 void _fastcall r4300i_COP1_S_CMP     ( void );
-
 /************************** COP1: D functions ************************/
 void _fastcall r4300i_COP1_D_ADD     ( void );
 void _fastcall r4300i_COP1_D_SUB     ( void );
@@ -182,7 +174,7 @@ void _fastcall r4300i_COP1_D_SQRT    ( void );
 void _fastcall r4300i_COP1_D_ABS     ( void );
 void _fastcall r4300i_COP1_D_MOV     ( void );
 void _fastcall r4300i_COP1_D_NEG     ( void );
-void _fastcall r4300i_COP1_D_TRUNC_L ( void );	//added by Witten	
+void _fastcall r4300i_COP1_D_TRUNC_L ( void );	//added by Witten
 void _fastcall r4300i_COP1_D_CEIL_L  ( void );	//added by Witten
 void _fastcall r4300i_COP1_D_FLOOR_L ( void );	//added by Witten
 void _fastcall r4300i_COP1_D_ROUND_W ( void );
@@ -193,18 +185,14 @@ void _fastcall r4300i_COP1_D_CVT_S   ( void );
 void _fastcall r4300i_COP1_D_CVT_W   ( void );
 void _fastcall r4300i_COP1_D_CVT_L   ( void );
 void _fastcall r4300i_COP1_D_CMP     ( void );
-
 /************************** COP1: W functions ************************/
 void _fastcall r4300i_COP1_W_CVT_S   ( void );
 void _fastcall r4300i_COP1_W_CVT_D   ( void );
-
 /************************** COP1: L functions ************************/
 void _fastcall r4300i_COP1_L_CVT_S   ( void );
 void _fastcall r4300i_COP1_L_CVT_D   ( void );
-
-/************************** Other functions **************************/	
+/************************** Other functions **************************/
 void _fastcall  R4300i_UnknownOpcode ( void );
-
 extern DWORD SWL_MASK[4], SWR_MASK[4], LWL_MASK[4], LWR_MASK[4];
 extern int SWL_SHIFT[4], SWR_SHIFT[4], LWL_SHIFT[4], LWR_SHIFT[4];
 extern int RoundingModel;

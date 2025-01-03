@@ -1,75 +1,53 @@
 // Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
-
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
 #include "afxres.h"
-
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
-
 /////////////////////////////////////////////////////////////////////////////
 // English (United States) resources
-
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
 //
-
 IDB_BITMAP1             BITMAP                  "tri-state.bmp"
-
-
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Icon
 //
-
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-
 ICON                    ICON                    "pj64.ico"
-
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
-
-
 /////////////////////////////////////////////////////////////////////////////
 // Dutch (Belgium) resources
-
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NLB)
 LANGUAGE LANG_DUTCH, SUBLANG_DUTCH_BELGIAN
 #pragma code_page(1252)
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // DESIGNINFO
 //
-
 #endif    // Dutch (Belgium) resources
 /////////////////////////////////////////////////////////////////////////////
-
-
 /////////////////////////////////////////////////////////////////////////////
 // English (Australia) resources
-
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENA)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
 #pragma code_page(1252)
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
-
 ROM_INFO_DIALOG DIALOGEX 0, 0, 229, 147
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "ROM Information"
@@ -93,7 +71,6 @@ BEGIN
     LTEXT           "Location:",IDC_LOCATION,11,45,64,10
     EDITTEXT        IDC_INFO_LOCATION,77,45,139,12,ES_AUTOHSCROLL | ES_READONLY
 END
-
 IDD_Settings_PlugSel DIALOGEX 0, 0, 231, 206
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_TOOLWINDOW
@@ -113,7 +90,6 @@ BEGIN
     PUSHBUTTON      "About",CONT_ABOUT,176,114,44,13,WS_DISABLED
     PUSHBUTTON      "About",RSP_ABOUT,176,150,44,13,WS_DISABLED
 END
-
 IDD_Settings_Directory DIALOG 0, 0, 231, 206
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP
 FONT 8, "MS Sans Serif"
@@ -140,7 +116,6 @@ BEGIN
     EDITTEXT        IDC_SNAP_DIR,26,182,170,12,ES_AUTOHSCROLL
     PUSHBUTTON      "...",IDC_SELECT_SNAP_DIR,203,182,14,12
 END
-
 IDD_Settings_Options DIALOGEX 0, 0, 231, 206
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP
 FONT 8, "MS Sans Serif", 0, 0, 0x0
@@ -160,7 +135,6 @@ BEGIN
     LTEXT           "Memory Size:",IDC_TEXT4,9,86,108,12
     COMBOBOX        IDC_RDRAM_SIZE,118,84,105,49,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
 END
-
 IDD_Cheats_List DIALOGEX 0, 0, 201, 221
 STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
 EXSTYLE WS_EX_CONTROLPARENT
@@ -171,7 +145,6 @@ BEGIN
     GROUPBOX        " Notes: ",IDC_NOTESFRAME,0,165,199,51
     EDITTEXT        IDC_NOTES,5,175,188,36,ES_MULTILINE | ES_READONLY | ES_WANTRETURN | NOT WS_BORDER | WS_VSCROLL
 END
-
 IDD_Cheats_CodeEx DIALOGEX 0, 0, 186, 153
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW
@@ -184,7 +157,6 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,74,132,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,129,132,50,14
 END
-
 IDD_Settings_ShellInt DIALOG 0, 0, 231, 206
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP
 FONT 8, "MS Sans Serif"
@@ -199,7 +171,6 @@ BEGIN
     CONTROL         ".pal",IDC_PAL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,97,120,37,9
     CONTROL         ".usa",IDC_USA,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,97,134,37,9
 END
-
 IDD_Settings_RomBrowser DIALOG 0, 0, 231, 206
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP
 FONT 8, "MS Sans Serif"
@@ -223,7 +194,6 @@ BEGIN
     PUSHBUTTON      "Up",IDC_UP,141,166,38,11
     PUSHBUTTON      "Down",IDC_DOWN,186,166,36,11
 END
-
 IDD_About_Ini DIALOG 0, 0, 185, 172
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About PJ64 Databases"
@@ -244,7 +214,6 @@ BEGIN
     LTEXT           "Version:",IDC_LAN_VERSION,13,24,166,8
     LTEXT           "Date:",IDC_LAN_DATE,13,34,166,8
 END
-
 IDD_Settings_General DIALOG 0, 0, 231, 206
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP
 FONT 8, "MS Sans Serif"
@@ -257,7 +226,6 @@ BEGIN
     CONTROL         "Remember selected cheats",IDC_REMEMBER_CHEAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,105,198,8
     CONTROL         "Hide Advanced Settings",IDC_BASIC_MODE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,127,198,8
 END
-
 IDD_Settings_RomNotes DIALOG 0, 0, 231, 206
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP
 FONT 8, "MS Sans Serif"
@@ -270,7 +238,6 @@ BEGIN
     LTEXT           "Plugin Note:",IDC_PLUGIN,17,111,96,9
     EDITTEXT        IDC_PLUGIN_NOTE,16,121,200,40,ES_MULTILINE | ES_AUTOVSCROLL
 END
-
 IDD_Cheats_Add DIALOGEX 0, 0, 191, 215
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW
@@ -291,7 +258,6 @@ BEGIN
     LTEXT           "<address> <value>",IDC_CODE_DES,7,40,70,10
     LTEXT           "<value> <label>",IDC_LABEL_OPTIONS_FORMAT,82,40,102,10,WS_DISABLED
 END
-
 IDD_Cheats_Edit DIALOGEX 0, 0, 191, 215
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW
@@ -311,7 +277,6 @@ BEGIN
     LTEXT           "<address> <value>",IDC_CODE_DES,7,40,70,10
     LTEXT           "<value> <label>",IDC_LABEL_OPTIONS_FORMAT,82,40,101,10,WS_DISABLED
 END
-
 IDD_Settings_Rom DIALOGEX 0, 0, 233, 206
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP
 FONT 8, "MS Sans Serif", 0, 0, 0x0
@@ -339,12 +304,10 @@ BEGIN
     LTEXT           "Self-modifying code Method:",IDC_SELFMOD_TEXT,11,66,111,10
     COMBOBOX        IDC_SELFMOD,124,65,99,49,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 END
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // DESIGNINFO
 //
-
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO
 BEGIN
@@ -355,7 +318,6 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 192
     END
-
     IDD_Settings_PlugSel, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -363,7 +325,6 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 131
     END
-
     IDD_Settings_Directory, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -371,7 +332,6 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 199
     END
-
     IDD_Settings_Options, DIALOG
     BEGIN
         LEFTMARGIN, 4
@@ -379,7 +339,6 @@ BEGIN
         TOPMARGIN, 4
         BOTTOMMARGIN, 200
     END
-
     IDD_Cheats_List, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -387,7 +346,6 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 214
     END
-
     IDD_Cheats_CodeEx, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -395,28 +353,24 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 146
     END
-
     IDD_Settings_ShellInt, DIALOG
     BEGIN
         LEFTMARGIN, 4
         TOPMARGIN, 4
         BOTTOMMARGIN, 200
     END
-
     IDD_Settings_RomBrowser, DIALOG
     BEGIN
         LEFTMARGIN, 4
         TOPMARGIN, 4
         BOTTOMMARGIN, 200
     END
-
     IDD_About_Ini, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 178
         TOPMARGIN, 7
     END
-
     IDD_Settings_General, DIALOG
     BEGIN
         LEFTMARGIN, 4
@@ -424,28 +378,24 @@ BEGIN
         TOPMARGIN, 4
         BOTTOMMARGIN, 200
     END
-
     IDD_Settings_RomNotes, DIALOG
     BEGIN
         LEFTMARGIN, 4
         TOPMARGIN, 4
         BOTTOMMARGIN, 200
     END
-
     IDD_Cheats_Add, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 184
         TOPMARGIN, 7
     END
-
     IDD_Cheats_Edit, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 184
         TOPMARGIN, 7
     END
-
     IDD_Settings_Rom, DIALOG
     BEGIN
         LEFTMARGIN, 4
@@ -453,16 +403,12 @@ BEGIN
         TOPMARGIN, 4
         BOTTOMMARGIN, 200
     END
-
 END
 #endif    // APSTUDIO_INVOKED
-
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
 //
-
 MAIN_MENU MENU
 BEGIN
     POPUP "File"
@@ -576,7 +522,6 @@ BEGIN
         MENUITEM "User Guide",                     ID_HELP_GUIDE
     END
 END
-
 IDR_POPUP MENU
 BEGIN
     POPUP "PopupMenu"
@@ -589,7 +534,6 @@ BEGIN
         MENUITEM "Cheats",                      ID_EDITCHEATS
     END
 END
-
 IDR_CHEAT_MENU MENU
 BEGIN
     POPUP "Popup"
@@ -600,39 +544,30 @@ BEGIN
         MENUITEM "Delete",                      ID_POPUP_DELETE
     END
 END
-
-
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
 // TEXTINCLUDE
 //
-
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
-
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
-
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "\r\n"
     "\0"
 END
-
 #endif    // APSTUDIO_INVOKED
-
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Accelerator
 //
-
 IDR_WINDOWMODE ACCELERATORS
 BEGIN
     "A",            ID_OPTIONS_ALWAYSONTOP, VIRTKEY, CONTROL, NOINVERT
@@ -647,7 +582,6 @@ BEGIN
     "T",            ID_OPTIONS_SETTINGS,    VIRTKEY, CONTROL, NOINVERT
  VK_F12,            ID_FILE_ENDEMULATION,   VIRTKEY, NOINVERT
 END
-
 IDR_ROMBROWSER ACCELERATORS
 BEGIN
     "A",            ID_OPTIONS_ALWAYSONTOP, VIRTKEY, CONTROL, NOINVERT
@@ -660,7 +594,6 @@ BEGIN
     VK_F11,         ID_FILE_STARTEMULATION, VIRTKEY, NOINVERT
     VK_F5,          ID_FILE_REFRESHROMLIST, VIRTKEY, NOINVERT
 END
-
 IDR_CPURUNNING ACCELERATORS
 BEGIN
     "`",            ID_CURRENTSAVE_DEFAULT, ASCII,  NOINVERT
@@ -723,28 +656,21 @@ BEGIN
     VK_F7,          ID_CPU_RESTORE,         VIRTKEY, NOINVERT
     VK_F9,          ID_SYSTEM_GSBUTTON,     VIRTKEY, NOINVERT
     VK_PAUSE,       ID_CPU_PAUSE,           VIRTKEY, NOINVERT
-    VK_RETURN,      ID_OPTIONS_FULLSCREEN,  VIRTKEY, ALT, NOINVERT    
+    VK_RETURN,      ID_OPTIONS_FULLSCREEN,  VIRTKEY, ALT, NOINVERT
     VK_CAPITAL,     ID_CPU_PAUSE,           VIRTKEY, SHIFT, NOINVERT
     VK_CAPITAL,     ID_SYSTEM_ALTERNATEPAUSE, VIRTKEY, NOINVERT
-
 END
-
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // AFX_DIALOG_LAYOUT
 //
-
 IDD_Settings_Rom AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
-
 IDD_Settings_Options AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
-
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
-

@@ -28,9 +28,9 @@ your repositories to be viewed publicly, you agree to allow others to view and
 Content from your repositories in repositories they control).
 
 If you set your pages and repositories to be viewed publicly, you grant each User
-of GitHub a nonexclusive, worldwide license to use, display, and perform Your 
+of GitHub a nonexclusive, worldwide license to use, display, and perform Your
 Content through the GitHub Service and to reproduce Your Content solely on GitHub
 as permitted through GitHub's functionality (for example, through forking). You
-may grant further rights if you adopt a license. If you are uploading Content you 
-did not create or own, you are responsible for ensuring that the Content you 
+may grant further rights if you adopt a license. If you are uploading Content you
+did not create or own, you are responsible for ensuring that the Content you
 upload is licensed under terms that grant these permissions to other GitHub Users.

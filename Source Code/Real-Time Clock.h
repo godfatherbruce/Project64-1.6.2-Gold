@@ -1,5 +1,4 @@
 #define RTC_H
-
 BYTE INTtoBCD (int val);
 BYTE BCDtoBYTE (BYTE val);
 int RTC_Command (BYTE *Command);

@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -25,41 +25,32 @@
  */
 #include <windows.h>
 #include "Language.h"
-
 /********************* Win32 Thread Timer ********************/
-
 struct {
 	DWORD Frames, LastTime;
 	DOUBLE Ratio;
 } FPSTimer = { 0,0, 1000.0F / 60.0F };
-
 void Timer_Initialize(double Hertz) {
 	FPSTimer.Ratio = 1000.0f / Hertz;
 }
-
 void Timer_Start(void) {
 	TIMECAPS Caps;
 	timeGetDevCaps(&Caps, sizeof(Caps));
 	if (timeBeginPeriod(Caps.wPeriodMin) == TIMERR_NOCANDO)
 		MessageBox(NULL, "Error during timer begin", GS(MSG_MSGBOX_TITLE), MB_ICONERROR);
-
 	FPSTimer.Frames = 0;
 	FPSTimer.LastTime = timeGetTime();
 }
-
 void Timer_Stop(void) {
 	TIMECAPS Caps;
 	timeGetDevCaps(&Caps, sizeof(Caps));
 	timeEndPeriod(Caps.wPeriodMin);
 }
-
 BOOL Timer_Process(DWORD * FrameRate) {
 	double CalculatedTime;
 	DWORD CurrentTime;
-
 	FPSTimer.Frames++;
 	CurrentTime = timeGetTime();
-
 	/* Calculate time that should of elapsed for this frame */
 	CalculatedTime = (double)FPSTimer.LastTime + (FPSTimer.Ratio * (double)FPSTimer.Frames);
 	if ((double)CurrentTime < CalculatedTime) {
@@ -67,18 +58,15 @@ BOOL Timer_Process(DWORD * FrameRate) {
 		if (time > 0) {
 			Sleep(time);
 		}
-
 		/* Refresh current time */
 		CurrentTime = timeGetTime();
 	}
-
 	if (CurrentTime - FPSTimer.LastTime >= 1000) {
 		/* Output FPS */
 		if (FrameRate != NULL) { *FrameRate = FPSTimer.Frames; }
 		FPSTimer.Frames = 0;
 		FPSTimer.LastTime = CurrentTime;
-
 		return TRUE;
-	} else 
+	} else
 		return FALSE;
 }

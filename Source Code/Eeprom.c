@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -23,33 +23,28 @@
  * should be forwarded to them so if they want them.
  *
  */
-
 #include <windows.h>
 #include <stdio.h>
 #include "main.h"
 #include "CPU.h"
-
 static HANDLE heepROMFile = NULL;
 BYTE eepROM[0x800];
-
 void CloseeepROM (void) {
 	if (heepROMFile) {
 		CloseHandle(heepROMFile);
 		heepROMFile = NULL;
 	}
 }
-
 void eepROMCommand ( BYTE * Command) {
 	if (SaveUsing == Auto) { SaveUsing = eepROM_4K; }
-
 	switch (Command[2]) {
 	case 0: // check
 		if (SaveUsing != eepROM_4K &&  SaveUsing != eepROM_16K) {
 			Command[1] |= 0x80;
 			break;
 		}
-		if (Command[1] != 3) { 
-			Command[1] |= 0x40; 
+		if (Command[1] != 3) {
+			Command[1] |= 0x40;
 			if ((Command[1] & 3) > 0) { Command[3] = 0x00; }
 			if (SaveUsing == eepROM_4K) {
 				if ((Command[1] & 3) > 1) { Command[4] = 0x80; }
@@ -71,15 +66,11 @@ void eepROMCommand ( BYTE * Command) {
 		break;
 	}
 }
-
-
 void LoadeepROM (void) {
 	char File[255], Directory[255];
 	DWORD dwRead;
-
 	GetAutoSaveDir(Directory);
 	sprintf(File,"%s%s.eep",Directory,RomName);
-	
 	heepROMFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
 	if (heepROMFile == INVALID_HANDLE_VALUE) {
@@ -99,27 +90,23 @@ void LoadeepROM (void) {
 		}
 	}
 	memset(eepROM,0xFF,sizeof(eepROM));
-	SetFilePointer(heepROMFile,0,NULL,FILE_BEGIN);	
+	SetFilePointer(heepROMFile,0,NULL,FILE_BEGIN);
 	ReadFile(heepROMFile,eepROM,sizeof(eepROM),&dwRead,NULL);
 }
-
 void ReadFromeepROM(BYTE * Buffer, int line) {
 	int i;
-	
 	if (heepROMFile == NULL) {
 		LoadeepROM();
 	}
 	for(i=0;i<8;i++) { Buffer[i]=eepROM[line*8+i]; }
 }
-
 void WriteToeepROM(BYTE * Buffer, int line) {
 	DWORD dwWritten;
 	int i;
-
 	if (heepROMFile == NULL) {
 		LoadeepROM();
 	}
 	for(i=0;i<8;i++) { eepROM[line*8+i]=Buffer[i]; }
-	SetFilePointer(heepROMFile,line*8,NULL,FILE_BEGIN);	
+	SetFilePointer(heepROMFile,line*8,NULL,FILE_BEGIN);
 	WriteFile( heepROMFile,Buffer,8,&dwWritten,NULL );
 }

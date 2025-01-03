@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -31,23 +31,19 @@
 #include "n64_cic_nus_6105.h"
 #include "RomTools_Common.h"
 #include "Real-Time Clock.h"
-
 void ProcessControllerCommand ( int Control, BYTE * Command);
 void ReadControllerCommand (int Control, BYTE * Command);
 static int rumble_offs;		// Used to avoid overloading buggy/weak gamepad drivers.
-
 BYTE PifRom[0x7C0], *PIF_Ram;
-
 int GetCicChipID (char * RomData) {
 	_int64 CRC = 0;
 	int count;
-
 	for (count = 0x40; count < 0x1000; count += 4) {
 		CRC += *(DWORD *)(RomData+count);
 	}
 	switch (CRC) {
 	case 0x000000D0027FDF31: return 1;
-	case 0x000000CFFB631223: return 1;	
+	case 0x000000CFFB631223: return 1;
 	case 0x000000D057C85244: return 2;
 	case 0x000000D6497E414B: return 3;
 	case 0x0000011A49F60E96: return 5;
@@ -57,35 +53,27 @@ int GetCicChipID (char * RomData) {
 		return -1;
 	}
 }
-
 void PifRamRead (void) {
 	int Channel, CurPos;
-
 	Channel = 0;
 	CurPos  = 0;
-
 	if (PIF_Ram[0x3F] == 0x2) {
 		char hold[32], resp[32] = {0};
 		int i, j;
-
 		for(i = 0, j = 48; i < 32; i += 2, j++)
 		{
 			hold[i + 1] = PIF_Ram[j] % 16;
 			hold[i] = PIF_Ram[j] / 16;
 		}
-
 		n64_cic_nus_6105(hold, resp, 32 - 2);
-
 		for(i = 48, j = 0; i <= 63; i++, j += 2)
 			PIF_Ram[i] = resp[j] * 16 + resp[j + 1];
-
 		return;
 	}
-
 	do {
 		switch(PIF_Ram[CurPos]) {
 		case 0x00:
-			Channel += 1; 
+			Channel += 1;
 			if (Channel > 6) { CurPos = 0x40; }
 			break;
 		case 0xFE: CurPos = 0x40; break;
@@ -99,7 +87,7 @@ void PifRamRead (void) {
 					} else {
 						ReadControllerCommand(Channel,&PIF_Ram[CurPos]);
 					}
-				} 
+				}
 				CurPos += PIF_Ram[CurPos] + (PIF_Ram[CurPos + 1] & 0x3F) + 1;
 				Channel += 1;
 			} else {
@@ -111,16 +99,13 @@ void PifRamRead (void) {
 	} while( CurPos < 0x40 );
 	if (ReadController) { ReadController(-1,NULL); }
 }
-
 void PifRamWrite (void) {
 	int Channel, CurPos;
-
 	Channel = 0;
-
-	if( PIF_Ram[0x3F] > 0x1) { 
+	if( PIF_Ram[0x3F] > 0x1) {
 		switch (PIF_Ram[0x3F]) {
-		case 0x08: 
-			PIF_Ram[0x3F] = 0; 
+		case 0x08:
+			PIF_Ram[0x3F] = 0;
 			MI_INTR_REG |= MI_INTR_SI;
 			SI_STATUS_REG |= SI_STATUS_INTERRUPT;
 			CheckInterrupts();
@@ -135,11 +120,10 @@ void PifRamWrite (void) {
 		}
 		return;
 	}
-
 	for (CurPos = 0; CurPos < 0x40; CurPos++){
 		switch(PIF_Ram[CurPos])	{
-		case 0x00: 
-			Channel += 1; 
+		case 0x00:
+			Channel += 1;
 			if (Channel > 6) { CurPos = 0x40; }
 			break;
 		case 0xFE: CurPos = 0x40; break;
@@ -168,7 +152,6 @@ void PifRamWrite (void) {
 	PIF_Ram[0x3F] = 0;
 	if (ControllerCommand) { ControllerCommand(-1,NULL); }
 }
-
 void ProcessControllerCommand ( int Control, BYTE * Command) {
 	switch (Command[2]) {
 	case 0x00: // check
@@ -211,13 +194,12 @@ void ProcessControllerCommand ( int Control, BYTE * Command) {
 		}
 		break;
 	case 0x03: //write controller pak
-		
 		if (Controllers[Control].Present == TRUE) {
 			DWORD address = ((Command[3] << 8) | Command[4]);
 			switch (Controllers[Control].Plugin) {
 			case PLUGIN_MEMPAK: WriteToMempak(Control, address, &Command[5]); break;
 			case PLUGIN_RAW: if (ControllerCommand) { ControllerCommand(Control, Command); } break;
-			case PLUGIN_RUMBLE_PAK: 
+			case PLUGIN_RUMBLE_PAK:
 				if (RumbleCommand != NULL) {
 					if ((address & 0xFFE0) == 0xC000) {
 						// This section is a hack to avoid sending too many rumble off commands and overloading buggy/weak gamepad drivers.
@@ -240,14 +222,12 @@ void ProcessControllerCommand ( int Control, BYTE * Command) {
 		break;
 	}
 }
-
 void ReadControllerCommand (int Control, BYTE * Command) {
 	switch (Command[2]) {
 	case 0x01: // read controller
 		if (Controllers[Control].Present == TRUE) {
 			if (GetKeys) {
 				BUTTONS Keys;
-				
 				GetKeys(Control,&Keys);
 				*(DWORD *)&Command[3] = Keys.Value;
 			} else {
@@ -260,7 +240,7 @@ void ReadControllerCommand (int Control, BYTE * Command) {
 			switch (Controllers[Control].Plugin) {
 			case PLUGIN_RAW: if (ControllerCommand) { ReadController(Control, Command); } break;
 			}
-		} 
+		}
 		break;
 	case 0x03: //write controller pak
 		if (Controllers[Control].Present == TRUE) {
@@ -271,16 +251,13 @@ void ReadControllerCommand (int Control, BYTE * Command) {
 		break;
 	}
 }
-
 int LoadPifRom(int country) {
 	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
 	char fname[_MAX_FNAME],ext[_MAX_EXT], PifRomName[255];
 	HANDLE hPifFile;
 	DWORD dwRead;
-
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
-
 	switch(RomRegion(country)) {
 	case PAL_Region:
 		sprintf(PifRomName,"%s%sPif\\pal.raw",drive,dir); break;
@@ -288,8 +265,7 @@ int LoadPifRom(int country) {
 		sprintf(PifRomName,"%s%sPif\\ntsc.raw",drive,dir); break;
 	default:
 		DisplayError(GS(MSG_UNKNOWN_COUNTRY)); break;
-	}	
-
+	}
 	hPifFile = CreateFile(PifRomName,GENERIC_READ,FILE_SHARE_READ,NULL,OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
 	if (hPifFile == INVALID_HANDLE_VALUE) {
@@ -297,7 +273,7 @@ int LoadPifRom(int country) {
 		return FALSE;
 	}
 	SetFilePointer(hPifFile,0,NULL,FILE_BEGIN);
-	ReadFile(hPifFile,PifRom,0x7C0,&dwRead,NULL);	
+	ReadFile(hPifFile,PifRom,0x7C0,&dwRead,NULL);
 	CloseHandle( hPifFile );
 	return TRUE;
 }

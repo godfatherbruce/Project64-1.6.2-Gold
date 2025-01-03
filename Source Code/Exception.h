@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -42,7 +42,6 @@
 #define	EXC_FPE					EXC_CODE(15)/* Floating Point Exception */
 #define	EXC_WATCH				EXC_CODE(23)/* Watchpoint reference */
 #define	EXC_VCED				EXC_CODE(31)/* Virt. Coherency on data read */
-
 #define Exception_Name(Except)\
 	(Except) == EXC_INT     ? "interrupt" :\
 	(Except) == EXC_MOD     ? "TLB mod" :\
@@ -63,7 +62,6 @@
 	(Except) == EXC_WATCH   ? "Watchpoint reference" :\
 	(Except) == EXC_VCED    ? "Virt. Coherency on data read" :\
 	"Unkown"
-
 void __cdecl AiCheckInterrupts      ( void );
 void __cdecl CheckInterrupts        ( void );
 void DoAddressError         ( BOOL DelaySlot, DWORD BadVaddr, BOOL FromRead );
@@ -72,4 +70,3 @@ void _fastcall DoCopUnusableException ( BOOL DelaySlot, int Coprocessor );
 void DoIntrException        ( BOOL DelaySlot );
 void _fastcall DoTLBMiss              ( BOOL DelaySlot, DWORD BadVaddr );
 void _fastcall DoSysCallException ( BOOL DelaySlot);
-

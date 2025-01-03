@@ -1,16 +1,13 @@
 #if defined(__cplusplus)
 extern "C" {
 #endif
-
 void LoadLanguage       ( char * RegLocation );
 void CreateLangList     ( HMENU hMenu, int uPosition, int MenuID );
 void SelectLangMenuItem ( HMENU hMenu, int LangMenuID );
 char * GS               ( int StringID );
-
 #if defined(__cplusplus)
 }
 #endif
-
 /*********************************************************************************
 * Meta Information                                                               *
 *********************************************************************************/
@@ -25,7 +22,6 @@ char * GS               ( int StringID );
 #define INI_HOMEPAGE	                9
 #define INI_CURRENT_RDB                 10
 #define INI_CURRENT_CHT                 11
-
 // Menu
 #define MENU_FILE			12
 	#define MENU_OPEN		13
@@ -37,7 +33,6 @@ char * GS               ( int StringID );
 	#define MENU_RECENT_ROM		19
 	#define MENU_RECENT_DIR		20
 	#define MENU_EXIT		21
-
 	#define MENU_SYSTEM		22
 	#define MENU_RESET		23
 	#define MENU_PAUSE		24
@@ -51,7 +46,6 @@ char * GS               ( int StringID );
 	#define MENU_CHEAT		32
 	#define MENU_GS_BUTTON		33
 	#define MENU_RESUME		34
-
 #define MENU_OPTIONS			35
 	#define MENU_FULL_SCREEN	36
 	#define MENU_ON_TOP		37
@@ -60,15 +54,12 @@ char * GS               ( int StringID );
 	#define MENU_CONFIG_CTRL	40
 	#define MENU_CONFIG_RSP		41
 	#define MENU_SETTINGS		42
-
 #define MENU_LANGUAGE			43
-
 #define MENU_HELP			44
 	#define MENU_USER_GUIDE		45
 	#define MENU_ABOUT_INI		46
 	#define MENU_GITHUB		47
 	#define MENU_UNINSTALL		48
-
 // Menu Descriptions
 #define MENUDES_OPEN			49
 #define MENUDES_ROM_INFO		50
@@ -104,7 +95,6 @@ char * GS               ( int StringID );
 #define MENUDES_GAME_CHEATS		80
 #define MENUDES_UNINSTALLAPP            81
 #define MENUDES_GITHUB	                82
-
 /*********************************************************************************
 * Rom Browser                                                                    *
 *********************************************************************************/
@@ -121,11 +111,9 @@ char * GS               ( int StringID );
 #define RB_CRC2				92
 #define RB_CICCHIP			93
 #define SELECT_ROM_DIR			94
-
 //Messages
 #define RB_NOT_IN_RDB		        95
 #define RB_HACK                         96
-
 /*********************************************************************************
 * Options                                                                        *
 *********************************************************************************/
@@ -137,14 +125,12 @@ char * GS               ( int StringID );
 #define TAB_ROMSETTINGS			101
 #define TAB_SHELLINTERGATION	        102
 #define TAB_ROMNOTES			103
-
 //Plugin Dialog
 #define PLUG_ABOUT			104
 #define PLUG_RSP			105
 #define PLUG_GFX			106
 #define PLUG_AUDIO			107
 #define PLUG_CTRL			108
-
 //Directory Dialog
 #define DIR_ROM				109
 #define DIR_AUTO_SAVE			110
@@ -155,13 +141,11 @@ char * GS               ( int StringID );
 #define DIR_SELECT_AUTO			115
 #define DIR_SELECT_INSTANT		116
 #define DIR_SELECT_SCREEN               117
-
 //Options (general) Tab
 #define OPTION_AUTO_SLEEP		118
 #define OPTION_AUTO_FULLSCREEN	        119
 #define OPTION_BASIC_MODE		120
 #define OPTION_REMEMBER_CHEAT	        121
-
 //Rom Browser Tab
 #define RB_MAX_ROMS			122
 #define RB_ROMS				123
@@ -175,13 +159,11 @@ char * GS               ( int StringID );
 #define RB_REMOVE			131
 #define RB_UP				132
 #define RB_DOWN				133
-
 //Advanced Options
 #define ADVANCE_INFO			134
 #define ADVANCE_DEFAULTS		135
 #define ADVANCE_AUTO_START		136
 #define ADVANCE_OVERWRITE		137
-
 //Rom Options
 #define ROM_CPU_STYLE			138
 #define ROM_SMCM			139
@@ -199,15 +181,12 @@ char * GS               ( int StringID );
 #define ROM_DELAY_RDP			151
 #define ROM_DELAY_RSP			152
 #define ROM_EMULATE_AI                  153
-
 //Core Styles
 #define CORE_INTERPRETER		154
 #define CORE_RECOMPILER			155
-
 //RDRAM Size
 #define RDRAM_4MB			156
 #define RDRAM_8MB			157
-
 //Core Styles
 #define SMCM_NONE			158
 #define SMCM_CACHE			159
@@ -215,32 +194,26 @@ char * GS               ( int StringID );
 #define SMCM_CHECK_MEM			161
 #define SMCM_CHANGE_MEM			162
 #define SMCM_CHECK_ADV			163
-
 //Advanced Block Linking
 #define ABL_ON				164
 #define ABL_OFF				165
-
 //Save Type
 #define SAVE_FIRST_USED			166
 #define SAVE_4K_eepROM			167
 #define SAVE_16K_eepROM			168
 #define SAVE_SRAM			169
 #define SAVE_FlashRAM			170
-
 //Shell Intergration Tab
 #define SHELL_TEXT			171
-
 //Rom Notes
 #define NOTE_STATUS			172
 #define NOTE_CORE			173
 #define NOTE_PLUGIN			174
-
 /*********************************************************************************
 * ROM Information                                                                *
 *********************************************************************************/
 //Rom Info Title Title
 #define INFO_TITLE			175
-
 //Rom Info Text
 #define INFO_ROM_NAME_TEXT		176
 #define INFO_FILE_NAME_TEXT		177
@@ -250,7 +223,6 @@ char * GS               ( int StringID );
 #define INFO_CRC1_TEXT			181
 #define INFO_CRC2_TEXT			182
 #define INFO_CIC_CHIP_TEXT		183
-
 /*********************************************************************************
 * Cheats                                                                         *
 *********************************************************************************/
@@ -258,7 +230,6 @@ char * GS               ( int StringID );
 #define CHEAT_LIST_FRAME		184
 #define CHEAT_NOTES_FRAME		185
 #define CHEAT_MARK_NONE			186
-
 //Add Cheat
 #define CHEAT_ADDCHEAT_NAME		187
 #define CHEAT_ADDCHEAT_CODE		188
@@ -268,20 +239,16 @@ char * GS               ( int StringID );
 #define CHEAT_ADDCHEAT_CODEDES 	        192
 #define CHEAT_ADDCHEAT_OPT 		193
 #define CHEAT_ADDCHEAT_OPTDES 	        194
-
 //Code extension
 #define CHEAT_CODE_EXT_TITLE	        195
 #define CHEAT_CODE_EXT_TXT		196
-
 //Edit Cheat
 #define CHEAT_EDITCHEAT_WINDOW	        197
 #define CHEAT_EDITCHEAT_UPDATE	        198
-
 //Cheat Popup Menu
 #define CHEAT_ADDNEW			199
 #define CHEAT_EDIT			200
 #define CHEAT_DELETE			201
-
 /*********************************************************************************
 * Messages                                                                       *
 *********************************************************************************/
@@ -324,9 +291,10 @@ char * GS               ( int StringID );
 #define HOT_SWAP_COMPLETE               238
 #define FULLSCREEN_TOGGLE               239
 #define GS_PRESS                        240
-#define NUMBER_1		        241
-#define NUMBER_2		        242
-#define NUMBER_3		        243
-#define NUMBER_4		        244
-#define NUMBER_5		        245
-#define NUMBER_6		        246
+#define FPS_DISPLAY                     241
+#define NUMBER_1		        242
+#define NUMBER_2		        243
+#define NUMBER_3		        244
+#define NUMBER_4		        245
+#define NUMBER_5		        246
+#define NUMBER_6		        247

@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -31,26 +31,21 @@
 #include "EmulateAI.h"
 #include "settings.h"
 #include "resource.h"
-
 DWORD EmuAI_DUMMY_STATUS;
 DWORD EmuAI_Frequency, EmuAI_VICntFrame, EmuAI_BitRate;
 DWORD EmuAI_Buffer[2];
 int EmuAI_FrameRate;
 double CountsPerByte;
 DWORD LastVICntFrame;
-
 int Start_COUNT;
-
 // Hooks to the original functions from the Audio Plugin
 void (__cdecl *AiDacrateChangedPlugin) ( int SystemType );
 void (__cdecl *AiLenChangedPlugin)     ( void );
 DWORD (__cdecl *AiReadLengthPlugin)    ( void );
-
 void __cdecl EmuAI_AiLenChanged (void)
 {
 	EmuAI_BitRate = AI_BITRATE_REG+1;
 	if (AI_LEN_REG == 0) return;
-
 	// Determine our COUNT cycles per byte - should only need recalculation if VICntFrame changes.
 	// Frequency, BitRate and FrameRate shouldn't change?
 	if (LastVICntFrame != EmuAI_VICntFrame)
@@ -58,8 +53,7 @@ void __cdecl EmuAI_AiLenChanged (void)
 		CountsPerByte = (double)(EmuAI_FrameRate * EmuAI_VICntFrame) / (double)(EmuAI_Frequency * (EmuAI_BitRate/4));
 		LastVICntFrame = EmuAI_VICntFrame;
 	}
-
-	if (EmuAI_Buffer[0] == 0) 
+	if (EmuAI_Buffer[0] == 0)
 	{
 		// Set the base
 		Start_COUNT = COUNT_REGISTER;
@@ -76,38 +70,30 @@ void __cdecl EmuAI_AiLenChanged (void)
 		AI_STATUS_REG |= 0x80000000;
 		DisplayError("AI FIFO FULL But still received an AI");
 	}
-
 	// Call our plugin to process the Length register
 	if (AiLenChangedPlugin != NULL) AiLenChangedPlugin();
 }
-
 DWORD __cdecl EmuAI_AiReadLength (void)
 {
 	DWORD SetTimer, RemainingCount;
 	static DWORD LengthReadHack = 0;
-
 	SetTimer = (DWORD)(int)(CountsPerByte * (double)(EmuAI_Buffer[0]));
 	RemainingCount = SetTimer - (COUNT_REGISTER - Start_COUNT);
-
 	if (EmuAI_Buffer[0] == 0) return 0;
-
 	return (DWORD)((double)RemainingCount / CountsPerByte);
-
 	AiReadLengthPlugin();
 	return 0;
 }
-
 void __cdecl EmuAI_AiDacrateChanged (int SystemType)
 {
 	if (EmuAI_FrameRate == 60) 	{
 		EmuAI_Frequency = 48681812 / (AI_DACRATE_REG + 1);
 		if (AiDacrateChangedPlugin != NULL) AiDacrateChangedPlugin(SYSTEM_NTSC);
-	} else { 
+	} else {
 		EmuAI_Frequency = 49656530 / (AI_DACRATE_REG + 1);
 		if (AiDacrateChangedPlugin != NULL) AiDacrateChangedPlugin(SYSTEM_PAL);
 	}
 }
-
 void EmuAI_ClearAudio()
 {
 	LastVICntFrame = 0;
@@ -120,7 +106,6 @@ void EmuAI_ClearAudio()
 		AiCheckInterrupts();
 	}
 }
-
 void EmuAI_InitializePluginHook()
 {
 	LastVICntFrame = 0;
@@ -130,32 +115,26 @@ void EmuAI_InitializePluginHook()
 	AiDacrateChangedPlugin = AiDacrateChanged;
 	AiLenChangedPlugin = AiLenChanged;
 	AiReadLengthPlugin = AiReadLength;
-
 	// Need to override AiLenChanged, AiReadLength
 	AiDacrateChanged = EmuAI_AiDacrateChanged;
 	AiLenChanged = EmuAI_AiLenChanged;
 	AiReadLength = EmuAI_AiReadLength;
 }
-
 void EmuAI_SetFrameRate(int frameRate)
 {
 	EmuAI_FrameRate = frameRate;
 }
-
 void EmuAI_SetVICountPerFrame(DWORD value)
 {
 	EmuAI_VICntFrame = value;
 }
-
 void EmuAI_SetNextTimer ()
 {
 	// Buffer Switch
 	EmuAI_Buffer[0] = EmuAI_Buffer[1];
 	EmuAI_Buffer[1] = 0;
-
 	// Remove Status Full Flag
 	AI_STATUS_REG &= ~0x80000000;
-
 	if (EmuAI_Buffer[0] > 0)
 	{
 		AI_STATUS_REG |= 0x40000000;

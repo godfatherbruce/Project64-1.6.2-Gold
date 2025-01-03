@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -27,9 +27,6 @@ void PI_DMA_READ  ( void );
 void PI_DMA_WRITE ( void );
 void SI_DMA_READ  ( void );
 void SI_DMA_WRITE ( void );
-void SP_DMA_READ  ( void ); 
+void SP_DMA_READ  ( void );
 void SP_DMA_WRITE ( void );
-
 extern int DMAUsed;
-
-

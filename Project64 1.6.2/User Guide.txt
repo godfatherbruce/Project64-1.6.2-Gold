@@ -1,22 +1,22 @@
 ********************************************************************************************************
 ********************************************************************************************************
----------------------------									       *
-|||||Table of Contents|||||									       *
----------------------------									       *
-Section#00 Hardware Compatibility								       *
-Section#01 IP Notice										       *
-Section#02 Notable Changes Between Project64 Version 1.6.1 & Project64 Version 1.6.2		       *
-Section#03 Project64 Legacy is an unfinished emulator with concerning issues to be aware of if using it*
-Section#04 Plugin Details									       *
-Section#05 RUNNING ROMHACKS									       *
-Section#06 Known Issues										       *
-Section#07 Tips and Tricks									       *
-Section#08 Credits										       *
-Section#09 Donations										       *
-Section#10 Special Thanks & Shoutouts								       *
-Section#11 The End										       *
-Section#12 Extra										       *
-(just ctrl-f the name to navigate to your desired section)					       *
+---------------------------
+|||||Table of Contents|||||
+---------------------------
+Section#00 Hardware Compatibility
+Section#01 IP Notice
+Section#02 Notable Changes Between Project64 Version 1.6.1 & Project64 Version 1.6.2
+Section#03 Project64 Legacy is an unfinished emulator with concerning issues to be aware of if using it!
+Section#04 Plugin Details
+Section#05 RUNNING ROMHACKS
+Section#06 Known Issues
+Section#07 Tips and Tricks
+Section#08 Credits
+Section#09 Donations
+Section#10 Special Thanks & Shoutouts
+Section#11 The End
+Section#12 Extra
+(just ctrl-f the name to navigate to your desired section)
 ********************************************************************************************************
 ********************************************************************************************************
 
@@ -173,7 +173,7 @@ Massive updates to databases.
 ***TONS more other stuff has been changed, but it would be too much to explain all of it here, sorry!***
 --------------------------------------------------------------------------------------------------------
 
-Section#03 Project64 Legacy is an unfinished emulator with concerning issues to be aware of if using it
+Section#03 Project64 Legacy is an unfinished emulator with concerning issues to be aware of if using it!
 --------------------------------------------------------------------------------------------------------
 For your information, here's some issues I have experienced with Project64 "Legacy" as of version 1.6.4:
 
@@ -218,8 +218,7 @@ Note that this section is only left here as a warning to anyone who is currently
 and to say if you desire an accurate emulator that is also reliable, you should seek alternative options
 like Ares or a properly tested and maintained frontend for Mupen64Plus because they will be more stable.
 Additionally, the developers responsible for Project64 Legacy have started a new project called "MiB64".
-This project is based on Project64 Legacy's source code so beware of potential issues, and make sure you
-inform the MiB64 team about any unknown issues you come across so that it can be fixed to improve MiB64.
+MiB64 is based off of Project64 Legacy's source code so beware of issues, or just use a better emulator.
 --------------------------------------------------------------------------------------------------------
 
 Section#04 Plugin Details

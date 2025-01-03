@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -27,38 +27,30 @@
 #include <stdio.h>
 #include "main.h"
 #include "CPU.h"
-
 static HANDLE hSRAMFile = NULL;
-
 void CloseSRAM (void) {
 	if (hSRAMFile) {
 		CloseHandle(hSRAMFile);
 		hSRAMFile = NULL;
 	}
 }
-  
 /*BOOL LoadSRAM (void) {
 	char File[255], Directory[255];
 	LPVOID lpMsgBuf;
-
 	GetAutoSaveDir(Directory);
 	sprintf(File,"%s%s.sra",Directory,RomName);*/
-	
 	// This fixes the pop-up error message (Icepir8)
-  
   BOOL LoadSRAM (void) {
   int i = 0;
   char File[255], Directory[255];
   LPVOID lpMsgBuf;
-
   GetAutoSaveDir(Directory);
   sprintf(File,"%s%s.sra",Directory,RomName);
   for(;File[i] != 0;i++)
   {
-    if(File[i] == '*' || File[i]== ';') 
+    if(File[i] == '*' || File[i]== ';')
       File[i] = '_';
   }
-	
 	hSRAMFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,NULL,OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
 	if (hSRAMFile == INVALID_HANDLE_VALUE) {
@@ -68,9 +60,9 @@ void CloseSRAM (void) {
 			hSRAMFile = CreateFile(File,GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ,
 				NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
 			if (hSRAMFile == INVALID_HANDLE_VALUE) {
-				FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | 
+				FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM |
 					FORMAT_MESSAGE_IGNORE_INSERTS,NULL,GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-					(LPTSTR) &lpMsgBuf,0,NULL 
+					(LPTSTR) &lpMsgBuf,0,NULL
 				);
 				DisplayError(lpMsgBuf);
 				LocalFree( lpMsgBuf );
@@ -78,9 +70,9 @@ void CloseSRAM (void) {
 			}
 			break;
 		default:
-			FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | 
+			FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM |
 				FORMAT_MESSAGE_IGNORE_INSERTS,NULL,GetLastError(),MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-				(LPTSTR) &lpMsgBuf,0,NULL 
+				(LPTSTR) &lpMsgBuf,0,NULL
 			);
 			DisplayError(lpMsgBuf);
 			LocalFree( lpMsgBuf );
@@ -89,28 +81,23 @@ void CloseSRAM (void) {
 	}
 	return TRUE;
 }
-
 void DmaFromSRAM(BYTE * dest, int StartOffset, int len) {
 	DWORD dwRead;
-
 	if (hSRAMFile == NULL) {
 		if (!LoadSRAM()) {
 			return;
 		}
 	}
-	SetFilePointer(hSRAMFile,StartOffset,NULL,FILE_BEGIN);	
+	SetFilePointer(hSRAMFile,StartOffset,NULL,FILE_BEGIN);
 	ReadFile(hSRAMFile,dest,len,&dwRead,NULL);
-
 }
-
 void DmaToSRAM(BYTE * Source, int StartOffset, int len) {
 	DWORD dwWritten;
-
 	if (hSRAMFile == NULL) {
 		if (!LoadSRAM()) {
 			return;
 		}
 	}
-	SetFilePointer(hSRAMFile,StartOffset,NULL,FILE_BEGIN);	
+	SetFilePointer(hSRAMFile,StartOffset,NULL,FILE_BEGIN);
 	WriteFile(hSRAMFile,Source,len,&dwWritten,NULL);
 }

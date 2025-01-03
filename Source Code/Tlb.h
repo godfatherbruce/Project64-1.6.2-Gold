@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -28,32 +28,25 @@ typedef struct {
 	union {
 		unsigned long Value;
 		unsigned char A[4];
-		
 		struct BreakDownPageMask{
 			unsigned zero : 13;
 			unsigned Mask : 12;
 			unsigned zero2 : 7;
 		} ;
-		
 	} PageMask;
-	
 	union {
 		unsigned long Value;
 		unsigned char A[4];
-		
 		struct BreakDownEntryHi {
 			unsigned ASID : 8;
 			unsigned Zero : 4;
 			unsigned G : 1;
 			unsigned VPN2 : 19;
 		};
-		
 	} EntryHi;
-
 	union {
 		unsigned long Value;
 		unsigned char A[4];
-		
 		struct BreakDownEntryLo0{
 			unsigned GLOBAL: 1;
 			unsigned V : 1;
@@ -62,13 +55,10 @@ typedef struct {
 			unsigned PFN : 20;
 			unsigned ZERO: 6;
 		} ;
-		
 	} EntryLo0;
-	
 	union {
 		unsigned long Value;
 		unsigned char A[4];
-		
 		struct BreakDownEntryLo1{
 			unsigned GLOBAL: 1;
 			unsigned V : 1;
@@ -77,10 +67,8 @@ typedef struct {
 			unsigned PFN : 20;
 			unsigned ZERO: 6;
 		} ;
-		
 	} EntryLo1;
 } TLB;
-
 typedef struct {
    DWORD VSTART;
    DWORD VEND;
@@ -89,11 +77,9 @@ typedef struct {
    BOOL DIRTY;
    BOOL GLOBAL;
    BOOL ValidEntry;
-} FASTTLB; 
-
+} FASTTLB;
 extern FASTTLB FastTlb[64];
 extern TLB tlb[32];
-
 BOOL AddressDefined ( DWORD VAddr);
 void InitilizeTLB   ( void );
 void SetupTLB       ( void );

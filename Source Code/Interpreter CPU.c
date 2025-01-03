@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -30,7 +30,6 @@
 #include "main.h"
 #include "cpu.h"
 #include "plugin.h"
-
 void * R4300i_Opcode[64];
 void * R4300i_Special[64];
 void * R4300i_Regimm[32];
@@ -42,50 +41,39 @@ void * R4300i_CoP1_S[64];
 void * R4300i_CoP1_D[64];
 void * R4300i_CoP1_W[64];
 void * R4300i_CoP1_L[64];
-
 void _fastcall R4300i_opcode_SPECIAL (void) {
 	((void (_fastcall *)()) R4300i_Special[ Opcode.funct ])();
 }
-
 void _fastcall R4300i_opcode_REGIMM (void) {
 	((void (_fastcall *)()) R4300i_Regimm[ Opcode.rt ])();
 }
-
 void _fastcall R4300i_opcode_COP0 (void) {
 	((void (_fastcall *)()) R4300i_CoP0[ Opcode.rs ])();
 }
-
 void _fastcall R4300i_opcode_COP0_CO (void) {
 	((void (_fastcall *)()) R4300i_CoP0_Function[ Opcode.funct ])();
 }
-
 void _fastcall R4300i_opcode_COP1 (void) {
 	((void (_fastcall *)()) R4300i_CoP1[ Opcode.fmt ])();
 }
-
 void _fastcall R4300i_opcode_COP1_BC (void) {
 	((void (_fastcall *)()) R4300i_CoP1_BC[ Opcode.ft ])();
 }
-
 void _fastcall R4300i_opcode_COP1_S (void) {
 	_controlfp(RoundingModel,_MCW_RC);
 	((void (_fastcall *)()) R4300i_CoP1_S[ Opcode.funct ])();
 }
-
 void _fastcall R4300i_opcode_COP1_D (void) {
 	_controlfp(RoundingModel,_MCW_RC);
 	((void (_fastcall *)()) R4300i_CoP1_D[ Opcode.funct ])();
 }
-
 void _fastcall R4300i_opcode_COP1_W (void) {
 	((void (_fastcall *)()) R4300i_CoP1_W[ Opcode.funct ])();
 }
-
 void _fastcall R4300i_opcode_COP1_L (void) {
 	((void (_fastcall *)()) R4300i_CoP1_L[ Opcode.funct ])();
 }
-
-void BuildInterpreter (void ) { 
+void BuildInterpreter (void ) {
 	R4300i_Opcode[ 0] = R4300i_opcode_SPECIAL;
 	R4300i_Opcode[ 1] = R4300i_opcode_REGIMM;
 	R4300i_Opcode[ 2] = r4300i_J;
@@ -150,7 +138,6 @@ void BuildInterpreter (void ) {
 	R4300i_Opcode[61] = r4300i_SDC1;
 	R4300i_Opcode[62] = R4300i_UnknownOpcode;
 	R4300i_Opcode[63] = r4300i_SD;
-
 	R4300i_Special[ 0] = r4300i_SPECIAL_SLL;
 	R4300i_Special[ 1] = R4300i_UnknownOpcode;
 	R4300i_Special[ 2] = r4300i_SPECIAL_SRL;
@@ -215,7 +202,6 @@ void BuildInterpreter (void ) {
 	R4300i_Special[61] = R4300i_UnknownOpcode;
 	R4300i_Special[62] = r4300i_SPECIAL_DSRL32;
 	R4300i_Special[63] = r4300i_SPECIAL_DSRA32;
-
 	R4300i_Regimm[ 0] = r4300i_REGIMM_BLTZ;
 	R4300i_Regimm[ 1] = r4300i_REGIMM_BGEZ;
 	R4300i_Regimm[ 2] = r4300i_REGIMM_BLTZL;
@@ -248,7 +234,6 @@ void BuildInterpreter (void ) {
 	R4300i_Regimm[29] = R4300i_UnknownOpcode;
 	R4300i_Regimm[30] = R4300i_UnknownOpcode;
 	R4300i_Regimm[31] = R4300i_UnknownOpcode;
-	
 	R4300i_CoP0[ 0] = r4300i_COP0_MF;
 	R4300i_CoP0[ 1] = R4300i_UnknownOpcode;
 	R4300i_CoP0[ 2] = R4300i_UnknownOpcode;
@@ -281,7 +266,6 @@ void BuildInterpreter (void ) {
 	R4300i_CoP0[29] = R4300i_opcode_COP0_CO;
 	R4300i_CoP0[30] = R4300i_opcode_COP0_CO;
 	R4300i_CoP0[31] = R4300i_opcode_COP0_CO;
-
 	R4300i_CoP0_Function[ 0] = R4300i_UnknownOpcode;
 	R4300i_CoP0_Function[ 1] = r4300i_COP0_CO_TLBR;
 	R4300i_CoP0_Function[ 2] = r4300i_COP0_CO_TLBWI;
@@ -346,7 +330,6 @@ void BuildInterpreter (void ) {
 	R4300i_CoP0_Function[61] = R4300i_UnknownOpcode;
 	R4300i_CoP0_Function[62] = R4300i_UnknownOpcode;
 	R4300i_CoP0_Function[63] = R4300i_UnknownOpcode;
-	
 	R4300i_CoP1[ 0] = r4300i_COP1_MF;
 	R4300i_CoP1[ 1] = r4300i_COP1_DMF;
 	R4300i_CoP1[ 2] = r4300i_COP1_CF;
@@ -379,7 +362,6 @@ void BuildInterpreter (void ) {
 	R4300i_CoP1[29] = R4300i_UnknownOpcode;
 	R4300i_CoP1[30] = R4300i_UnknownOpcode;
 	R4300i_CoP1[31] = R4300i_UnknownOpcode;
-
 	R4300i_CoP1_BC[ 0] = r4300i_COP1_BCF;
 	R4300i_CoP1_BC[ 1] = r4300i_COP1_BCT;
 	R4300i_CoP1_BC[ 2] = r4300i_COP1_BCFL;
@@ -412,7 +394,6 @@ void BuildInterpreter (void ) {
 	R4300i_CoP1_BC[29] = R4300i_UnknownOpcode;
 	R4300i_CoP1_BC[30] = R4300i_UnknownOpcode;
 	R4300i_CoP1_BC[31] = R4300i_UnknownOpcode;
-
 	R4300i_CoP1_S[ 0] = r4300i_COP1_S_ADD;
 	R4300i_CoP1_S[ 1] = r4300i_COP1_S_SUB;
 	R4300i_CoP1_S[ 2] = r4300i_COP1_S_MUL;
@@ -477,7 +458,6 @@ void BuildInterpreter (void ) {
 	R4300i_CoP1_S[61] = r4300i_COP1_S_CMP;
 	R4300i_CoP1_S[62] = r4300i_COP1_S_CMP;
 	R4300i_CoP1_S[63] = r4300i_COP1_S_CMP;
-
 	R4300i_CoP1_D[ 0] = r4300i_COP1_D_ADD;
 	R4300i_CoP1_D[ 1] = r4300i_COP1_D_SUB;
 	R4300i_CoP1_D[ 2] = r4300i_COP1_D_MUL;
@@ -542,7 +522,6 @@ void BuildInterpreter (void ) {
 	R4300i_CoP1_D[61] = r4300i_COP1_D_CMP;
 	R4300i_CoP1_D[62] = r4300i_COP1_D_CMP;
 	R4300i_CoP1_D[63] = r4300i_COP1_D_CMP;
-
 	R4300i_CoP1_W[ 0] = R4300i_UnknownOpcode;
 	R4300i_CoP1_W[ 1] = R4300i_UnknownOpcode;
 	R4300i_CoP1_W[ 2] = R4300i_UnknownOpcode;
@@ -606,8 +585,7 @@ void BuildInterpreter (void ) {
 	R4300i_CoP1_W[60] = R4300i_UnknownOpcode;
 	R4300i_CoP1_W[61] = R4300i_UnknownOpcode;
 	R4300i_CoP1_W[62] = R4300i_UnknownOpcode;
-	R4300i_CoP1_W[63] = R4300i_UnknownOpcode;	
-
+	R4300i_CoP1_W[63] = R4300i_UnknownOpcode;
 	R4300i_CoP1_L[ 0] = R4300i_UnknownOpcode;
 	R4300i_CoP1_L[ 1] = R4300i_UnknownOpcode;
 	R4300i_CoP1_L[ 2] = R4300i_UnknownOpcode;
@@ -671,36 +649,31 @@ void BuildInterpreter (void ) {
 	R4300i_CoP1_L[60] = R4300i_UnknownOpcode;
 	R4300i_CoP1_L[61] = R4300i_UnknownOpcode;
 	R4300i_CoP1_L[62] = R4300i_UnknownOpcode;
-	R4300i_CoP1_L[63] = R4300i_UnknownOpcode;	
+	R4300i_CoP1_L[63] = R4300i_UnknownOpcode;
 }
-
 void ExecuteInterpreterOpCode (void) {
-	if (!r4300i_LW_VAddr(PROGRAM_COUNTER, &Opcode.Hex)) { 
+	if (!r4300i_LW_VAddr(PROGRAM_COUNTER, &Opcode.Hex)) {
 		DoTLBMiss(NextInstruction == JUMP,PROGRAM_COUNTER);
 		NextInstruction = NORMAL;
 		return;
-	} 
-
+	}
 	COUNT_REGISTER += CountPerOp;
 	{ Timers.Timer -= CountPerOp; }
-
 	RANDOM_REGISTER -= 1;
 	if ((int)RANDOM_REGISTER < (int)WIRED_REGISTER) {
 		RANDOM_REGISTER = 31;
 	}
-
 	((void (_fastcall *)()) R4300i_Opcode[ Opcode.op ])();
 	if (GPR[0].DW != 0) {
 		GPR[0].DW = 0;
 	}
-
 	switch (NextInstruction) {
-	case NORMAL: 
-		PROGRAM_COUNTER += 4; 
+	case NORMAL:
+		PROGRAM_COUNTER += 4;
 		break;
 	case DELAY_SLOT:
 		NextInstruction = JUMP;
-		PROGRAM_COUNTER += 4; 
+		PROGRAM_COUNTER += 4;
 		break;
 	case JUMP:
 		PROGRAM_COUNTER  = JumpToLocation;
@@ -708,14 +681,11 @@ void ExecuteInterpreterOpCode (void) {
 				if ((int)Timers.Timer < 0) {  TimerDone(); }
 				if (CPU_Action.DoSomething) { DoSomething(); }
 		}
-	}		
-	
-void StartInterpreterCPU (void ) { 
+	}
+void StartInterpreterCPU (void ) {
 	//DWORD Value, Value2, Addr = 0x80031000;
-
 	CoInitialize(NULL);
 	NextInstruction = NORMAL;
-
 	if (GfxRomOpen != NULL) { GfxRomOpen(); }
 	if (ContRomOpen != NULL) { ContRomOpen(); }
 	//Add_R4300iBPoint(0x802000C8,FALSE);
@@ -728,7 +698,6 @@ void StartInterpreterCPU (void ) {
 		ExitThread(0);
 	}
 }
-
 void TestInterpreterJump (DWORD PC, DWORD TargetPC, int Reg1, int Reg2) {
 	if (PC != TargetPC) { return; }
 	if (DelaySlotEffectsCompare(PC,Reg1,Reg2)) { return; }

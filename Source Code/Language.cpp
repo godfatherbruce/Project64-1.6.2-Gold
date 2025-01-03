@@ -1,24 +1,19 @@
 #include <windows.h>
 #include <stdio.h>
-
 #include "Main.h" // for hinst
 #include "Language.h"
 #include "resource.h"
-
 /*******************************************************************************
 * Definitions                                                                  *
 *******************************************************************************/
-
 #define MAX_LANGUAGES	45
 #define MAX_LANNAME_LEN	100
 #define MAX_STRINGS		300
 #define MAX_STRING_LEN	400
-
 typedef struct {
 	int    ID;
 	char   Str[MAX_STRING_LEN];
 } LANG_STR;
-
 LANG_STR DefaultString[] = {
     { LANGUAGE_AUTHOR,     "PJ64Team x Bruce Shankle IV"  },
     { LANGUAGE_VERSION,    "1.6.2 (2025)"                 },
@@ -36,7 +31,6 @@ LANG_STR DefaultString[] = {
 	{ NUMBER_4,             "4"                       },
 	{ NUMBER_5,             "5"                       },
 	{ NUMBER_6,             "6"                       },
-
 	        { MENU_FILE,       "File"                    },
 		{ MENU_OPEN,       "Open ROM"                },
 		{ MENU_ROM_INFO,   "ROM Info"                },
@@ -75,41 +69,40 @@ LANG_STR DefaultString[] = {
 		{ MENU_GITHUB,    "GitHub"                        },
 		{ MENU_UNINSTALL,   "Factory Reset"               },
 // Menu Descriptions
-        { MENUDES_OPEN, "Lets you open N64 ROMs" },    
-        { MENUDES_ROM_INFO, "Displays ROM-specific information about a running ROM" }, 
-        { MENUDES_START, "Starts emulation of the most recently opened ROM within this instance" }, 
-        { MENUDES_END, "Ends emulation of the most recently opened ROM within this instance" }, 
-        { MENUDES_CHOOSE_ROM, "Lets you choose a ROM directory (ROMs folder by default)" }, 
-        { MENUDES_REFRESH, "Refreshes current list of ROMs in the ROM browser" }, 
-        { MENUDES_EXIT, "Closes Project64" }, 
-        { MENUDES_RESET, "Resets the current ROM" }, 
-        { MENUDES_PAUSE, "Pauses/resumes emulation of the current ROM" }, 
+        { MENUDES_OPEN, "Lets you open N64 ROMs" },
+        { MENUDES_ROM_INFO, "Displays ROM-specific information about a running ROM" },
+        { MENUDES_START, "Starts emulation of the most recently opened ROM within this instance" },
+        { MENUDES_END, "Ends emulation of the most recently opened ROM within this instance" },
+        { MENUDES_CHOOSE_ROM, "Lets you choose a ROM directory (ROMs folder by default)" },
+        { MENUDES_REFRESH, "Refreshes current list of ROMs in the ROM browser" },
+        { MENUDES_EXIT, "Closes Project64" },
+        { MENUDES_RESET, "Resets the current ROM" },
+        { MENUDES_PAUSE, "Pauses/resumes emulation of the current ROM" },
         { MENUDES_BITMAP, "Screenshots the current frame (plugin-dependent, freezes on D3D8 1.7 plugins w/FSAA)" },
-        { MENUDES_LIMIT_FPS, "Lets you toggle >100% speeds (disabled by Sync game to Audio plugin setting)" }, 
-        { MENUDES_SAVE, "Saves last selected save state slot" }, 
-        { MENUDES_SAVE_AS, "Lets you choose a directory to make a save state" }, 
-        { MENUDES_RESTORE, "Loads last selected save state slot" }, 
-        { MENUDES_LOAD, "Lets you choose a save state to load" }, 
-        { MENUDES_CHEAT, "Enables/disables GameShark cheats" }, 
-        { MENUDES_GS_BUTTON, "Activates GS cheats when enabled in the cheat menu" }, 
-        { MENUDES_FULL_SCREEN, "Enters current video plugin's fullscreen mode (issues with Direct3D8)" }, 
-        { MENUDES_ON_TOP, "Makes Project64 stay in front of all other windows" }, 
-        { MENUDES_CONFIG_GFX, "Lets you change settings inside the Graphics plugin" }, 
-        { MENUDES_CONFIG_AUDIO, "Lets you change settings inside the Audio plugin" }, 
-        { MENUDES_CONFIG_CTRL, "Lets you change settings inside the Controller plugin" }, 
-        { MENUDES_CONFIG_RSP, "Lets you change settings inside the RSP plugin" }, 
-        { MENUDES_SETTINGS, "Lets you change settings for Project64" }, 
-        { MENUDES_USER_GUIDE, "Opens the user guide" }, 
-        { MENUDES_ABOUT_INI, "Displays metadata for Project64 databases" }, 
-        { MENUDES_RECENT_ROM, "Lets you open a previously opened ROM path" }, 
-        { MENUDES_RECENT_DIR, "Lets you choose a ROM directory" }, 
-        { MENUDES_LANGUAGES, "Lets you swap to a different language database if provided" }, 
-        { MENUDES_GAME_SLOT, "Selects a save state slot" },  
-        { MENUDES_GAME_SETTINGS, "Lets you edit ROM database (.rdb) settings for a selected ROM" }, 
-        { MENUDES_GAME_CHEATS, "Lets you use/edit cheat database (.cdb) codes for a selected ROM" }, 
-        { MENUDES_UNINSTALLAPP, "Attempts to factory reset all PJ64 registries/configurations and terminates this instance" }, 
-        { MENUDES_GITHUB, "Takes you to Bruce Shankle IV's Project64 GitHub page" }, 
-
+        { MENUDES_LIMIT_FPS, "Lets you toggle >100% speeds (disabled by Sync game to Audio plugin setting)" },
+        { MENUDES_SAVE, "Saves last selected save state slot" },
+        { MENUDES_SAVE_AS, "Lets you choose a directory to make a save state" },
+        { MENUDES_RESTORE, "Loads last selected save state slot" },
+        { MENUDES_LOAD, "Lets you choose a save state to load" },
+        { MENUDES_CHEAT, "Enables/disables GameShark cheats" },
+        { MENUDES_GS_BUTTON, "Activates GS cheats when enabled in the cheat menu" },
+        { MENUDES_FULL_SCREEN, "Enters current video plugin's fullscreen mode (issues with Direct3D8)" },
+        { MENUDES_ON_TOP, "Makes Project64 stay in front of all other windows" },
+        { MENUDES_CONFIG_GFX, "Lets you change settings inside the Graphics plugin" },
+        { MENUDES_CONFIG_AUDIO, "Lets you change settings inside the Audio plugin" },
+        { MENUDES_CONFIG_CTRL, "Lets you change settings inside the Controller plugin" },
+        { MENUDES_CONFIG_RSP, "Lets you change settings inside the RSP plugin" },
+        { MENUDES_SETTINGS, "Lets you change settings for Project64" },
+        { MENUDES_USER_GUIDE, "Opens the user guide" },
+        { MENUDES_ABOUT_INI, "Displays metadata for Project64 databases" },
+        { MENUDES_RECENT_ROM, "Lets you open a previously opened ROM path" },
+        { MENUDES_RECENT_DIR, "Lets you choose a ROM directory" },
+        { MENUDES_LANGUAGES, "Lets you swap to a different language database if provided" },
+        { MENUDES_GAME_SLOT, "Selects a save state slot" },
+        { MENUDES_GAME_SETTINGS, "Lets you edit ROM database (.rdb) settings for a selected ROM" },
+        { MENUDES_GAME_CHEATS, "Lets you use/edit cheat database (.cdb) codes for a selected ROM" },
+        { MENUDES_UNINSTALLAPP, "Attempts to factory reset all PJ64 registries/configurations and terminates this instance" },
+        { MENUDES_GITHUB, "Takes you to Bruce Shankle IV's Project64 GitHub page" },
 /*********************************************************************************
 * ROM Browser                                                                    *
 *********************************************************************************/
@@ -126,12 +119,9 @@ LANG_STR DefaultString[] = {
 	{ RB_CRC2,         "2nd CRC" },
 	{ RB_CICCHIP,      "CIC Chip" },
 	{ SELECT_ROM_DIR,  "Choose your ROM directory" },
-
 //Messages
-
 	{ RB_NOT_IN_RDB,"Unknown" },
         { RB_HACK, "Unknown (Hack?)" },
-
 /*********************************************************************************
 * Options                                                                        *
 *********************************************************************************/
@@ -143,14 +133,12 @@ LANG_STR DefaultString[] = {
 	{ TAB_ROMSETTINGS,"ROM Settings"},
 	{ TAB_SHELLINTERGATION,"Shell Integration"},
 	{ TAB_ROMNOTES,"ROM Notes"},
-
 //Plugin Dialog
 	{ PLUG_ABOUT, "About"},
 	{ PLUG_RSP,   " Reality Signal Processor plugin: "},
 	{ PLUG_GFX,   " Video (graphics) plugin: "},
 	{ PLUG_AUDIO, " Audio (sound) plugin: "},
 	{ PLUG_CTRL,  " Input (controller) plugin: "},
-
 //Directory Dialog
 	{ DIR_ROM,           " ROM Directory: "},
 	{ DIR_AUTO_SAVE,     " Save Data: "},
@@ -161,13 +149,11 @@ LANG_STR DefaultString[] = {
 	{ DIR_SELECT_AUTO,   "Select Save Data Directory"},
 	{ DIR_SELECT_INSTANT,"Select Save States Directory"},
         { DIR_SELECT_SCREEN, "Select Screenshots Directory"},
-
 //Options (general) Tab
 	{ OPTION_AUTO_SLEEP,      "Pause emulation when window is not active?"},
 	{ OPTION_AUTO_FULLSCREEN, "On loading a ROM go to full screen"},
 	{ OPTION_BASIC_MODE,      "Hide Advanced Settings"},
 	{ OPTION_REMEMBER_CHEAT,  "Remember selected cheats"},
-
 //ROM Browser Tab
 	{ RB_MAX_ROMS,         "Max # of ROMs Remembered (Max 10):"},
 	{ RB_ROMS,             "ROMs"},
@@ -181,13 +167,11 @@ LANG_STR DefaultString[] = {
 	{ RB_REMOVE,           "<- Remove"},
 	{ RB_UP,               "Up"},
 	{ RB_DOWN,             "Down"},
-
 //Advanced Options
 	{ ADVANCE_INFO,        "Check Memory Advance = High FPS Low Compatibility\nProtect Memory = Medium FPS Medium Compatibility\nInterpreter = Low FPS High Compatibility\nNote Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register caching"},
 	{ ADVANCE_DEFAULTS,    "Core Defaults"},
 	{ ADVANCE_AUTO_START,  "Start Emulation Upon ROM Opening"},
 	{ ADVANCE_OVERWRITE,   "RDB ROM Settings"},
-
 //ROM Options
 	{ ROM_CPU_STYLE,       "CPU Core Style:"},
 	{ ROM_SMCM,            "Self-modifying Code Method:"},
@@ -205,15 +189,12 @@ LANG_STR DefaultString[] = {
 	{ ROM_DELAY_RDP,       "Delay RDP Interrupt"},
 	{ ROM_DELAY_RSP,       "Delay RSP Interrupt"},
 	{ ROM_EMULATE_AI,      "Emulate AI"},
-
 //Core Styles
 	{ CORE_INTERPRETER,    "Interpreter"},
 	{ CORE_RECOMPILER,     "Recompiler"},
-
 //RDRAM Size
 	{ RDRAM_4MB,           "4 MB" },
 	{ RDRAM_8MB,           "8 MB" },
-
 //Self Mod Methods
 	{ SMCM_NONE,           "None"},
 	{ SMCM_CACHE,          "Cache"},
@@ -221,32 +202,26 @@ LANG_STR DefaultString[] = {
 	{ SMCM_CHECK_MEM,      "Check Memory & Cache"},
 	{ SMCM_CHANGE_MEM,     "Change Memory & Cache"},
 	{ SMCM_CHECK_ADV,      "Check Memory Advance"},
-
 //Advanced Block Linking
 	{ ABL_ON,              "On"},
 	{ ABL_OFF,             "Off"},
-
 //Save Type
 	{ SAVE_FIRST_USED,     "Use First Used Save Type"},
 	{ SAVE_4K_eepROM,      "4kbit eepROM"},
 	{ SAVE_16K_eepROM,     "16kbit eepROM"},
 	{ SAVE_SRAM,           "32kbytes SRAM"},
 	{ SAVE_FlashRAM,       "FlashRAM"},
-
 //Shell Intergration Tab
 	{ SHELL_TEXT,          "File extension association:"},
-
 //ROM Notes
 	{ NOTE_STATUS,         "ROM Status:"},
 	{ NOTE_CORE,           "Core Note:"},
 	{ NOTE_PLUGIN,         "Plugin Note:"},
-
 /*********************************************************************************
 * ROM Information                                                                *
 *********************************************************************************/
 //ROM Info Title Title
 	{ INFO_TITLE,             "ROM Information"},
-
 //ROM Info Text
 	{ INFO_ROM_NAME_TEXT,     "ROM Name:"},
 	{ INFO_FILE_NAME_TEXT,    "File Name:"},
@@ -256,7 +231,6 @@ LANG_STR DefaultString[] = {
 	{ INFO_CRC1_TEXT,         "1st CRC:"},
 	{ INFO_CRC2_TEXT,         "2nd CRC:"},
 	{ INFO_CIC_CHIP_TEXT,     "CIC Chip:"},
-
 /*********************************************************************************
 * Cheats                                                                         *
 *********************************************************************************/
@@ -264,7 +238,6 @@ LANG_STR DefaultString[] = {
 	{ CHEAT_LIST_FRAME,      "Cheats:"},
 	{ CHEAT_NOTES_FRAME,     " Notes: "},
 	{ CHEAT_MARK_NONE,       "Unmark All"},
-
 //Add Cheat
 	{ CHEAT_ADDCHEAT_NAME,   "Name:"},
 	{ CHEAT_ADDCHEAT_CODE,   "Code:"},
@@ -274,20 +247,16 @@ LANG_STR DefaultString[] = {
 	{ CHEAT_ADDCHEAT_CODEDES,"<address> <value>"},
 	{ CHEAT_ADDCHEAT_OPT,    "Options:"},
 	{ CHEAT_ADDCHEAT_OPTDES, "<value> <label>"},
-
 //Code extension
 	{ CHEAT_CODE_EXT_TITLE,  "Code Extensions"},
 	{ CHEAT_CODE_EXT_TXT,    "Please choose a value to be used for:"},
-
 //Edit Cheat
 	{ CHEAT_EDITCHEAT_WINDOW,"Edit Cheat"},
 	{ CHEAT_EDITCHEAT_UPDATE,"Update Cheat"},
-
 //Cheat Popup Menu
 	{ CHEAT_ADDNEW,          "Add New Cheat"},
 	{ CHEAT_EDIT,            "Edit"},
 	{ CHEAT_DELETE,          "Delete"},
-
 /*********************************************************************************
 * Messages                                                                       *
 *********************************************************************************/
@@ -324,22 +293,20 @@ LANG_STR DefaultString[] = {
 	{ MSG_CHEAT_NAME_IN_USE,  "Cheat name is currently in use"},
 	{ MSG_MAX_CHEATS,         "You have reached the maximum amount of cheats allowed for this ROM"},
         { MSG_DELETE_SETTINGS_FAILED, "Factory reset failed to reset Project64 registries/configurations" },
-        { MSG_CONFIRMATION_UNINSTALL, "This action will attempt to factory reset all Project64 registries/configurations and terminate this instance.\n\nIs it OK to execute this action? If so, press OK to close Project64 or close it yourself. Otherwise, please cancel"},                                       
+        { MSG_CONFIRMATION_UNINSTALL, "This action will attempt to factory reset all Project64 registries/configurations and terminate this instance.\n\nIs it OK to execute this action? If so, press OK to close Project64 or close it yourself. Otherwise, please cancel"},
         { MSG_PLUGIN_HOT_SWAP,    "Plugin hot swapping in progress"},
         { PLUG_HOT_SWAP_DOUBLE,   "Double click the OK button while plugin hot swapping to quickly close Project64 from this window"},
         { HOT_SWAP_COMPLETE,      "Plugin hot swapping completed"},
         { FULLSCREEN_TOGGLE,      "Fullscreen mode toggled"},
         { GS_PRESS,               "GS button pressed"},
+	{ FPS_DISPLAY,            "Frames Per Second"},
 };
-
 class CLanguage  {
 	void FindLangName  ( int Index );
 	void LoadStrings   ( char * FileName );
 	void SaveCurrentLang ( char * String );
-
 public:
 	CLanguage();
-
 	void CreateLangList ( HMENU hMenu, int uPosition, int MenuID );
 	char * GetString    ( int StringID );
 	void LoadLangList   ( void );
@@ -348,7 +315,6 @@ public:
 	int  GetNumberLang  ( void );
 	void SetCurrentLang ( HMENU hMenu, int MenuIndx );
 	int  SetMenuBase    ( int MenuBase );
-
 private:
 	LANG_STR m_Strings[MAX_STRINGS];
 	char m_filenames[MAX_LANGUAGES][_MAX_PATH];
@@ -359,13 +325,10 @@ private:
 	int m_NoOfStrings;
 	int m_BaseMenuID;
 };
-
 /*******************************************************************************
 * Variables                                                                    *
 *******************************************************************************/
 CLanguage lng;
-
-
 /*******************************************************************************
 * Code                                                                         *
 *******************************************************************************/
@@ -374,22 +337,17 @@ CLanguage::CLanguage() {
 	m_NoOfStrings = 0;
 	strcpy(m_CurrentLangName,"");
 }
-
 int CLanguage::GetNumberLang(void) {
 	return m_NoOflangs;
 }
-
 const char * CLanguage::LangName  ( int index ) {
 	if (index >= MAX_LANGUAGES) { return NULL; }
 	return m_LangName[index];
 }
-
 void CLanguage::LoadLanguage  ( char * RegLocation ) {
 	strncpy(m_RegKey, RegLocation, sizeof(m_RegKey));
-
 	LoadLangList();
 	strcpy(m_CurrentLangName,"");
-
 	HKEY hKeyResults = 0;
 	long lResult = RegOpenKeyEx( HKEY_CURRENT_USER,RegLocation,0, KEY_ALL_ACCESS,&hKeyResults);
 	if (lResult == ERROR_SUCCESS) {
@@ -397,8 +355,7 @@ void CLanguage::LoadLanguage  ( char * RegLocation ) {
 		lResult = RegQueryValueEx(hKeyResults,"Language",0,&Type,(LPBYTE)(m_CurrentLangName),&Bytes);
 		if (lResult != ERROR_SUCCESS) { strcpy(m_CurrentLangName,""); }
 	}
-	RegCloseKey(hKeyResults);	
-
+	RegCloseKey(hKeyResults);
 	bool Found = false;
 	for (int count = 0; count < m_NoOflangs; count++) {
 		if (strcmp(m_LangName[count], m_CurrentLangName) == 0) {
@@ -411,26 +368,22 @@ void CLanguage::LoadLanguage  ( char * RegLocation ) {
 		strcpy(m_CurrentLangName, "English");
 	}
 }
-
 void CLanguage::CreateLangList ( HMENU hMenu, int uPosition, int MenuID ) {
 	LoadLangList();
-
 	HMENU hSubMenu = CreateMenu();
 	MENUITEMINFO menuinfo;
 	char String[100];
-
 	menuinfo.cbSize = sizeof(MENUITEMINFO);
 	menuinfo.fMask = MIIM_TYPE|MIIM_ID;
 	menuinfo.fType = MFT_STRING;
 	menuinfo.dwTypeData = String;
 	menuinfo.cch = sizeof(String);
-
 	if (GetNumberLang() == 0) {
 		menuinfo.wID = MenuID;
 		strcpy(String,"English");
 		InsertMenuItem(hSubMenu, 0, TRUE, &menuinfo);
 		CheckMenuItem(hSubMenu, MenuID, MF_BYCOMMAND | MFS_CHECKED );
-		EnableMenuItem(hSubMenu,MenuID, MFS_DISABLED|MF_BYCOMMAND);		
+		EnableMenuItem(hSubMenu,MenuID, MFS_DISABLED|MF_BYCOMMAND);
 	}
 	for (int count = 0; count < GetNumberLang(); count ++) {
 		menuinfo.wID = MenuID + count;
@@ -442,26 +395,22 @@ void CLanguage::CreateLangList ( HMENU hMenu, int uPosition, int MenuID ) {
 	}
 	ModifyMenu(hMenu,uPosition,MF_STRING|MF_POPUP|MF_BYPOSITION,(DWORD)hSubMenu,GS(MENU_LANGUAGE));
 }
-
 char * CLanguage::GetString (int StringID) {
 	for (int count = 0; count < m_NoOfStrings; count ++) {
 		if (m_Strings[count].ID == StringID) { return m_Strings[count].Str; }
 	}
 	return NULL;
 }
-
 void CLanguage::LoadLangList (void) {
 	char Directory[_MAX_PATH], SearchString[_MAX_PATH];
 	{
 		char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
 		char fname[_MAX_FNAME],ext[_MAX_EXT];
-
 		GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 		_splitpath( path_buffer, drive, dir, fname, ext );
 		sprintf(Directory,"%s%sPJ64DB\\",drive,dir);
 		sprintf(SearchString,"%s*.ldb",Directory);
 	}
-
 	WIN32_FIND_DATA find_data;
 	HANDLE   search_handle;
 	search_handle = FindFirstFile(SearchString, &find_data);
@@ -474,40 +423,31 @@ void CLanguage::LoadLangList (void) {
 		} while (FindNextFile(search_handle, &find_data ) && search_handle != INVALID_HANDLE_VALUE);
 		FindClose(search_handle);
 	}
-
 	for (int count = 0; count < m_NoOflangs; count ++) { FindLangName(count); }
 }
-
 void CLanguage::LoadStrings  ( char * FileName ) {
 	m_NoOfStrings = 0;
-
 	FILE *file = fopen(FileName, "rb");
 	if (file == NULL) { return; }
-
 	char  token=0;
 	while(!feof(file)){
 		token = 0;
-
 		//Search for token #
 		while(token!='#' && !feof(file)) { fread(&token, 1, 1, file); }
-		if(feof(file)){ continue; } 
-		
+		if(feof(file)){ continue; }
 		//get StringID after token
 		fscanf(file, "%d", &m_Strings[m_NoOfStrings].ID);
-	
 		//Search for token #
 		while(token!='#' && !feof(file)) { fread(&token, 1, 1, file); }
-		if(feof(file)){ continue; } 
-
+		if(feof(file)){ continue; }
 		//Search for start of string '"'
 		while(token!='"' && !feof(file)) { fread(&token, 1, 1, file); }
-		if(feof(file)){ continue; } 		
-
+		if(feof(file)){ continue; }
 		int pos = 0;
-		fread(&token, 1, 1, file); 
-		while(token!='"' && !feof(file)){ 
+		fread(&token, 1, 1, file);
+		while(token!='"' && !feof(file)){
 			m_Strings[m_NoOfStrings].Str[pos++] = token;
-			fread(&token, 1, 1, file); 
+			fread(&token, 1, 1, file);
 			if (pos == MAX_STRING_LEN - 2) { token = '"'; }
 		}
 		m_Strings[m_NoOfStrings].Str[pos++] = 0;
@@ -516,49 +456,37 @@ void CLanguage::LoadStrings  ( char * FileName ) {
 	}
 	fclose(file);
 }
-
-
 void CLanguage::FindLangName  ( int Index ) {
 	strcpy(m_LangName[Index],GS(RB_NOT_IN_RDB));
-
 	FILE *file = fopen(m_filenames[Index], "rb");
 	if (file == NULL) { return; }
-
 	char  token=0;
 	int   StringID;
-
 	while(!feof(file)){
 		token = 0;
-
 		//Search for token #
 		while(token!='#' && !feof(file)) { fread(&token, 1, 1, file); }
-		if(feof(file)){ continue; } 
-		
+		if(feof(file)){ continue; }
 		//get StringID after token
 		fscanf(file, "%d", &StringID);
-	
 		//Search for token #
 		while(token!='#' && !feof(file)) { fread(&token, 1, 1, file); }
-		if(feof(file)){ continue; } 
+		if(feof(file)){ continue; }
 		if (StringID != LANGUAGE_NAME) { continue; }
-
 		//Search for start of string '"'
 		while(token!='"' && !feof(file)) { fread(&token, 1, 1, file); }
-		if(feof(file)){ continue; } 		
-		
+		if(feof(file)){ continue; }
 		int pos = 0;
-		fread(&token, 1, 1, file); 
-		while(token!='"' && !feof(file)){ 
+		fread(&token, 1, 1, file);
+		while(token!='"' && !feof(file)){
 			m_LangName[Index][pos++] = token;
-			fread(&token, 1, 1, file); 
+			fread(&token, 1, 1, file);
 			if (pos == sizeof(m_LangName[Index]) - 2) { token = '"'; }
 		}
-		m_LangName[Index][pos++] = 0;		
+		m_LangName[Index][pos++] = 0;
 	}
 	fclose(file);
-
 }
-
 void CLanguage::SaveCurrentLang ( char * String ) {
 	long lResult;
 	HKEY hKeyResults = 0;
@@ -570,7 +498,6 @@ void CLanguage::SaveCurrentLang ( char * String ) {
 		strcpy(m_CurrentLangName,String);
 	}
 	RegCloseKey(hKeyResults);
-
 	for (int count = 0; count < m_NoOflangs; count++) {
 		if (strcmp(m_LangName[count], m_CurrentLangName) == 0) {
 			LoadStrings(m_filenames[count]);
@@ -578,11 +505,9 @@ void CLanguage::SaveCurrentLang ( char * String ) {
 		}
 	}
 }
-
 void CLanguage::SetCurrentLang ( HMENU hMenu, int MenuIndx ) {
 	MENUITEMINFO menuinfo;
 	char String[MAX_LANNAME_LEN];
-
 	menuinfo.cbSize = sizeof(MENUITEMINFO);
 	menuinfo.fMask = MIIM_TYPE;
 	menuinfo.fType = MFT_STRING;
@@ -591,27 +516,21 @@ void CLanguage::SetCurrentLang ( HMENU hMenu, int MenuIndx ) {
 	GetMenuItemInfo(hMenu,MenuIndx,FALSE,&menuinfo);
 	SaveCurrentLang(String);
 }
-
 char * GS (int StringID) {
 	int count;
-
 	char * Ret = lng.GetString(StringID);
 	if (Ret != NULL) { return Ret; }
-
 	for (count = 0; count < (sizeof(DefaultString) / sizeof(LANG_STR)); count ++) {
 		if (DefaultString[count].ID == StringID) { return DefaultString[count].Str; }
 	}
 	return "";
 }
-
 void CreateLangList (HMENU hMenu, int uPosition, int MenuID) {
 	lng.CreateLangList(hMenu,uPosition,MenuID);
 }
-
 void LoadLanguage ( char * RegLocation ) {
 	lng.LoadLanguage(RegLocation);
 }
-
 void SelectLangMenuItem ( HMENU hMenu, int LangMenuID) {
 	lng.SetCurrentLang(hMenu,LangMenuID);
 }

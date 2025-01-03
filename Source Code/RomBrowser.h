@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -30,7 +30,6 @@ typedef struct {
 	int  ColWidth;
 	int  LangID;
 } ROMBROWSER_FIELDS;
-
 void FillRomList               ( char * Directory );
 void FixRomBrowserColoumnLang  ( void );
 void HideRomBrowser            ( void );
@@ -50,9 +49,7 @@ void SetRomBrowserSize         ( int nWidth, int nHeight );
 void SelectRomDir              ( void );
 void ShowRomList               ( HWND hParent );
 void FreeRomBrowser            ( void );
-
 #define IDC_ROMLIST		                 223
-
 extern char CurrentRBFileName[MAX_PATH+1];
 extern ROMBROWSER_FIELDS RomBrowserFields[];
 extern int NoOfFields;

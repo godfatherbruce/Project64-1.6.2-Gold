@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -24,7 +24,6 @@
  *
  */
 void CompileReadTLBMiss (BLOCK_SECTION * Section, int AddressReg, int LookUpReg );
-
 /************************** Branch functions  ************************/
 void Compile_R4300i_Branch         ( BLOCK_SECTION * Section, void (*CompareFunc)(BLOCK_SECTION * Section), int BranchType, BOOL Link);
 void Compile_R4300i_BranchLikely   ( BLOCK_SECTION * Section, void (*CompareFunc)(BLOCK_SECTION * Section), BOOL Link);
@@ -36,7 +35,6 @@ void BLTZ_Compare                  ( BLOCK_SECTION * Section );
 void BGEZ_Compare                  ( BLOCK_SECTION * Section );
 void COP1_BCF_Compare              ( BLOCK_SECTION * Section );
 void COP1_BCT_Compare              ( BLOCK_SECTION * Section );
-
 /*************************  OpCode functions *************************/
 void Compile_R4300i_J              ( BLOCK_SECTION * Section );
 void Compile_R4300i_JAL            ( BLOCK_SECTION * Section );
@@ -75,7 +73,6 @@ void Compile_R4300i_SC             ( BLOCK_SECTION * Section );
 void Compile_R4300i_SWC1           ( BLOCK_SECTION * Section );
 void Compile_R4300i_SDC1           ( BLOCK_SECTION * Section );
 void Compile_R4300i_SD             ( BLOCK_SECTION * Section );
-
 /********************** R4300i OpCodes: Special **********************/
 void Compile_R4300i_SPECIAL_SLL    ( BLOCK_SECTION * Section );
 void Compile_R4300i_SPECIAL_SRL    ( BLOCK_SECTION * Section );
@@ -121,18 +118,15 @@ void Compile_R4300i_SPECIAL_DSRA   ( BLOCK_SECTION * Section );
 void Compile_R4300i_SPECIAL_DSLL32 ( BLOCK_SECTION * Section );
 void Compile_R4300i_SPECIAL_DSRL32 ( BLOCK_SECTION * Section );
 void Compile_R4300i_SPECIAL_DSRA32 ( BLOCK_SECTION * Section );
-
 /************************** COP0 functions **************************/
 void Compile_R4300i_COP0_MF        ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP0_MT        ( BLOCK_SECTION * Section );
-
 /************************** COP0 CO functions ***********************/
 void Compile_R4300i_COP0_CO_TLBR   ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP0_CO_TLBWI  ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP0_CO_TLBWR  ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP0_CO_TLBP   ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP0_CO_ERET   ( BLOCK_SECTION * Section );
-
 /************************** COP1 functions **************************/
 void Compile_R4300i_COP1_MF        ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_DMF       ( BLOCK_SECTION * Section );
@@ -140,7 +134,6 @@ void Compile_R4300i_COP1_CF        ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_MT        ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_DMT       ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_CT        ( BLOCK_SECTION * Section );
-
 /************************** COP1: S functions ************************/
 void Compile_R4300i_COP1_S_ADD     ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_S_SUB     ( BLOCK_SECTION * Section );
@@ -161,7 +154,6 @@ void Compile_R4300i_COP1_S_CVT_D   ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_S_CVT_W   ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_S_CVT_L   ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_S_CMP     ( BLOCK_SECTION * Section );
-
 /************************** COP1: D functions ************************/
 void Compile_R4300i_COP1_D_ADD     ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_D_SUB     ( BLOCK_SECTION * Section );
@@ -182,14 +174,11 @@ void Compile_R4300i_COP1_D_CVT_S   ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_D_CVT_W   ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_D_CVT_L   ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_D_CMP     ( BLOCK_SECTION * Section );
-
 /************************** COP1: W functions ************************/
 void Compile_R4300i_COP1_W_CVT_S   ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_W_CVT_D   ( BLOCK_SECTION * Section );
-
 /************************** COP1: L functions ************************/
 void Compile_R4300i_COP1_L_CVT_S   ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_L_CVT_D   ( BLOCK_SECTION * Section );
-
 /************************** Other functions **************************/
 void Compile_R4300i_UnknownOpcode  ( BLOCK_SECTION * Section );

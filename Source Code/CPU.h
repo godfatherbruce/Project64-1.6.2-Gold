@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -39,10 +39,8 @@
 #include "pif.h"
 #include "opcode.h"
 #include "rom.h"
-
 typedef struct {
 	HANDLE hStepping;
-
 	BOOL DoSomething;
 	BOOL CloseCPU;
 	BOOL ChangeWindow;
@@ -53,8 +51,6 @@ typedef struct {
 	BOOL DoInterrupt;
 	BOOL Stepping;
 } CPU_ACTION;
-
-
 #define MaxTimers	6
 #define CompareTimer			0
 #define SiTimer					1
@@ -62,15 +58,12 @@ typedef struct {
 #define ViTimer					3
 #define RspTimer				4
 #define AiTimer					5
-
-
 typedef struct {
 	int  NextTimer[MaxTimers];
 	BOOL Active[MaxTimers];
 	int  CurrentTimerType;
 	int  Timer;
 } SYSTEM_TIMERS;
-
 void ChangeCompareTimer ( void );
 void ChangeTimer        ( int Type, int Value );
 void CheckTimer         ( void );
@@ -94,7 +87,6 @@ void SetCoreToStepping  ( void );
 void StartEmulation     ( void );
 void StepOpcode         ( void );
 void TimerDone          ( void );
-
 #define NORMAL					0
 #define DO_DELAY_SLOT			1
 #define DO_END_DELAY_SLOT		2
@@ -106,7 +98,6 @@ void TimerDone          ( void );
 #define LIKELY_DELAY_SLOT_DONE	8
 #define END_BLOCK 				9
 #define CPU_Message
-
 enum SaveType {
 	Auto,
 	eepROM_4K,

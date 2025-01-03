@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -23,11 +23,9 @@
  * should be forwarded to them so if they want them.
  *
  */
-#ifndef __Types_h 
-#define __Types_h 
-
+#ifndef __Types_h
+#define __Types_h
 typedef unsigned _int64 QWORD;
-
 typedef union tagUWORD {
 	long				W;
 	float				F;
@@ -37,7 +35,6 @@ typedef union tagUWORD {
 	char				B[4];
 	unsigned char		UB[4];
 } MIPS_WORD;
-
 typedef union tagUDWORD {
 	double				D;
 	_int64				DW;
@@ -50,5 +47,4 @@ typedef union tagUDWORD {
 	char				B[8];
 	unsigned char		UB[8];
 } MIPS_DWORD;
-
 #endif

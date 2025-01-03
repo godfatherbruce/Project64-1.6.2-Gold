@@ -1,7 +1,7 @@
 /*
  * Project 64 - A Nintendo 64 emulator.
  *
- * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and 
+ * (c) Copyright 2001 zilmar (zilmar@emulation64.com) and
  * Jabo (jabo@emulation64.com).
  *
  * pj64 homepage: www.pj64.net
@@ -23,14 +23,11 @@
  * should be forwarded to them so if they want them.
  *
  */
-
 /*
    Overrides the plugin to emulate the AI internally
 */
 #include "Plugin.h"
-
 #pragma once
-
 void EmuAI_ClearAudio();
 void EmuAI_InitializePluginHook();
 void EmuAI_SetFrameRate(int frameRate);

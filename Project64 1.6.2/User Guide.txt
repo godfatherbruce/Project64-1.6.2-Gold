@@ -234,7 +234,7 @@ Jabo's Direct3D8 1.6 -   **Note: This is the previous version of the plugin foun
 
 Jabo's Direct3D8 1.6.1 - This is the default gfx plugin due to low requirements and minimal regressions.
 			 However, it also has many graphics emulation issues, and if your PC can support
-			 Mk3 GLideN64 or Legacy's Angrylion's RDP Plus, I would suggest trying those out
+			 Mk3 GLideN64 or Icepir8's Legacy LLE Ver 0.3.2. I would suggest trying them out
 			 if you experience bad graphic issues with the ROMs/hacks you're trying to play.
 			 Do not enable "Copy framebuffer to RDRAM" or you will suffer evil consequences.
 			 Avoid enabling full-scene anti aliasing if possible because it causes problems.
@@ -284,10 +284,11 @@ Vigilante 8: fixed some textures
 Legend of Zelda Majora's Mask: fixed day transition borders and lens of truth in snow areas
 
 
-Legacy's Angrylion's RDP Plus x ParaLLel -  An excellent fork of Angrylion's RDP Plus which comes with a
-					    builtin ParaLLel RSP and an option to render using DirectX8.
-					    Originally created by Icepir8 for Project64 Legacy emulator.
+Icepir8's Legacy LLE Ver. 0.3.2 -  An excellent fork of Angrylion's RDP Plus which comes with a built-in
+				   ParaLLel RSP plugin and supports DirectX8, helps plugin hot swapping.
+				   Originally created by Icepir8 for the Project64, "Legacy" Experiment.
 					***Entering fullscreen after changing resolution fixes freezing.
+					*Note: The final version was buggy as hell, so use this version.
 
 Mk3 GLideN64#42d6569 - The last stable release of GLideN64 I am able to find before the bad regressions.
 		       Use this if you want something that generally works but it has high requirements.
@@ -338,7 +339,7 @@ Reality Signal Processor plugin:
 
 Iconoclast+MarathonMan SSE2 RSP - This is very basic but accurate and pure low level RSP. Use the plugin
 				  to test low level graphics emulation. This plugin can also fix graphic
-				  issues seen in Legacy's Angrylion's RDP Plus x ParaLLel since ParaLLel
+				  issues seen in Icepir8's Legacy LLE Ver. 0.3.2 as the builtin ParaLLel
 				  RSP is less accurate and prone to some issues aren't seen in this RSP.
 				  Do not ever use this plugin unless you know what it is to be used for.
 
@@ -379,8 +380,7 @@ either the ROM header data above the internal name, or the baseROM's internal na
 
 Section#06 Known Issues
 --------------------------------------------------------------------------------------------------------
-There's screen shaking in more difficult to emulate N64 ROMs. In that case, try out a more accurate emu.
-There's also some screen tearing issues in more difficult to emulate N64 ROMs like The Infernal Machine.
+Texture tearing problem in difficult to emulate N64 roms such as Indiana Jones and The Infernal Machine.
 GLideN64 is missing microcode support for some games which will crash at some point when using GLideN64.
 The rom browser is a bit buggy but this shouldn't affect your gaming experience so it's not a big issue.
 Jabo's Direct3D8 can crash the emulator upon entering fullscreen while connected to a TV and while using
@@ -411,7 +411,7 @@ the program can misbehave and fail to open up ROMs or have a varying amount of i
 Saving doesn't work with certain mods and causes the save to get deleted because of an unused save type.
 Shankle's GLideN64 can sometimes get stuck on a black screen when messing with config settings. However,
 the screen returns to normal if you enter or exit fullscreen mode or if you hot swap one of the plugins.
-The issue described above is also present with Legacy's Angrylion's RDP x ParaLLel on resolution change.
+The issue described above is also present if using Icepir8's Legacy LLE Ver. 0.3.2 on resolution change.
 The "players" default is "1" instead of "Unknown" when examining ROM's that are missing an entry in RDB.
 If you hold down the F1 key, sometimes it accidentally attempts to load the selected state slot instead.
 The display will be frozen if you either sleep or lock your computer while using Jabo's Direct3D8 video.

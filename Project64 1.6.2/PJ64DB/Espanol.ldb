@@ -218,47 +218,46 @@ Necesitas ir a Configuracion y seleccionar un complemento de Controles (Inputs)"
 Emulacion finalizada"
 #212# "Falla al guardar el estado de guardado. Asegurate de que no estes guardando un estado de guardado marcado como solo lectura"
 #213# "No se puede acceder a los datos de guardado. Puede que estes ejecutando una aplicacion desde un directorio con permisos de admin, o puedes tener multiples instancias de Project64 abiertas. Deten cualquiera de las dos para hacer que este error desaparezca"
-#214# "Error al abrir mempak"
-#215# "Intento de abrir el archivo zip fallido.
+#214# "Intento de abrir el archivo zip fallido.
 
 Potencialmente es un archivo .zip corrupto: intenta descomprimir ROM manualmente"
-#216# "Error al abrir la ROM.
+#215# "Error al abrir la ROM.
 
 Potencialmente es una ruta no valida: actualiza el navegador de ROMs si encontraste este error desde alli. De lo contrario, intenta restablecer el nombre y la ubicacion anteriores del archivo ROM en tu unidad"
-#217# "Error ocurrido al intentar abrir archivo .zip"
-#218# "El archivo cargado no parece ser una ROM valida.
+#216# "Error ocurrido al intentar abrir archivo .zip"
+#217# "El archivo cargado no parece ser una ROM valida.
 
 Verifica que el checksum de tu ROM sea valido"
-#219# "Pais desconocido"
-#220# "Formato de archivo desconocido"
-#221# "Accion de memoria desconocida.
+#218# "Pais desconocido"
+#219# "Formato de archivo desconocido"
+#220# "Accion de memoria desconocida.
 
 Emulacion finalizada"
-#222# "Codigo de operacion R4300i no controlado en"
-#223# "Emulacion finalizada
+#221# "Codigo de operacion R4300i no controlado en"
+#222# "Emulacion finalizada
 (Intenta Vinculacion de Bloques Avanzada + Cambiar Memoria y Cache)
 (Intenta Estilo de Nucleo de CPU Interprete)"
-#224# "Ejecutando desde espacio no asignado.
+#223# "Ejecutando desde espacio no asignado.
 
 Emulacion finalizada
 (Intenta Comprobacion de Memoria Avanzada)
 (Intenta Estilo de Nucleo de CPU Interprete)
 (Intenta Tamano de Memoria de 8MB)"
-#226# "Secuencia de copyright no encontrada en LUT. El juego ya no funcionara"
-#227# "Fallo de Proteccion de Copia"
-#228# "Emulacion iniciada"
-#229# "No se puede cargar el estado de Guardado"
-#230# "Emulacion finalizada"
-#231# "No se puede abrir una ROM porque los plugins no se han inicializado correctamente"
-#232# "El nombre del Truco ya esta en uso"
-#233# "Has alcanzado la cantidad maxima de Trucos permitidos para esta ROM"
-#234# "El restablecimiento de fabrica fallo al restablecer los registros/configuraciones de Project64"
-#235# "Esta accion intentara restablecer de fabrica todos los registros/configuraciones de Project64 y terminar esta instancia.
+#225# "Secuencia de copyright no encontrada en LUT. El juego ya no funcionara"
+#226# "Fallo de Proteccion de Copia"
+#227# "Emulacion iniciada"
+#228# "No se puede cargar el estado de Guardado"
+#229# "Emulacion finalizada"
+#230# "No se puede abrir una ROM porque los plugins no se han inicializado correctamente"
+#231# "El nombre del Truco ya esta en uso"
+#232# "Has alcanzado la cantidad maxima de Trucos permitidos para esta ROM"
+#233# "El restablecimiento de fabrica fallo al restablecer los registros/configuraciones de Project64"
+#234# "Esta accion intentara restablecer de fabrica todos los registros/configuraciones de Project64 y terminar esta instancia.
 
 Esta bien ejecutar esta accion? Si es asi, presiona OK para cerrar Project64 o cierralo tu mismo. De lo contrario, por favor cancela"
-#236# "Cambio rapido de Plugin en progreso"
-#237# "Haz doble click sobre el boton OK mientras de cambias rapidamente de plugin para cerrar de inmediato Project64 desde esta ventana"
-#238# "Cambio rapido de plugin completado"
-#239# "Pantalla completa activada"
-#240# "Boton GS presionado"
-#241# "Frames Por Segundo"
+#235# "Cambio rapido de Plugin en progreso"
+#236# "Haz doble click sobre el boton OK mientras de cambias rapidamente de plugin para cerrar de inmediato Project64 desde esta ventana"
+#237# "Cambio rapido de plugin completado"
+#238# "Pantalla completa activada"
+#239# "Boton GS presionado"
+#240# "Frames Por Segundo"

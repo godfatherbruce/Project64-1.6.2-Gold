@@ -10,6 +10,8 @@ BUG/ISSUE REPORTING: To report any unknown issues (not documented in known issue
 
 3: Send me an email through gmail. I don't check my email very often at all anymore, but here it is: bruceiv.shankle@gmail.com
 
+VULNERABILITY REPORTING: Rumor has it that there are more vulnerabilities in Project64 1.6 which just aren't talked about. If they are real and you know about one of these vulnerabilities, please DM me on discord at bruceshankle or open an issue about it on GitHub and make sure I am notified so I am made aware of it, then we can start thinking about how it might be able to be fixed.
+
 
 About: Project64 1.6.2 is my unofficial update and spiritual successor to Project64 Versions 1.6 and 1.6.1 developed using PJ64Team's vulnerability fixed (but kinda bugged) 1.6 Plus as it stood at this time: https://github.com/pj64team/Project64-1.6-Plus/tree/7ff51997c16e35a1c0685cc076b085ee6eda1b64 (Plus is based on the source code for 1.6.1, hence my rebranding to 1.6.2)
 

@@ -7433,4 +7433,4 @@ Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
 Status=Compatible
-Plugin Note=Use Jabo
+Plugin Note=Don't use GLideN64

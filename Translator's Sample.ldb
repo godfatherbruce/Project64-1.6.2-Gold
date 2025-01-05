@@ -229,48 +229,47 @@ You need to go into Settings and select an input (controller) plugin"
 Emulation ending"
 #212# "Failed to save this savestate. You should ensure you aren't saving a savestate marked as read-only"
 #213# "Cannot access save data. You may be running the application from an admin rights directory, or you may have multiple instances of Project64 open. Stop doing either of those to make this error go away"
-#214# "Failed to open mempak"
-#215# "Attempt to open zip file failed.
+#214# "Attempt to open zip file failed.
 
 Potentially is a corrupt zip file - try unzipping ROM manually"
-#216# "Failed to open ROM.
+#215# "Failed to open ROM.
 
 Potentially is an invalid path - refresh the ROM browser if you encountered this error from there. Otherwise, try reinstating the ROM's previous file name and location within your drive"
-#217# "Error occured when trying to open zip file"
-#218# "File loaded does not appear to be a valid ROM.
+#216# "Error occured when trying to open zip file"
+#217# "File loaded does not appear to be a valid ROM.
 
 Verify that your ROM's checksum is valid"
-#219# "Unknown country"
-#220# "Unknown file format"
-#221# "Unknown memory action.
+#218# "Unknown country"
+#219# "Unknown file format"
+#220# "Unknown memory action.
 
 Emulation ending"
-#222# "Unhandled R4300i OpCode at"
-#223# "Emulation ending
+#221# "Unhandled R4300i OpCode at"
+#222# "Emulation ending
 (Try Advanced Block Linking + Change Memory & Cache)
 (Try Interpreter CPU Core Style)"
-#224# "Executing from non-mapped space.
+#223# "Executing from non-mapped space.
 
 Emulation ending
 (Try Check Memory Advance)
 (Try Interpreter CPU Core Style)
 (Try 8MB Memory Size)"
-#225# "Error"
-#226# "Copyright sequence not found in LUT. Game will no longer function"
-#227# "Copy Protection Failure"
-#228# "Emulation started"
-#229# "Unable to load save state"
-#230# "Emulation ended"
-#231# "Cannot open a ROM because plugins haven't successfully initialized"
-#232# "Cheat name is currently in use"
-#233# "You have reached the maximum amount of cheats allowed for this ROM"
-#234# "Factory reset failed to reset Project64 registries/configurations"
-#235# "This action will attempt to factory reset all Project64 registries/configurations and terminate this instance.
+#224# "Error"
+#225# "Copyright sequence not found in LUT. Game will no longer function"
+#226# "Copy Protection Failure"
+#227# "Emulation started"
+#228# "Unable to load save state"
+#229# "Emulation ended"
+#230# "Cannot open a ROM because plugins haven't successfully initialized"
+#231# "Cheat name is currently in use"
+#232# "You have reached the maximum amount of cheats allowed for this ROM"
+#233# "Factory reset failed to reset Project64 registries/configurations"
+#234# "This action will attempt to factory reset all Project64 registries/configurations and terminate this instance.
 
 Is it OK to execute this action? If so, press OK to close Project64 or close it yourself. Otherwise, please cancel"
-#236# "Plugin hot swapping in progress"
-#237# "Double click the OK button while plugin hot swapping to quickly close Project64 from this window"
-#238# "Plugin hot swapping completed"
-#239# "Fullscreen mode toggled"
-#240# "GS button pressed"
-#241# "Frames Per Second"
+#235# "Plugin hot swapping in progress"
+#236# "Double click the OK button while plugin hot swapping to quickly close Project64 from this window"
+#237# "Plugin hot swapping completed"
+#238# "Fullscreen mode toggled"
+#239# "GS button pressed"
+#240# "Frames Per Second"

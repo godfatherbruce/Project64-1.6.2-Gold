@@ -380,7 +380,6 @@ either the ROM header data above the internal name, or the baseROM's internal na
 
 Section#06 Known Issues
 --------------------------------------------------------------------------------------------------------
-Texture tearing problem in difficult to emulate N64 roms such as Indiana Jones and The Infernal Machine.
 GLideN64 is missing microcode support for some games which will crash at some point when using GLideN64.
 The rom browser is a bit buggy but this shouldn't affect your gaming experience so it's not a big issue.
 Jabo's Direct3D8 can crash the emulator upon entering fullscreen while connected to a TV and while using

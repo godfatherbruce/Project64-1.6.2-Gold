@@ -272,7 +272,6 @@ LANG_STR DefaultString[] = {
 	{ MSG_FAIL_LOAD_WORD,     "Failed to load word.\n\nEmulation ending"},
 	{ MSG_FAIL_OPEN_SAVE,     "Failed to save this savestate. You should ensure you aren't saving a savestate marked as read-only"},
         { MSG_FAIL_OPEN_FLASH,    "Cannot access save data. You may be running the application from an admin rights directory, or you may have multiple instances of Project64 open. Stop doing either of those to make this error go away"},
-	{ MSG_FAIL_OPEN_MEMPAK,   "Failed to open mempak"},
 	{ MSG_FAIL_OPEN_ZIP,      "Attempt to open zip file failed.\n\nPotentially is a corrupt zip file - try unzipping ROM manually"},
 	{ MSG_FAIL_OPEN_IMAGE,    "Failed to open ROM.\n\nPotentially is an invalid path - refresh the ROM browser if you encountered this error from there. Otherwise, try reinstating the ROM's previous file name and location within your drive"},
 	{ MSG_FAIL_ZIP,           "Error occured when trying to open zip file"},

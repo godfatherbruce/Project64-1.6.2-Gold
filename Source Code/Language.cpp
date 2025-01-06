@@ -168,7 +168,7 @@ LANG_STR DefaultString[] = {
 	{ RB_UP,               "Up"},
 	{ RB_DOWN,             "Down"},
 //Advanced Options
-	{ ADVANCE_INFO,        "Check Memory Advance = High FPS Low Compatibility\nProtect Memory = Medium FPS Medium Compatibility\nInterpreter = Low FPS High Compatibility\nNote Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register caching"},
+	{ ADVANCE_INFO,        "Check Memory Advance = High FPS Low Compatibility\nProtect Memory = Medium FPS Medium Compatibility\nInterpreter = Low FPS High Compatibility\n\nNote Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register caching"},
 	{ ADVANCE_DEFAULTS,    "Core Defaults"},
 	{ ADVANCE_AUTO_START,  "Start Emulation Upon ROM Opening"},
 	{ ADVANCE_OVERWRITE,   "RDB ROM Settings"},

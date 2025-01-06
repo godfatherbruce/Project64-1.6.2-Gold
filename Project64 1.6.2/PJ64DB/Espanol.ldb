@@ -127,6 +127,7 @@
 #134# "Revisar Memoria Avanzada = Altos FPS, Baja Compatibilidad
 Proteger Memoria = FPS Medio, Compatibilidad Media
 Interprete = Bajos FPS, Alta Compatibilidad
+
 Nota: El Interprete no se ve afectado por los siguientes ajustes:
 SCM, ABL, Bufer de Compilacion Grande y Cache de Registros"
 #135# "Valores Predeterminados del Nucleo"

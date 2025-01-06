@@ -89,7 +89,7 @@
 #93# "Chip CIC"
 #94# "Elige tu directorio para la ROM"
 #95# "Desconocido"
-#96# "Desconocido (Hack?)"
+#96# "Desconocido (Hack/Dominio Publico?)"
 #98# "Directorios"
 #99# "Seleccion de la ROM"
 #100# "Avanzado"
@@ -250,7 +250,8 @@ Emulacion finalizada
 #230# "No se puede abrir una ROM porque los plugins no se han inicializado correctamente"
 #231# "El nombre del Truco ya esta en uso"
 #232# "Has alcanzado la cantidad maxima de Trucos permitidos para esta ROM"
-#233# "El restablecimiento de fabrica fallo al restablecer los registros/configuraciones de Project64"
+#233# "Emulacion finalizada
+(Intenta Estilo de Nucleo de CPU Interprete)"
 #234# "Esta accion intentara restablecer de fabrica todos los registros/configuraciones de Project64 y terminar esta instancia.
 
 Esta bien ejecutar esta accion? Si es asi, presiona OK para cerrar Project64 o cierralo tu mismo. De lo contrario, por favor cancela"

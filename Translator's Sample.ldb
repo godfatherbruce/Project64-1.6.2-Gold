@@ -93,7 +93,7 @@
 #93# "CIC Chip"
 #94# "Choose your ROM directory"
 #95# "Unknown"
-#96# "Unknown (Hack?)"
+#96# "Unknown (Hack/Public Domain?)"
 #97# "Plugins"
 #98# "Directories"
 #99# "ROM Selection"
@@ -262,7 +262,8 @@ Emulation ending
 #230# "Cannot open a ROM because plugins haven't successfully initialized"
 #231# "Cheat name is currently in use"
 #232# "You have reached the maximum amount of cheats allowed for this ROM"
-#233# "Factory reset failed to reset Project64 registries/configurations"
+#233# "Emulation ending
+(Try Interpreter CPU Core Style"
 #234# "This action will attempt to factory reset all Project64 registries/configurations and terminate this instance.
 
 Is it OK to execute this action? If so, press OK to close Project64 or close it yourself. Otherwise, please cancel"

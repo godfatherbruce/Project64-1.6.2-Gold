@@ -283,7 +283,7 @@ char * GS               ( int StringID );
 #define MSG_PLUGIN_NOT_INIT             230
 #define MSG_CHEAT_NAME_IN_USE           231
 #define MSG_MAX_CHEATS                  232
-#define MSG_DELETE_SETTINGS_FAILED      233
+#define GZ_ROMS				233
 #define MSG_CONFIRMATION_UNINSTALL      234
 #define MSG_PLUGIN_HOT_SWAP             235
 #define PLUG_HOT_SWAP_DOUBLE            236

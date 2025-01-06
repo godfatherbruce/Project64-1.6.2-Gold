@@ -121,7 +121,7 @@ LANG_STR DefaultString[] = {
 	{ SELECT_ROM_DIR,  "Choose your ROM directory" },
 //Messages
 	{ RB_NOT_IN_RDB,"Unknown" },
-        { RB_HACK, "Unknown (Hack?)" },
+        { RB_HACK, "Unknown (Hack/Public Domain?)" },
 /*********************************************************************************
 * Options                                                                        *
 *********************************************************************************/
@@ -291,7 +291,7 @@ LANG_STR DefaultString[] = {
 	{ MSG_PLUGIN_NOT_INIT,    "Cannot open a ROM because plugins haven't successfully initialized"},
 	{ MSG_CHEAT_NAME_IN_USE,  "Cheat name is currently in use"},
 	{ MSG_MAX_CHEATS,         "You have reached the maximum amount of cheats allowed for this ROM"},
-        { MSG_DELETE_SETTINGS_FAILED, "Factory reset failed to reset Project64 registries/configurations" },
+	{ GZ_ROMS,                "Emulation ending\n(Try Interpreter CPU Core Style)"},
         { MSG_CONFIRMATION_UNINSTALL, "This action will attempt to factory reset all Project64 registries/configurations and terminate this instance.\n\nIs it OK to execute this action? If so, press OK to close Project64 or close it yourself. Otherwise, please cancel"},
         { MSG_PLUGIN_HOT_SWAP,    "Plugin hot swapping in progress"},
         { PLUG_HOT_SWAP_DOUBLE,   "Double click the OK button while plugin hot swapping to quickly close Project64 from this window"},

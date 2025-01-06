@@ -1574,9 +1574,6 @@ void UninstallApplication(HWND hWnd) {
 	if (MessageBox(NULL, GS(MSG_CONFIRMATION_UNINSTALL), AppName, MB_OKCANCEL | MB_ICONEXCLAMATION | MB_SETFOREGROUND) ==  IDOK) {
 		// Delete registry keys recursive
 		sprintf(RegistryKey, "N64 Software\\%s", AppName);
-		if (!RegDelnode(HKEY_CURRENT_USER, RegistryKey)) {
-			DisplayError(GS(MSG_DELETE_SETTINGS_FAILED));
-		}
 		ForceClose = TRUE;
 		DestroyWindow(hWnd);
 	}

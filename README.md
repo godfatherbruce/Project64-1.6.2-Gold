@@ -1,5 +1,8 @@
-See release video here: https://youtu.be/uTH-rQExkDU?feature=shared
-To see what has changed with each new release, please examine the GitHub commit history if a changelog is not provided.
+Project64 1.6.2 is a deployment-ready software-based Nintendo 64 emulator developed by Edwin Bruce Shankle IV from the source code of Project64 1.6.1/1.6 Plus. This does not target hardware or PD roms. Project64 1.6.2's specialty is with playing non-hardware compatible romhacks (typically older one's) and running on low-end Windows computers which lack the necessary specs required for accurate emulation. This emulator has received one vulnerability fix, but there could be other vulnerabilities highlighted in the future so be on the lookout! If a vulnerability does get discovered and it doesn't get addressed on this repo should I be busy doing something else, feel free to make a fork and fix it yourself. Just include the license in your distributions and don't profit off of the code and you'll be fine.
+
+
+Christmas initial release video showing off some of the early fixes: https://youtu.be/uTH-rQExkDU?feature=shared
+To see what has changed with each new release, please examine the GitHub commit history. A changelog will not be provided anymore.
 Please always download the latest release and carefully read any left notes for your own sake.
 
 BUG/ISSUE REPORTING: To report any unknown issues (not documented in known issues section), here's a few ways. They are ordered from most to least effective:
@@ -12,12 +15,7 @@ BUG/ISSUE REPORTING: To report any unknown issues (not documented in known issue
 
 VULNERABILITY REPORTING: Rumor has it that there are more vulnerabilities in Project64 1.6 which just aren't talked about. If they are real and you know about one of these vulnerabilities, please DM me on discord at bruceshankle or open an issue about it on GitHub and make sure I am notified so I am made aware of it, then we can start thinking about how it might be able to be fixed.
 
-
-About: Project64 1.6.2 is my unofficial update and spiritual successor to Project64 Versions 1.6 and 1.6.1 developed using PJ64Team's vulnerability fixed (but kinda bugged) 1.6 Plus as it stood at this time: https://github.com/pj64team/Project64-1.6-Plus/tree/7ff51997c16e35a1c0685cc076b085ee6eda1b64 (Plus is based on the source code for 1.6.1, hence my rebranding to 1.6.2)
-
-
-
-There is some misinformation about this project not being licensed and forks of it being prohibited, despite this code being labelled "free" and "open source" upon the release that 1.6.2's source was developed from. Please see GitHub Terms of Service: https://docs.github.com/en/site-policy/github-terms/github-terms-of-service#5-license-grant-to-other-users and review the license that comes with the code as written below.
+There is some misinformation about this project not being licensed and forks of it being prohibited, most likely being spread around by trolls. Please see GitHub Terms of Service: https://docs.github.com/en/site-policy/github-terms/github-terms-of-service#5-license-grant-to-other-users and review the license that comes with the code as written below.
 
 Project 64 - A Nintendo 64 emulator.
 (c) Copyright 2001 zilmar (zilmar@emulation64.com) and Jabo (jabo@emulation64.com)

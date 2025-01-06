@@ -7950,7 +7950,7 @@ Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Counter Factor=2
 Plugin Note=Use GLideN64 or D3D8 1.6
-[7B70336C-C8DBA8F7-C:45]
+[6AF2B8CC-AB2DCB77-C:45]
 Game Name=(Hack) Time Lost
 RDRAM Size=8
 CPU Type=Recompiler

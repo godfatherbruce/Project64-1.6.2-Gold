@@ -1,5 +1,6 @@
 https://github.com/mdqinc/SDL_GameControllerDB/blob/master/gamecontrollerdb.txt
 https://www.youtube.com/watch?v=rYWtGcdsrcY
+https://www.youtube.com/watch?v=SsU3uC68dBc
 https://github.com/krm01/oot-indigo-mod/releases
 https://github.com/RichieUltimate/ultimate-trial/releases
 https://github.com/Javarooster-png/PumkinPatch/releases
@@ -10,6 +11,7 @@ https://ootrandomizer.com/external?key=bq_v22
 https://github.com/Javarooster-png/curseofmoonlight
 https://github.com/krimtonz/kz/releases
 https://hylianmodding.com/mods/crystal_clocks
+https://docs.google.com/document/d/1KzLEvPh1yZ2q9yygnimzErERal88N1Ip3ygtXxSLhjI/edit?tab=t.0
 
 https://www.openallurls.com/
 ^ use this to open all the url's, make sure popups are allowed/not blocked for this site
@@ -19,6 +21,7 @@ and from Jabo applying per game hacks per checksum basis depending on what's in 
 
 Current Repo Binaries Last Updated at...:
 
+Super Mario 64 Practice Rom 2023-01-01
 Crystal Clocks 7/23/2024
 kz Oct 22, 2021
 curseofmoonlight Nov 4 2024
@@ -29,5 +32,6 @@ Sands of Time Dec 23, 2024
 Pumkin Patch/Pumkin Tower July 31st 2024
 Ultimate Trial September 16th 2024
 Indigo Chapter 2 Sep 16 2024
+Time Lost 01/06/25
 Shadows of Eldoria 10/31/2024
 gamecontrollerdb e9d11d9

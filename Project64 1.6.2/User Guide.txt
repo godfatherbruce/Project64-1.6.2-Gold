@@ -1,5 +1,4 @@
 ********************************************************************************************************
-********************************************************************************************************
 ---------------------------
 |||||Table of Contents|||||
 ---------------------------
@@ -16,8 +15,8 @@ Section#09 Donations
 Section#10 Special Thanks & Shoutouts
 Section#11 The End
 Section#12 Extra
+Section#13 How to Develop Project64 1.6 + BEWARE of MiB/PJ64Team!
 (just ctrl-f the name to navigate to your desired section)
-********************************************************************************************************
 ********************************************************************************************************
 
 Section#00 Hardware Compatibility
@@ -154,7 +153,7 @@ Disabled end emulation in fullscreen mode because it's crashing.
 
 Fixed "Always On Top" not being togglable from within the ROM browser.
 
-Fixed CMA crashing which was affecting Ocarina of Time.
+Fixed CMA crash in recompiler ops (was affecting Ocarina of Time).
 
 Fixed loadstate glitches.
 
@@ -642,4 +641,10 @@ Use Large Buffer=
 (No)
 Linking= 
 (User's Selected Core Setting, Off by default)
---------------------------------------------------------------------------------------------------------⠀⠀
+--------------------------------------------------------------------------------------------------------
+
+Section#13 How to Develop Project64 1.6 + BEWARE of MiB/PJ64Team!
+--------------------------------------------------------------------------------------------------------
+If you would like to develop Project64 1.6 or you're unaware of the risks involved with associating with
+Men in Black/Project64 Team, please carefully read this informative document from my URL provided below:
+https://docs.google.com/document/d/1VosUr3DHkhFd6hYRLrwpAtuzDuvYq0zUe2C1rkQ1_xg/edit?usp=sharing

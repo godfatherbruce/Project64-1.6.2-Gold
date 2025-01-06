@@ -2179,9 +2179,21 @@ void Compile_R4300i_SDR (BLOCK_SECTION * Section) {
 	Call_Direct(r4300i_SDR, "r4300i_SDR");
 	Popad();
 }
+void _fastcall ClearRecomplierCache (DWORD Address) {
+	if (!TranslateVaddr(&Address)) { DisplayError("Failed to translate cache: %X",Address); return; }
+	if (Address < RdramSize) {
+		DWORD Block = Address >> 12;
+		if (N64_Blocks.NoOfRDRamBlocks[Block] > 0) {
+			N64_Blocks.NoOfRDRamBlocks[Block] = 0;
+			memset(JumpTable + (Block << 10),0,0x1000);
+			*(DelaySlotTable + Block) = NULL;
+		}
+	}
+}
 void Compile_R4300i_CACHE (BLOCK_SECTION * Section){
 	CPU_Message("  %X %s",Section->CompilePC,R4300iOpcodeName(Opcode.Hex,Section->CompilePC));
-	if (SelfModCheck != ModCode_ChangeMemory &&
+	if (SelfModCheck != ModCode_Cache &&
+		SelfModCheck != ModCode_ChangeMemory &&
 		SelfModCheck != ModCode_CheckMemory2 &&
 		SelfModCheck != ModCode_CheckMemoryCache)
 	{
@@ -2204,6 +2216,7 @@ void Compile_R4300i_CACHE (BLOCK_SECTION * Section){
 			MoveVariableToX86reg(&GPR[Opcode.base].UW[0],GPR_NameLo[Opcode.base],x86_ECX);
 			AddConstToX86Reg(x86_ECX,(short)Opcode.offset);
 		}
+		if (SelfModCheck != ModCode_CheckMemory2) Call_Direct(ClearRecomplierCache, "ClearRecomplierCache");
 		Popad();
 		break;
 	case 1:

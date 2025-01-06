@@ -63,14 +63,16 @@ extern "C" {
 #define CPU_Recompiler				1
 #define Default_CPU					CPU_Recompiler
 /******* Self modifying code *********/
-#define ModCode_Default				-1
-#define ModCode_ProtectedMemory		0
+#define ModCode_Default			-1
+#define ModCode_Cache			0
 #define ModCode_ChangeMemory		1
 #define ModCode_CheckMemoryCache	2
-#define ModCode_CheckMemory2		3 // *** Add in Build 53
+#define ModCode_CheckMemory2		3
+#define ModCode_None			4
+#define ModCode_ProtectedMemory		5
 #define Default_SelfModCheck		ModCode_CheckMemory2
 /********** Counter Factor ***********/
-#define Default_CountPerOp			2
+#define Default_CountPerOp		2
 /********** Rom Browser **************/
 #define Default_UseRB				TRUE
 #define Default_Rercursion			TRUE

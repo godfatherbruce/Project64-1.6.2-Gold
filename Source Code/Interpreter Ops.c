@@ -1129,7 +1129,7 @@ void _fastcall R4300i_UnknownOpcode (void) {
 	char Message[200];
 	sprintf(Message,"%s: %08X\n%s\n\n", GS(MSG_UNHANDLED_OP), PROGRAM_COUNTER,
 		R4300iOpcodeName(Opcode.Hex,PROGRAM_COUNTER));
-	strcat(Message,GS(MSG_UNHANDLED_OP_IDEAS));
+	strcat(Message,"Emulation ending");
 		DisplayError(Message);
 		ExitThread(0);
 	}

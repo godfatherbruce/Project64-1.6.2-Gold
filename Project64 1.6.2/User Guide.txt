@@ -44,7 +44,7 @@ it does not come with ROM's (.z64, .n64) nor is it compiled with code that I can
 This emulator also won't circumvent any encryption whatsoever, further attesting to its legality status.
 --------------------------------------------------------------------------------------------------------
 
-Section#02 Notable Changes Between Project64 Version 1.6.1 and Project64 Version 1.6.2
+Section#02 Notable Changes Between Project64 Version 1.6.1 & Project64 Version 1.6.2
 --------------------------------------------------------------------------------------------------------
 This section will be divided into two parts to give fair credit where it is due: one part is for changes
 from Plus (https://github.com/pj64team/Project64-1.6-Plus/tree/7ff51997c16e35a1c0685cc076b085ee6eda1b64)
@@ -154,9 +154,11 @@ Disabled end emulation in fullscreen mode because it's crashing.
 
 Fixed "Always On Top" not being togglable from within the ROM browser.
 
-Fixed crashing in Ocarina of Time ROMs (NOT ALWAYS APPLICABLE FOR 1.0/1.1/1.2 ROMHACKS IN A FEW CASES).
+Fixed CMA crashing which was affecting Ocarina of Time.
 
 Fixed loadstate glitches.
+
+Fixed ROM browser failing to auto refresh.
 
 Fixed ROM extension association.
 
@@ -209,6 +211,7 @@ For your information, here's some issues I have experienced with Project64 "Lega
 * Jabo's Direct3D8 1.7.0.47 can get an infinite number of microcode error messages when booting up ROMs.
 * Star manager is no longer compatible out of the gate due to a regression with the executable filename.
 * Loading a savestate can ruin all of the graphics if you try to load states just after a ROM is opened.
+* Persistently annoying stuttering in Ocarina of Time which hurts the quality of my gameplay experience.
 
 For the reasons listed above, I consider the legacy project to be a failed experiment that could've been
 succesful in "finishing" what they started, as they put it. But unfortunately, it doesn't quite hold up.
@@ -396,9 +399,6 @@ Pressing F4 to unlimit FPS can crash the game depending on the video plugin gett
 Some cheats act up in ROMhacks with shared CRC values (sometimes needed to get Direct3D8 per ROM hacks).
 In some ROMhacks, they never get a save data file even made for them and they do not ever save progress.
 Having protected memory self modifying code method enabled causes stuttering on certain weaker machines.
-^ Note that Ocarina of Time is using Change Memory & cache, you can change it to Protected Memory method
-with advanced block linking turned off from the ROM settings tab after opening the ROM to fix suttering,
-but only on some computers! Which is why it's set to Change Memory & Cache, better framerate on CMC too.
 Having advanced block linking and protected memory self modifying code method enabled causes stuttering.
 Having advanced block linking enabled causes some ROMs to not boot up at all and get stuck on blackness.
 Jabo's plugins don't have shadows on intel cards. However, this can be worked around using 3DAnalyzer w/
@@ -414,21 +414,13 @@ The issue described above is also present if using Icepir8's Legacy LLE Ver. 0.3
 The "players" default is "1" instead of "Unknown" when examining ROM's that are missing an entry in RDB.
 If you hold down the F1 key, sometimes it accidentally attempts to load the selected state slot instead.
 The display will be frozen if you either sleep or lock your computer while using Jabo's Direct3D8 video.
-Ocarina of Time ROMhacks can crash when entering kokiri forest from the lost woods after passing through
-the left passageway area due to a bug in the default CMA self modifying code method. I suggest you don't
-use this emulator for ROMhacks, or you understand enough about how this emulator functions to be able to
-fine tune the core and/or ROM settings, or you understand enough about how the N64 works to pull request
-a fix on github, and then I'll be happy to compile a new executable with your fix in it for you to test.
-In addition to all of this, if the game didn't work in Project64 1.6, it probably still won't work here.
-Likewise, if the game worked in Project64 1.6, it should still (most likely) work using Project64 1.6.2,
-as there have been essentially zero changes made to the great N64 emulation programmed in Project64 1.6.
 --------------------------------------------------------------------------------------------------------
 
 Section#07 Tips and Tricks
 --------------------------------------------------------------------------------------------------------
 If you're playing newer ROMhacks, GLideN64 is recommended. Use an ANGLE version for Super Mario 64 mods.
 
-If the only ROMhacks you are playing can take advantage of counter factor 1, try out the 1.6.2-CF1 build
+Try out the 1.6.2-CF1 build if the only ROMhacks you are playing can take advantage of counter factor 1.
 ******Note****** The only different files in this portable version are Project64.exe and PJ64DB\PJ64.rdb
 
 In some games like Ocarina of Time which use Change Memory & Cache SCM, you can get smoother performance

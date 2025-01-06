@@ -53,8 +53,6 @@ extern "C" {
 #define Default_RememberCheats		TRUE
 #define Default_RomsToRemember		10
 #define Default_RomsDirsToRemember	10
-#define LinkBlocks
-#define TLB_HACK
 /*********** Menu Stuff **************/
 #define ID_FILE_RECENT_FILE		1000
 #define ID_FILE_RECENT_DIR		1100

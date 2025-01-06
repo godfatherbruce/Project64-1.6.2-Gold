@@ -245,9 +245,7 @@ Verify that your ROM's checksum is valid"
 
 Emulation ending"
 #221# "Unhandled R4300i OpCode at"
-#222# "Emulation ending
-(Try Advanced Block Linking + Change Memory & Cache)
-(Try Interpreter CPU Core Style)"
+#222# "Failed to open mempak"
 #223# "Executing from non-mapped space.
 
 Emulation ending

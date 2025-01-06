@@ -402,7 +402,6 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 		Section.RegWorking.RandomModifier = 0;
 		Section.RegWorking.CycleCount = 0;
 		if (reason == Normal) { CompileSystemCheck(0,(DWORD)-1,Section.RegWorking);	}
-#ifdef LinkBlocks
 		if (SelfModCheck == ModCode_ChangeMemory) {
 			BYTE * Jump, * Jump2;
 			if (TargetPC >= 0x80000000 && TargetPC < 0xC0000000) {
@@ -467,9 +466,6 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 			}
 		}
 		Ret();
-#else
-		Ret();
-#endif
 		break;
 	case DoCPU_Action:
 		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }

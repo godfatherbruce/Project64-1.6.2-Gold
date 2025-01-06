@@ -272,7 +272,7 @@ char * GS               ( int StringID );
 #define MSG_UNKNOWN_FILE_FORMAT         219
 #define MSG_UNKNOWN_MEM_ACTION          220
 #define MSG_UNHANDLED_OP                221
-#define MSG_UNHANDLED_OP_IDEAS          222
+#define MSG_FAIL_OPEN_MEMPAK            222
 #define MSG_NONMAPPED_SPACE             223
 #define MSG_MSGBOX_TITLE                224
 #define MSG_PIF2_ERROR                  225

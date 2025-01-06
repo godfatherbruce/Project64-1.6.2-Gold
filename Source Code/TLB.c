@@ -141,7 +141,6 @@ BOOL TranslateVaddr ( DWORD * Addr) {
 }
 void _fastcall WriteTLBEntry (int index) {
 	int FastIndx;
-#ifdef TLB_HACK
 	FastIndx = index << 1;
 	if ((PROGRAM_COUNTER >= FastTlb[FastIndx].VSTART &&
 		PROGRAM_COUNTER < FastTlb[FastIndx].VEND &&
@@ -151,7 +150,6 @@ void _fastcall WriteTLBEntry (int index) {
 		PROGRAM_COUNTER < FastTlb[FastIndx + 1].VEND &&
 		FastTlb[FastIndx + 1].ValidEntry && FastTlb[FastIndx + 1].VALID))
 		return;
-#endif
 	if (tlb[index].EntryDefined) {
 		DWORD count;
 		for ( FastIndx = index << 1; FastIndx <= (index << 1) + 1; FastIndx++) {

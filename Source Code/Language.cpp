@@ -280,7 +280,7 @@ LANG_STR DefaultString[] = {
 	{ MSG_UNKNOWN_FILE_FORMAT,"Unknown file format"},
 	{ MSG_UNKNOWN_MEM_ACTION, "Unknown memory action.\n\nEmulation ending"},
 	{ MSG_UNHANDLED_OP,       "Unhandled R4300i OpCode at"},
-        { MSG_UNHANDLED_OP_IDEAS, "Emulation ending\n(Try Advanced Block Linking + Change Memory & Cache)\n(Try Interpreter CPU Core Style)"},
+        { MSG_FAIL_OPEN_MEMPAK,   "Failed to open mempak"},
 	{ MSG_NONMAPPED_SPACE,    "Executing from non-mapped space.\n\nEmulation ending\n(Try Check Memory Advance)\n(Try Interpreter CPU Core Style)\n(Try 8MB Memory Size)"},
 	{ MSG_MSGBOX_TITLE,       "Error"},
 	{ MSG_PIF2_ERROR,         "Copyright sequence not found in LUT. Game will no longer function"},

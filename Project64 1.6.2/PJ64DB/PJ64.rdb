@@ -7131,7 +7131,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Plugin Note=Use GLideN64
 Status=Semicompatible
-Core Note=Broken saving, broken with change mem
 [D1AA799D-489144F5-C:45]
 Game Name=(Hack) Ocarina of Time 1.0 (U) GZ Practice ROM
 RDRAM Size=8

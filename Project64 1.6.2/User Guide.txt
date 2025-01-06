@@ -552,7 +552,7 @@ Bruce Shankle III - For helping me learn to use Visual Studio when I first start
 
 z64me - For being supportive and addressing issues during the project's primitive stages when I started.
 
-l0lgamez - For testing Ocarina of Time with the new emulation settings, thank you for saving me my time!
+l0lgamez - Although the alternative OoT config you tested for has got scrapped, you were a great tester!
 
 aglab2 - I'm so glad that you researched and documented about the vulnerability inside of N64 emulators.
 	 Without you, this project wouldn't have ever existed and I cannot thank people like you enough.
@@ -596,7 +596,7 @@ the following issues with this emulator:
 * Save data never gets created when playing newer versions of Ocarina of Time GZ.
 * Save data being stored as ROM's internal name->Change to store by CRC instead to eliminate issues.
 * Some controllers don't work with any known input plugins (someone please make a perfect input plugin).
-* The ROM, cheat, and browser databases could be greatly improved and expanded upon. However, there's no
+* Both the ROM and cheat database could be very greatly improved and expanded upon. However, there is no
   need to add support for ROMs or games that won't get usage w/ Ver1.6.2. Because if you do, then you're
   just adding unneeded bloat to the file size which is something you never want to do as Ver1.6.2 should
   be as portable as it possibly can be, ideally not much more than 11MB once compressed inside of a RAR.

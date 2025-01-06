@@ -188,9 +188,7 @@ char * GS               ( int StringID );
 #define RDRAM_4MB			156
 #define RDRAM_8MB			157
 //Core Styles
-#define SMCM_NONE			158
-#define SMCM_CACHE			159
-#define SMCM_PROECTED			160
+#define SMCM_PROTECTED			160
 #define SMCM_CHECK_MEM			161
 #define SMCM_CHANGE_MEM			162
 #define SMCM_CHECK_ADV			163

@@ -196,9 +196,7 @@ LANG_STR DefaultString[] = {
 	{ RDRAM_4MB,           "4 MB" },
 	{ RDRAM_8MB,           "8 MB" },
 //Self Mod Methods
-	{ SMCM_NONE,           "None"},
-	{ SMCM_CACHE,          "Cache"},
-	{ SMCM_PROECTED,       "Protect Memory"},
+	{ SMCM_PROTECTED,       "Protect Memory"},
 	{ SMCM_CHECK_MEM,      "Check Memory & Cache"},
 	{ SMCM_CHANGE_MEM,     "Change Memory & Cache"},
 	{ SMCM_CHECK_ADV,      "Check Memory Advance"},

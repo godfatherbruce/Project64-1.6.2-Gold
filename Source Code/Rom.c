@@ -589,9 +589,7 @@ void ReadRomOptions (void) {
 			else if (strcmp(String,"Recompiler") == 0)   { RomCPUType = CPU_Recompiler; }
 			else                                         { RomCPUType = CPU_Default; }
 			_GetPrivateProfileString(Identifier,"Self-modifying code Method","",String,sizeof(String),IniFileName);
-			if (strcmp(String,"None") == 0)                      { RomSelfMod = ModCode_None; }
-			else if (strcmp(String,"Cache") == 0)                { RomSelfMod = ModCode_Cache; }
-			else if (strcmp(String,"Protected Memory") == 0)     { RomSelfMod = ModCode_ProtectedMemory; }
+			if (strcmp(String,"Protected Memory") == 0)     { RomSelfMod = ModCode_ProtectedMemory; }
 			else if (strcmp(String,"Check Memory") == 0)         { RomSelfMod = ModCode_CheckMemoryCache; }
 			else if (strcmp(String,"Check Memory & cache") == 0) { RomSelfMod = ModCode_CheckMemoryCache; }
 			else if (strcmp(String,"Check Memory Advance") == 0) { RomSelfMod = ModCode_CheckMemory2; }
@@ -944,8 +942,6 @@ void SaveRomOptions (void) {
 	}
 	_WritePrivateProfileString(Identifier,"CPU Type",String,GetIniFileName());
 	switch (RomSelfMod) {
-	case ModCode_None: sprintf(String,"None"); break;
-	case ModCode_Cache: sprintf(String,"Cache"); break;
 	case ModCode_ProtectedMemory: sprintf(String,"Protected Memory"); break;
 	case ModCode_CheckMemoryCache: sprintf(String,"Check Memory & cache"); break;
 	case ModCode_CheckMemory2: sprintf(String,"Check Memory Advance"); break;

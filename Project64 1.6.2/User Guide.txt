@@ -172,6 +172,8 @@ Fixed multiple crashes in start emulation.
 
 Massive updates to databases.
 
+None and Cache self-modifying code options are gone because they don't work with 1.6.2's new recompiler.
+
 ***TONS more other stuff has been changed, but it would be too much to explain all of it here, sorry!***
 --------------------------------------------------------------------------------------------------------
 

@@ -72,7 +72,7 @@ Many games use "self modifying code". In a nutshell, this makes them harder to e
 several methods of dealing with this situation, which range from fast on one side to more secure/stable
 on the other. In order from fastest to most secure these are:
 
-None, Cache, Check Memory, Check Memory & cache, Change Memory, Check Memory Advance, Protected Memory
+Check Memory, Check Memory & cache, Change Memory, Check Memory Advance, Protected Memory
 *Note from Bruce IV: The above ordering was originally incorrect and has been corrected by me.
 -
 

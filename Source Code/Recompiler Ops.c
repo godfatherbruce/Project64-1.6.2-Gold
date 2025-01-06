@@ -2181,8 +2181,7 @@ void Compile_R4300i_SDR (BLOCK_SECTION * Section) {
 }
 void Compile_R4300i_CACHE (BLOCK_SECTION * Section){
 	CPU_Message("  %X %s",Section->CompilePC,R4300iOpcodeName(Opcode.Hex,Section->CompilePC));
-	if (SelfModCheck != ModCode_Cache &&
-		SelfModCheck != ModCode_ChangeMemory &&
+	if (SelfModCheck != ModCode_ChangeMemory &&
 		SelfModCheck != ModCode_CheckMemory2 &&
 		SelfModCheck != ModCode_CheckMemoryCache)
 	{

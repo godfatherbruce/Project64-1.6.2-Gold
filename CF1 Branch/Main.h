@@ -64,12 +64,10 @@ extern "C" {
 #define Default_CPU					CPU_Recompiler
 /******* Self modifying code *********/
 #define ModCode_Default				-1
-#define ModCode_None				0
-#define ModCode_Cache				1
-#define ModCode_ProtectedMemory		2
-#define ModCode_ChangeMemory		4
-#define ModCode_CheckMemoryCache	6
-#define ModCode_CheckMemory2		7 // *** Add in Build 53
+#define ModCode_ProtectedMemory		0
+#define ModCode_ChangeMemory		1
+#define ModCode_CheckMemoryCache	2
+#define ModCode_CheckMemory2		3 // *** Add in Build 53
 #define Default_SelfModCheck		ModCode_CheckMemory2
 /********** Counter Factor ***********/
 #define Default_CountPerOp			1

@@ -7868,7 +7868,7 @@ Save Type=FlashRam
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Plugin Note=Use GLideN64
-Status=Semicompatible
+Status=Compatible
 Core Note=Broken saving, requires FlashRam save type
 Counter Factor=2
 [FDDAA882-1EF1AB5C-C:45]
@@ -7877,7 +7877,7 @@ RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Plugin Note=Use GLideN64
-Status=Semicompatible
+Status=Compatible
 Counter Factor=2
 [D1AA799D-489144F5-C:45]
 Game Name=(Hack) Ocarina of Time 1.0 (U) GZ Practice ROM

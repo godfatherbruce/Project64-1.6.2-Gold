@@ -34,12 +34,6 @@ void CloseSRAM (void) {
 		hSRAMFile = NULL;
 	}
 }
-/*BOOL LoadSRAM (void) {
-	char File[255], Directory[255];
-	LPVOID lpMsgBuf;
-	GetAutoSaveDir(Directory);
-	sprintf(File,"%s%s.sra",Directory,RomName);*/
-	// This fixes the pop-up error message (Icepir8)
   BOOL LoadSRAM (void) {
   int i = 0;
   char File[255], Directory[255];
@@ -92,12 +86,20 @@ void DmaFromSRAM(BYTE * dest, int StartOffset, int len) {
 	ReadFile(hSRAMFile,dest,len,&dwRead,NULL);
 }
 void DmaToSRAM(BYTE * Source, int StartOffset, int len) {
-	DWORD dwWritten;
-	if (hSRAMFile == NULL) {
-		if (!LoadSRAM()) {
-			return;
-		}
-	}
-	SetFilePointer(hSRAMFile,StartOffset,NULL,FILE_BEGIN);
-	WriteFile(hSRAMFile,Source,len,&dwWritten,NULL);
+    DWORD dwWritten;
+    if (hSRAMFile == NULL) {
+        if (!LoadSRAM()) {
+            return;
+        }
+    }
+    StartOffset = ((StartOffset >> 3) & 0xFFFF8000) | (StartOffset & 0x7FFF);
+    if (((StartOffset & 3) == 0) && ((((size_t)Source) & 3) == 0)) {
+        SetFilePointer(hSRAMFile, StartOffset, NULL, FILE_BEGIN);
+        WriteFile(hSRAMFile, Source, len, &dwWritten, NULL);
+    } else {
+        for (int i = 0; i < len; i++) {
+            SetFilePointer(hSRAMFile, (StartOffset + i) ^ 3, NULL, FILE_BEGIN);
+            WriteFile(hSRAMFile, (BYTE *)(((size_t)Source + i) ^ 3), 1, &dwWritten, NULL);
+        }
+    }
 }

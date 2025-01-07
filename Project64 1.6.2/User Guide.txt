@@ -153,6 +153,8 @@ Disabled end emulation in fullscreen mode because it's crashing.
 
 Fixed "Always On Top" not being togglable from within the ROM browser.
 
+Fixed certain ROMhacks having their save file get deleted upon being saved (Indigo, Ultimate Trial).
+
 Fixed CMA crash in recompiler ops (was affecting Ocarina of Time).
 
 Fixed loadstate glitches.
@@ -178,6 +180,7 @@ Section#03 Project64 Legacy is an unfinished emulator with concerning issues to 
 --------------------------------------------------------------------------------------------------------
 For your information, here's some issues I have experienced with Project64 "Legacy" as of version 1.6.4:
 
+* When saving in some ROMhacks, instead of saving your save data, it will outright delete it altogether.
 * Resetting will straight-up crash the emulator with some games, ROMhack or not (Mario Party, or Conker,
   ROMhacks like, "That Time I Became Friends With The Royal Scuttlebug Family And Fell from Space.z64").
 * Configuring the included high-level RSP freezes if done while a game is running, killing all progress.
@@ -406,7 +409,6 @@ Selecting certain resolutions in Jabo's video plugins can result in graphical pr
 You can leave the "About" window open for some plugins and you crash if you swap plugins before exiting.
 If your CPU usage is high from screen recording or from your PC being infected with trojans and viruses,
 the program can misbehave and fail to open up ROMs or have a varying amount of input delay and stutters.
-Saving doesn't work with certain mods and causes the save to get deleted because of an unused save type.
 Shankle's GLideN64 can sometimes get stuck on a black screen when messing with config settings. However,
 the screen returns to normal if you enter or exit fullscreen mode or if you hot swap one of the plugins.
 The issue described above is also present if using Icepir8's Legacy LLE Ver. 0.3.2 on resolution change.
@@ -588,7 +590,6 @@ the following issues with this emulator:
 * Missing disk drive support.
 * Missing N64 mouse ROMs support.
 * Missing language translations support besides spanish (but only for languages w/ english characters).
-* Save data gets deleted when trying to save in ROMhacks like Ultimate Trial.
 * Resetting could be made instantaneous, as evident by aglab2's PJ64Fixups RSP.
 * Save data never gets created when playing newer versions of Ocarina of Time GZ.
 * Save data being stored as ROM's internal name->Change to store by CRC instead to eliminate issues.

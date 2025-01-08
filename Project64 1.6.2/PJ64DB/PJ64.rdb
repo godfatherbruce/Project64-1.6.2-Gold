@@ -3808,7 +3808,7 @@ Plugin Note=Graphic issues with Jabo plugins
 [916852D8-73DBEAEF-C:45]
 Game Name=NBA Courtside 2 - Featuring Kobe Bryant (U)
 RDRAM Size=4
-Save Type=FlashRam
+Save Type=FlashRAM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -3944,7 +3944,7 @@ Status=Compatible
 Game Name=NBA Showtime - NBA on NBC (U)
 RDRAM Size=4
 Counter Factor=1
-Save Type=FlashRam
+Save Type=FlashRAM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
@@ -6021,14 +6021,14 @@ Status=Compatible
 [2B4F4EFB-43C511FE-C:50]
 Game Name=Tom and Jerry in Fists of Furry (E) (M6)
 RDRAM Size=4
-Save Type=FlashRam
+Save Type=FlashRAM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 [63E7391C-E6CCEA33-C:45]
 Game Name=Tom and Jerry in Fists of Furry (U)
 RDRAM Size=4
-Save Type=FlashRam
+Save Type=FlashRAM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -7172,7 +7172,7 @@ Cheat0=D0210BA1 0002,8022414B 0002,D0210BA1 0002,80210BA1 0003//Subscreen crash 
 Core Note=Requires recompiler core with TLB off for ROMhacks
 //Hacks
 [FAFD18BA-A63F937B-C:45]
-Game Name=(Hack) Ocarina of Time Master Quest GC
+Game Name=(Hack) Zelda's Birthday/Ocarina of Time Master Quest GC
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
@@ -7180,6 +7180,7 @@ Use TLB=No
 Core Note=Requires recompiler core with TLB off for ROMhacks
 Counter Factor=1
 Status=Compatible
+Plugin Note=Jabo's Direct3D8 1.6 ONLY/Use GLideN64
 [E27F4A0D-3173AC9B-C:45]
 Game Name=(Hack) Nimpize Adventure
 RDRAM Size=4
@@ -7310,12 +7311,10 @@ Status=Compatible
 [CDD9E9E1-ED4EEF35-C:45]
 Game Name=(Hack) Indigo Chapter 2
 RDRAM Size=8
-Save Type=FlashRam
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Plugin Note=Use GLideN64
 Status=Compatible
-Core Note=Broken saving, requires FlashRam save type
 [FDDAA882-1EF1AB5C-C:45]
 Game Name=(Hack) Ultimate Trial
 RDRAM Size=8
@@ -7416,11 +7415,26 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Use GLideN64 or D3D8 1.6
-[85A772F1-D5E7CDCA-C:45]
-Game Name=(Hack) Mario 64 60fps Widescreen
+[E5E9F5FB-E1C4551D-C:45]
+Game Name=(Hack) Mario 64 60fps
 RDRAM Size=8
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
 Status=Compatible
-Plugin Note=Don't use GLideN64
+[5A888910-DD683598-C:0]
+Game Name=(Hack) Return to Yoshi's Island Demo 2
+RDRAM Size=8
+Counter Factor=1
+CPU Type=Recompiler
+Self-modifying code Method=Cache
+Status=Compatible
+Plugin Note=Use ANGLE GLideN64
+[91085973-E32B4E16-C:45]
+Game Name=(Hack) That Time I Became Friends With The Royal Scuttlebug Family And Fell From Space
+RDRAM Size=8
+Counter Factor=1
+CPU Type=Recompiler
+Self-modifying code Method=Cache
+Status=Compatible
+Plugin Note=Use ANGLE GLideN64

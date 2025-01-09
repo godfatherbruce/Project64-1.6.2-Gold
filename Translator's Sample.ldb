@@ -132,7 +132,6 @@
 #132# "Up"
 #133# "Down"
 #134# "Check Memory Advance = High FPS Low Compatibility
-Protect Memory = Medium FPS Medium Compatibility
 Interpreter = Low FPS High Compatibility
 
 Note Interpreter is not affected by the following settings:

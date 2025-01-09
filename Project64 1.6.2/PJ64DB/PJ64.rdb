@@ -179,7 +179,6 @@ Status=Compatible
 Game Name=AeroFighters Assault (E) (M3)
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 RDRAM Size=8
@@ -188,13 +187,11 @@ Game Name=AeroFighters Assault (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [D83045C8-F29D3A36-C:50]
 Game Name=AeroGauge (E) (M3)
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 RDRAM Size=8
@@ -203,21 +200,18 @@ Game Name=AeroGauge (J) (Demo)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [80F41131-384645F6-C:4A]
 Game Name=AeroGauge (J) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [AEBE463E-CC71464B-C:45]
 Game Name=AeroGauge (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 [8CC182A6-C2D0CAB0-C:4A]
@@ -234,21 +228,18 @@ Game Name=Aidyn Chronicles - The First Mage (E)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Status=Compatible
 [E6A95A4F-BAD2EA23-C:45]
 Game Name=Aidyn Chronicles - The First Mage (U) (v1.0)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Status=Compatible
 [112051D2-68BEF8AC-C:45]
 Game Name=Aidyn Chronicles - The First Mage (U) (Rev A)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Linking=Off
 Status=Compatible
 [27C425D0-8C2D99C1-C:50]
@@ -288,7 +279,6 @@ Game Name=Yannick Noah All Star Tennis '99 (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 [E185E291-4E50766D-C:45]
@@ -296,7 +286,6 @@ Game Name=All Star Tennis '99 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 [A19F8089-77884B51-C:50]
@@ -364,7 +353,6 @@ Game Name=Army Men - Air Combat (U)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [B210DF19-98B58D1A-C:50]
@@ -385,7 +373,6 @@ Game Name=Army Men - Sarge's Heroes 2 (U)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [D1F7D8AB-293B0446-C:45]
 Game Name=Asteroids Hyper 64 (U)
@@ -399,7 +386,6 @@ Game Name=Automobili Lamborghini (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 [41B25DC4-1B726786-C:45]
@@ -407,14 +393,12 @@ Game Name=Automobili Lamborghini (U) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [DB833E34-63548286-C:45]
 Game Name=Automobili Lamborghini (U) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 //BROMs
 [E340A49C-74318D41-C:4A]
@@ -522,7 +506,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [259F7F84-7C9EED26-C:50]
@@ -557,7 +540,6 @@ Game Name=BattleTanx (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Counter Factor=3
 Status=Compatible
 [55D4C4CE-7753C78A-C:45]
@@ -623,7 +605,6 @@ Game Name=Big Mountain 2000 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [AB7C101D-EC58C8B0-C:50]
@@ -645,7 +626,6 @@ RDRAM Size=8
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
-Use TLB=No
 Linking=Off
 Reg Cache=No
 Status=Compatible
@@ -655,7 +635,6 @@ Audio Signal=Yes
 Game Name=Blast Corps (E) (M2)
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -665,7 +644,6 @@ Game Name=Blast Corps (U) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -674,7 +652,6 @@ Game Name=Blast Corps (U) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -683,7 +660,6 @@ Game Name=Blast Dozer (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -706,7 +682,6 @@ Game Name=Body Harvest (E) (M3)
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Delay SI=Yes
 Status=Compatible
@@ -718,7 +693,6 @@ Game Name=Body Harvest (U)
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Delay SI=Yes
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -727,21 +701,18 @@ Game Name=Bokujou Monogatari 2 (J) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [7365D8F8-9ED9326F-C:4A]
 Game Name=Bokujou Monogatari 2 (J) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [736657F6-3C88A702-C:4A]
 Game Name=Bokujou Monogatari 2 (J) (v1.2)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [237E73B4-D63B6B37-C:45]
 Game Name=Bomberman 64 - The Second Attack! (U)
@@ -854,7 +825,6 @@ Game Name=Bust-A-Move '99 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 //CROMs
 [AC16400E-CF5D071A-C:45]
@@ -863,7 +833,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [580162EC-E3108BF1-C:58]
 Game Name=Carmageddon 64 (E) (M4)
@@ -948,7 +917,6 @@ Game Name=Chameleon Twist (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=On
 Status=Compatible
 [6420535A-50028062-C:45]
@@ -991,7 +959,6 @@ Game Name=Charlie Blast's Territory (E)
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 RDRAM Size=8
@@ -1001,14 +968,12 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [2E359339-3FA5EDA6-C:50]
 Game Name=Chopper Attack (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -1017,7 +982,6 @@ Game Name=Chopper Attack (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [2BCCF9C4-403D9F6F-C:4A]
@@ -1025,7 +989,6 @@ Game Name=Choro Q 64 (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [26CD0F54-53EBEFE0-C:4A]
 Game Name=Choro Q 64 II - Hacha Mecha Grand Prix Race (J)
@@ -1053,7 +1016,6 @@ Game Name=Chou Snobow Kids (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [F8009DB0-6B291823-C:4A]
 Game Name=City Tour Grandprix - Zennihon GT Senshuken (J)
@@ -1069,7 +1031,6 @@ Game Name=Clay Fighter - Sculptor's Cut (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [8E9692B3-4264BB2A-C:50]
@@ -1084,7 +1045,6 @@ Game Name=Clay Fighter 63 1-3 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [AE5B9465-C54D6576-C:50]
@@ -1143,7 +1103,6 @@ Game Name=Cruis'n USA (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Delay SI=Yes
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -1152,7 +1111,6 @@ Game Name=Cruis'n USA (U) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Delay SI=Yes
 Status=Compatible
@@ -1162,7 +1120,6 @@ Game Name=Cruis'n USA (U) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Delay SI=Yes
 Status=Compatible
@@ -1172,7 +1129,6 @@ Game Name=Cruis'n USA (U) (v1.2)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Delay SI=Yes
 Status=Compatible
@@ -1216,14 +1172,12 @@ Game Name=CyberTiger (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Semicompatible
 [E8FC8EA1-9F738391-C:45]
 Game Name=CyberTiger (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Semicompatible
 //DROMs
 [7188F445-84410A68-C:4A]
@@ -1286,7 +1240,6 @@ Game Name=Destruction Derby 64 (E) (M3)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [DEE584A2-0F161187-C:45]
 Game Name=Destruction Derby 64 (U)
@@ -1294,7 +1247,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Linking=Off
 Reg Cache=No
 Use Large Buffer=Yes
@@ -1312,7 +1264,6 @@ Game Name=Diddy Kong Racing (E) (M3) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=None
-Use TLB=No
 Linking=Off
 Status=Compatible
 [596E145B-F7D9879F-C:50]
@@ -1320,7 +1271,6 @@ Game Name=Diddy Kong Racing (E) (M3) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=None
-Use TLB=No
 Linking=Off
 Status=Compatible
 [7435C9BB-39763CF4-C:4A]
@@ -1328,7 +1278,6 @@ Game Name=Diddy Kong Racing (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 [F389A35A-17785562-C:4A]
@@ -1336,7 +1285,6 @@ Game Name=Diddy Kong Racing (J) [h]
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 [53D440E7-7519B011-C:45]
@@ -1344,7 +1292,6 @@ Game Name=Diddy Kong Racing (U) (M2) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=None
-Use TLB=No
 Linking=Off
 Status=Compatible
 [E402430D-D2FCFC9D-C:45]
@@ -1352,7 +1299,6 @@ Game Name=Diddy Kong Racing (U) (M2) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=None
-Use TLB=No
 Linking=Off
 Status=Compatible
 [C16C421B-A21580F7-C:45]
@@ -1361,7 +1307,6 @@ RDRAM Size=8
 Counter Factor=3
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 [D614E5BF-A76DBCC1-C:50]
@@ -1491,7 +1436,6 @@ Game Name=Doraemon - Nobita to 3tsu no Seireiseki (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [B6306E99-B63ED2B2-C:4A]
@@ -1508,7 +1452,6 @@ RDRAM Size=4
 Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
-Use TLB=No
 Linking=Off
 Reg Cache=No
 Status=Compatible
@@ -1533,7 +1476,6 @@ Game Name=Dr. Mario 64 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [B6524461-ED6D04B1-C:50]
 Game Name=Dual Heroes (E)
@@ -1597,14 +1539,12 @@ Game Name=Duke Nukem 64 (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [1E12883D-D3B92718-C:46]
 Game Name=Duke Nukem 64 (F)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [A273AB56-DA33DB9A-C:45]
@@ -1612,7 +1552,6 @@ Game Name=Duke Nukem 64 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 //EROMs
@@ -1621,14 +1560,12 @@ Game Name=Earthworm Jim 3D (E) (M6)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [DF574191-9EB5123D-C:45]
 Game Name=Earthworm Jim 3D (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [8C38E5DB-B37C27D7-C:50]
@@ -1636,21 +1573,18 @@ Game Name=ECW Hardcore Revolution (E)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [2138A076-408AD8B2-C:44]
 Game Name=ECW Hardcore Revolution (G)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [BDF9766D-BD068D70-C:45]
 Game Name=ECW Hardcore Revolution (U)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [0DED0568-1502515E-C:4A]
 Game Name=Eikou no Saint Andrews (J)
@@ -1665,14 +1599,12 @@ Game Name=Elmo's Letter Adventure (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [02B1538F-C94B88D0-C:45]
 Game Name=Elmo's Number Journey (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [E13AE2DC-4FB65CE8-C:4A]
 Game Name=Eltale Monsters (J)
@@ -1746,7 +1678,6 @@ Game Name=Extreme-G (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -1773,7 +1704,6 @@ Game Name=Extreme-G XG2 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Use Large Buffer=Yes
 Status=Compatible
@@ -1784,14 +1714,12 @@ Game Name=F-1 Pole Position 64 (E) (M3)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [AE82687A-9A3F388D-C:45]
 Game Name=F-1 Pole Position 64 (U) (M3)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [B70BAEE5-3A5005A8-C:46]
 Game Name=F-1 World Grand Prix (F)
@@ -1812,7 +1740,6 @@ Game Name=F-1 World Grand Prix (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [CC3CC8B3-0EC405A4-C:45]
@@ -1858,7 +1785,6 @@ Game Name=FIFA - Road to World Cup 98 (E) (M7)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 Audio Signal=Yes
@@ -1868,7 +1794,6 @@ Game Name=FIFA - Road to World Cup 98 - World Cup heno Michi (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [CB1ACDDE-CF291DF2-C:45]
@@ -1876,7 +1801,6 @@ Game Name=FIFA - Road to World Cup 98 (U)
 RAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [0198A651-FC219D84-C:50]
@@ -1949,7 +1873,6 @@ Game Name=Fighter Destiny 2 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -2151,7 +2074,6 @@ Game Name=Gex 64 - Enter the Gecko (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [89FED774-CAAFE21B-C:45]
@@ -2159,7 +2081,6 @@ Game Name=Gex 64 - Enter the Gecko (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [F5237301-99E3EE93-C:50]
@@ -2167,7 +2088,6 @@ Game Name=Glover (E) (M3)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [8E6E01FF-CCB4F948-C:45]
@@ -2175,7 +2095,6 @@ Game Name=Glover (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [B7F40BCF-553556A5-C:45]
@@ -2287,7 +2206,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [3E70E866-4438BAE8-C:4A]
 Game Name=Heiwa Pachinko World 64 (J)
@@ -2445,7 +2363,6 @@ Game Name=Human Grand Prix - New Generation (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [641D3A7F-86820466-C:50]
@@ -2521,7 +2438,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 Delay RDP=Yes
 [D692CC5E-EC58D072-C:50]
@@ -2530,7 +2446,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 Delay RDP=Yes
 [E616B5BC-C9658B88-C:45]
@@ -2539,7 +2454,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 Delay RDP=Yes
 [AF9DCC15-1A723D88-C:45]
@@ -2599,7 +2513,6 @@ Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 Delay RSP=Yes
@@ -2611,7 +2524,6 @@ Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [F41B6343-C10661E6-C:50]
@@ -2661,7 +2573,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=None
 Reg Cache=No
-Use TLB=No
 Status=Compatible
 [E8D29DA0-15E61D94-C:4A]
 Game Name=J.League Tactics Soccer (J) (v1.0)
@@ -2771,7 +2682,6 @@ Game Name=Jet Force Gemini (E) (M4)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Use Large Buffer=Yes
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -2780,7 +2690,6 @@ Game Name=Jet Force Gemini (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [63112A53-A29FA88F-C:4A]
@@ -3097,7 +3006,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 [F4CBE92C-B392ED12-C:50]
 Game Name=Lylat Wars (E) (M3)
@@ -3105,7 +3013,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 //MROMs
 [1145443D-11610EDB-C:50]
@@ -3120,7 +3027,6 @@ Game Name=Mace - The Dark Age (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [0CB81686-5FD85A81-C:45]
@@ -3168,7 +3074,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 Emulate AI=Yes
@@ -3178,7 +3083,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [DF09D625-1791C87D-C:45]
@@ -3187,7 +3091,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [E4906679-9F243F05-C:50]
@@ -3207,7 +3110,6 @@ Game Name=Magical Tetris Challenge featuring Mickey (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [75B61647-7ADABF78-C:45]
 Game Name=Magical Tetris Challenge (U)
@@ -3484,7 +3386,6 @@ Game Name=Micro Machines 64 Turbo (E) (M5)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [F1850C35-ACE07912-C:45]
@@ -3512,14 +3413,12 @@ Game Name=Milo's Astro Lanes (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [2E955ECD-F3000884-C:45]
 Game Name=Milo's Astro Lanes (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [418BDA98-248A0F58-C:50]
 Game Name=Mischief Makers (E)
@@ -3533,7 +3432,6 @@ Game Name=Mischief Makers (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [BFA526B4-0691E430-C:45]
@@ -3541,7 +3439,6 @@ Game Name=Mischief Makers (U) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [2256ECDA-71AB1B9C-C:50]
@@ -3623,7 +3520,6 @@ RDRAM Size=4
 Counter Factor=3
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [E8E8DD70-415DD198-C:4A]
@@ -3644,7 +3540,6 @@ Game Name=Mortal Kombat 4 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [FF44EDC4-1AAE9213-C:50]
 Game Name=Mortal Kombat Mythologies - Sub-Zero (E)
@@ -3703,7 +3598,6 @@ Game Name=MRC - Multi Racing Championship (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [1938525C-586E9656-C:45]
@@ -3800,7 +3694,6 @@ Game Name=NBA Hangtime (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [4E69B487-FE18E290-C:45]
@@ -3808,7 +3701,6 @@ Game Name=NBA Hangtime (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [AAE11F01-2625A045-C:4A]
@@ -3840,7 +3732,6 @@ Game Name=NBA In the Zone '98 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [A292524F-3D6C2A49-C:45]
 Game Name=NBA In the Zone '99 (U)
@@ -3848,7 +3739,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [B6D0CAA0-E3F493C8-C:50]
 Game Name=NBA Jam 2000 (E)
@@ -3870,7 +3760,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 [810729F6-E03FCFC1-C:45]
 Game Name=NBA Jam 99 (U)
@@ -3878,7 +3767,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 [EB499C8F-CD4567B6-C:50]
 Game Name=NBA Live 2000 (E) (M4)
@@ -3901,14 +3789,12 @@ Game Name=NBA Live 99 (E) (M5)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [57F81C9B-1133FA35-C:45]
 Game Name=NBA Live 99 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [ACDE962F-B2CBF87F-C:50]
 Game Name=NBA Pro 98 (E)
@@ -4031,7 +3917,6 @@ Game Name=NHL Blades of Steel '99 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 [29CE7692-71C58579-C:50]
@@ -4093,7 +3978,6 @@ Game Name=Nintendo All-Star! Dairantou Smash Brothers (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Linking=Off
 Status=Compatible
 [8A97A197-272DF6C1-C:50]
@@ -4154,14 +4038,12 @@ Game Name=Olympic Hockey Nagano '98 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [90F43037-5C5370F5-C:4A]
 Game Name=Olympic Hockey Nagano '98 (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [812289D0-C2E53296-C:50]
 Game Name=Off Road Challenge (E)
@@ -4211,7 +4093,6 @@ Game Name=Operation WinBack (E) (M5)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 //PROMs
@@ -4254,14 +4135,12 @@ Game Name=Paperboy (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [3E198D9E-F2E1267E-C:45]
 Game Name=Paperboy (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [CFE2CB31-4D6B1E1D-C:4A]
 Game Name=Parlor! Pro 64 - Pachinko Jikki Simulation Game (J)
@@ -4284,14 +4163,12 @@ Game Name=Penny Racers (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [73ABB1FB-9CCA6093-C:45]
 Game Name=Penny Racers (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [E4B08007-A602FF33-C:50]
 Game Name=Perfect Dark (E) (M5)
@@ -4346,7 +4223,6 @@ Game Name=PGA European Tour (E) (M5)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [B54CE881-BCCB6126-C:45]
@@ -4354,7 +4230,6 @@ Game Name=PGA European Tour (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [3F245305-FC0B74AA-C:4A]
@@ -4362,7 +4237,6 @@ Game Name=Pikachu Genki Dechuu (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Semicompatible
 [1AA05AD5-46F52D80-C:50]
 Game Name=Pilotwings 64 (E) (M3)
@@ -4370,7 +4244,6 @@ RDRAM Size=4
 Counter Factor=3
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 Cheat0=D0264361 0012,80264361 00FF,D0264BE1 0012,80264BE1 00FF,D0264DA1 0012,80264DA1 00FF,D02647E1 0012,802647E1 00FF,D02646A1 0012,802646A1 00FF,D0264661 0012,80264661 00FF,D02649A1 0012,802649A1 00FF,D0264BA1 0012,80264BA1 00FF,D0264AA1 0012,80264AA1 00FF,D02641E1 0020,802641E1 00FF,D02648E1 0020,802648E1 00FF,D0264D61 0020,80264D61 00FF,D0264A21 0020,80264A21 00FF,D02645A1 0020,802645A1 00FF,D02647A1 0020,802647A1 00FF,D02642A1 0029,802642A1 00FF,D0264921 0029,80264921 00FF,D0264621 0029,80264621 00FF,D0264A21 0029,80264A21 00FF,D0264C61 0029,80264C61 00FF,D02647A1 0029,802647A1 00FF,D0264FE1 0029,80264FE1 00FF,D0265161 0029,80265161 00FF,D0264AA1 0029,80264AA1 00FF,D02641E1 003D,802641E1 00FF,D02649E1 003D,802649E1 00FF,D0264561 003D,80264561 00FF,D02646E1 003D,802646E1 00FF,D0264721 003D,80264721 00FF//Land Shadow Fix
@@ -4380,7 +4253,6 @@ RDRAM Size=4
 Counter Factor=3
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 Cheat0=D02639B1 0012,802639B1 00FF,D0264231 0012,80264231 00FF,D02643F1 0012,802643F1 00FF,D0263E31 0012,80263E31 00FF,D0263CF1 0012,80263CF1 00FF,D0263CB1 0012,80263CB1 00FF,D0263FF1 0012,80263FF1 00FF,D02641F1 0012,802641F1 00FF,D02640F1 0012,802640F1 00FF,D0263831 0020,80263831 00FF,D0263F31 0020,80263F31 00FF,D02643B1 0020,802643B1 00FF,D0264071 0020,80264071 00FF,D0263BF1 0020,80263BF1 00FF,D0263DF1 0020,80263DF1 00FF,D02638F1 0029,802638F1 00FF,D0263F71 0029,80263F71 00FF,D0263C71 0029,80263C71 00FF,D0264071 0029,80264071 00FF,D02642B1 0029,802642B1 00FF,D0263DF1 0029,80263DF1 00FF,D0264631 0029,80264631 00FF,D02647B1 0029,802647B1 00FF,D02640F1 0029,802640F1 00FF,D0263831 003D,80263831 00FF,D0264031 003D,80264031 00FF,D0263BB1 003D,80263BB1 00FF,D0263D31 003D,80263D31 00FF,D0263D71 003D,80263D71 00FF//Land Shadow Fix
@@ -4390,7 +4262,6 @@ RDRAM Size=4
 Counter Factor=3
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 Cheat0=D0263B41 0012,80263B41 00FF,D02643C1 0012,802643C1 00FF,D0264581 0012,80264581 00FF,D0263FC1 0012,80263FC1 00FF,D0263E81 0012,80263E81 00FF,D0263E41 0012,80263E41 00FF,D0264181 0012,80264181 00FF,D0264381 0012,80264381 00FF,D0264281 0012,80264281 00FF,D02639C1 0020,802639C1 00FF,D02640C1 0020,802640C1 00FF,D0264541 0020,80264541 00FF,D0264201 0020,80264201 00FF,D0263D81 0020,80263D81 00FF,D0263F81 0020,80263F81 00FF,D0263A81 0029,80263A81 00FF,D0264101 0029,80264101 00FF,D0263E01 0029,80263E01 00FF,D0264201 0029,80264201 00FF,D0264441 0029,80264441 00FF,D0263F81 0029,80263F81 00FF,D02647C1 0029,802647C1 00FF,D0264941 0029,80264941 00FF,D0264281 0029,80264281 00FF,D02639C1 003D,802639C1 00FF,D02641C1 003D,802641C1 00FF,D0263D41 003D,80263D41 00FF,D0263EC1 003D,80263EC1 00FF,D0263F01 003D,80263F01 00FF//Land Shadow Fix
@@ -4656,14 +4527,12 @@ Game Name=Power League 64 (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [39F60C11-AB2EBA7D-C:50]
 Game Name=Power Rangers - Lightspeed Rescue (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [CF8957AD-96D57EA9-C:45]
@@ -4671,7 +4540,6 @@ Game Name=Power Rangers - Lightspeed Rescue (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [F3D27F54-C111ACF9-C:50]
@@ -4709,7 +4577,6 @@ Game Name=Puyo Puyo Sun 64 (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [C0DE0747-A2DF72D3-C:4A]
@@ -4800,21 +4667,18 @@ Game Name=Rampage - World Tour (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [C29FF9E4-264BFE7D-C:45]
 Game Name=Rampage - World Tour (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [5DFC4249-99529C07-C:50]
 Game Name=Rampage 2 - Universal Tour (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 [673D099B-A4C808DE-C:45]
@@ -4822,7 +4686,6 @@ Game Name=Rampage 2 - Universal Tour (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 [20FD0BF1-F5CF1D87-C:50]
@@ -4830,20 +4693,17 @@ Game Name=Rat Attack (E) (M6)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [0304C48E-AC4001B8-C:45]
 Game Name=Rat Attack (U)
 RDRAM Size=4
 CPU Type=Interpreter
-Use TLB=No
 Status=Compatible
 [60D5E10B-8BEDED46-C:50]
 Game Name=Rayman 2 - The Great Escape (E) (M5)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [F3C5BF9B-160F33E2-C:45]
@@ -4851,7 +4711,6 @@ Game Name=Rayman 2 - The Great Escape (U)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Linking=On
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -4875,7 +4734,6 @@ Game Name=Ready 2 Rumble Boxing (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [E9219533-13FBAFBD-C:45]
 Game Name=Ready 2 Rumble Boxing Round 2 (U)
@@ -4890,7 +4748,6 @@ RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Reg Cache=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -4902,7 +4759,6 @@ Game Name=Resident Evil 2 (U)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
-Use TLB=No
 Linking=Off
 Reg Cache=No
 Status=Compatible
@@ -4916,7 +4772,6 @@ RDRAM Size=8
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
-Use TLB=No
 Linking=Off
 Reg Cache=No
 Status=Semicompatible
@@ -4944,7 +4799,6 @@ RDRAM Size=8
 Counter Factor=3
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [F050746C-247B820B-C:45]
 Game Name=Road Rash 64 (U)
@@ -4952,7 +4806,6 @@ RDRAM Size=8
 Counter Factor=3
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [74E87A70-6293AED4-C:50]
 Game Name=Roadsters Trophy (E) (M6)
@@ -4978,7 +4831,6 @@ RDRAM Size=4
 Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Reg Cache=No
 Status=Compatible
 [9FF69D4F-195F0059-C:50]
@@ -4986,28 +4838,24 @@ Game Name=Robotron 64 (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [AC8E4B32-E7B47326-C:45]
 Game Name=Robotron 64 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [9FD375F8-45F32DC8-C:50]
 Game Name=Rocket - Robot on Wheels (M3)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [0C5EE085-A167DD3E-C:45]
 Game Name=Rocket - Robot on Wheels (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [D666593B-D7A25C07-C:4A]
 Game Name=Rockman Dash - Hagane no Boukenshin (J)
@@ -5099,14 +4947,12 @@ Game Name=S.C.A.R.S. (E) (M3)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [769147F3-2033C10E-C:45]
 Game Name=S.C.A.R.S. (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [5E3E60E8-4AB5D495-C:4A]
 Game Name=Saikyou Habu Shougi (J)
@@ -5159,14 +5005,12 @@ Game Name=Scooby-Doo - Classic Creep Capers (U) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [569433AD-F7E13561-C:45]
 Game Name=Scooby-Doo - Classic Creep Capers (U) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [EBF5F6B7-C956D739-C:4A]
 Game Name=SD Hiryuu no Ken Densetsu (J)
@@ -5213,35 +5057,30 @@ Game Name=Shadowgate 64 - Trials Of The Four Towers (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [02B46F55-61778D0B-C:59]
 Game Name=Shadowgate 64 - Trials Of The Four Towers (E) (M2)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [2BC1FCF2-7B9A0DF4-C:58]
 Game Name=Shadowgate 64 - Trials Of The Four Towers (E) (M3)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [CCEDB696-D3883DB4-C:4A]
 Game Name=Shadowgate 64 - Trials Of The Four Towers (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [036897CE-E0D4FA54-C:45]
 Game Name=Shadowgate 64 - Trials Of The Four Towers (U) (M2)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [EF703CA4-4D4A9AC9-C:4A]
 Game Name=Shin Nihon Pro wrestling Toukon Road - Brave Spirits (J)
@@ -5278,7 +5117,6 @@ Game Name=Snowboard Kids (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [DBF4EA9D-333E82C0-C:45]
 Game Name=Snowboard Kids (U)
@@ -5303,7 +5141,6 @@ Game Name=Snowboard Kids (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [22212351-4046594B-C:4A]
 Game Name=Sonic Wings Assault (J)
@@ -5377,14 +5214,12 @@ Game Name=Space Invaders (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [FC70E272-08FFE7AA-C:50]
 Game Name=Space Station Silicon Valley (E) (M7)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [BFE23884-EF48EAAF-C:45]
@@ -5392,7 +5227,6 @@ Game Name=Space Station Silicon Valley (U) (v1.0)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [FC70E272-08FFE7AA-C:45]
@@ -5400,7 +5234,6 @@ Game Name=Space Station Silicon Valley (U) (v1.1)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [A60ED171-3D85D06E-C:45]
@@ -5416,7 +5249,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 [A7D015F8-2289AA43-C:45]
 Game Name=Star Fox 64 (U) (v1.0)
@@ -5424,7 +5256,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 [BA780BA0-0F21DB34-C:45]
 Game Name=Star Fox 64 (U) (v1.1)
@@ -5432,28 +5263,24 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Use TLB=No
 Status=Compatible
 [B703EB23-28AAE53A-C:4A]
 Game Name=Star Soldier - Vanishing Earth (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [DDD93C85-DAE381E8-C:45]
 Game Name=Star Soldier - Vanishing Earth (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [F163A242-F2449B3B-C:4A]
 Game Name=Star Twins (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [7EE0E8BB-49E411AA-C:50]
@@ -5493,7 +5320,6 @@ Game Name=Star Wars - Shadows of the Empire (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [FE24AC63-1B41AA17-C:4A]
@@ -5501,7 +5327,6 @@ Game Name=Star Wars - Teikoku no Kage (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [264D7E5C-18874622-C:45]
@@ -5509,7 +5334,6 @@ Game Name=Star Wars - Shadows of the Empire (U) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [4147B091-63251060-C:45]
@@ -5517,7 +5341,6 @@ Game Name=Star Wars - Shadows of the Empire (U) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [4DD7ED54-74F9287D-C:45]
@@ -5525,7 +5348,6 @@ Game Name=Star Wars - Shadows of the Empire (U) (v1.2)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Linking=On
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -5557,7 +5379,6 @@ RDRAM Size=8
 Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [61F5B152-046122AB-C:4A]
 Game Name=Star Wars Episode I - Racer (J)
@@ -5565,7 +5386,6 @@ RDRAM Size=8
 Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [72F70398-6556A98B-C:45]
 Game Name=Star Wars Episode I - Racer (U)
@@ -5573,7 +5393,6 @@ RDRAM Size=8
 Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [86EDC3C1-E983A7BF-C:45]
 Game Name=Star Wars Episode I - Racer (U) [Save Fix]
@@ -5689,7 +5508,6 @@ Counter Factor=1
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -5699,7 +5517,6 @@ Counter Factor=1
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -5709,7 +5526,6 @@ Counter Factor=1
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -5718,7 +5534,6 @@ Game Name=Super Speed Race 64 (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [2CBB127F-09C2BFD8-C:50]
 Game Name=Supercross 2000 (E) (M3)
@@ -5740,7 +5555,6 @@ Game Name=Superman (E) (M6)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [A2E8F35B-C9DC87D9-C:45]
@@ -5748,7 +5562,6 @@ Game Name=Superman (U) (M3)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [35E811F3-99792724-C:4A]
@@ -5791,7 +5604,6 @@ RDRAM Size=8
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=Off
 Status=Compatible
 Delay RDP=Yes
@@ -5806,21 +5618,18 @@ Game Name=Tetris 64 (J)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [0FE684A9-8BB77AC4-C:50]
 Game Name=Tetrisphere (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [3C1FDABE-02A4E0BA-C:45]
 Game Name=Tetrisphere (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [F82DD377-8C3FB347-C:58]
 Game Name=TG Rally 2 (E)
@@ -5989,7 +5798,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Status=Compatible
 [4EBFDD33-664C9D84-C:45]
 Game Name=Tigger's Honey Hunt (U)
@@ -5997,7 +5805,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Linking=On
 Status=Compatible
 [2B4F4EFB-43C511FE-C:50]
@@ -6043,7 +5850,6 @@ Game Name=Tonic Trouble (E) (M5)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [EF9E9714-C03B2C7D-C:45]
@@ -6059,21 +5865,18 @@ Game Name=Tony Hawk's Pro Skater (E)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [204EC022-B119D185-C:45]
 Game Name=Tony Hawk's Pro Skater (U) (v1.0)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [E0144180-650B78C9-C:45]
 Game Name=Tony Hawk's Pro Skater (U) (v1.1)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [84EAB557-C88A190F-C:50]
 Game Name=Tony Hawk's Pro Skater 2 (E)
@@ -6262,7 +6065,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Linking=On
 Reg Cache=No
 Status=Compatible
@@ -6476,14 +6278,12 @@ Game Name=Virtual Chess 64 (E) (M6)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [82B3248B-E73E244D-C:45]
 Game Name=Virtual Chess 64 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [98F9F2D0-03D9F09C-C:50]
 Game Name=Virtual Pool 64 (E)
@@ -6491,7 +6291,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=On
 Status=Compatible
 [4E4A7643-A37439D7-C:45]
@@ -6500,7 +6299,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Linking=On
 Status=Compatible
 [045C08C4-4AFD798B-C:4A]
@@ -6554,7 +6352,6 @@ Plugin Note=Graphic issues with Jabo plugins
 Game Name=Wave Race 64 Shindou (J) (v1.0)
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=On
 Status=Compatible
 [44995484-20A5FC5E-C:4A]
@@ -6562,7 +6359,6 @@ Game Name=Wave Race 64 (J) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=On
 Status=Compatible
 [93053075-261E0F43-C:50]
@@ -6599,7 +6395,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [F7FE28F6-C3F2ACC3-C:45]
@@ -6608,7 +6403,6 @@ RDRAM Size=4
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [650EFA96-30DDF9A7-C:50]
@@ -6616,7 +6410,6 @@ Game Name=Wave Race 64 (E) (M2)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=On
 Status=Compatible
 [5C9191D6-B30AC306-C:4A]
@@ -6624,7 +6417,6 @@ Game Name=Wave Race 64 (J) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=On
 Status=Compatible
 [7DE11F53-74872F9D-C:45]
@@ -6632,7 +6424,6 @@ Game Name=Wave Race 64 (U) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=On
 Status=Compatible
 [492F4B61-04E5146A-C:45]
@@ -6640,7 +6431,6 @@ Game Name=Wave Race 64 (U) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Linking=On
 Status=Compatible
 [535DF3E2-609789F1-C:4A]
@@ -6655,14 +6445,12 @@ Game Name=Wayne Gretzky's 3D Hockey (E) (M4)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [F1301043-FD80541A-C:4A]
 Game Name=Wayne Gretzky's 3D Hockey (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [6B45223F-F00E5C56-C:45]
 Game Name=Wayne Gretzky's 3D Hockey (U) (v1.0)
@@ -6681,21 +6469,18 @@ Game Name=Wayne Gretzky's 3D Hockey '98 (E) (M4)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [5A9D3859-97AAE710-C:45]
 Game Name=Wayne Gretzky's 3D Hockey '98 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [396F5ADD-6693ECA7-C:45]
 Game Name=WCW Backstage Assault (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Status=Compatible
 [AA7B0658-9C96937B-C:50]
 Game Name=WCW Mayhem (E)
@@ -6787,7 +6572,6 @@ Game Name=Wild Choppers (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [1FA056E0-A4B9946A-C:4A]
@@ -6795,7 +6579,6 @@ Game Name=WinBack (J) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [C52E0BC6-56BC6556-C:4A]
@@ -6803,7 +6586,6 @@ Game Name=WinBack (J) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [ED98957E-8242DCAC-C:45]
@@ -6811,7 +6593,6 @@ Game Name=WinBack - Covert Operations (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [54310E7D-6B5430D8-C:50]
@@ -6823,7 +6604,6 @@ RDRAM Size=8
 Counter Factor=1
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 Emulate AI=Yes
@@ -6890,70 +6670,60 @@ Game Name=WWF - War Zone (E)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [CD5BEC0F-86FD1008-C:45]
 Game Name=WWF - War Zone (U)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [5BF45B7B-596BEEE8-C:50]
 Game Name=WWF Attitude (E)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [8F3151C8-4F3AF545-C:44]
 Game Name=WWF Attitude (G)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [D2BE2F14-38453788-C:45]
 Game Name=WWF Attitude (U)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Use TLB=No
 Status=Compatible
 [6D8DF08E-D008C3CF-C:50]
 Game Name=WWF No Mercy (E) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Status=Compatible
 [8CDB94C2-CB46C6F0-C:50]
 Game Name=WWF No Mercy (E) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Status=Compatible
 [4E4B0640-1B49BCFB-C:45]
 Game Name=WWF No Mercy (U) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Status=Compatible
 [6C80F13B-427EDEAA-C:45]
 Game Name=WWF No Mercy (U) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Status=Compatible
 [C71353BE-AA09A6EE-C:50]
 Game Name=WWF WrestleMania 2000 (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Use Large Buffer=Yes
 Status=Compatible
 [12737DA5-23969159-C:4A]
@@ -6961,7 +6731,6 @@ Game Name=WWF Wrestlemania 2000 (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Use Large Buffer=Yes
 Status=Compatible
 [90A59003-31089864-C:45]
@@ -6969,7 +6738,6 @@ Game Name=WWF WrestleMania 2000 (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
-Use TLB=No
 Use Large Buffer=Yes
 Status=Compatible
 //XROMs
@@ -6978,14 +6746,12 @@ Game Name=Xena Warrior Princess - Talisman of Fate (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 [0553AE9D-EAD8E0C1-C:45]
 Game Name=Xena Warrior Princess - Talisman of Fate (U)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Cache
-Use TLB=No
 Status=Compatible
 //YROMs
 [9F8B96C3-A01194DC-C:4A]

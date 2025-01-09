@@ -477,8 +477,8 @@ BOOL Is8BitReg (int x86Reg) {
 }
 void Load_FPR_ToTop (BLOCK_SECTION * Section, int Reg, int RegToLoad, int Format) {
 	int i;
-	if (RegToLoad < 0) { DisplayError("Load FPR to top\nRegtoload < 0 error"); return; }
-	if (Reg < 0) { DisplayError("Load FPR to top\nReg < 0 error"); return; }
+	if (RegToLoad < 0) return;
+	if (Reg < 0) return;
 	if (Format == FPU_Double || Format == FPU_Qword) {
 		UnMap_FPR(Section,Reg + 1,TRUE);
 		UnMap_FPR(Section,RegToLoad + 1,TRUE);
@@ -651,10 +651,10 @@ void Map_GPR_64bit (BLOCK_SECTION * Section, int Reg, int MipsRegToLoad) {
 	ProtectGPR(Section,Reg);
 	if (IsUnknown(Reg) || IsConst(Reg)) {
 		x86Hi = FreeX86Reg(Section);
-		if (x86Hi < 0) {  DisplayError("Map GPR x64 out of registers"); return; }
+		if (x86Hi < 0) return;
 		x86Protected(x86Hi) = TRUE;
 		x86lo = FreeX86Reg(Section);
-		if (x86lo < 0) {  DisplayError("Map GPR x64 out of registers"); return; }
+		if (x86lo < 0) return;
 		x86Protected(x86lo) = TRUE;
 		CPU_Message("    regcache: allocate %s to hi word of %s",x86_Name(x86Hi),GPR_Name[Reg]);
 		CPU_Message("    regcache: allocate %s to low word of %s",x86_Name(x86lo),GPR_Name[Reg]);
@@ -663,7 +663,7 @@ void Map_GPR_64bit (BLOCK_SECTION * Section, int Reg, int MipsRegToLoad) {
 		if (Is32Bit(Reg)) {
 			x86Protected(x86lo) = TRUE;
 			x86Hi = FreeX86Reg(Section);
-			if (x86Hi < 0) {  DisplayError("Map_GPR_64bit\n\nOut of registers"); return; }
+			if (x86Hi < 0) return;
 			x86Protected(x86Hi) = TRUE;
 		} else {
 			x86Hi = MipsRegHi(Reg);

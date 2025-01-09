@@ -306,12 +306,6 @@ void _fastcall r4300i_SWL (void) {
 void _fastcall r4300i_SW (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;
 	if ((Address & 3) != 0) { ADDRESS_ERROR_EXCEPTION(Address,FALSE); }
-	if (!r4300i_SW_VAddr(Address,GPR[Opcode.rt].UW[0])) {
-	}
-	//TranslateVaddr(&Address);
-	//if (Address == 0x00090AA0) {
-	//	LogMessage("%X: Write %X to %X",PROGRAM_COUNTER,GPR[Opcode.rt].UW[0],GPR[Opcode.base].UW[0] + (short)Opcode.offset);
-	//}
 }
 QWORD SDL_MASK[8] = { 0,0xFF00000000000000,
 						0xFFFF000000000000,
@@ -397,10 +391,6 @@ void _fastcall r4300i_LWC1 (void) {
 void _fastcall r4300i_SC (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;
 	if ((Address & 3) != 0) { ADDRESS_ERROR_EXCEPTION(Address,FALSE); }
-	if (LLBit == 1) {
-		if (!r4300i_SW_VAddr(Address,GPR[Opcode.rt].UW[0])) {
-		}
-	}
 	GPR[Opcode.rt].UW[0] = LLBit;
 }
 void _fastcall r4300i_LD (void) {

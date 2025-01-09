@@ -2180,7 +2180,7 @@ void Compile_R4300i_SDR (BLOCK_SECTION * Section) {
 	Popad();
 }
 void _fastcall ClearRecomplierCache (DWORD Address) {
-	if (!TranslateVaddr(&Address)) { DisplayError("Failed to translate cache: %X",Address); return; }
+	if (!TranslateVaddr(&Address)) return;
 	if (Address < RdramSize) {
 		DWORD Block = Address >> 12;
 		if (N64_Blocks.NoOfRDRamBlocks[Block] > 0) {

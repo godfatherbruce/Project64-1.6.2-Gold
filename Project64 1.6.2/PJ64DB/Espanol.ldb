@@ -41,7 +41,7 @@
 #43# "Idioma/Language"
 #44# "Ayuda"
 #45# "Guia de usuario"
-#46# "Informacion sobre las bases de datos de PJ64"
+#46# "Informacion sobre las bases de datos"
 #48# "Resetear de fabrica"
 #49# "Te permite abrir ROMs de N64"
 #50# "Muestra informacion especifica sobre una ROM activa"
@@ -124,7 +124,7 @@
 #131# "<- Remover"
 #132# "Arriba"
 #133# "Abajo"
-#134# "Revisar Memoria Avanzada = Altos FPS, Baja Compatibilidad
+#134# "Recompilador = Altos FPS, Baja Compatibilidad
 Interprete = Bajos FPS, Alta Compatibilidad
 
 Nota: El Interprete no se ve afectado por los siguientes ajustes:

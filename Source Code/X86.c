@@ -42,8 +42,6 @@ void AdcX86regToVariable(int x86reg, void * Variable, char * VariableName) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D11); break;
 	case x86_ESP: PUTDST16(RecompPos,0x2511); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D11); break;
-	default:
-		DisplayError("AddVariableToX86reg\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -92,8 +90,6 @@ void AdcVariableToX86reg(int x86reg, void * Variable, char * VariableName) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D13); break;
 	case x86_ESP: PUTDST16(RecompPos,0x2513); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D13); break;
-	default:
-		DisplayError("AdcVariableToX86reg\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -167,8 +163,6 @@ void AddVariableToX86reg(int x86reg, void * Variable, char * VariableName) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D03); break;
 	case x86_ESP: PUTDST16(RecompPos,0x2503); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D03); break;
-	default:
-		DisplayError("AddVariableToX86reg\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -183,8 +177,6 @@ void AddX86regToVariable(int x86reg, void * Variable, char * VariableName) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D01); break;
 	case x86_ESP: PUTDST16(RecompPos,0x2501); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D01); break;
-	default:
-		DisplayError("AddVariableToX86reg\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -266,7 +258,6 @@ void AndVariableDispToX86Reg(void *Variable, char *VariableName, int x86Reg, int
 	case 2: x = 0x40; break;
 	case 4: x = 0x80; break;
 	case 8: x = 0xC0; break;
-	default: DisplayError("Invalid x86 multiplier");
 	}
 	/* format xx|000000 */
 	switch (AddrReg) {
@@ -352,8 +343,6 @@ void CompConstToX86reg(int x86Reg, DWORD Const) {
 		case x86_EDI: PUTDST16(RecompPos,0xFF81); break;
 		case x86_ESP: PUTDST16(RecompPos,0xFC81); break;
 		case x86_EBP: PUTDST16(RecompPos,0xFD81); break;
-		default:
-			DisplayError("CompConstToX86reg\nUnknown x86 Register");
 		}
 		PUTDST32(RecompPos,Const);
 	} else {
@@ -381,8 +370,6 @@ void CompX86regToVariable(int x86Reg, void * Variable, char * VariableName) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D3B); break;
 	case x86_ESP: PUTDST16(RecompPos,0x253B); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D3B); break;
-	default:
-		DisplayError("Unknown x86 Register");
 	}
 	PUTDST32(RecompPos,Variable);
 }
@@ -397,8 +384,6 @@ void CompVariableToX86reg(int x86Reg, void * Variable, char * VariableName) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D39); break;
 	case x86_ESP: PUTDST16(RecompPos,0x2539); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D39); break;
-	default:
-		DisplayError("Unknown x86 Register");
 	}
 	PUTDST32(RecompPos,Variable);
 }
@@ -438,8 +423,6 @@ void DecX86reg(x86Reg) {
 	case x86_EDI: PUTDST16(RecompPos,0xCFFF); break;
 	case x86_ESP: PUTDST8 (RecompPos,0x4C);   break;
 	case x86_EBP: PUTDST8 (RecompPos,0x4D);   break;
-	default:
-		DisplayError("DecX86reg\nUnknown x86 Register");
 	}
 }
 void DivX86reg(int x86reg) {
@@ -452,8 +435,6 @@ void DivX86reg(int x86reg) {
 	case x86_EDI: PUTDST16(RecompPos,0xf7F7); break;
 	case x86_ESP: PUTDST16(RecompPos,0xf4F7); break;
 	case x86_EBP: PUTDST16(RecompPos,0xf5F7); break;
-	default:
-		DisplayError("divX86reg\nUnknown x86 Register");
 	}
 }
 void idivX86reg(int x86reg) {
@@ -466,8 +447,6 @@ void idivX86reg(int x86reg) {
 	case x86_EDI: PUTDST16(RecompPos,0xffF7); break;
 	case x86_ESP: PUTDST16(RecompPos,0xfcF7); break;
 	case x86_EBP: PUTDST16(RecompPos,0xfdF7); break;
-	default:
-		DisplayError("idivX86reg\nUnknown x86 Register");
 	}
 }
 void imulX86reg(int x86reg) {
@@ -481,8 +460,6 @@ void imulX86reg(int x86reg) {
 	case x86_EDI: PUTDST16(RecompPos,0xEFF7); break;
 	case x86_ESP: PUTDST16(RecompPos,0xECF7); break;
 	case x86_EBP: PUTDST16(RecompPos,0xEDF7); break;
-	default:
-		DisplayError("imulX86reg\nUnknown x86 Register");
 	}
 }
 void IncX86reg(int x86Reg) {
@@ -496,8 +473,6 @@ void IncX86reg(int x86Reg) {
 	case x86_EDI: PUTDST16(RecompPos,0xC7FF); break;
 	case x86_ESP: PUTDST8 (RecompPos,0x44);   break;
 	case x86_EBP: PUTDST8 (RecompPos,0x45);   break;
-	default:
-		DisplayError("IncX86reg\nUnknown x86 Register");
 	}
 }
 void JaeLabel8(char * Label, BYTE Value) {
@@ -590,7 +565,6 @@ void JmpDirectReg( int x86reg ) {
 	case x86_ESI: PUTDST16(RecompPos,0xE6ff); break;
 	case x86_EDI: PUTDST16(RecompPos,0xE7ff); break;
 	default:
-		DisplayError("JmpDirectReg\nUnknown x86 Register");
 		break;
 	}
 }
@@ -668,16 +642,12 @@ void LeaRegReg(int x86RegDest, int x86RegSrc, int multiplier) {
 	case x86_EDI: PUTDST8(RecompPos,0x3C); break;
 	case x86_ESP: PUTDST8(RecompPos,0x24); break;
 	case x86_EBP: PUTDST8(RecompPos,0x2C); break;
-	default:
-		DisplayError("LEA\nUnknown x86 Register");
 	}
 	/* put in shifter 2(01), 4(10), 8(11) */
 	switch(multiplier) {
 	case 2: s = 0x40; break;
 	case 4: s = 0x80; break;
 	case 8: s = 0xC0; break;
-	default:
-		DisplayError("LEA\nInvalid x86 multiplier");
 	}
 	/* format ss|000000 */
 	switch (x86RegSrc) {
@@ -689,9 +659,7 @@ void LeaRegReg(int x86RegDest, int x86RegSrc, int multiplier) {
 	case x86_EDI: PUTDST8(RecompPos,0x3D|s); break;
 	case x86_EBP: PUTDST8(RecompPos,0x2D|s); break;
 	case x86_ESP:
-		DisplayError("LEA\nESP is invalid"); break;
-	default:
-		DisplayError("LEA\nUnknown x86 Register");
+		break;
 	}
 	PUTDST32(RecompPos,0x00000000);
 }
@@ -709,8 +677,6 @@ void LeaSourceAndOffset(x86DestReg, x86SourceReg, offset) {
 		case x86_EDI: x86Command = 0xB88D; break;
 		case x86_ESP: x86Command = 0xA08D; break;
 		case x86_EBP: x86Command = 0xA88D; break;
-		default:
-			DisplayError("LeaSourceAndOffset\nUnknown x86 Register");
 		}
 		switch (x86SourceReg) {
 		case x86_EAX: x86Command += 0x0000; break;
@@ -721,8 +687,6 @@ void LeaSourceAndOffset(x86DestReg, x86SourceReg, offset) {
 		case x86_EDI: x86Command += 0x0700; break;
 		case x86_ESP: x86Command += 0x0400; break;
 		case x86_EBP: x86Command += 0x0500; break;
-		default:
-			DisplayError("LeaSourceAndOffset\nUnknown x86 Register");
 		}
 		PUTDST16(RecompPos,x86Command);
 		PUTDST32(RecompPos,offset);
@@ -736,8 +700,6 @@ void LeaSourceAndOffset(x86DestReg, x86SourceReg, offset) {
 		case x86_EDI: x86Command = 0x788D; break;
 		case x86_ESP: x86Command = 0x608D; break;
 		case x86_EBP: x86Command = 0x688D; break;
-		default:
-			DisplayError("LeaSourceAndOffset\nUnknown x86 Register");
 		}
 		switch (x86SourceReg) {
 		case x86_EAX: x86Command += 0x0000; break;
@@ -748,8 +710,6 @@ void LeaSourceAndOffset(x86DestReg, x86SourceReg, offset) {
 		case x86_EDI: x86Command += 0x0700; break;
 		case x86_ESP: x86Command += 0x0400; break;
 		case x86_EBP: x86Command += 0x0500; break;
-		default:
-			DisplayError("LeaSourceAndOffset\nUnknown x86 Register");
 		}
 		PUTDST16(RecompPos,x86Command);
 		PUTDST8(RecompPos,offset);
@@ -766,8 +726,6 @@ void MoveConstByteToN64Mem(BYTE Const, int AddrReg) {
 	case x86_EDI: PUTDST16(RecompPos,0x87C6); break;
 	case x86_ESP: PUTDST16(RecompPos,0x84C6); break;
 	case x86_EBP: PUTDST16(RecompPos,0x85C6); break;
-	default:
-		DisplayError("MoveConstByteToN64Mem\nUnknown x86 Register");
 	}
 	PUTDST32(RecompPos,N64MEM);
 	PUTDST8(RecompPos,Const);
@@ -790,8 +748,6 @@ void MoveConstHalfToN64Mem(WORD Const, int AddrReg) {
 	case x86_EDI: PUTDST16(RecompPos,0x87C7); break;
 	case x86_ESP: PUTDST16(RecompPos,0x84C7); break;
 	case x86_EBP: PUTDST16(RecompPos,0x85C7); break;
-	default:
-		DisplayError("MoveConstToN64Mem\nUnknown x86 Register");
 	}
 	PUTDST32(RecompPos,N64MEM);
 	PUTDST16(RecompPos,Const);
@@ -815,8 +771,6 @@ void MoveConstHalfToX86regPointer(WORD Const, int AddrReg1, int AddrReg2) {
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveConstToX86regPointer\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -827,8 +781,6 @@ void MoveConstHalfToX86regPointer(WORD Const, int AddrReg1, int AddrReg2) {
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveConstToX86regPointer\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
     PUTDST16(RecompPos,Const);
@@ -844,8 +796,6 @@ void MoveConstToMemoryDisp (DWORD Const, int AddrReg, DWORD Disp) {
 	case x86_EDI: PUTDST16(RecompPos,0x87C7); break;
 	case x86_ESP: PUTDST16(RecompPos,0x84C7); break;
 	case x86_EBP: PUTDST16(RecompPos,0x85C7); break;
-	default:
-		DisplayError("MoveConstToN64Mem\nUnknown x86 Register");
 	}
 	PUTDST32(RecompPos,Disp);
 	PUTDST32(RecompPos,Const);
@@ -861,8 +811,6 @@ void MoveConstToN64Mem(DWORD Const, int AddrReg) {
 	case x86_EDI: PUTDST16(RecompPos,0x87C7); break;
 	case x86_ESP: PUTDST16(RecompPos,0x84C7); break;
 	case x86_EBP: PUTDST16(RecompPos,0x85C7); break;
-	default:
-		DisplayError("MoveConstToN64Mem\nUnknown x86 Register");
 	}
 	PUTDST32(RecompPos,N64MEM);
 	PUTDST32(RecompPos,Const);
@@ -878,8 +826,6 @@ void MoveConstToN64MemDisp (DWORD Const, int AddrReg, BYTE Disp) {
 	case x86_EDI: PUTDST16(RecompPos,0x87C7); break;
 	case x86_ESP: PUTDST16(RecompPos,0x84C7); break;
 	case x86_EBP: PUTDST16(RecompPos,0x85C7); break;
-	default:
-		DisplayError("MoveConstToN64Mem\nUnknown x86 Register");
 	}
 	PUTDST32(RecompPos,N64MEM + Disp);
 	PUTDST32(RecompPos,Const);
@@ -916,7 +862,6 @@ void MoveConstToX86reg(DWORD Const, int x86reg) {
 	case x86_ESP: PUTDST16(RecompPos,0xC4C7); break;
 	case x86_EBP: PUTDST16(RecompPos,0xC5C7); break;
 	default:
-		DisplayError("MoveConstToX86reg\nUnknown x86 Register");
 		_asm int 3
 	}
     PUTDST32(RecompPos,Const);
@@ -932,8 +877,6 @@ void MoveConstByteToX86regPointer(BYTE Const, int AddrReg1, int AddrReg2) {
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveConstByteToX86regPointer\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -944,8 +887,6 @@ void MoveConstByteToX86regPointer(BYTE Const, int AddrReg1, int AddrReg2) {
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveConstByteToX86regPointer\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
     PUTDST8(RecompPos,Const);
@@ -961,8 +902,6 @@ void MoveConstToX86regPointer(DWORD Const, int AddrReg1, int AddrReg2) {
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveConstToX86regPointer\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -973,8 +912,6 @@ void MoveConstToX86regPointer(DWORD Const, int AddrReg1, int AddrReg2) {
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveConstToX86regPointer\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
     PUTDST32(RecompPos,Const);
@@ -1053,7 +990,6 @@ void MoveN64MemToX86regByte(int x86reg, int AddrReg) {
 /*	case x86_EDI: x86Command += 0xB800; break; */
 /*	case x86_ESP: case x86_EBP: */
 	default:
-		DisplayError("MoveN64MemToX86regByte\nInvalid x86 Register");
 		break;
 	}
 	PUTDST16(RecompPos,x86Command);
@@ -1099,8 +1035,6 @@ void MoveSxByteX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDI: PUTDST8(RecompPos,0x3C); break;
 	case x86_ESP: PUTDST8(RecompPos,0x24); break;
 	case x86_EBP: PUTDST8(RecompPos,0x2C); break;
-	default:
-		DisplayError("MoveZxByteX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg1) {
 	case x86_EAX: Param = 0x00; break;
@@ -1109,8 +1043,6 @@ void MoveSxByteX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveZxByteX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -1121,8 +1053,6 @@ void MoveSxByteX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveZxByteX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
 }
@@ -1139,8 +1069,6 @@ void MoveSxHalfX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDI: PUTDST8(RecompPos,0x3C); break;
 	case x86_ESP: PUTDST8(RecompPos,0x24); break;
 	case x86_EBP: PUTDST8(RecompPos,0x2C); break;
-	default:
-		DisplayError("MoveZxHalfX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg1) {
 	case x86_EAX: Param = 0x00; break;
@@ -1149,8 +1077,6 @@ void MoveSxHalfX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveZxHalfX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -1161,8 +1087,6 @@ void MoveSxHalfX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveZxHalfX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
 }
@@ -1189,7 +1113,6 @@ void MoveSxN64MemToX86regByte(int x86reg, int AddrReg) {
 	case x86_ESP: x86Command += 0xA000; break;
 	case x86_EBP: x86Command += 0xA800; break;
 	default:
-		DisplayError("MoveSxN64MemToX86regByte\nInvalid x86 Register");
 		break;
 	}
 	PUTDST8(RecompPos,0x0f);
@@ -1235,7 +1158,6 @@ void MoveSxVariableToX86regByte(void *Variable, char *VariableName, int x86reg) 
 	case x86_EDI: PUTDST8(RecompPos,0x3D); break;
 	case x86_ESP: PUTDST8(RecompPos,0x25); break;
 	case x86_EBP: PUTDST8(RecompPos,0x2D); break;
-	default: DisplayError("MoveSxVariableToX86regHalf\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -1251,7 +1173,6 @@ void MoveSxVariableToX86regHalf(void *Variable, char *VariableName, int x86reg) 
 	case x86_EDI: PUTDST8(RecompPos,0x3D); break;
 	case x86_ESP: PUTDST8(RecompPos,0x25); break;
 	case x86_EBP: PUTDST8(RecompPos,0x2D); break;
-	default: DisplayError("MoveSxVariableToX86regHalf\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -1266,7 +1187,6 @@ void MoveVariableToX86reg(void *Variable, char *VariableName, int x86reg) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D8B); break;
 	case x86_ESP: PUTDST16(RecompPos,0x258B); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D8B); break;
-	default: DisplayError("MoveVariableToX86reg\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -1290,7 +1210,6 @@ void MoveVariableDispToX86Reg(void *Variable, char *VariableName, int x86Reg, in
 	case 2: x = 0x40; break;
 	case 4: x = 0x80; break;
 	case 8: x = 0xC0; break;
-	default: DisplayError("Move\nInvalid x86 multiplier");
 	}
 	/* format xx|000000 */
 	switch (AddrReg) {
@@ -1312,7 +1231,6 @@ void MoveVariableToX86regByte(void *Variable, char *VariableName, int x86reg) {
 	case x86_EBX: PUTDST16(RecompPos,0x1D8A); break;
 	case x86_ECX: PUTDST16(RecompPos,0x0D8A); break;
 	case x86_EDX: PUTDST16(RecompPos,0x158A); break;
-	default: DisplayError("MoveVariableToX86regByte\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -1328,7 +1246,6 @@ void MoveVariableToX86regHalf(void *Variable, char *VariableName, int x86reg) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D8B); break;
 	case x86_ESP: PUTDST16(RecompPos,0x258B); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D8B); break;
-	default: DisplayError("MoveVariableToX86reg\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -1359,8 +1276,6 @@ void MoveX86regByteToVariable(int x86reg, void * Variable, char * VariableName) 
 	case x86_EBX: PUTDST16(RecompPos,0x1D88); break;
 	case x86_ECX: PUTDST16(RecompPos,0x0D88); break;
 	case x86_EDX: PUTDST16(RecompPos,0x1588); break;
-	default:
-		DisplayError("MoveX86regByteToVariable\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -1376,8 +1291,6 @@ void MoveX86regByteToX86regPointer(int x86reg, int AddrReg1, int AddrReg2) {
 	case x86_EDI: PUTDST16(RecompPos,0x3C88); break;
 	case x86_ESP: PUTDST16(RecompPos,0x2488); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2C88); break;
-	default:
-		DisplayError("MoveX86regToX86regPointer\nUnhandled x86 Register");
 	}
 	switch (AddrReg1) {
 	case x86_EAX: Param = 0x00; break;
@@ -1386,8 +1299,6 @@ void MoveX86regByteToX86regPointer(int x86reg, int AddrReg1, int AddrReg2) {
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveX86regToX86regPointer\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -1398,8 +1309,6 @@ void MoveX86regByteToX86regPointer(int x86reg, int AddrReg1, int AddrReg2) {
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveX86regByteToX86regPointer\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
 }
@@ -1442,8 +1351,6 @@ void MoveX86regHalfToVariable(int x86reg, void * Variable, char * VariableName) 
 	case x86_EDI: PUTDST16(RecompPos,0x3D89); break;
 	case x86_ESP: PUTDST16(RecompPos,0x2589); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D89); break;
-	default:
-		DisplayError("MoveX86regToVariable\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -1460,8 +1367,6 @@ void MoveX86regHalfToX86regPointer(int x86reg, int AddrReg1, int AddrReg2) {
 	case x86_EDI: PUTDST16(RecompPos,0x3C89); break;
 	case x86_ESP: PUTDST16(RecompPos,0x2489); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2C89); break;
-	default:
-		DisplayError("MoveX86regHalfToX86regPointer\nUnhandled x86 Register");
 	}
 	switch (AddrReg1) {
 	case x86_EAX: Param = 0x00; break;
@@ -1470,8 +1375,6 @@ void MoveX86regHalfToX86regPointer(int x86reg, int AddrReg1, int AddrReg2) {
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveX86regHalfToX86regPointer\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -1482,8 +1385,6 @@ void MoveX86regHalfToX86regPointer(int x86reg, int AddrReg1, int AddrReg2) {
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveX86regHalfToX86regPointer\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
 }
@@ -1522,8 +1423,6 @@ void MoveX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDI: PUTDST16(RecompPos,0x3C8B); break;
 	case x86_ESP: PUTDST16(RecompPos,0x248B); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2C8B); break;
-	default:
-		DisplayError("MoveX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg1) {
 	case x86_EAX: Param = 0x00; break;
@@ -1532,8 +1431,6 @@ void MoveX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -1544,8 +1441,6 @@ void MoveX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
 }
@@ -1561,8 +1456,6 @@ void MoveX86regPointerToX86regDisp8(int AddrReg1, int AddrReg2, int x86reg, BYTE
 	case x86_EDI: PUTDST16(RecompPos,0x7C8B); break;
 	case x86_ESP: PUTDST16(RecompPos,0x648B); break;
 	case x86_EBP: PUTDST16(RecompPos,0x6C8B); break;
-	default:
-		DisplayError("MoveX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg1) {
 	case x86_EAX: Param = 0x00; break;
@@ -1571,8 +1464,6 @@ void MoveX86regPointerToX86regDisp8(int AddrReg1, int AddrReg2, int x86reg, BYTE
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -1583,8 +1474,6 @@ void MoveX86regPointerToX86regDisp8(int AddrReg1, int AddrReg2, int x86reg, BYTE
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
 	PUTDST8(RecompPos,offset);
@@ -1678,8 +1567,6 @@ void MoveX86regToVariable(int x86reg, void * Variable, char * VariableName) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D89); break;
 	case x86_ESP: PUTDST16(RecompPos,0x2589); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D89); break;
-	default:
-		DisplayError("MoveX86regToVariable\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -1743,8 +1630,6 @@ void MoveX86regToX86regPointer(int x86reg, int AddrReg1, int AddrReg2) {
 	case x86_EDI: PUTDST16(RecompPos,0x3C89); break;
 	case x86_ESP: PUTDST16(RecompPos,0x2489); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2C89); break;
-	default:
-		DisplayError("MoveX86regToX86regPointer\nUnhandled x86 Register");
 	}
 	switch (AddrReg1) {
 	case x86_EAX: Param = 0x00; break;
@@ -1753,8 +1638,6 @@ void MoveX86regToX86regPointer(int x86reg, int AddrReg1, int AddrReg2) {
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveX86regToX86regPointer\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -1765,8 +1648,6 @@ void MoveX86regToX86regPointer(int x86reg, int AddrReg1, int AddrReg2) {
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveX86regToX86regPointer\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
 }
@@ -1783,8 +1664,6 @@ void MoveZxByteX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDI: PUTDST8(RecompPos,0x3C); break;
 	case x86_ESP: PUTDST8(RecompPos,0x24); break;
 	case x86_EBP: PUTDST8(RecompPos,0x2C); break;
-	default:
-		DisplayError("MoveZxByteX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg1) {
 	case x86_EAX: Param = 0x00; break;
@@ -1793,8 +1672,6 @@ void MoveZxByteX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveZxByteX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -1805,8 +1682,6 @@ void MoveZxByteX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveZxByteX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
 }
@@ -1823,8 +1698,6 @@ void MoveZxHalfX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDI: PUTDST8(RecompPos,0x3C); break;
 	case x86_ESP: PUTDST8(RecompPos,0x24); break;
 	case x86_EBP: PUTDST8(RecompPos,0x2C); break;
-	default:
-		DisplayError("MoveZxHalfX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg1) {
 	case x86_EAX: Param = 0x00; break;
@@ -1833,8 +1706,6 @@ void MoveZxHalfX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDX: Param = 0x02; break;
 	case x86_ESI: Param = 0x06; break;
 	case x86_EDI: Param = 0x07; break;
-	default:
-		DisplayError("MoveZxHalfX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	switch (AddrReg2) {
 	case x86_EAX: Param += 0x00; break;
@@ -1845,8 +1716,6 @@ void MoveZxHalfX86regPointerToX86reg(int AddrReg1, int AddrReg2, int x86reg) {
 	case x86_EDI: Param += 0x38; break;
 	case x86_ESP: Param += 0x20; break;
 	case x86_EBP: Param += 0x28; break;
-	default:
-		DisplayError("MoveZxHalfX86regPointerToX86reg\nUnhandled x86 Register");
 	}
 	PUTDST8(RecompPos,Param);
 }
@@ -1873,7 +1742,6 @@ void MoveZxN64MemToX86regByte(int x86reg, int AddrReg) {
 	case x86_ESP: x86Command += 0xA000; break;
 	case x86_EBP: x86Command += 0xA800; break;
 	default:
-		DisplayError("MoveZxN64MemToX86regByte\nInvalid x86 Register");
 		break;
 	}
 	PUTDST8(RecompPos,0x0f);
@@ -1919,7 +1787,6 @@ void MoveZxVariableToX86regByte(void *Variable, char *VariableName, int x86reg) 
 	case x86_EDI: PUTDST8(RecompPos,0x3D); break;
 	case x86_ESP: PUTDST8(RecompPos,0x25); break;
 	case x86_EBP: PUTDST8(RecompPos,0x2D); break;
-	default: DisplayError("MoveZxVariableToX86regHalf\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -1935,7 +1802,6 @@ void MoveZxVariableToX86regHalf(void *Variable, char *VariableName, int x86reg) 
 	case x86_EDI: PUTDST8(RecompPos,0x3D); break;
 	case x86_ESP: PUTDST8(RecompPos,0x25); break;
 	case x86_EBP: PUTDST8(RecompPos,0x2D); break;
-	default: DisplayError("MoveZxVariableToX86regHalf\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -1950,8 +1816,6 @@ void MulX86reg(int x86reg) {
 	case x86_EDI: PUTDST16(RecompPos,0xE7F7); break;
 	case x86_ESP: PUTDST16(RecompPos,0xE4F7); break;
 	case x86_EBP: PUTDST16(RecompPos,0xE5F7); break;
-	default:
-		DisplayError("MulX86reg\nUnknown x86 Register");
 	}
 }
 void NotX86Reg(int  x86Reg) {
@@ -2105,8 +1969,6 @@ void Seta(int x86reg) {
 	case x86_EBX: PUTDST8(RecompPos,0xC3); break;
 	case x86_ECX: PUTDST8(RecompPos,0xC1); break;
 	case x86_EDX: PUTDST8(RecompPos,0xC2); break;
-	default:
-		DisplayError("Seta\nUnknown x86 Register");
 	}
 }
 void SetaVariable(void * Variable, char * VariableName) {
@@ -2123,8 +1985,6 @@ void Setae(int x86reg) {
 	case x86_EBX: PUTDST8(RecompPos,0xC3); break;
 	case x86_ECX: PUTDST8(RecompPos,0xC1); break;
 	case x86_EDX: PUTDST8(RecompPos,0xC2); break;
-	default:
-		DisplayError("Setae\nUnknown x86 Register");
 	}
 }
 void Setb(int x86reg) {
@@ -2135,8 +1995,6 @@ void Setb(int x86reg) {
 	case x86_EBX: PUTDST8(RecompPos,0xC3); break;
 	case x86_ECX: PUTDST8(RecompPos,0xC1); break;
 	case x86_EDX: PUTDST8(RecompPos,0xC2); break;
-	default:
-		DisplayError("Setb\nUnknown x86 Register");
 	}
 }
 void SetbVariable(void * Variable, char * VariableName) {
@@ -2153,8 +2011,6 @@ void Setg(int x86reg) {
 	case x86_EBX: PUTDST8(RecompPos,0xC3); break;
 	case x86_ECX: PUTDST8(RecompPos,0xC1); break;
 	case x86_EDX: PUTDST8(RecompPos,0xC2); break;
-	default:
-		DisplayError("Setg\nUnknown x86 Register");
 	}
 }
 void SetgVariable(void * Variable, char * VariableName) {
@@ -2171,8 +2027,6 @@ void Setl(int x86reg) {
 	case x86_EBX: PUTDST8(RecompPos,0xC3); break;
 	case x86_ECX: PUTDST8(RecompPos,0xC1); break;
 	case x86_EDX: PUTDST8(RecompPos,0xC2); break;
-	default:
-		DisplayError("Setl\nUnknown x86 Register");
 	}
 }
 void SetlVariable(void * Variable, char * VariableName) {
@@ -2189,8 +2043,6 @@ void Setz(int x86reg) {
 	case x86_EBX: PUTDST8(RecompPos,0xC3); break;
 	case x86_ECX: PUTDST8(RecompPos,0xC1); break;
 	case x86_EDX: PUTDST8(RecompPos,0xC2); break;
-	default:
-		DisplayError("Setz\nUnknown x86 Register");
 	}
 }
 void Setnz(int x86reg) {
@@ -2201,8 +2053,6 @@ void Setnz(int x86reg) {
 	case x86_EBX: PUTDST8(RecompPos,0xC3); break;
 	case x86_ECX: PUTDST8(RecompPos,0xC1); break;
 	case x86_EDX: PUTDST8(RecompPos,0xC2); break;
-	default:
-		DisplayError("Setnz\nUnknown x86 Register");
 	}
 }
 void ShiftLeftDouble(int Destination, int Source) {
@@ -2309,8 +2159,6 @@ void ShiftRightSignImmed(int x86reg, BYTE Immediate) {
 	case x86_EDI: PUTDST16(RecompPos,0xFFC1); break;
 	case x86_ESP: PUTDST16(RecompPos,0xFCC1); break;
 	case x86_EBP: PUTDST16(RecompPos,0xFDC1); break;
-	default:
-		DisplayError("ShiftRightSignImmed\nUnknown x86 Register");
 	}
 	PUTDST8(RecompPos,Immediate);
 }
@@ -2433,8 +2281,6 @@ void SbbVariableFromX86reg(int x86reg, void * Variable, char * VariableName) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D1B); break;
 	case x86_ESP: PUTDST16(RecompPos,0x251B); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D1B); break;
-	default:
-		DisplayError("SbbVariableFromX86reg\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -2508,8 +2354,6 @@ void SubVariableFromX86reg(int x86reg, void * Variable, char * VariableName) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D2B); break;
 	case x86_ESP: PUTDST16(RecompPos,0x252B); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D2B); break;
-	default:
-		DisplayError("SubVariableFromX86reg\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }
@@ -2647,7 +2491,6 @@ void XorVariableToX86reg(void *Variable, char *VariableName, int x86reg) {
 	case x86_EDI: PUTDST16(RecompPos,0x3D33); break;
 	case x86_ESP: PUTDST16(RecompPos,0x2533); break;
 	case x86_EBP: PUTDST16(RecompPos,0x2D33); break;
-	default: DisplayError("XorVariableToX86reg\nUnknown x86 Register");
 	}
     PUTDST32(RecompPos,Variable);
 }

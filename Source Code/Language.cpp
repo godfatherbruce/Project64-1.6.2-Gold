@@ -65,7 +65,7 @@ LANG_STR DefaultString[] = {
 	        { MENU_LANGUAGE, "Language"                       },
 	        { MENU_HELP,     "Help"                           },
 		{ MENU_USER_GUIDE,    "User Guide"                },
-		{ MENU_ABOUT_INI,   "About PJ64 Databases"        },
+		{ MENU_ABOUT_INI,   "About Databases"             },
 		{ MENU_GITHUB,    "GitHub"                        },
 		{ MENU_UNINSTALL,   "Factory Reset"               },
 // Menu Descriptions
@@ -168,7 +168,7 @@ LANG_STR DefaultString[] = {
 	{ RB_UP,               "Up"},
 	{ RB_DOWN,             "Down"},
 //Advanced Options
-	{ ADVANCE_INFO,        "Check Memory Advance = High FPS Low Compatibility\nInterpreter = Low FPS High Compatibility\n\nNote Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register caching"},
+	{ ADVANCE_INFO,        "Recompiler = High FPS Low Compatibility\nInterpreter = Low FPS High Compatibility\n\nNote Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register caching"},
 	{ ADVANCE_DEFAULTS,    "Core Defaults"},
 	{ ADVANCE_AUTO_START,  "Start Emulation Upon ROM Opening"},
 	{ ADVANCE_OVERWRITE,   "RDB ROM Settings"},

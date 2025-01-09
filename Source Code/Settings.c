@@ -596,8 +596,6 @@ BOOL CALLBACK PluginSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				switch (CPU_Type) {
 				case CPU_Interpreter: hCPU = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)StartInterpreterCPU,NULL,0, &ThreadID); break;
 				case CPU_Recompiler: hCPU = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)StartRecompilerCPU,NULL,0, &ThreadID);	break;
-				default:
-				DisplayError("Unhandled CPU %d",CPU_Type);
 				}
         			CPURunning = TRUE;
 				_splitpath(SaveFile, drive, dir, fname, ext);

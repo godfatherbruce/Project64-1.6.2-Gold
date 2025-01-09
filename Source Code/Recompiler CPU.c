@@ -2322,7 +2322,7 @@ BOOL InheritParentInfo (BLOCK_SECTION * Section) {
 			NoOfCompiledParents += Parent->JumpSection != Parent->ContinueSection?1:2;
 		}
 	}
-	if (NoOfCompiledParents == 0){ DisplayError("No compiled parent detected"); return FALSE; }
+	if (NoOfCompiledParents == 0) return FALSE;
 	SectionParents = (BLOCK_PARENT *)malloc(NoOfParents * sizeof(BLOCK_PARENT));
 	for (count = 0, NoOfCompiledParents = 0;Section->ParentSection[count] != NULL;count++) {
 		Parent = Section->ParentSection[count];

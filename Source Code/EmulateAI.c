@@ -66,11 +66,7 @@ void __cdecl EmuAI_AiLenChanged (void)
 		EmuAI_Buffer[1] = AI_LEN_REG&0x3FFF8;
 		// Set our Status Register to FIFO FULL
 		AI_STATUS_REG |= 0x80000000;
-	} else {
-		AI_STATUS_REG |= 0x80000000;
-		DisplayError("AI FIFO FULL But still received an AI");
 	}
-	// Call our plugin to process the Length register
 	if (AiLenChangedPlugin != NULL) AiLenChangedPlugin();
 }
 DWORD __cdecl EmuAI_AiReadLength (void)

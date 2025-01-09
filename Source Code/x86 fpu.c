@@ -58,7 +58,6 @@ void fpuAddDwordRegPointer(int x86Pointer) {
 	case x86_ESI: PUTDST16(RecompPos,0x06D8); break;
 	case x86_EDI: PUTDST16(RecompPos,0x07D8); break;
 	default:
-		DisplayError("fpuAddDwordRegPointer\nUnknown x86 Register");
 		break;
 	}
 }
@@ -77,7 +76,6 @@ void fpuAddQwordRegPointer(int x86Pointer) {
 	case x86_ESI: PUTDST16(RecompPos,0x06DC); break;
 	case x86_EDI: PUTDST16(RecompPos,0x07DC); break;
 	default:
-		DisplayError("fpuAddQwordRegPointer\nUnknown x86 Register");
 		break;
 	}
 }
@@ -93,7 +91,6 @@ void fpuAddReg(int x86reg) {
 	case x86_ST6: PUTDST16(RecompPos,0xC6D8); break;
 	case x86_ST7: PUTDST16(RecompPos,0xC7D8); break;
 	default:
-		DisplayError("fpuAddReg\nUnknown x86 Register");
 		break;
 	}
 }
@@ -110,7 +107,6 @@ void fpuAddRegPop(int * StackPos, int x86reg) {
 	case x86_ST6: PUTDST16(RecompPos,0xC6DE); break;
 	case x86_ST7: PUTDST16(RecompPos,0xC7DE); break;
 	default:
-		DisplayError("fpuAddReg\nUnknown x86 Register");
 		break;
 	}
 }
@@ -165,7 +161,6 @@ void fpuComReg(int x86reg, BOOL Pop) {
 	case x86_ST6: PUTDST16(RecompPos,0xD6D8|s); break;
 	case x86_ST7: PUTDST16(RecompPos,0xD7D8|s); break;
 	default:
-		DisplayError("fpuComReg\nUnknown x86 Register");
 		break;
 	}
 }
@@ -184,7 +179,6 @@ void fpuDivDwordRegPointer(int x86Pointer) {
 	case x86_ESI: PUTDST16(RecompPos,0x36D8); break;
 	case x86_EDI: PUTDST16(RecompPos,0x37D8); break;
 	default:
-		DisplayError("fpuDivDwordRegPointer\nUnknown x86 Register");
 		break;
 	}
 }
@@ -203,7 +197,6 @@ void fpuDivQwordRegPointer(int x86Pointer) {
 	case x86_ESI: PUTDST16(RecompPos,0x36DC); break;
 	case x86_EDI: PUTDST16(RecompPos,0x37DC); break;
 	default:
-		DisplayError("fpuDivQwordRegPointer\nUnknown x86 Register");
 		break;
 	}
 }
@@ -219,7 +212,6 @@ void fpuDivReg(int Reg) {
 	case x86_ST6: PUTDST16(RecompPos,0xF6D8); break;
 	case x86_ST7: PUTDST16(RecompPos,0xF7D8); break;
 	default:
-		DisplayError("fpuDivReg\nUnknown x86 Register");
 		break;
 	}
 }
@@ -235,7 +227,6 @@ void fpuDivRegPop(int x86reg) {
 	case x86_ST6: PUTDST16(RecompPos,0xFEDE); break;
 	case x86_ST7: PUTDST16(RecompPos,0xFFDE); break;
 	default:
-		DisplayError("fpuDivReg\nUnknown x86 Register");
 		break;
 	}
 }
@@ -251,7 +242,6 @@ void fpuExchange(int Reg) {
 	case x86_ST6: PUTDST16(RecompPos,0xCED9); break;
 	case x86_ST7: PUTDST16(RecompPos,0xCFD9); break;
 	default:
-		DisplayError("fpuExchange\nUnknown x86 Register: %i", Reg);
 		break;
 	}
 }
@@ -267,7 +257,6 @@ void fpuFree(int Reg) {
 	case x86_ST6: PUTDST16(RecompPos,0xC6DD); break;
 	case x86_ST7: PUTDST16(RecompPos,0xC7DD); break;
 	default:
-		DisplayError("fpuFree\nUnknown x86 Register");
 		break;
 	}
 }
@@ -303,8 +292,6 @@ void fpuLoadDwordFromX86Reg(int * StackPos, int x86Reg) {
 	case x86_EDX: PUTDST8(RecompPos,0x02); break;
 	case x86_ESI: PUTDST8(RecompPos,0x06); break;
 	case x86_EDI: PUTDST8(RecompPos,0x07); break;
-	default:
-		DisplayError("fpuLoadDwordFromX86Reg\nUnknown x86 Register");
 	}
 }
 void fpuLoadDwordFromN64Mem(int * StackPos,int x86reg) {
@@ -318,8 +305,6 @@ void fpuLoadDwordFromN64Mem(int * StackPos,int x86reg) {
 	case x86_ESI: PUTDST16(RecompPos,0x86D9); break;
 	case x86_EDI: PUTDST16(RecompPos,0x87D9); break;
 	case x86_EBP: PUTDST16(RecompPos,0x85D9); break;
-	default:
-		DisplayError("fpuLoadDwordFromN64Mem\nUnknown x86 Register");
 	}
 	PUTDST32(RecompPos,N64MEM);
 }
@@ -334,8 +319,6 @@ void fpuLoadInt32bFromN64Mem(int * StackPos,int x86reg) {
 	case x86_ESI: PUTDST16(RecompPos,0x86DB); break;
 	case x86_EDI: PUTDST16(RecompPos,0x87DB); break;
 	case x86_EBP: PUTDST16(RecompPos,0x85DB); break;
-	default:
-		DisplayError("fpuLoadIntDwordFromN64Mem\nUnknown x86 Register");
 	}
 	PUTDST32(RecompPos,N64MEM);
 }
@@ -356,8 +339,6 @@ void fpuLoadIntegerDwordFromX86Reg(int * StackPos,int x86Reg) {
 	case x86_EDX: PUTDST8(RecompPos,0x02); break;
 	case x86_ESI: PUTDST8(RecompPos,0x06); break;
 	case x86_EDI: PUTDST8(RecompPos,0x07); break;
-	default:
-		DisplayError("fpuLoadIntegerDwordFromX86Reg\nUnknown x86 Register");
 	}
 }
 void fpuLoadIntegerQword(int * StackPos,void *Variable, char *VariableName) {
@@ -377,8 +358,6 @@ void fpuLoadIntegerQwordFromX86Reg(int * StackPos,int x86Reg) {
 	case x86_EDX: PUTDST8(RecompPos,0x2A); break;
 	case x86_ESI: PUTDST8(RecompPos,0x2E); break;
 	case x86_EDI: PUTDST8(RecompPos,0x2F); break;
-	default:
-		DisplayError("fpuLoadIntegerDwordFromX86Reg\nUnknown x86 Register");
 	}
 }
 void fpuLoadQword(int * StackPos,void *Variable, char *VariableName) {
@@ -398,8 +377,6 @@ void fpuLoadQwordFromX86Reg(int * StackPos, int x86Reg) {
 	case x86_EDX: PUTDST8(RecompPos,0x02); break;
 	case x86_ESI: PUTDST8(RecompPos,0x06); break;
 	case x86_EDI: PUTDST8(RecompPos,0x07); break;
-	default:
-		DisplayError("fpuLoadQwordFromX86Reg\nUnknown x86 Register");
 	}
 }
 void fpuLoadQwordFromN64Mem(int * StackPos,int x86reg) {
@@ -413,8 +390,6 @@ void fpuLoadQwordFromN64Mem(int * StackPos,int x86reg) {
 	case x86_ESI: PUTDST16(RecompPos,0x86DD); break;
 	case x86_EDI: PUTDST16(RecompPos,0x87DD); break;
 	case x86_EBP: PUTDST16(RecompPos,0x85DD); break;
-	default:
-		DisplayError("fpuLoadQwordFromN64Mem\nUnknown x86 Register");
 	}
 	PUTDST32(RecompPos,N64MEM);
 }
@@ -430,8 +405,6 @@ void fpuLoadReg(int * StackPos,int Reg) {
 	case x86_ST5: PUTDST16(RecompPos,0xC5D9); break;
 	case x86_ST6: PUTDST16(RecompPos,0xC6D9); break;
 	case x86_ST7: PUTDST16(RecompPos,0xC7D9); break;
-	default:
-		DisplayError("fpuLoadReg\nUnknown x86 Register:%i", Reg);
 		break;
 	}
 }
@@ -449,8 +422,6 @@ void fpuMulDwordRegPointer(int x86Pointer) {
 	case x86_EDX: PUTDST16(RecompPos,0x0AD8); break;
 	case x86_ESI: PUTDST16(RecompPos,0x0ED8); break;
 	case x86_EDI: PUTDST16(RecompPos,0x0FD8); break;
-	default:
-		DisplayError("fpuMulDwordRegPointer\nUnknown x86 Register");
 		break;
 	}
 }
@@ -469,7 +440,6 @@ void fpuMulQwordRegPointer(int x86Pointer) {
 	case x86_ESI: PUTDST16(RecompPos,0x0EDC); break;
 	case x86_EDI: PUTDST16(RecompPos,0x0FDC); break;
 	default:
-		DisplayError("fpuMulQwordRegPointer\nUnknown x86 Register");
 		break;
 	}
 }
@@ -485,7 +455,6 @@ void fpuMulReg(int x86reg) {
 	case x86_ST6: PUTDST16(RecompPos,0xCED8); break;
 	case x86_ST7: PUTDST16(RecompPos,0xCFD8); break;
 	default:
-		DisplayError("fpuMulReg\nUnknown x86 Register");
 		break;
 	}
 }
@@ -501,7 +470,6 @@ void fpuMulRegPop(int x86reg) {
 	case x86_ST6: PUTDST16(RecompPos,0xCEDE); break;
 	case x86_ST7: PUTDST16(RecompPos,0xCFDE); break;
 	default:
-		DisplayError("fpuMulReg\nUnknown x86 Register");
 		break;
 	}
 }
@@ -540,8 +508,6 @@ void fpuStoreDwordFromX86Reg(int * StackPos,int x86Reg, BOOL pop) {
 	case x86_EDX: Command = 0x12; break;
 	case x86_ESI: Command = 0x16; break;
 	case x86_EDI: Command = 0x17; break;
-	default:
-		DisplayError("fpuStoreIntegerQwordFromX86Reg\nUnknown x86 Register");
 	}
 	PUTDST8(RecompPos, (pop == FALSE) ? Command : (Command + 0x8));
 }
@@ -556,9 +522,7 @@ void fpuStoreDwordToN64Mem(int * StackPos,int x86reg, BOOL Pop) {
 	case x86_EDX: PUTDST16(RecompPos,0x92D9|s); break;
 	case x86_ESI: PUTDST16(RecompPos,0x96D9|s); break;
 	case x86_EDI: PUTDST16(RecompPos,0x97D9|s); break;
-	case x86_EBP: PUTDST16(RecompPos,0x95D9|s); break;
-	default:
-		DisplayError("fpuStoreDwordToN64Mem\nUnknown x86 Register");
+	case x86_EBP: PUTDST16(RecompPos,0x95D9|s); break;;
 	}
 	PUTDST32(RecompPos,N64MEM);
 }
@@ -580,8 +544,6 @@ void fpuStoreIntegerDwordFromX86Reg(int * StackPos,int x86Reg, BOOL pop) {
 	case x86_EDX: Command = 0x12; break;
 	case x86_ESI: Command = 0x16; break;
 	case x86_EDI: Command = 0x17; break;
-	default:
-		DisplayError("fpuStoreIntegerDwordFromX86Reg\nUnknown x86 Register");
 	}
 	PUTDST8(RecompPos, (pop == FALSE) ? Command : (Command + 0x8));
 }
@@ -604,8 +566,6 @@ void fpuStoreIntegerQwordFromX86Reg(int * StackPos, int x86Reg, BOOL pop) {
 	case x86_EDX: Command = 0x32; break;
 	case x86_ESI: Command = 0x36; break;
 	case x86_EDI: Command = 0x37; break;
-	default:
-		DisplayError("fpuStoreIntegerQwordFromX86Reg\nUnknown x86 Register");
 	}
 	PUTDST8(RecompPos, (pop == FALSE) ? Command : (Command + 0x8));
 }
@@ -621,8 +581,6 @@ void fpuStoreQwordFromX86Reg(int * StackPos, int x86Reg, BOOL pop) {
 	case x86_EDX: Command = 0x12; break;
 	case x86_ESI: Command = 0x16; break;
 	case x86_EDI: Command = 0x17; break;
-	default:
-		DisplayError("fpuStoreQwordFromX86Reg\nUnknown x86 Register");
 	}
 	PUTDST8(RecompPos, (pop == FALSE) ? Command : (Command + 0x8));
 }
@@ -645,7 +603,6 @@ void fpuSubDwordRegPointer(int x86Pointer) {
 	case x86_ESI: PUTDST16(RecompPos,0x26D8); break;
 	case x86_EDI: PUTDST16(RecompPos,0x27D8); break;
 	default:
-		DisplayError("fpuSubDwordRegPointer\nUnknown x86 Register");
 		break;
 	}
 }
@@ -669,7 +626,6 @@ void fpuSubQwordRegPointer(int x86Pointer) {
 	case x86_ESI: PUTDST16(RecompPos,0x26DC); break;
 	case x86_EDI: PUTDST16(RecompPos,0x27DC); break;
 	default:
-		DisplayError("fpuSubQwordRegPointer\nUnknown x86 Register");
 		break;
 	}
 }
@@ -690,7 +646,6 @@ void fpuSubReg(int x86reg) {
 	case x86_ST6: PUTDST16(RecompPos,0xE6D8); break;
 	case x86_ST7: PUTDST16(RecompPos,0xE7D8); break;
 	default:
-		DisplayError("fpuSubReg\nUnknown x86 Register");
 		break;
 	}
 }
@@ -706,7 +661,6 @@ void fpuSubRegPop(int x86reg) {
 	case x86_ST6: PUTDST16(RecompPos,0xEEDE); break;
 	case x86_ST7: PUTDST16(RecompPos,0xEFDE); break;
 	default:
-		DisplayError("fpuSubRegPop\nUnknown x86 Register");
 		break;
 	}
 }

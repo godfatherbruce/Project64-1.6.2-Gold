@@ -43,7 +43,7 @@
 #43# "Language"
 #44# "Help"
 #45# "User Guide"
-#46# "About PJ64 Databases"
+#46# "About Databases"
 #47# "GitHub"
 #48# "Factory Reset"
 #49# "Lets you open N64 ROMs"
@@ -131,7 +131,7 @@
 #131# "<- Remove"
 #132# "Up"
 #133# "Down"
-#134# "Check Memory Advance = High FPS Low Compatibility
+#134# "Recompiler = High FPS Low Compatibility
 Interpreter = Low FPS High Compatibility
 
 Note Interpreter is not affected by the following settings:

@@ -162,8 +162,6 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 				WriteFile(hFlashRAMFile,FlipBuffer,128,&dwWritten,NULL);
 			}
 			break;
-		default:
-			DisplayError("Writing %X to flash ram command register\nFlashFlag: %d",FlashRAM_Command,FlashFlag);
 		}
 		FlashFlag = FlashRAM_MODE_NOPES;
 		break;

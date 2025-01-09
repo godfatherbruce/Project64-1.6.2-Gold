@@ -982,21 +982,18 @@ int r4300i_Command_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 			return EXCEPTION_CONTINUE_EXECUTION;
 			break;
 		default:
-			DisplayError("Unknown x86 opcode %X\nlocation %X\nN64mem loc: %X",
-				*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)N64MEM);
+				*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)N64MEM;
 			//return EXCEPTION_EXECUTE_HANDLER;
 			return EXCEPTION_CONTINUE_SEARCH;
 		}
 		break;
 	default:
-		DisplayError("Unknown x86 opcode %X\nlocation %X\nloc: %X\n2",
-			*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM);
+			*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM;
 		//return EXCEPTION_EXECUTE_HANDLER;
 		return EXCEPTION_CONTINUE_SEARCH;
 	}
-	DisplayError("Unknown x86 opcode %X\nlocation %X\nN64mem loc: %X\nAddress: %X",
 		*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)N64MEM,
-		(char *)exRec.ExceptionInformation[1] - (char *)N64MEM);
+		(char *)exRec.ExceptionInformation[1] - (char *)N64MEM;
 	return EXCEPTION_CONTINUE_SEARCH;
 }
 int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
@@ -1104,8 +1101,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 	case 0x86: ReadPos += 5; break;
 	case 0x87: ReadPos += 5; break;
 	default:
-		DisplayError("Unknown x86 opcode %X\nlocation %X\nloc: %X\nfgh2",
-			*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM);
+			*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM;
 		return EXCEPTION_CONTINUE_SEARCH;
 	}
 	switch(*TypePos) {
@@ -1140,8 +1136,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 			lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 			return EXCEPTION_CONTINUE_EXECUTION;
 		default:
-			DisplayError("Unkown x86 opcode %X\nlocation %X\nloc: %X\nfhfgh2",
-				*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM);
+				*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM;
 			return EXCEPTION_CONTINUE_SEARCH;
 		}
 		break;
@@ -1168,8 +1163,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 			lpEP->ContextRecord->Eip = (DWORD)(ReadPos + 2);
 			return EXCEPTION_CONTINUE_EXECUTION;
 		default:
-			DisplayError("Unknown x86 opcode %X\nlocation %X\nloc: %X\nfhfgh2",
-				*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM);
+				*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM;
 			return EXCEPTION_CONTINUE_SEARCH;
 		}
 		break;
@@ -1215,8 +1209,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 		lpEP->ContextRecord->Eip = (DWORD)(ReadPos + 4);
 		return EXCEPTION_CONTINUE_EXECUTION;
 	default:
-		DisplayError("Unkown x86 opcode %X\nlocation %X\nloc: %X\nfhfgh2",
-			*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM);
+			*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM;
 		return EXCEPTION_CONTINUE_SEARCH;
 	}
 }
@@ -1502,10 +1495,6 @@ int r4300i_SB_NonMemory ( DWORD PAddr, BYTE Value ) {
 	case 0x00600000:
 	case 0x00700000:
 		if (PAddr < RdramSize) {
-			DWORD OldProtect;
-			if (VirtualProtect((N64MEM + PAddr), 1, PAGE_READWRITE, &OldProtect) == 0) {
-				DisplayError("Failed to unprotect %X\n5", PAddr);
-			}
 			*(BYTE *)(N64MEM+PAddr) = Value;
 			if (N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
 			N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
@@ -1535,10 +1524,6 @@ int r4300i_SH_NonMemory ( DWORD PAddr, WORD Value ) {
 	case 0x00600000:
 	case 0x00700000:
 		if (PAddr < RdramSize) {
-			DWORD OldProtect;
-			if (VirtualProtect((N64MEM + PAddr), 2, PAGE_READWRITE, &OldProtect) == 0) {
-				DisplayError("Failed to unprotect %X\n4", PAddr);
-			}
 			*(WORD *)(N64MEM+PAddr) = Value;
 			if (N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
 			N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
@@ -1582,10 +1567,6 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 	case 0x00600000:
 	case 0x00700000:
 		if (PAddr < RdramSize) {
-			DWORD OldProtect;
-			if (VirtualProtect((N64MEM + PAddr), 4, PAGE_READWRITE, &OldProtect) == 0) {
-				DisplayError("Failed to unprotect %X\n3", PAddr);
-			}
 			*(DWORD *)(N64MEM+PAddr) = Value;
 			if (N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
 			N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
@@ -1617,10 +1598,6 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 		break;
 	case 0x04000000:
 		if (PAddr < 0x04002000) {
-			DWORD OldProtect;
-			if (VirtualProtect((N64MEM + PAddr), 4, PAGE_READWRITE, &OldProtect) == 0) {
-				DisplayError("Failed to unprotect %X\n2", PAddr);
-			}
 			*(DWORD *)(N64MEM+PAddr) = Value;
 			if (PAddr < 0x04001000) {
 				if (N64_Blocks.NoOfDMEMBlocks == 0) { break; }
@@ -1943,7 +1920,7 @@ void ResetMemoryStack (BLOCK_SECTION * Section) {
 	MoveX86regToVariable(x86reg, &MemoryStack, "MemoryStack");
 }
 void ResetRecompCode (void) {
-	DWORD count, OldProtect;
+	DWORD count;
 	RecompPos = RecompCode;
 	if (SelfModCheck == ModCode_ChangeMemory) {
 		DWORD count, PAddr, Value;
@@ -1962,26 +1939,17 @@ void ResetRecompCode (void) {
 			N64_Blocks.NoOfRDRamBlocks[count] = 0;
 			memset(JumpTable + (count << 10),0,0x1000);
 			*(DelaySlotTable + count) = NULL;
-			if (VirtualProtect((N64MEM + (count << 12)), 4, PAGE_READWRITE, &OldProtect) == 0) {
-				DisplayError("Failed to unprotect %X\n1", (count << 12));
-			}
 		}
 	}
 	if (N64_Blocks.NoOfDMEMBlocks > 0) {
 		N64_Blocks.NoOfDMEMBlocks = 0;
 		memset(JumpTable + (0x04000000 >> 2),0,0x1000);
 		*(DelaySlotTable + (0x04000000 >> 12)) = NULL;
-		if (VirtualProtect((N64MEM + 0x04000000), 4, PAGE_READWRITE, &OldProtect) == 0) {
-			DisplayError("Failed to unprotect %X\n0", 0x04000000);
-		}
 	}
 	if (N64_Blocks.NoOfIMEMBlocks > 0) {
 		N64_Blocks.NoOfIMEMBlocks = 0;
 		memset(JumpTable + (0x04001000 >> 2),0,0x1000);
 		*(DelaySlotTable + (0x04001000 >> 12)) = NULL;
-		if (VirtualProtect((N64MEM + 0x04001000), 4, PAGE_READWRITE, &OldProtect) == 0) {
-			DisplayError("Failed to unprotect %X\n4", 0x04001000);
-		}
 	}
 //	if (N64_Blocks.NoOfPifRomBlocks > 0) {
 //		N64_Blocks.NoOfPifRomBlocks = 0;

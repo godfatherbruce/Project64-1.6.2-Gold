@@ -307,7 +307,6 @@ void _fastcall r4300i_SW (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;
 	if ((Address & 3) != 0) { ADDRESS_ERROR_EXCEPTION(Address,FALSE); }
 	if (!r4300i_SW_VAddr(Address,GPR[Opcode.rt].UW[0])) {
-		DisplayError("SW TLB: %X",Address);
 	}
 	//TranslateVaddr(&Address);
 	//if (Address == 0x00090AA0) {
@@ -400,7 +399,6 @@ void _fastcall r4300i_SC (void) {
 	if ((Address & 3) != 0) { ADDRESS_ERROR_EXCEPTION(Address,FALSE); }
 	if (LLBit == 1) {
 		if (!r4300i_SW_VAddr(Address,GPR[Opcode.rt].UW[0])) {
-			DisplayError("SW TLB: %X",Address);
 		}
 	}
 	GPR[Opcode.rt].UW[0] = LLBit;

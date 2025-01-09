@@ -453,7 +453,6 @@ Game Name=Banjo to Kazooie no Daibouken (J)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [514B6900-B4B19881-C:4A]
@@ -462,14 +461,12 @@ RDRAM Size=4
 Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Status=Compatible
 Plugin Note=Angrylion's RDP or PR2GLN suggested for F4 Usage (crashes otherwise)
 [733FCCB1-444892F9-C:50]
 Game Name=Banjo-Kazooie (E) (M3)
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 RDRAM Size=8
@@ -478,7 +475,6 @@ Game Name=Banjo-Kazooie (U) (v1.0)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [CD7559AC-B26CF5AE-C:45]
@@ -486,7 +482,6 @@ Game Name=Banjo-Kazooie (U) (v1.1)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [155B7CDF-F0DA7325-C:55]
@@ -495,27 +490,14 @@ RDRAM Size=4
 Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Status=Compatible
-Plugin Note=Angrylion's RDP or PR2GLN suggested for F4 Usage (crashes otherwise)
-[C9176D39-EA4779D1-C:50]
-Game Name=Banjo-Tooie (E) (M4)
-Save Type=16kbit eepROM
-CPU Type=Recompiler
-Self-modifying code Method=Check Memory Advance
-Use TLB=No
-Status=Compatible
-RDRAM Size=8
-Plugin Note=Angrylion's RDP or PR2GLN suggested for F4 Usage (crashes otherwise)
 [C2E9AA9A-475D70AA-C:45]
 Game Name=Banjo-Tooie (U)
 RDRAM Size=4
 Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
-Use TLB=No
 Status=Compatible
-Plugin Note=Angrylion's RDP or PR2GLN suggested for F4 Usage (crashes otherwise)
 [B088FBB4-441E4B1D-C:50]
 Game Name=Bass Hunter 64 (E)
 Counter Factor=1
@@ -6021,17 +6003,17 @@ Status=Compatible
 [2B4F4EFB-43C511FE-C:50]
 Game Name=Tom and Jerry in Fists of Furry (E) (M6)
 RDRAM Size=4
-Save Type=FlashRAM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
+Emulate AI=Yes
 [63E7391C-E6CCEA33-C:45]
 Game Name=Tom and Jerry in Fists of Furry (U)
 RDRAM Size=4
-Save Type=FlashRAM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
+Emulate AI=Yes
 [4875AF3D-9A66D3A2-C:50]
 Game Name=Tom Clancy's Rainbow Six (E)
 RDRAM Size=4

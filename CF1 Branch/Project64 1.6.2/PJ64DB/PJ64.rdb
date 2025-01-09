@@ -502,7 +502,7 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-RDRAM Size=8
+RDRAM Size=4
 Counter Factor=2
 [A4BF9306-BF0CDFD1-C:45]
 Game Name=Banjo-Kazooie (U) (v1.0)

@@ -397,7 +397,6 @@ Some text doesn't always update from english to the selected translations, happe
 The .exe shall fail to properly close if you leave Octomino SDL2 config window open and close Project64.
 There are some controllers which are not supported by any known input plugins and will mandate keyboard.
 Some error messages do not get translated into other languages due to them being part of the exe or dll.
-Pressing F4 to unlimit FPS can crash the game depending on the video plugin getting used, unfortunately.
 Some cheats act up in ROMhacks with shared CRC values (sometimes needed to get Direct3D8 per ROM hacks).
 In some ROMhacks, they never get a save data file even made for them and they do not ever save progress.
 Having protected memory self modifying code method enabled causes stuttering on certain weaker machines.

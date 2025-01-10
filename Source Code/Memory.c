@@ -1495,6 +1495,8 @@ int r4300i_SB_NonMemory ( DWORD PAddr, BYTE Value ) {
 	case 0x00600000:
 	case 0x00700000:
 		if (PAddr < RdramSize) {
+			DWORD OldProtect;
+			if (VirtualProtect((N64MEM + PAddr), 1, PAGE_READWRITE, &OldProtect) == 0) {}
 			*(BYTE *)(N64MEM+PAddr) = Value;
 			if (N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
 			N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
@@ -1524,6 +1526,8 @@ int r4300i_SH_NonMemory ( DWORD PAddr, WORD Value ) {
 	case 0x00600000:
 	case 0x00700000:
 		if (PAddr < RdramSize) {
+			DWORD OldProtect;
+			if (VirtualProtect((N64MEM + PAddr), 2, PAGE_READWRITE, &OldProtect) == 0) {}
 			*(WORD *)(N64MEM+PAddr) = Value;
 			if (N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
 			N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
@@ -1567,6 +1571,8 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 	case 0x00600000:
 	case 0x00700000:
 		if (PAddr < RdramSize) {
+			DWORD OldProtect;
+			if (VirtualProtect((N64MEM + PAddr), 4, PAGE_READWRITE, &OldProtect) == 0) {}
 			*(DWORD *)(N64MEM+PAddr) = Value;
 			if (N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
 			N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
@@ -1598,6 +1604,8 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 		break;
 	case 0x04000000:
 		if (PAddr < 0x04002000) {
+			DWORD OldProtect;
+			if (VirtualProtect((N64MEM + PAddr), 4, PAGE_READWRITE, &OldProtect) == 0) {}
 			*(DWORD *)(N64MEM+PAddr) = Value;
 			if (PAddr < 0x04001000) {
 				if (N64_Blocks.NoOfDMEMBlocks == 0) { break; }
@@ -1920,7 +1928,7 @@ void ResetMemoryStack (BLOCK_SECTION * Section) {
 	MoveX86regToVariable(x86reg, &MemoryStack, "MemoryStack");
 }
 void ResetRecompCode (void) {
-	DWORD count;
+	DWORD count, OldProtect;
 	RecompPos = RecompCode;
 	if (SelfModCheck == ModCode_ChangeMemory) {
 		DWORD count, PAddr, Value;
@@ -1939,17 +1947,20 @@ void ResetRecompCode (void) {
 			N64_Blocks.NoOfRDRamBlocks[count] = 0;
 			memset(JumpTable + (count << 10),0,0x1000);
 			*(DelaySlotTable + count) = NULL;
+			if (VirtualProtect((N64MEM + (count << 12)), 4, PAGE_READWRITE, &OldProtect) == 0) {}
 		}
 	}
 	if (N64_Blocks.NoOfDMEMBlocks > 0) {
 		N64_Blocks.NoOfDMEMBlocks = 0;
 		memset(JumpTable + (0x04000000 >> 2),0,0x1000);
 		*(DelaySlotTable + (0x04000000 >> 12)) = NULL;
+		if (VirtualProtect((N64MEM + 0x04000000), 4, PAGE_READWRITE, &OldProtect) == 0) {}
 	}
 	if (N64_Blocks.NoOfIMEMBlocks > 0) {
 		N64_Blocks.NoOfIMEMBlocks = 0;
 		memset(JumpTable + (0x04001000 >> 2),0,0x1000);
 		*(DelaySlotTable + (0x04001000 >> 12)) = NULL;
+		if (VirtualProtect((N64MEM + 0x04001000), 4, PAGE_READWRITE, &OldProtect) == 0) {}
 	}
 //	if (N64_Blocks.NoOfPifRomBlocks > 0) {
 //		N64_Blocks.NoOfPifRomBlocks = 0;

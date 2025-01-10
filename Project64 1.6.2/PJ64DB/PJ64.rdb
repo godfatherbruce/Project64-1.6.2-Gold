@@ -72,6 +72,7 @@ Incompatible.Seltext=FFFFFF
 //0-9
 [3B941695-F90A5EEB-C:50]
 Game Name=007 - The World is Not Enough (E) (M3)
+RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
@@ -1088,9 +1089,6 @@ Use Large Buffer=Yes
 Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-[094D7111-AB226B88-C:45]
-Game Name=Conker's Bad Fur Day (U) (Demo)
-Status=Incompatible
 [46A3F7AF-0F7591D0-C:45]
 Game Name=Cruis'n Exotica (U)
 RDRAM Size=4
@@ -1223,9 +1221,6 @@ Self-modifying code Method=Check Memory & cache
 Linking=Off
 Status=Compatible
 Cheat0=81046576 0000//freeze fix by Jelta
-[726537C2-9D6F813B-C:5A]
-Game Name=Densha de Go! 64 (J) [T-Eng]
-Status=Incompatible
 [A5F667E1-DA1FBD1F-C:4A]
 Game Name=Derby Stallion 64 (J)
 RDRAM Size=4
@@ -1235,6 +1230,7 @@ Linking=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 Cheat0=D10C21A2 3021,810C21A0 2406,D10C21A2 3021,810C21A2 0001//save fix
+Emulate AI=Yes
 [630AA37D-896BD7DB-C:50]
 Game Name=Destruction Derby 64 (E) (M3)
 RDRAM Size=4
@@ -1364,9 +1360,6 @@ Linking=Off
 Use Large Buffer=Yes
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-[CE84793D-27ECC1AD-C:45]
-Game Name=Donkey Kong 64 (U) [Save Fix]
-Status=Incompatible
 [11936D8C-6F2C4B43-C:50]
 Game Name=Donkey Kong 64 (E)
 RDRAM Size=8
@@ -1765,7 +1758,11 @@ Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [53CCAD28-AEA6EDA2-C:45]
 Game Name=F1 Racing Championship (B)
-Status=Incompatible
+RDRAM Size=8
+CPU Type=Recompiler
+Self-modifying code Method=Protected Memory
+Linking=Off
+Status=Compatible
 [3CECBCB8-6126BF07-C:50]
 Game Name=F1 Racing Championship (E) (M5)
 RDRAM Size=8
@@ -1995,6 +1992,7 @@ Status=Compatible
 Linking=On
 [832C168B-56A2CDAE-C:4A]
 Game Name=Ganbare Goemon - Neo Momoyama Bakufu no Odori (J)
+CPU Type=Recompiler
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Change Memory
@@ -2003,7 +2001,11 @@ Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [21FFFD0A-FA0D1D98-C:4A]
 Game Name=Ganbare! Nippon! Olympics 2000 (J)
-Status=Incompatible
+RDRAM Size=4
+CPU Type=Recompiler
+Self-modifying code Method=Change Memory
+Linking=Off
+Status=Compatible
 [D543BCD6-2BA5E256-C:50]
 Game Name=Gauntlet Legends (E)
 RDRAM Size=8
@@ -2525,16 +2527,27 @@ Game Name=International Superstar Soccer '98 (E)
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
-Status=Compatible
+Status=Semicompatible
 [7F0FDA09-6061CE0B-C:45]
 Game Name=International Superstar Soccer '98 (U)
-Status=Incompatible
+RDRAM Size=4
+CPU Type=Recompiler
+Self-modifying code Method=Check Memory & cache
+Status=Semicompatible
 [20073BC7-5E3B0111-C:45]
 Game Name=International Track & Field 2000 (U)
-Status=Incompatible
+Status=Compatible
+RDRAM Size=4
+CPU Type=Recompiler
+Self-modifying code Method=Change Memory
+Linking=Off
 [6712C779-3B72781D-C:50]
 Game Name=International Track & Field Summer Games (E) (M3)
-Status=Incompatible
+Status=Compatible
+RDRAM Size=4
+CPU Type=Recompiler
+Self-modifying code Method=Change Memory
+Linking=Off
 [D137A2CA-62B65053-C:4A]
 Game Name=Itoi Shigesato no Bass Tsuri No. 1 Kettei Ban! (J)
 RDRAM Size=4
@@ -5380,9 +5393,6 @@ Save Type=16kbit eepROM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
-[86EDC3C1-E983A7BF-C:45]
-Game Name=Star Wars Episode I - Racer (U) [Save Fix]
-Status=Incompatible
 [42CF5EA3-9A1334DF-C:50]
 Game Name=StarCraft 64 (E)
 RDRAM Size=8
@@ -6583,7 +6593,12 @@ Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 [54310E7D-6B5430D8-C:50]
 Game Name=Wipeout 64 (E)
-Status=Incompatible
+RDRAM Size=8
+Counter Factor=1
+CPU Type=Recompiler
+Self-modifying code Method=Check Memory Advance
+Status=Compatible
+Plugin Note=Graphic issues with Jabo plugins
 [132D2732-C70E9118-C:45]
 Game Name=Wipeout 64 (U)
 RDRAM Size=8
@@ -6592,7 +6607,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Emulate AI=Yes
 [E43C9765-05B1C1BE-C:4A]
 Game Name=Wonder Project J2 - Corlo no Mori no Josette (J)
 RDRAM Size=4

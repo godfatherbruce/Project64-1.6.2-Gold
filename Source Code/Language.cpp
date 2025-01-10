@@ -121,7 +121,7 @@ LANG_STR DefaultString[] = {
 	{ SELECT_ROM_DIR,  "Choose your ROM directory" },
 //Messages
 	{ RB_NOT_IN_RDB,"Unknown" },
-        { RB_HACK, "Unknown (Hack/Public Domain?)" },
+        { RB_HACK, "Unknown (Hack/Prototype/Public Domain?)" },
 /*********************************************************************************
 * Options                                                                        *
 *********************************************************************************/

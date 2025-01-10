@@ -917,7 +917,6 @@ void SaveRomOptions (void) {
 	if (strlen(RomName) == 0) { return; }
 	IniFileName = GetIniFileName();
 	sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-	_WritePrivateProfileString(Identifier,"Internal Name",RomName,IniFileName);
 	switch (RomRamSize) {
 	case 0x400000: strcpy(String,"4"); break;
 	case 0x800000: strcpy(String,"8"); break;

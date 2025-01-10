@@ -421,7 +421,8 @@ Section#07 Tips and Tricks
 If you're playing newer ROMhacks, GLideN64 is recommended. Use an ANGLE version for Super Mario 64 mods.
 
 Try out the 1.6.2-CF1 build if the only ROMhacks you are playing can take advantage of counter factor 1.
-******Note****** The only different files in this portable version are Project64.exe and PJ64DB\PJ64.rdb
+However, if the RDB included in the CF1 build has not been properly adjusted to account for CF1 default,
+you may encounter sudden crashes in other roms which depend on counter factor 2 such as Ocarina of Time.
 
 You can get better default ROM settings (applies to ROMhacks) by disabling hide advanced settings in the
 options to access the advanced tab to fine tune the core settings. You can also lower your RAM to 4MB by

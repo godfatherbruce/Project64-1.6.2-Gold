@@ -209,7 +209,6 @@
 #define ID_OPTIONS_ALWAYSONTOP          40150
 #define ID_PLAYGAME                     40152
 #define ID_EDITSETTINGS                 40153
-#define ID_EDITCHEATS                   40154
 #define ID_POPUPMENU_ROMINFORMATION     40155
 #define ID_POPUP_ADDNEWCHEAT            40161
 #define ID_POPUP_EDIT                   40162

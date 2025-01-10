@@ -563,7 +563,6 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_PLAYGAME: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_START)); break;
 		case ID_POPUPMENU_ROMINFORMATION: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ROM_INFO)); break;
 		case ID_EDITSETTINGS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_GAME_SETTINGS)); break;
-		case ID_EDITCHEATS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_GAME_CHEATS)); break;
 		case ID_FILE_OPEN_ROM: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_OPEN)); break;
 		case ID_FILE_ROM_INFO: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ROM_INFO)); break;
 		case ID_FILE_STARTEMULATION: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_START)); break;
@@ -783,7 +782,6 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			}
 			break;
 		case ID_EDITSETTINGS: ChangeRomSettings(hWnd); break;
-		case ID_EDITCHEATS: ChangeRomCheats(hMainWindow); break;
 		case ID_POPUPMENU_ROMINFORMATION:
 			{
 				char OrigRomName[sizeof(RomName)], OrigFileName[sizeof(CurrentFileName)];

@@ -393,10 +393,9 @@ the TV, or you should use Jabo's DirectSound 1.6.1 with Sync game to Audio on af
 GLideN64 is prone to crashing upon using "End Emulation". It seems to be related to a lack of threading.
 Lots of tearing in fullscreen mode if VSync is not set and initialized (hot swap will initialize Vsync).
 Special characters aren't supported when it comes to language database translations for other languages.
-Some text doesn't always update from english to the selected translations, happens for numerous reasons.
 The .exe shall fail to properly close if you leave Octomino SDL2 config window open and close Project64.
 There are some controllers which are not supported by any known input plugins and will mandate keyboard.
-Some error messages do not get translated into other languages due to them being part of the exe or dll.
+Some error messages do not get translated into other languages due to them being part of the plugin dll.
 Some cheats act up in ROMhacks with shared CRC values (sometimes needed to get Direct3D8 per ROM hacks).
 In some ROMhacks, they never get a save data file even made for them and they do not ever save progress.
 Having protected memory self modifying code method enabled causes stuttering on certain weaker machines.
@@ -411,7 +410,6 @@ the program can misbehave and fail to open up ROMs or have a varying amount of i
 Shankle's GLideN64 can sometimes get stuck on a black screen when messing with config settings. However,
 the screen returns to normal if you enter or exit fullscreen mode or if you hot swap one of the plugins.
 The issue described above is also present if using Icepir8's Legacy LLE Ver. 0.3.2 on resolution change.
-The "players" default is "1" instead of "Unknown" when examining ROM's that are missing an entry in RDB.
 If you hold down the F1 key, sometimes it accidentally attempts to load the selected state slot instead.
 The display will be frozen if you either sleep or lock your computer while using Jabo's Direct3D8 video.
 --------------------------------------------------------------------------------------------------------
@@ -633,8 +631,6 @@ Delay RDP=
 Delay RSP= 
 (No)
 Emulate AI= 
-(No)
-Audio Signal= 
 (No)
 SP Hack= 
 (No)

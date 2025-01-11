@@ -282,10 +282,7 @@ void SP_DMA_READ (void) {
 	if (SP_RD_LEN_REG + 1  + (SP_MEM_ADDR_REG & 0xFFF) > 0x1000) {
 		return;
 	}
-	if ((SP_MEM_ADDR_REG & 3) != 0 || (SP_DRAM_ADDR_REG & 3) != 0 || ((SP_RD_LEN_REG + 1) & 3) != 0) {
-		DisplayErrorFatal("Nonstandard DMA transfer.\n\nEmulation ending");
-		ExitThread(0);
-	}
+	if ((SP_MEM_ADDR_REG & 3) != 0 || (SP_DRAM_ADDR_REG & 3) != 0 || ((SP_RD_LEN_REG + 1) & 3) != 0) ExitThread(0);
 	/*
 	if ((SP_MEM_ADDR_REG & 3) != 0) { _asm int 3 }
 	if ((SP_DRAM_ADDR_REG & 3) != 0) { _asm int 3 }

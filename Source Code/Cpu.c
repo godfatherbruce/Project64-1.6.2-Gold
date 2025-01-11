@@ -1518,10 +1518,8 @@ void RefreshScreen (void ){
         CurrentFrame += 1;
 	__try {
 		if (UpdateScreen != NULL) { UpdateScreen(); }
-	} __except( r4300i_CPU_MemoryFilter( GetExceptionCode(), GetExceptionInformation()) ) {
-		DisplayError("Unknown memory action detected when updating screen.\n\nEmulation ending");
-		ExitThread(0);
 	}
+	__except (r4300i_CPU_MemoryFilter(GetExceptionCode(), GetExceptionInformation())) { ExitThread(0); }
 	if ((STATUS_REGISTER & STATUS_IE) != 0 ) { ApplyCheats(); }
 }
 void RunRsp (void) {

@@ -159,12 +159,10 @@ char * GS               ( int StringID );
 #define RB_REMOVE			131
 #define RB_UP				132
 #define RB_DOWN				133
-//Advanced Options
 #define ADVANCE_INFO			134
 #define ADVANCE_DEFAULTS		135
 #define ADVANCE_AUTO_START		136
 #define ADVANCE_OVERWRITE		137
-//Rom Options
 #define ROM_CPU_STYLE			138
 #define ROM_SMCM			139
 #define ROM_MEM_SIZE			140
@@ -177,7 +175,7 @@ char * GS               ( int StringID );
 #define ROM_DELAY_SI			147
 #define ROM_SP_HACK			148
 #define ROM_DEFAULT			149
-#define ROM_AUDIO_SIGNAL		150
+#define LIMIT_FPS_TOGGLED		150
 #define ROM_DELAY_RDP			151
 #define ROM_DELAY_RSP			152
 #define ROM_EMULATE_AI                  153

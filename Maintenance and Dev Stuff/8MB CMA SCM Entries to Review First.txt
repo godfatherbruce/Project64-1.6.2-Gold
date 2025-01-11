@@ -1,0 +1,70 @@
+[5E547A4D-90E60795-C:45]
+Game Name=All-Star Baseball 2000 (U)
+[5446C6EF-E18E47BB-C:45]
+Game Name=All-Star Baseball 2001 (U)
+[D9EDD54D-6BB8E274-C:50]
+Game Name=All-Star Baseball '99 (E)
+[4C52BBB2-CEAB0F6B-C:45]
+Game Name=Army Men - Air Combat (U)
+[A1B64A61-D014940B-C:50]
+Game Name=Beetle Adventure Racing! (E) (M3)
+[07A69D01-9A7D41A1-C:50]
+Game Name=Chameleon Twist 2 (E)
+[F8009DB0-6B291823-C:4A]
+Game Name=City Tour Grandprix - Zennihon GT Senshuken (J)
+[3DF17480-193DED5A-C:50]
+Game Name=Donald Duck - Quack Attack (E) (M5)
+[729B5E32-B728D980-C:45]
+Game Name=Gauntlet Legends (U)
+[EE4A0E33-8FD588C9-C:50]
+Game Name=GT 64 - Championship Edition (E) (M3)
+[C49ADCA2-F1501B62-C:45]
+Game Name=GT 64 - Championship Edition (U)
+[E436467A-82DE8F9B-C:45]
+Game Name=Indy Racing 2000 (U)
+[336364A0-06C8D5BF-C:58]
+Game Name=International Superstar Soccer 2000 (E) (M2)
+[8E835437-CD5748B4-C:45]
+Game Name=International Superstar Soccer 2000 (U) (M2) (v1.0)
+[96816CCD-0272EA8C-C:45]
+Game Name=International Superstar Soccer 2000 (U) (M2) (v1.1)
+[0AA0055B-7637DF65-C:50]
+Game Name=Looney Tunes - Duck Dodgers (E) (M6)
+[E36166C2-8613A2E5-C:58]
+Game Name=Michael Owens WLS 2000 (E)
+[F3C5BF9B-160F33E2-C:45]
+Game Name=Rayman 2 - The Great Escape (U)
+[E97955C6-BC338D38-C:50]
+Game Name=The Legend of Zelda - Majora's Mask (E) (M4) (v1.0)
+[0A5D8F83-98C5371A-C:50]
+Game Name=The Legend of Zelda - Majora's Mask (E) (M4) (v1.1)
+[5354631C-03A2DEF0-C:45]
+Game Name=The Legend of Zelda - Majora's Mask (U)
+[6AECEC4F-F0924814-C:50]
+Game Name=The Legend of Zelda - Majora's Mask - Collector's Edition (E) (M4)
+[B443EB08-4DB31193-C:45]
+Game Name=The Legend of Zelda - Majora's Mask - Collector's Edition (U)
+[BF799345-39FF7A02-C:45]
+Game Name=The Legend of Zelda - Majora's Mask (U) (Demo)
+[DD10BC7E-F900B351-C:50]
+Game Name=Vigilante 8 - 2nd Offense (E)
+[F5C5866D-052713D9-C:45]
+Game Name=Vigilante 8 - 2nd Offense (U)
+[54310E7D-6B5430D8-C:50]
+Game Name=Wipeout 64 (E)
+[132D2732-C70E9118-C:45]
+Game Name=Wipeout 64 (U)
+[AC062778-DFADFCB8-C:50]
+Game Name=World Driver Championship (E) (M5)
+[EC417312-EB31DE5F-C:4A]
+Game Name=Zelda no Densetsu - Mujura no Kamen (J) (v1.0)
+[69AE0438-2C63F3F3-C:4A]
+Game Name=Zelda no Densetsu - Mujura no Kamen (J) (v1.1)
+[8473D0C1-23120666-C:4A]
+Game Name=Zelda no Densetsu - Mujura no Kamen - Zelda Collection Version GC (J)
+[9FC385E5-3ECC05C7-C:50]
+Game Name=Majora's Mask (E) (M3) (Debug)
+[36F2DB16-DF63D3BE-C:45]
+Game Name=(Hack) Pumkin Tower
+[55194B11-551010B5-C:45]
+Game Name=(Hack) Zelda Revival

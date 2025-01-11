@@ -958,7 +958,6 @@ LRESULT CALLBACK CheatAddProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 						break;
 					}
 					if (strcmp(CheatName,NewCheatName) == 0) {
-						MessageBox(hDlg,"Cheat Name is already in use","Error",MB_OK|MB_ICONERROR);
 						DisplayError(GS(MSG_CHEAT_NAME_IN_USE));
 						SetFocus(GetDlgItem(hDlg,IDC_CODE_NAME));
 						return TRUE;

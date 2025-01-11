@@ -890,7 +890,6 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		SetFlagControl(hDlg,&RomDelayRDP, IDC_DELAY_RDP, ROM_DELAY_RDP);
 		SetFlagControl(hDlg,&RomDelayRSP, IDC_DELAY_RSP, ROM_DELAY_RSP);
 		SetFlagControl(hDlg,&RomEmulateAI, IDC_EMULATE_AI, ROM_EMULATE_AI);
-		SetFlagControl(hDlg,&RomAudioSignal, IDC_AUDIO_SIGNAL, ROM_AUDIO_SIGNAL);
 		SetFlagControl(hDlg,&RomSPHack, IDC_ROM_SPHACK, ROM_SP_HACK);
 		if (strlen(RomName) == 0) {
 			EnableWindow(GetDlgItem(hDlg,IDC_MEMORY_SIZE_TEXT),FALSE);
@@ -913,7 +912,6 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 			EnableWindow(GetDlgItem(hDlg,IDC_ROM_REGCACHE),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_BLOCK_LINKING_TEXT),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_BLOCK_LINKING),FALSE);
-			EnableWindow(GetDlgItem(hDlg,IDC_AUDIO_SIGNAL),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_LARGE_COMPILE_BUFFER),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_NOTES),FALSE);
 		}
@@ -938,7 +936,6 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 			RomDelayRDP = SendMessage(GetDlgItem(hDlg,IDC_DELAY_RDP),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 			RomDelayRSP = SendMessage(GetDlgItem(hDlg,IDC_DELAY_RSP),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 			RomEmulateAI = SendMessage(GetDlgItem(hDlg,IDC_EMULATE_AI),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-			RomAudioSignal = SendMessage(GetDlgItem(hDlg,IDC_AUDIO_SIGNAL),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 			RomSPHack = SendMessage(GetDlgItem(hDlg,IDC_ROM_SPHACK),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 			RomUseTlb = SendMessage(GetDlgItem(hDlg,IDC_USE_TLB),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 			RomUseCache = SendMessage(GetDlgItem(hDlg,IDC_ROM_REGCACHE),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;

@@ -83,7 +83,6 @@
 #define IDC_DELAY_SI                    1099
 #define IDC_CONT_NAME                   1100
 #define IDC_ROM_SPHACK                  1100
-#define IDC_AUDIO_SIGNAL                1101
 #define IDC_DIR_FRAME2                  1102
 #define IDC_DIR_FRAME3                  1103
 #define IDC_DIR_FRAME4                  1104

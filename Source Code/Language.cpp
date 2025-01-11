@@ -167,12 +167,11 @@ LANG_STR DefaultString[] = {
 	{ RB_REMOVE,           "<- Remove"},
 	{ RB_UP,               "Up"},
 	{ RB_DOWN,             "Down"},
-//Advanced Options
+
 	{ ADVANCE_INFO,        "Recompiler = High FPS Low Compatibility\nInterpreter = Low FPS High Compatibility\n\nNote Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register caching"},
 	{ ADVANCE_DEFAULTS,    "Core Defaults"},
 	{ ADVANCE_AUTO_START,  "Start Emulation Upon ROM Opening"},
 	{ ADVANCE_OVERWRITE,   "RDB ROM Settings"},
-//ROM Options
 	{ ROM_CPU_STYLE,       "CPU Core Style:"},
 	{ ROM_SMCM,            "Self-modifying Code Method:"},
 	{ ROM_MEM_SIZE,        "Memory Size:" },
@@ -185,7 +184,7 @@ LANG_STR DefaultString[] = {
 	{ ROM_DELAY_SI,        "Delay SI Interrupt"},
 	{ ROM_SP_HACK,         "SP Hack"},
 	{ ROM_DEFAULT,         "Default"},
-	{ ROM_AUDIO_SIGNAL,    "RSP Audio Signal"},
+	{ LIMIT_FPS_TOGGLED,    "Limit FPS Toggled"},
 	{ ROM_DELAY_RDP,       "Delay RDP Interrupt"},
 	{ ROM_DELAY_RSP,       "Delay RSP Interrupt"},
 	{ ROM_EMULATE_AI,      "Emulate AI"},

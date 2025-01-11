@@ -3,7 +3,7 @@
 Author=Bruce Shankle IV
 Date=January 2025
 Homepage=github.com/BruceShankleIV/Project64-1.6.2/blob/main/Project64 1.6.2/PJ64DB/PJ64.rdb
-Version=1.6.2 (2025)
+Version=1.6.2 (2025) WIP
 [Microcode Identifiers]
 38221D7F=0 //SD Hiryuu no Ken Densetsu (J), near start (Smiff)
 56D032C9=8 //Fox Sports College Hoops 99 (U) (Duncan)
@@ -314,7 +314,6 @@ Self-modifying code Method=Check Memory Advance
 Use Large Buffer=Yes
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 [D9EDD54D-6BB8E274-C:50]
 Game Name=All-Star Baseball '99 (E)
 CPU Type=Recompiler
@@ -558,7 +557,6 @@ Self-modifying code Method=Check Memory Advance
 Reg Cache=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 [A1B64A61-D014940B-C:50]
 Game Name=Beetle Adventure Racing! (E) (M3)
@@ -568,7 +566,6 @@ Linking=Off
 Reg Cache=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 RDRAM Size=8
 [EDF419A8-BF1904CC-C:45]
@@ -579,7 +576,6 @@ Self-modifying code Method=Check Memory Advance
 Reg Cache=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 [559A0FD3-897F777C-C:45]
 Game Name=Beetle Adventure Racing! (U) (M3) [t1]
@@ -589,7 +585,6 @@ Self-modifying code Method=Check Memory Advance
 Reg Cache=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 [522409D3-9340EBFF-C:45]
 Game Name=Beetle Adventure Racing! (U) (M3) [t2]
@@ -599,7 +594,6 @@ Self-modifying code Method=Check Memory Advance
 Reg Cache=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 [08FFA4B7-01F453B6-C:45]
 Game Name=Big Mountain 2000 (U)
@@ -631,7 +625,6 @@ Linking=Off
 Reg Cache=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 [7C64E6DB-55B924DB-C:50]
 Game Name=Blast Corps (E) (M2)
 CPU Type=Recompiler
@@ -1312,7 +1305,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
 Status=Compatible
-Audio Signal=Yes
 Emulate AI=Yes
 [001A3BD0-AFB3DE1A-C:46]
 Game Name=Disney's Tarzan (F)
@@ -1321,7 +1313,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
 Status=Compatible
-Audio Signal=Yes
 Emulate AI=Yes
 [4C261323-4F295E1A-C:44]
 Game Name=Disney's Tarzan (G)
@@ -1330,7 +1321,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
 Status=Compatible
-Audio Signal=Yes
 Emulate AI=Yes
 [CBFE69C7-F2C0AB2A-C:45]
 Game Name=Disney's Tarzan (U)
@@ -1339,7 +1329,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
 Status=Compatible
-Audio Signal=Yes
 Emulate AI=Yes
 [3DF17480-193DED5A-C:50]
 Game Name=Donald Duck - Quack Attack (E) (M5)
@@ -1453,7 +1442,7 @@ Cheat0=8104ECD6 0000//freeze fix by Jelta
 Game Name=Doubutsu no Mori (J)
 RDRAM Size=4
 CPU Type=Recompiler
-Self-modifying code Method=Change Memory
+Self-modifying code Method=Check Memory Advance
 Linking=On
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
@@ -1778,7 +1767,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 [F5733C67-17A3973A-C:4A]
 Game Name=FIFA - Road to World Cup 98 - World Cup heno Michi (J)
@@ -1802,7 +1790,6 @@ Self-modifying code Method=Check Memory & cache
 Reg Cache=No
 Status=Compatible
 Emulate AI=Yes
-Audio Signal=Yes
 [7613A630-3ED696F3-C:45]
 Game Name=FIFA 99 (U)
 RDRAM Size=4
@@ -1818,7 +1805,6 @@ Self-modifying code Method=Cache
 Linking=Off
 Reg Cache=No
 Status=Compatible
-Audio Signal=Yes
 Emulate AI=Yes
 Cheat0=810C1102 2400//Nekokabu Game Fix
 [C3F19159-65D2BC5A-C:45]
@@ -1829,7 +1815,6 @@ Self-modifying code Method=Cache
 Linking=Off
 Reg Cache=No
 Status=Compatible
-Audio Signal=Yes
 Emulate AI=Yes
 Cheat0=810C1104 2400//Nekokabu Game Fix
 [36F1C74B-F2029939-C:50]
@@ -2352,7 +2337,6 @@ Self-modifying code Method=Check Memory Advance
 Reg Cache=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 [5535972E-BD8E3295-C:4A]
 Game Name=Human Grand Prix - New Generation (J)
@@ -2389,7 +2373,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 [29A045CE-ABA9060E-C:46]
 Game Name=Hydro Thunder (F)
@@ -2398,7 +2381,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 [C8DC65EB-3D8C8904-C:45]
 Game Name=Hydro Thunder (U)
@@ -2407,7 +2389,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 [2FC5C34C-7A05CC9D-C:4A]
 Game Name=Hyper Olympics in Nagano 64 (J)
@@ -2476,13 +2457,6 @@ Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [336364A0-06C8D5BF-C:58]
 Game Name=International Superstar Soccer 2000 (E) (M2)
-RDRAM Size=8
-CPU Type=Recompiler
-Self-modifying code Method=Check Memory Advance
-Linking=Off
-Status=Compatible
-[BAE8E871-35FF944E-C:59]
-Game Name=International Superstar Soccer 2000 (E) (M2) (Fre-Ita)
 RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
@@ -3823,7 +3797,6 @@ Save Type=FlashRAM
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Compatible
-Audio Signal=Yes
 [147E0EDB-36C5B12C-C:4A]
 Game Name=Neon Genesis Evangelion (J)
 RDRAM Size=4
@@ -4750,7 +4723,6 @@ Linking=Off
 Reg Cache=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 Counter Factor=1
 [AA18B1A5-07DB6AEB-C:45]
@@ -4762,7 +4734,6 @@ Linking=Off
 Reg Cache=No
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 Counter Factor=1
 [2F493DD0-2E64DFD9-C:45]
@@ -4775,7 +4746,6 @@ Linking=Off
 Reg Cache=No
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 [C3E7E29E-5D7251CC-C:50]
 Game Name=Re-Volt (E) (M4)
 RDRAM Size=8
@@ -4917,7 +4887,6 @@ RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Protected Memory
 Linking=Off
-Audio Signal=Yes
 Emulate AI=Yes
 Status=Semicompatible
 [B7CF2136-FA0AA715-C:50]
@@ -5669,21 +5638,21 @@ Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [B044B569-373C1985-C:50]
 Game Name=The Legend of Zelda - Ocarina of Time (E) (M3) (v1.0)
-RDRAM Size=4
+RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [B2055FBD-0BAB4E0C-C:50]
 Game Name=The Legend of Zelda - Ocarina of Time (E) (M3) (v1.1)
-RDRAM Size=4
+RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [EC7011B7-7616D72B-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time (U) (v1.0)
-RDRAM Size=4
+RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -5691,7 +5660,7 @@ Cheat0=D109C5AC 0C02,8109C5AC 2400//Subscreen Delay Fix
 Cheat1=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 [D43DA81F-021E1E19-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time (U) (v1.1)
-RDRAM Size=4
+RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -5699,7 +5668,7 @@ Cheat0=D109C5BC 0C02,8109C5BC 2400//Subscreen Delay Fix
 Cheat1=D138EA6C 0C0E,8138EA6C 2400//Equipment Screen Delay Fix
 [693BA2AE-B7F14E9F-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time (U) (v1.2)
-RDRAM Size=4
+RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -5747,21 +5716,6 @@ Cheat0=D109A8C4 0320,8109A8C4 0000,D109A8C6 F809,8109A8C6 0000//End Credits Fix
 Plugin Note=Graphic issues with Jabo plugins
 [F034001A-AE47ED06-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time - Master Quest GC (U)
-RDRAM Size=4
-CPU Type=Recompiler
-Self-modifying code Method=Check Memory Advance
-Status=Compatible
-Cheat0=D109A7F4 0320,8109A7F4 0000,D109A7F6 F809,8109A7F6 0000//End Credits Fix
-Plugin Note=Graphic issues with Jabo plugins
-[254E6038-B4CF2485-C:45]
-Game Name=Legend of Zelda, The - Ocarina of Time - Master Quest GC (U) [Fix]
-RDRAM Size=4
-CPU Type=Recompiler
-Self-modifying code Method=Check Memory Advance
-Status=Compatible
-Plugin Note=Graphic issues with Jabo plugins
-[2778A458-71FD3BBC-C:45]
-Game Name=Legend of Zelda - Ocarina of Time - Master Quest GC (U) [T-Bra]
 RDRAM Size=4
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
@@ -5957,7 +5911,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Delay RDP=Yes
 Emulate AI=Yes
 [0E596247-753D4B8B-C:4A]
@@ -5967,7 +5920,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 [62269B3D-FE11B1E8-C:45]
 Game Name=Top Gear Rally (U)
@@ -5976,7 +5928,6 @@ CPU Type=Recompiler
 Self-modifying code Method=Check Memory & cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
-Audio Signal=Yes
 Emulate AI=Yes
 [BEBAB677-51B0B5E4-C:50]
 Game Name=Top Gear Rally 2 (E)
@@ -6209,7 +6160,7 @@ Delay SI=Yes
 Status=Semicompatible
 //VROMs
 [DD10BC7E-F900B351-C:50]
-Game Name=Vigilante 8 - 2nd Offence (E)
+Game Name=Vigilante 8 - 2nd Offense (E)
 RDRAM Size=8
 Counter Factor=1
 CPU Type=Recompiler
@@ -6796,7 +6747,7 @@ Status=Compatible
 //ZROMs
 [EC7011B7-7616D72B-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina (J) (v1.0)
-RDRAM Size=4
+RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -6804,7 +6755,7 @@ Cheat0=D109C5AC 0C02,8109C5AC 2400//Subscreen Delay Fix
 Cheat1=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 [D43DA81F-021E1E19-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina (J) (v1.1)
-RDRAM Size=4
+RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible
@@ -6812,7 +6763,7 @@ Cheat0=D109C5BC 0C02,8109C5BC 2400//Subscreen Delay Fix
 Cheat1=D138EA6C 0C0E,8138EA6C 2400//Equipment Screen Delay Fix
 [693BA2AE-B7F14E9F-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina (J) (v1.2)
-RDRAM Size=4
+RDRAM Size=8
 CPU Type=Recompiler
 Self-modifying code Method=Check Memory Advance
 Status=Compatible

@@ -25,7 +25,7 @@
  */
 extern DWORD RomFileSize, RomRamSize, RomSaveUsing, RomCPUType, RomSelfMod,
 	RomUseTlb, RomUseLinking, RomCF, RomUseLargeBuffer, RomUseCache,
-	RomDelaySI, RomSPHack, RomAudioSignal, RomDelayRDP, RomDelayRSP, RomEmulateAI;
+	RomDelaySI, RomSPHack, RomDelayRDP, RomDelayRSP, RomEmulateAI;
 extern char CurrentFileName[MAX_PATH+1], RomName[MAX_PATH+1], RomHeader[0x1000];
 extern char LastRoms[10][MAX_PATH+1], LastDirs[10][MAX_PATH+1];
 void AddRecentFile           ( HWND hWnd, char * addition );

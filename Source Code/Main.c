@@ -41,7 +41,7 @@ LARGE_INTEGER Frequency, Frames[8], LastFrame;
 BOOL 	AutoStart,
 	AutoSleep, DisableRegCaching, UseIni, UseTlb, UseLinking, RomBrowser,
 	IgnoreMove, Rercursion, LimitFPS,
-	AutoFullScreen, SystemABL, AlwaysOnTop, BasicMode, DelaySI, RememberCheats, AudioSignal,
+	AutoFullScreen, SystemABL, AlwaysOnTop, BasicMode, DelaySI, RememberCheats,
 	DelayRSP, DelayRDP, EmulateAI, ForceClose;
 DWORD CurrentFrame, CPU_Type, SystemCPU_Type, SelfModCheck, SystemSelfModCheck,
 	RomsToRemember, RomDirsToRemember;
@@ -919,6 +919,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			break;
 		case ID_SYSTEM_LIMITFPS:
 			CheckedMenuItem(ID_SYSTEM_LIMITFPS,&LimitFPS,"Limit FPS");
+			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(LIMIT_FPS_TOGGLED));
 			break;
 				case ID_CURRENTSAVE_DEFAULT:
 					SetCurrentSaveState(hWnd, LOWORD(wParam));

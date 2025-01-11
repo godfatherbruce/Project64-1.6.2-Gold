@@ -2180,6 +2180,7 @@ void Compile_R4300i_SDR (BLOCK_SECTION * Section) {
 	Popad();
 }
 void _fastcall ClearRecomplierCache (DWORD Address) {
+	if (SelfModCheck != ModCode_CheckMemory2 || RomRamSize == 0x400000)
 	if (!TranslateVaddr(&Address)) return;
 	if (Address < RdramSize) {
 		DWORD Block = Address >> 12;
@@ -2216,7 +2217,7 @@ void Compile_R4300i_CACHE (BLOCK_SECTION * Section){
 			MoveVariableToX86reg(&GPR[Opcode.base].UW[0],GPR_NameLo[Opcode.base],x86_ECX);
 			AddConstToX86Reg(x86_ECX,(short)Opcode.offset);
 		}
-		if (SelfModCheck != ModCode_CheckMemory2) Call_Direct(ClearRecomplierCache, "ClearRecomplierCache");
+		Call_Direct(ClearRecomplierCache, "ClearRecomplierCache");
 		Popad();
 		break;
 	case 1:

@@ -39,7 +39,7 @@
 #define MenuLocOfUsedDirs	(MenuLocOfUsedFiles + 1)
 DWORD RomFileSize, RomRamSize, RomSaveUsing, RomCPUType, RomSelfMod,
 	RomUseTlb, RomUseLinking, RomCF, RomUseLargeBuffer, RomUseCache,
-	RomDelaySI, RomSPHack, RomAudioSignal, RomDelayRDP, RomDelayRSP, RomEmulateAI;
+	RomDelaySI, RomSPHack, RomDelayRDP, RomDelayRSP, RomEmulateAI;
 char CurrentFileName[MAX_PATH+1] = {""}, RomName[MAX_PATH+1] = {""}, RomHeader[0x1000];
 char LastRoms[10][MAX_PATH+1], LastDirs[10][MAX_PATH+1];
 BOOL IsValidRomImage ( BYTE Test[4] );
@@ -513,7 +513,6 @@ void LoadRomOptions ( void ) {
 	DelayRDP = RomDelayRDP;
 	DelayRSP = RomDelayRSP;
 	EmulateAI = RomEmulateAI;
-	AudioSignal = RomAudioSignal;
 	SPHack = RomSPHack;
 	UseLinking = SystemABL;
 	DisableRegCaching = !RomUseCache;
@@ -555,7 +554,6 @@ void ReadRomOptions (void) {
 	RomSelfMod        = ModCode_Default;
 	RomUseTlb         = TRUE;
 	RomDelaySI        = FALSE;
-	RomAudioSignal    = FALSE;
 	RomSPHack         = FALSE;
 	RomUseCache       = TRUE;
 	RomUseLargeBuffer = FALSE;
@@ -602,8 +600,6 @@ void ReadRomOptions (void) {
 		if (strcmp(String,"No") == 0) { RomUseTlb = FALSE; }
 		_GetPrivateProfileString(Identifier,"Delay SI","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"Yes") == 0) { RomDelaySI = TRUE; }
-		_GetPrivateProfileString(Identifier,"Audio Signal","",String,sizeof(String),IniFileName);
-		if (strcmp(String,"Yes") == 0) { RomAudioSignal = TRUE; }
 		_GetPrivateProfileString(Identifier,"SP Hack","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"Yes") == 0) { RomSPHack = TRUE; }
 		_GetPrivateProfileString(Identifier,"Reg Cache","",String,sizeof(String),IniFileName);
@@ -958,7 +954,6 @@ void SaveRomOptions (void) {
 	_WritePrivateProfileString(Identifier,"Delay RDP",RomDelayRDP?"Yes":" ",GetIniFileName());
 	_WritePrivateProfileString(Identifier,"Delay RSP",RomDelayRSP?"Yes":" ",GetIniFileName());
 	_WritePrivateProfileString(Identifier,"Emulate AI",RomEmulateAI?"Yes":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"Audio Signal",RomAudioSignal?"Yes":"",GetIniFileName());
 	_WritePrivateProfileString(Identifier,"SP Hack",RomSPHack?"Yes":" ",GetIniFileName());
 	_WritePrivateProfileString(Identifier,"Use Large Buffer",RomUseLargeBuffer?"Yes":" ",GetIniFileName());
 	_WritePrivateProfileString(Identifier,"Linking"," ",GetIniFileName());

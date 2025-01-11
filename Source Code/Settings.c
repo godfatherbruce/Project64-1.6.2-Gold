@@ -316,7 +316,7 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}
 			GetRomDirectory( Directory );
 			SetDlgItemText(hDlg,IDC_ROM_DIR,Directory);
-			SetDlgItemText(hDlg,IDC_DIR_FRAME2,GS(DIR_ROM));
+			SetDlgItemText(hDlg,IDC_DIR_FRAME2,GS(RB_ROMS));
 			SetDlgItemText(hDlg,IDC_DIR_FRAME3,GS(DIR_AUTO_SAVE));
 			SetDlgItemText(hDlg,IDC_DIR_FRAME4,GS(DIR_INSTANT_SAVE));
 			SetDlgItemText(hDlg,IDC_DIR_FRAME5,GS(DIR_SCREEN_SHOT));

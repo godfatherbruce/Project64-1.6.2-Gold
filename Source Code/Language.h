@@ -131,12 +131,11 @@ char * GS               ( int StringID );
 #define PLUG_GFX			106
 #define PLUG_AUDIO			107
 #define PLUG_CTRL			108
-//Directory Dialog
-#define DIR_ROM				109
+#define DIR_ROM_DEFAULT			109
 #define DIR_AUTO_SAVE			110
 #define DIR_INSTANT_SAVE		111
 #define DIR_SCREEN_SHOT                 112
-#define DIR_ROM_DEFAULT			113
+#define SCREENSHOT_TAKEN		113
 #define DIR_SELECT_ROM			114
 #define DIR_SELECT_AUTO			115
 #define DIR_SELECT_INSTANT		116

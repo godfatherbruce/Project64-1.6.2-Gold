@@ -16,6 +16,7 @@ Section#10 Special Thanks & Shoutouts
 Section#11 The End
 Section#12 Extra
 Section#13 How to Develop Project64 1.6 + BEWARE of MiB/PJ64Team!
+Section#14 Documentation That You Can Use to Help Develop Project64 & Fix Emulation Issues You Encounter
 (just ctrl-f the name to navigate to your desired section)
 ********************************************************************************************************
 
@@ -645,3 +646,118 @@ Section#13 How to Develop Project64 1.6 + BEWARE of MiB/PJ64Team!
 If you would like to develop Project64 1.6 or you're unaware of the risks involved with associating with
 Men in Black/Project64 Team, please carefully read this informative document from my URL provided below:
 https://docs.google.com/document/d/1VosUr3DHkhFd6hYRLrwpAtuzDuvYq0zUe2C1rkQ1_xg/edit?usp=sharing
+--------------------------------------------------------------------------------------------------------
+
+Documentation That You Can Use to Help Develop Project64 & Fix Emulation Issues You Encounter
+--------------------------------------------------------------------------------------------------------
+Surreal64 Documentation for Project64 1.4 from here http://surreal64ce.wikidot.com/settings:pj64settings
+
+With this documentation and clever text editing, you can fix virtually any emulation issue you encounter 
+by adjusting your ROM Settings appropriately. This documentation is from the Surreal64 website for V 1.4
+but it applies here as well. Simply open up the PJ64.rdb file in your favorite text editor and you'll be
+able to individually tweak how the program emulates ROMs, particularly using the SCM/Self-modifying Code
+Method and the CPU/CPU Core Style. You can fix many issues you encounter between just those two options.
+
+
+
+Counter Factor
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Counter Factor affects the timing in the core, it's a difficult option to explain, what you need to know
+is that 2 is the default and best speed you can get in most games without losing frames of video, 1 is
+required by some games to prevent flicker or optionally to increase smoothness, and 3 is a possibility
+for some games to improve performance (overall) on slower systems. Values higher than 3 are likely to
+cause severe frame loss, leading to instability. But in the hands of experienced users this setting can
+be used as a crude form of frame-skip.
+
+
+CPU Core Style
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+The Recompiler and Interpreter are two seperate cores in the emulator (although the Recompiler
+implementation is based on the Interpreter). Generally, any game that works on the Recompiler will also
+work on the Interpreter, but not always vice-versa. Explaining the difference between a Recompiler and
+an Interpreter in a general sense is beyond the scope of this document, suffficient to say that the
+Recompiler is (usually much) faster but (a little) less compatible, the Interpreter (usually much)
+slower but (a little) more compatible.
+
+Note from Bruce IV: Recompiler must be used for a few older Ocarina of Time and Super Mario 64 romhacks.
+
+
+Advanced Block Linking
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Advanced Block Linking is one of Project64's speed optimization techniques - it usually provides a
+performance increase without negative side effects. However (this is why this can be set on a per game
+basis) some games run badly with this On, and some games don't work at all if On. Similarly, some
+games have been found to not work if this is Off.
+
+Note from Bruce IV: Linking as well as TLB must be disabled for some older Ocarina of Time romhacks.
+
+
+Memory Size
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+If 4, the system will have an emulated RDRAM size of 4MB, which is the standard amount of memory an
+N64 console has. This reduces size of state saves, improves performance in some ways.
+
+If 8, the system will have an emulated RDRAM size of 8MB, which represents an N64 console with the 4MB
+memory expansion accessory installed. This results in larger state saves and lower performance, but is
+required by some games.
+
+Note from Bruce IV: 8 is the best default because most romhacks (which get default settings) need 8MB.
+Additionally, using a memory size of 4 will emulate roms differently w/ Check Memory Advance in 1.6.2.
+A memory size of 8 is required for all Majora's Mask, Ocarina of Time Debug, and Ocarina of Time v1.0,
+v1.1, and v1.2 ROMs to function correctly, but you can use 4 size in niche cases with Ocarina of Time.
+
+
+Register Caching
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Probably the recompiler's most significant optimization technique, register caching usually dramatically
+improves the efficiency of the recompiler without side effects. The reason this is included as an option
+is that sometimes register caching will produce an error in a game. Register caching can cause many
+kinds of obscure errors, such as events in a game not triggering, or a game becoming stuck in a loop,
+as well as obvious errors such as a crash. If you find you are having stability problems with the
+recompiler and not the interpreter, try disabling register caching to see if you can get past the
+point/game with at least some of the performance of the recompiler.
+
+
+Save Type
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+You can set any of the four possible native cartridge save types here, but the only one that should be
+needed is 16kbit eepROM, because it is not possible for the emulator to detect the difference between a
+game asking for 16kbit and a game asking for 4kbit - Project64 assumes 4kbit, the more common size. If
+a game actually needs 16kbit it will either fail to save or not boot unless set to 16kbit eepROM. The
+other settings are included for the rare possibility that the autodetect goes wrong - generally, don't
+set them. Note that MemPak is treated seperately and will work in addition to whatever is selected here.
+
+Note from Bruce IV: Failing to have 16kbit eepROM save type set can result in your controls not working.
+
+
+Self-modifying Code Method
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Many games use "self modifying code". In a nutshell, this makes them harder to emulate. Project64 has
+several methods of dealing with this situation, which range from fast on one side to more secure/stable
+on the other. In order from fastest to most secure these are:
+
+None, Cache, Check Memory, Check Memory & cache, Change Memory, Protect Memory, Check Memory Advance.
+
+Note from Bruce IV: I suggest avoiding pairing Protect Memory with ABL on and avoid pairing ABL off with
+Change Memory & Cache. If you don't listen to this suggestion, there may be stuttering or weird crashes.
+
+
+Large Buffer
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Yet another highly technical setting. Some games generate particularly complex code structures which
+tend to overlow the default 20MB compiler buffer and stall the system. By enabling this a game will be
+given a 50MB buffer, which obviously increases resource usage but may help reduce occurence of overflows
+and thus improve performance. Most games do not need more than 20MB hence this will usually only waste
+resources.
+
+
+TLB
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+This is another highly technical core feature, it's part of the N64 CPU, used extensively by some games
+(Goldeneye, Mario) and not at all by others (Zelda). If a game uses the TLB (end user can't tell this
+without knowing or by trial and error) then TLB must be enabled or the game will fail with various error
+messages, usually soon after boot. TLB is an option mainly because you can gain some performance by
+turning it off when not needed, and strangely, some games require it disabled to work.
+
+Note from Bruce IV: TLB must be disabled for some older Ocarina of Time romhacks.
+--------------------------------------------------------------------------------------------------------

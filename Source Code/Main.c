@@ -914,6 +914,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			if (CaptureScreen) {
 				char Directory[255];
 				GetSnapShotDir(Directory);
+				SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(SCREENSHOT_TAKEN));
 				CaptureScreen(Directory);
 			}
 			break;

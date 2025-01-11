@@ -573,7 +573,7 @@ void ReadRomOptions (void) {
 		} else {
 			ROMRAMsize = -1;
 		}
-		RomCF = _GetPrivateProfileInt(Identifier,"Counter Factor",-1,IniFileName);
+		RomCF = _GetPrivateProfileInt(Identifier,"CF",-1,IniFileName);
 		if (RomCF > 6) { RomCF = -1; }
 		_GetPrivateProfileString(Identifier,"Save","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"4") == 0)       { RomSaveUsing = eepROM_4K; }
@@ -918,12 +918,12 @@ void SaveRomOptions (void) {
 	case 0x800000: strcpy(String,"8"); break;
 	default: strcpy(String," "); break;
 	}
-	_WritePrivateProfileString(Identifier,"Memory Size",String,GetIniFileName());
+	_WritePrivateProfileString(Identifier,"MB",String,GetIniFileName());
 	switch (RomCF) {
 	case 1: case 2: case 3: case 4: case 5: case 6: sprintf(String,"%d",RomCF); break;
 	default: sprintf(String," "); break;
 	}
-	_WritePrivateProfileString(Identifier,"Counter Factor",String,GetIniFileName());
+	_WritePrivateProfileString(Identifier,"CF",String,GetIniFileName());
 	switch (RomSaveUsing) {
 	case eepROM_4K: sprintf(String,"4"); break;
 	case eepROM_16K: sprintf(String,"16"); break;

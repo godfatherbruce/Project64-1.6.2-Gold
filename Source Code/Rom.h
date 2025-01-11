@@ -23,7 +23,7 @@
  * should be forwarded to them so if they want them.
  *
  */
-extern DWORD RomFileSize, RomRamSize, RomSaveUsing, RomCPUType, RomSelfMod,
+extern DWORD RomFileSize, ROMRAMsize, RomSaveUsing, RomCPUType, RomSelfMod,
 	RomUseTlb, RomUseLinking, RomCF, RomUseLargeBuffer, RomUseCache,
 	RomDelaySI, RomSPHack, RomDelayRDP, RomDelayRSP, RomEmulateAI;
 extern char CurrentFileName[MAX_PATH+1], RomName[MAX_PATH+1], RomHeader[0x1000];

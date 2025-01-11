@@ -45,7 +45,7 @@ extern "C" {
 #define Default_AutoStart			TRUE
 #define Default_AutoSleep			TRUE
 #define Default_DisableRegCaching	FALSE
-#define Default_RdramSize			0x800000
+#define Default_RDRAMsize			0x800000
 #define Default_UseIni				TRUE
 #define Default_LimitFPS			TRUE
 #define Default_AlwaysOnTop			FALSE

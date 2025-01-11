@@ -142,8 +142,8 @@ BYTE * Compiler4300iBlock(void) {
 	StartAddress = BlockInfo.StartVAddr;
 	TranslateVaddr(&StartAddress);
 	MarkCodeBlock(StartAddress);
-	if (StartAddress < RdramSize) {
-		CPU_Message("====== RDRAM: block (%X:%d) ======", StartAddress>>12,N64_Blocks.NoOfRDRamBlocks[StartAddress>>12]);
+	if (StartAddress < RDRAMsize) {
+		CPU_Message("====== RDRAM: block (%X:%d) ======", StartAddress>>12,N64_Blocks.NoOfRDRAMBlocks[StartAddress>>12]);
 	} else if (StartAddress >= 0x04000000 && StartAddress <= 0x04000FFC) {
 		CPU_Message("====== DMEM: block (%d) ======", N64_Blocks.NoOfDMEMBlocks);
 	} else if (StartAddress >= 0x04001000 && StartAddress <= 0x04001FFC) {
@@ -192,7 +192,7 @@ BYTE * CompileDelaySlot(void) {
 		ExitThread(0);
 	}
 	TranslateVaddr(&StartAddress);
-	if (StartAddress < RdramSize) {
+	if (StartAddress < RDRAMsize) {
 		CPU_Message("====== RDRAM: Delay Slot ======", 1);
 	} else if (StartAddress >= 0x04000000 && StartAddress <= 0x04000FFC) {
 		CPU_Message("====== DMEM: Delay Slot ======");
@@ -2585,8 +2585,8 @@ void _fastcall InitilzeSection (BLOCK_SECTION * Section, BLOCK_SECTION * Parent,
 	AddParent(Section,Parent);
 }
 void MarkCodeBlock (DWORD PAddr) {
-	if (PAddr < RdramSize) {
-		N64_Blocks.NoOfRDRamBlocks[PAddr >> 12] += 1;
+	if (PAddr < RDRAMsize) {
+		N64_Blocks.NoOfRDRAMBlocks[PAddr >> 12] += 1;
 	} else if (PAddr >= 0x04000000 && PAddr <= 0x04000FFC) {
 		N64_Blocks.NoOfDMEMBlocks += 1;
 	} else if (PAddr >= 0x04001000 && PAddr <= 0x04001FFC) {
@@ -2811,10 +2811,10 @@ void StartRecompilerCPU (void ) {
 					DWORD Start = (Addr & ~0xFFF) - 0x10000;
 					DWORD End   = Start + 0x20000;
 					DWORD count;
-					if (End < RdramSize) { End = RdramSize; }
+					if (End < RDRAMsize) { End = RDRAMsize; }
 					for (count = (Start >> 12); count < (End >> 12); count ++ ) {
-						if (N64_Blocks.NoOfRDRamBlocks[count] > 0) {
-							N64_Blocks.NoOfRDRamBlocks[count] = 0;
+						if (N64_Blocks.NoOfRDRAMBlocks[count] > 0) {
+							N64_Blocks.NoOfRDRAMBlocks[count] = 0;
 							memset(JumpTable + (count << 10),0,0x1000);
 							*(DelaySlotTable + count) = NULL;
 						}

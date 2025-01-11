@@ -29,7 +29,7 @@
 #include "cpu.h"
 #include "x86.h"
 #include "plugin.h"
-DWORD *TLB_ReadMap, *TLB_WriteMap, RdramSize, SystemRdramSize;
+DWORD *TLB_ReadMap, *TLB_WriteMap, RDRAMsize, SystemRDRAMsize;
 BYTE *N64MEM, *RDRAM, *DMEM, *IMEM, *ROM;
 void ** JumpTable, ** DelaySlotTable;
 BYTE *RecompCode, *RecompPos;
@@ -43,7 +43,7 @@ int Allocate_ROM ( void ) {
 	return ROM == NULL?FALSE:TRUE;
 }
 int Allocate_Memory ( void ) {
-	RdramSize = 0x400000;
+	RDRAMsize = 0x400000;
 	N64MEM = (unsigned char *) VirtualAlloc( NULL, 0x20000000, MEM_RESERVE | MEM_TOP_DOWN, PAGE_READWRITE );
 	if(N64MEM==NULL) {
 		DisplayError(GS(MSG_MEM_ALLOC_ERROR));
@@ -1007,10 +1007,10 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 		if ((int)Start < 0) {
 			return EXCEPTION_CONTINUE_SEARCH;
 		}
-		if ((int)End < RdramSize) {
+		if ((int)End < RDRAMsize) {
 			for ( count = Start; count < End; count += 0x1000 ) {
-				if (N64_Blocks.NoOfRDRamBlocks[(count >> 12)] > 0) {
-					N64_Blocks.NoOfRDRamBlocks[(count >> 12)] = 0;
+				if (N64_Blocks.NoOfRDRAMBlocks[(count >> 12)] > 0) {
+					N64_Blocks.NoOfRDRAMBlocks[(count >> 12)] = 0;
 					memset(JumpTable + ((count & 0x00FFFFF0) >> 2),0,0x1000);
 					*(DelaySlotTable + count) = NULL;
 					if (VirtualProtect(N64MEM + count, 4, PAGE_READWRITE, &OldProtect) == 0) {
@@ -1487,12 +1487,12 @@ int r4300i_SB_NonMemory ( DWORD PAddr, BYTE Value ) {
 	case 0x00500000:
 	case 0x00600000:
 	case 0x00700000:
-		if (PAddr < RdramSize) {
+		if (PAddr < RDRAMsize) {
 			DWORD OldProtect;
 			if (VirtualProtect((N64MEM + PAddr), 1, PAGE_READWRITE, &OldProtect) == 0) {}
 			*(BYTE *)(N64MEM+PAddr) = Value;
-			if (N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
-			N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
+			if (N64_Blocks.NoOfRDRAMBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
+			N64_Blocks.NoOfRDRAMBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
 			memset(JumpTable+((PAddr & 0xFFFFF000) >> 2),0,0x1000);
 			*(DelaySlotTable + ((PAddr & 0xFFFFF000) >> 12)) = NULL;
 		}
@@ -1518,12 +1518,12 @@ int r4300i_SH_NonMemory ( DWORD PAddr, WORD Value ) {
 	case 0x00500000:
 	case 0x00600000:
 	case 0x00700000:
-		if (PAddr < RdramSize) {
+		if (PAddr < RDRAMsize) {
 			DWORD OldProtect;
 			if (VirtualProtect((N64MEM + PAddr), 2, PAGE_READWRITE, &OldProtect) == 0) {}
 			*(WORD *)(N64MEM+PAddr) = Value;
-			if (N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
-			N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
+			if (N64_Blocks.NoOfRDRAMBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
+			N64_Blocks.NoOfRDRAMBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
 			memset(JumpTable+((PAddr & 0xFFFFF000) >> 2),0,0x1000);
 			*(DelaySlotTable + ((PAddr & 0xFFFFF000) >> 12)) = NULL;
 		}
@@ -1563,12 +1563,12 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 	case 0x00500000:
 	case 0x00600000:
 	case 0x00700000:
-		if (PAddr < RdramSize) {
+		if (PAddr < RDRAMsize) {
 			DWORD OldProtect;
 			if (VirtualProtect((N64MEM + PAddr), 4, PAGE_READWRITE, &OldProtect) == 0) {}
 			*(DWORD *)(N64MEM+PAddr) = Value;
-			if (N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
-			N64_Blocks.NoOfRDRamBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
+			if (N64_Blocks.NoOfRDRAMBlocks[(PAddr & 0x00FFFFF0) >> 12] == 0) { break; }
+			N64_Blocks.NoOfRDRAMBlocks[(PAddr & 0x00FFFFF0) >> 12] = 0;
 			memset(JumpTable+((PAddr & 0xFFFFF000) >> 2),0,0x1000);
 			*(DelaySlotTable + ((PAddr & 0xFFFFF000) >> 12)) = NULL;
 		}
@@ -1930,9 +1930,9 @@ void ResetRecompCode (void) {
 	}
 	TargetIndex = 0;
 	//Jump Table
-	for (count = 0; count < (RdramSize >> 12); count ++ ) {
-		if (N64_Blocks.NoOfRDRamBlocks[count] > 0) {
-			N64_Blocks.NoOfRDRamBlocks[count] = 0;
+	for (count = 0; count < (RDRAMsize >> 12); count ++ ) {
+		if (N64_Blocks.NoOfRDRAMBlocks[count] > 0) {
+			N64_Blocks.NoOfRDRAMBlocks[count] = 0;
 			memset(JumpTable + (count << 10),0,0x1000);
 			*(DelaySlotTable + count) = NULL;
 			if (VirtualProtect((N64MEM + (count << 12)), 4, PAGE_READWRITE, &OldProtect) == 0) {}

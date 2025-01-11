@@ -210,7 +210,7 @@ BOOL IsRomBrowserMaximized (void) {
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Value, Bytes = 4;
-		lResult = RegQueryValueEx(hKeyResults,"RomBrowser Maximized",0,&Type,(LPBYTE)(&Value),&Bytes);
+		lResult = RegQueryValueEx(hKeyResults,"ROM Browser Maximized",0,&Type,(LPBYTE)(&Value),&Bytes);
 		if (Type == REG_DWORD && lResult == ERROR_SUCCESS) {
 			RegCloseKey(hKeyResults);
 			return Value;
@@ -524,9 +524,9 @@ void RomList_GetDispInfo(LPNMHDR pnmh) {
 			sprintf(lpdi->item.pszText,"CIC-NUS-610%d",pRomInfo->CicChip);
 		}
 		break;
-	default: strncpy(lpdi->item.pszText, " ", lpdi->item.cchTextMax);
+	default: strncpy(lpdi->item.pszText, "", lpdi->item.cchTextMax);
 	}
-	if (strlen(lpdi->item.pszText) == 0) { strcpy(lpdi->item.pszText," "); }
+	if (strlen(lpdi->item.pszText) == 0) { strcpy(lpdi->item.pszText,""); }
 }
 void RomList_PopupMenu(LPNMHDR pnmh) {
 	LV_DISPINFO * lpdi = (LV_DISPINFO *)pnmh;
@@ -761,7 +761,7 @@ void SetRomBrowserMaximized (BOOL Maximized) {
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
-		RegSetValueEx(hKeyResults,"RomBrowser Maximized",0, REG_DWORD,(CONST BYTE *)(&Maximized),sizeof(DWORD));
+		RegSetValueEx(hKeyResults,"ROM Browser Maximized",0, REG_DWORD,(CONST BYTE *)(&Maximized),sizeof(DWORD));
 	}
 	RegCloseKey(hKeyResults);
 }

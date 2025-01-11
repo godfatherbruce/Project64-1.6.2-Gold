@@ -164,7 +164,7 @@ typedef struct {
 	void * CompiledLocation;
 } ORIGINAL_MEMMARKER;
 struct {
-	DWORD NoOfRDRamBlocks[2048];
+	DWORD NoOfRDRAMBlocks[2048];
 	DWORD NoOfDMEMBlocks;
 	DWORD NoOfIMEMBlocks;
 	DWORD NoOfPifRomBlocks;

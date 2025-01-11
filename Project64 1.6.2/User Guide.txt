@@ -155,7 +155,7 @@ Fixed "Always On Top" not being togglable from within the ROM browser.
 
 Fixed certain ROMhacks having their save file get deleted upon being saved (Indigo, Ultimate Trial).
 
-Fixed CMA crash in recompiler ops (was affecting Ocarina of Time).
+Fixed CMA crash in recompiler ops while 8MB RDRAM is currently used (was affecting Ocarina of Time).
 
 Fixed loadstate glitches.
 
@@ -621,21 +621,21 @@ CPU Type=
 Self-modifying code Method= 
 (User's Selected Core Setting, Check Memory Advance by default)
 Reg Cache= 
-(Yes)
-Use TLB= 
-(Yes)
+(On)
+TLB= 
+(On)
 Delay SI= 
-(No)
+(Off)
 Delay RDP= 
-(No)
+(Off)
 Delay RSP= 
-(No)
+(Off)
 Emulate AI= 
-(No)
+(Off)
 SP Hack= 
-(No)
-Use Large Buffer= 
-(No)
+(Off)
+Large Buffer= 
+(Off)
 Linking= 
 (User's Selected Core Setting, Off by default)
 --------------------------------------------------------------------------------------------------------

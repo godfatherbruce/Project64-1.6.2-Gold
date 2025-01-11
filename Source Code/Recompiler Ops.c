@@ -2180,12 +2180,12 @@ void Compile_R4300i_SDR (BLOCK_SECTION * Section) {
 	Popad();
 }
 void _fastcall ClearRecomplierCache (DWORD Address) {
-	if (SelfModCheck != ModCode_CheckMemory2 || RomRamSize == 0x400000)
+	if (SelfModCheck != ModCode_CheckMemory2 || RDRAMsize == 0x400000)
 	if (!TranslateVaddr(&Address)) return;
-	if (Address < RdramSize) {
+	if (Address < RDRAMsize) {
 		DWORD Block = Address >> 12;
-		if (N64_Blocks.NoOfRDRamBlocks[Block] > 0) {
-			N64_Blocks.NoOfRDRamBlocks[Block] = 0;
+		if (N64_Blocks.NoOfRDRAMBlocks[Block] > 0) {
+			N64_Blocks.NoOfRDRAMBlocks[Block] = 0;
 			memset(JumpTable + (Block << 10),0,0x1000);
 			*(DelaySlotTable + Block) = NULL;
 		}

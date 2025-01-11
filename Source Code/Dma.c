@@ -30,17 +30,17 @@
 int DMAUsed;
 void FirstDMA (void) {
 	switch (GetCicChipID(ROM)) {
-	case 1: *(DWORD *)&N64MEM[0x318] = RdramSize; break;
-	case 2: *(DWORD *)&N64MEM[0x318] = RdramSize; break;
-	case 3: *(DWORD *)&N64MEM[0x318] = RdramSize; break;
-	case 5: *(DWORD *)&N64MEM[0x3F0] = RdramSize; break;
-	case 6: *(DWORD *)&N64MEM[0x318] = RdramSize; break;
-	case 9: *(DWORD *)&N64MEM[0x318] = RdramSize; break;
+	case 1: *(DWORD *)&N64MEM[0x318] = RDRAMsize; break;
+	case 2: *(DWORD *)&N64MEM[0x318] = RDRAMsize; break;
+	case 3: *(DWORD *)&N64MEM[0x318] = RDRAMsize; break;
+	case 5: *(DWORD *)&N64MEM[0x3F0] = RDRAMsize; break;
+	case 6: *(DWORD *)&N64MEM[0x318] = RDRAMsize; break;
+	case 9: *(DWORD *)&N64MEM[0x318] = RDRAMsize; break;
 	}
 }
 void PI_DMA_READ (void) {
 //	PI_STATUS_REG |= PI_STATUS_DMA_BUSY;
-	if ( PI_DRAM_ADDR_REG + PI_RD_LEN_REG + 1 > RdramSize) {
+	if ( PI_DRAM_ADDR_REG + PI_RD_LEN_REG + 1 > RDRAMsize) {
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
 		CheckInterrupts();
@@ -85,7 +85,7 @@ void PI_DMA_READ (void) {
 void PI_DMA_WRITE (void) {
 	DWORD i;
 	PI_STATUS_REG |= PI_STATUS_DMA_BUSY;
-	if ( PI_DRAM_ADDR_REG + PI_WR_LEN_REG + 1 > RdramSize) {
+	if ( PI_DRAM_ADDR_REG + PI_WR_LEN_REG + 1 > RDRAMsize) {
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
 		CheckInterrupts();
@@ -180,17 +180,17 @@ void PI_DMA_WRITE (void) {
 }
 void SI_DMA_READ (void) {
 	BYTE * PifRamPos = &PIF_Ram[0];
-	if ((int)SI_DRAM_ADDR_REG > (int)RdramSize) {
+	if ((int)SI_DRAM_ADDR_REG > (int)RDRAMsize) {
 		return;
 	}
 	PifRamRead();
 	SI_DRAM_ADDR_REG &= 0xFFFFFFF8;
 	if ((int)SI_DRAM_ADDR_REG < 0) {
-		int count, RdramPos;
-		RdramPos = (int)SI_DRAM_ADDR_REG;
-		for (count = 0; count < 0x40; count++, RdramPos++) {
-			if (RdramPos < 0) { continue; }
-			N64MEM[RdramPos ^3] = PIF_Ram[count];
+		int count, RDRAMPos;
+		RDRAMPos = (int)SI_DRAM_ADDR_REG;
+		for (count = 0; count < 0x40; count++, RDRAMPos++) {
+			if (RDRAMPos < 0) { continue; }
+			N64MEM[RDRAMPos ^3] = PIF_Ram[count];
 		}
 	} else {
 		_asm {
@@ -227,16 +227,16 @@ void SI_DMA_READ (void) {
 }
 void SI_DMA_WRITE (void) {
 	BYTE * PifRamPos = &PIF_Ram[0];
-	if ((int)SI_DRAM_ADDR_REG > (int)RdramSize) {
+	if ((int)SI_DRAM_ADDR_REG > (int)RDRAMsize) {
 		return;
 	}
 	SI_DRAM_ADDR_REG &= 0xFFFFFFF8;
 	if ((int)SI_DRAM_ADDR_REG < 0) {
-		int count, RdramPos;
-		RdramPos = (int)SI_DRAM_ADDR_REG;
-		for (count = 0; count < 0x40; count++, RdramPos++) {
-			if (RdramPos < 0) { PIF_Ram[count] = 0; continue; }
-			PIF_Ram[count] = N64MEM[RdramPos ^3];
+		int count, RDRAMPos;
+		RDRAMPos = (int)SI_DRAM_ADDR_REG;
+		for (count = 0; count < 0x40; count++, RDRAMPos++) {
+			if (RDRAMPos < 0) { PIF_Ram[count] = 0; continue; }
+			PIF_Ram[count] = N64MEM[RDRAMPos ^3];
 		}
 	} else {
 		_asm {
@@ -274,7 +274,7 @@ void SI_DMA_WRITE (void) {
 }
 void SP_DMA_READ (void) {
 	SP_DRAM_ADDR_REG &= 0x1FFFFFFF;
-	if (SP_DRAM_ADDR_REG > RdramSize) {
+	if (SP_DRAM_ADDR_REG > RDRAMsize) {
 		SP_DMA_BUSY_REG = 0;
 		SP_STATUS_REG  &= ~SP_STATUS_DMA_BUSY;
 		return;
@@ -294,7 +294,7 @@ void SP_DMA_READ (void) {
 	SP_STATUS_REG  &= ~SP_STATUS_DMA_BUSY;
 }
 void SP_DMA_WRITE (void) {
-	if (SP_DRAM_ADDR_REG > RdramSize) {
+	if (SP_DRAM_ADDR_REG > RDRAMsize) {
 		return;
 	}
 	if (SP_WR_LEN_REG + 1 + (SP_MEM_ADDR_REG & 0xFFF) > 0x1000) {

@@ -353,7 +353,7 @@ void LoadSettings (void) {
 	CPU_Type = Default_CPU;
 	SystemCPU_Type = Default_CPU;
 	SystemSelfModCheck = Default_SelfModCheck;
-	SystemRdramSize = Default_RdramSize;
+	SystemRDRAMsize = Default_RDRAMsize;
 	SystemABL = Default_AdvancedBlockLink;
 	AutoStart = Default_AutoStart;
 	AutoSleep = Default_AutoSleep;
@@ -377,33 +377,33 @@ void LoadSettings (void) {
 		if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { RememberCheats = Default_RememberCheats; }
 		lResult = RegQueryValueEx(hKeyResults,"Basic Mode",0,&Type,(LPBYTE)(&BasicMode),&Bytes);
 		if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { BasicMode = Default_BasicMode;	}
-		lResult = RegQueryValueEx(hKeyResults,"Pause emulation when window is not active",0,&Type,(BYTE *)(&AutoSleep),&Bytes);
+		lResult = RegQueryValueEx(hKeyResults,"Pause CPU Upon Focus Loss",0,&Type,(BYTE *)(&AutoSleep),&Bytes);
 		if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { AutoSleep = Default_AutoSleep; }
-		lResult = RegQueryValueEx(hKeyResults,"On open ROM go full screen",0,&Type,(BYTE *)(&AutoFullScreen),&Bytes);
+		lResult = RegQueryValueEx(hKeyResults,"Enter Fullscreen Mode Upon ROM Opening",0,&Type,(BYTE *)(&AutoFullScreen),&Bytes);
 		if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { AutoFullScreen = FALSE; }
 		{
 			lResult = RegQueryValueEx(hKeyResults,"Limit FPS",0,&Type,(LPBYTE)(&LimitFPS),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { LimitFPS = Default_LimitFPS;	}
-			lResult = RegQueryValueEx(hKeyResults,"ROMs To Remember",0,&Type,(BYTE *)(&RomsToRemember),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"Max # of ROMs Remembered",0,&Type,(BYTE *)(&RomsToRemember),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { RomsToRemember = Default_RomsToRemember; }
-			lResult = RegQueryValueEx(hKeyResults,"ROM Dirs To Remember",0,&Type,(BYTE *)(&RomDirsToRemember),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"Max # of ROM Dirs Remembered",0,&Type,(BYTE *)(&RomDirsToRemember),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { RomDirsToRemember = Default_RomsDirsToRemember; }
-			lResult = RegQueryValueEx(hKeyResults,"Start Emulation when ROM is opened",0,&Type,(BYTE *)(&AutoStart),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"Start Emulation Upon ROM Opening",0,&Type,(BYTE *)(&AutoStart),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { AutoStart = Default_AutoStart; }
 			lResult = RegQueryValueEx(hKeyResults,"Use ROM Browser",0,&Type,(BYTE *)(&RomBrowser),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { RomBrowser = Default_UseRB; }
 			lResult = RegQueryValueEx(hKeyResults,"Use Recursion",0,&Type,(BYTE *)(&Rercursion),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Rercursion = Default_Rercursion; }
-			lResult = RegQueryValueEx(hKeyResults,"Overwrite default settings with ones from RDB?",0,&Type,(BYTE *)(&UseIni),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"RDB ROM Settings",0,&Type,(BYTE *)(&UseIni),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { UseIni = Default_UseIni; }
-			lResult = RegQueryValueEx(hKeyResults,"CPU Type",0,&Type,(BYTE *)(&SystemCPU_Type),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"CPU Core Style",0,&Type,(BYTE *)(&SystemCPU_Type),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemCPU_Type = Default_CPU; }
-			lResult = RegQueryValueEx(hKeyResults,"Self modifying code method",0,&Type,(LPBYTE)(&SystemSelfModCheck),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"Self-modifying Code Method",0,&Type,(LPBYTE)(&SystemSelfModCheck),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemSelfModCheck = Default_SelfModCheck; }
 			lResult = RegQueryValueEx(hKeyResults,"Advanced Block Linking",0,&Type,(LPBYTE)(&SystemABL),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemABL = Default_AdvancedBlockLink; }
-			lResult = RegQueryValueEx(hKeyResults,"RDRAM Size",0,&Type,(LPBYTE)(&SystemRdramSize),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemRdramSize = Default_RdramSize; }
+			lResult = RegQueryValueEx(hKeyResults,"Memory Size",0,&Type,(LPBYTE)(&SystemRDRAMsize),&Bytes);
+			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemRDRAMsize = Default_RDRAMsize; }
 			lResult = RegQueryValueEx(hKeyResults,"Always On Top",0,&Type,(LPBYTE)(&AlwaysOnTop),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { AlwaysOnTop = Default_AlwaysOnTop;	}
 		}

@@ -540,9 +540,6 @@ BOOL CheatActive (char * Name) {
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults); // check is game ID excists in registry
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Bytes, Active;
-		char GameName[300];
-		Bytes = sizeof(GameName);
-		lResult = RegQueryValueEx(hKeyResults,"Internal Name",0,&Type,(LPBYTE)GameName,&Bytes); // get gamename from registry
 		Bytes = sizeof(Active);
 		lResult = RegQueryValueEx(hKeyResults,Name,0,&Type,(LPBYTE)(&Active),&Bytes); // get cheat-state from registry
 		RegCloseKey(hKeyResults);
@@ -1954,7 +1951,6 @@ void SaveCheat(char * CheatName, BOOL Active) {
 	lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
-		RegSetValueEx(hKeyResults,"Internal Name",0,REG_SZ,(CONST BYTE *)RomName,strlen(RomName));
 		if (Active) {
 			RegSetValueEx(hKeyResults,CheatName,0, REG_DWORD,(CONST BYTE *)(&Active),sizeof(DWORD));
 		} else {
@@ -1980,7 +1976,6 @@ void SaveCheatExt(char * CheatName, char * CheatExt) {
 		KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 	if (lResult == ERROR_SUCCESS) {
 		sprintf(String,"%s.exten",CheatName);
-		RegSetValueEx(hKeyResults,"Internal Name",0,REG_SZ,(CONST BYTE *)RomName,strlen(RomName));
 		RegSetValueEx(hKeyResults,String,0,REG_SZ,(CONST BYTE *)CheatExt,strlen(CheatExt));
 		RegCloseKey(hKeyResults);
 	}

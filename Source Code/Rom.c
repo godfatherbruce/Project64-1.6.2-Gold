@@ -37,7 +37,7 @@
 #include "RomTools_Common.h"
 #define MenuLocOfUsedFiles	11
 #define MenuLocOfUsedDirs	(MenuLocOfUsedFiles + 1)
-DWORD RomFileSize, RomRamSize, RomSaveUsing, RomCPUType, RomSelfMod,
+DWORD RomFileSize, ROMRAMsize, RomSaveUsing, RomCPUType, RomSelfMod,
 	RomUseTlb, RomUseLinking, RomCF, RomUseLargeBuffer, RomUseCache,
 	RomDelaySI, RomSPHack, RomDelayRDP, RomDelayRSP, RomEmulateAI;
 char CurrentFileName[MAX_PATH+1] = {""}, RomName[MAX_PATH+1] = {""}, RomHeader[0x1000];
@@ -145,7 +145,7 @@ void GetRomDirectory ( char * Directory ) {
 	sprintf(Group,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,Group,0,KEY_ALL_ACCESS,
 		&hKeyResults);
-	sprintf(Directory,"%s%sRoms\\",drive,dir);
+	sprintf(Directory,"%s%sROMs\\",drive,dir);
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Bytes = sizeof(Dir);
 		lResult = RegQueryValueEx(hKeyResults,"Rom Directory",0,&Type,(LPBYTE)Dir,&Bytes);
@@ -463,10 +463,10 @@ BOOL LoadRomHeader ( void ) {
 	return FALSE;
 }
 void LoadRomOptions ( void ) {
-	DWORD NewRamSize;
+	DWORD NewRAMsize;
 	ReadRomOptions();
-	NewRamSize = RomRamSize;
-	if ((int)RomRamSize < 0) { NewRamSize = SystemRdramSize; }
+	NewRAMsize = ROMRAMsize;
+	if ((int)ROMRAMsize < 0) { NewRAMsize = SystemRDRAMsize; }
 	if (RomUseLargeBuffer) {
 		if (VirtualAlloc(RecompCode, LargeCompileBufferSize, MEM_COMMIT, PAGE_EXECUTE_READWRITE)==NULL) {
 			DisplayError(GS(MSG_MEM_ALLOC_ERROR));
@@ -479,8 +479,8 @@ void LoadRomOptions ( void ) {
 			ExitThread(0);
 		}
 	}
-	if (NewRamSize != RdramSize) {
-		if (RdramSize == 0x400000) {
+	if (NewRAMsize != RDRAMsize) {
+		if (RDRAMsize == 0x400000) {
 			if (VirtualAlloc(N64MEM + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
 				DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 				ExitThread(0);
@@ -499,7 +499,7 @@ void LoadRomOptions ( void ) {
 			VirtualFree((BYTE *)DelaySlotTable + (0x400000 >> 0xA), (0x400000 >> 0xA),MEM_DECOMMIT);
 		}
 	}
-	RdramSize = NewRamSize;
+	RDRAMsize = NewRAMsize;
 	CPU_Type = SystemCPU_Type;
 	if (RomCPUType != CPU_Default) { CPU_Type = RomCPUType; }
 	CountPerOp = RomCF;
@@ -547,7 +547,7 @@ void RemoveRecentList (HWND hWnd) {
 	memset(LastRoms[0],0,sizeof(LastRoms[0]));
 }
 void ReadRomOptions (void) {
-	RomRamSize        = -1;
+	ROMRAMsize        = -1;
 	RomSaveUsing      = Auto;
 	RomCF             = -1;
 	RomCPUType        = CPU_Default;
@@ -567,11 +567,11 @@ void ReadRomOptions (void) {
 		char String[100];
 		IniFileName = GetIniFileName();
 		sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-		if (UseIni) { RomRamSize = _GetPrivateProfileInt(Identifier,"RDRAM Size",-1,IniFileName); }
-		if (RomRamSize == 4 || RomRamSize == 8) {
-			RomRamSize *= 0x100000;
+		if (UseIni) { ROMRAMsize = _GetPrivateProfileInt(Identifier,"Memory Size",-1,IniFileName); }
+		if (ROMRAMsize == 4 || ROMRAMsize == 8) {
+			ROMRAMsize *= 0x100000;
 		} else {
-			RomRamSize = -1;
+			ROMRAMsize = -1;
 		}
 		RomCF = _GetPrivateProfileInt(Identifier,"Counter Factor",-1,IniFileName);
 		if (RomCF > 6) { RomCF = -1; }
@@ -582,7 +582,7 @@ void ReadRomOptions (void) {
 		else if (strcmp(String,"FlashRAM") == 0)      { RomSaveUsing = FlashRAM; }
 		else                                          { RomSaveUsing = Auto; }
 		if (UseIni) {
-			_GetPrivateProfileString(Identifier,"CPU Type","",String,sizeof(String),IniFileName);
+			_GetPrivateProfileString(Identifier,"CPU Core Style","",String,sizeof(String),IniFileName);
 			if (strcmp(String,"Interpreter") == 0)       { RomCPUType = CPU_Interpreter; }
 			else if (strcmp(String,"Recompiler") == 0)   { RomCPUType = CPU_Recompiler; }
 			else                                         { RomCPUType = CPU_Default; }
@@ -596,7 +596,7 @@ void ReadRomOptions (void) {
 			else if (strcmp(String,"Change Memory") == 0)        { RomSelfMod = ModCode_ChangeMemory; }
 			else                                                 { RomSelfMod = ModCode_Default; }
 		}
-		_GetPrivateProfileString(Identifier,"Use TLB","",String,sizeof(String),IniFileName);
+		_GetPrivateProfileString(Identifier,"TLB","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"No") == 0) { RomUseTlb = FALSE; }
 		_GetPrivateProfileString(Identifier,"Delay SI","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"Yes") == 0) { RomDelaySI = TRUE; }
@@ -604,7 +604,7 @@ void ReadRomOptions (void) {
 		if (strcmp(String,"Yes") == 0) { RomSPHack = TRUE; }
 		_GetPrivateProfileString(Identifier,"Reg Cache","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"No") == 0) { RomUseCache = FALSE; }
-		_GetPrivateProfileString(Identifier,"Use Large Buffer","",String,sizeof(String),IniFileName);
+		_GetPrivateProfileString(Identifier,"Large Buffer","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"Yes") == 0) { RomUseLargeBuffer = TRUE; }
 		_GetPrivateProfileString(Identifier,"Linking","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"On") == 0) { RomUseLinking = 0; }
@@ -634,7 +634,7 @@ void SetNewFileDirectory (void ){
 	if (lResult == ERROR_SUCCESS) {
 		char drive[_MAX_DRIVE] ,dir[_MAX_DIR], fname[_MAX_FNAME],ext[_MAX_EXT];
 		DWORD Type, ChangeRomDir, Bytes = 4;
-		lResult = RegQueryValueEx(hKeyResults,"Use Default ROM Dir",0,&Type,(LPBYTE)(&ChangeRomDir),&Bytes);
+		lResult = RegQueryValueEx(hKeyResults,"AppPath ROMs",0,&Type,(LPBYTE)(&ChangeRomDir),&Bytes);
 		if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { ChangeRomDir = FALSE; }
 		if (!ChangeRomDir) { return; }
 		_splitpath( CurrentFileName, drive, dir, fname, ext );
@@ -913,12 +913,12 @@ void SaveRomOptions (void) {
 	if (strlen(RomName) == 0) { return; }
 	IniFileName = GetIniFileName();
 	sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-	switch (RomRamSize) {
+	switch (ROMRAMsize) {
 	case 0x400000: strcpy(String,"4"); break;
 	case 0x800000: strcpy(String,"8"); break;
 	default: strcpy(String," "); break;
 	}
-	_WritePrivateProfileString(Identifier,"RDRAM Size",String,GetIniFileName());
+	_WritePrivateProfileString(Identifier,"Memory Size",String,GetIniFileName());
 	switch (RomCF) {
 	case 1: case 2: case 3: case 4: case 5: case 6: sprintf(String,"%d",RomCF); break;
 	default: sprintf(String," "); break;
@@ -937,7 +937,7 @@ void SaveRomOptions (void) {
 	case CPU_Recompiler: sprintf(String,"Recompiler"); break;
 	default: sprintf(String," "); break;
 	}
-	_WritePrivateProfileString(Identifier,"CPU Type",String,GetIniFileName());
+	_WritePrivateProfileString(Identifier,"CPU Core Style",String,GetIniFileName());
 	switch (RomSelfMod) {
 	case ModCode_None: sprintf(String,"None"); break;
 	case ModCode_Cache: sprintf(String,"Cache"); break;
@@ -948,14 +948,14 @@ void SaveRomOptions (void) {
 	default: sprintf(String," "); break;
 	}
 	_WritePrivateProfileString(Identifier,"Self-modifying code Method",String,GetIniFileName());
-	_WritePrivateProfileString(Identifier,"Reg Cache",RomUseCache?" ":"No",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"Use TLB",RomUseTlb?" ":"No",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"Delay SI",RomDelaySI?"Yes":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"Delay RDP",RomDelayRDP?"Yes":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"Delay RSP",RomDelayRSP?"Yes":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"Emulate AI",RomEmulateAI?"Yes":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"SP Hack",RomSPHack?"Yes":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"Use Large Buffer",RomUseLargeBuffer?"Yes":" ",GetIniFileName());
+	_WritePrivateProfileString(Identifier,"Reg Cache",RomUseCache?" ":"Off",GetIniFileName());
+	_WritePrivateProfileString(Identifier,"TLB",RomUseTlb?" ":"Off",GetIniFileName());
+	_WritePrivateProfileString(Identifier,"Delay SI",RomDelaySI?"On":" ",GetIniFileName());
+	_WritePrivateProfileString(Identifier,"Delay RDP",RomDelayRDP?"On":" ",GetIniFileName());
+	_WritePrivateProfileString(Identifier,"Delay RSP",RomDelayRSP?"On":" ",GetIniFileName());
+	_WritePrivateProfileString(Identifier,"Emulate AI",RomEmulateAI?"On":" ",GetIniFileName());
+	_WritePrivateProfileString(Identifier,"SP Hack",RomSPHack?"On":" ",GetIniFileName());
+	_WritePrivateProfileString(Identifier,"Large Buffer",RomUseLargeBuffer?"Yes":" ",GetIniFileName());
 	_WritePrivateProfileString(Identifier,"Linking"," ",GetIniFileName());
 	if (RomUseLinking == 0) { _WritePrivateProfileString(Identifier,"Linking","On",GetIniFileName()); }
 	if (RomUseLinking == 1) { _WritePrivateProfileString(Identifier,"Linking","Off",GetIniFileName()); }

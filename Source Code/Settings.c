@@ -168,13 +168,13 @@ BOOL CALLBACK GeneralOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 				KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 			if (lResult == ERROR_SUCCESS) {
 				AutoFullScreen = SendMessage(GetDlgItem(hDlg,IDC_LOAD_FULLSCREEN),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"On open ROM go full screen",0,REG_DWORD,(BYTE *)&AutoFullScreen,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"Enter Fullscreen Mode Upon ROM Opening",0,REG_DWORD,(BYTE *)&AutoFullScreen,sizeof(DWORD));
 				BasicMode = SendMessage(GetDlgItem(hDlg,IDC_BASIC_MODE),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 				RegSetValueEx(hKeyResults,"Basic Mode",0,REG_DWORD,(BYTE *)&BasicMode,sizeof(DWORD));
 				RememberCheats = SendMessage(GetDlgItem(hDlg,IDC_REMEMBER_CHEAT),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 				RegSetValueEx(hKeyResults,"Remember Cheats",0,REG_DWORD,(BYTE *)&RememberCheats,sizeof(DWORD));
 				AutoSleep = SendMessage(GetDlgItem(hDlg,IDC_AUTOSLEEP),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"Pause emulation when window is not active",0,REG_DWORD,(BYTE *)&AutoSleep,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"Pause CPU Upon Focus Loss",0,REG_DWORD,(BYTE *)&AutoSleep,sizeof(DWORD));
 			}
 			RegCloseKey(hKeyResults);
 		}
@@ -212,8 +212,8 @@ BOOL CALLBACK DefaultOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_MEM,ModCode_CheckMemoryCache,&SystemSelfModCheck);
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHANGE_MEM,ModCode_ChangeMemory,&SystemSelfModCheck);
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_ADV,ModCode_CheckMemory2,&SystemSelfModCheck);
-		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,&SystemRdramSize);
-		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,&SystemRdramSize);
+		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,&SystemRDRAMsize);
+		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,&SystemRDRAMsize);
 		AddDropDownItem(hDlg,IDC_ABL,ABL_ON,TRUE,&SystemABL);
 		AddDropDownItem(hDlg,IDC_ABL,ABL_OFF,FALSE,&SystemABL);
 		break;
@@ -228,18 +228,18 @@ BOOL CALLBACK DefaultOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 				KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 			if (lResult == ERROR_SUCCESS) {
 				AutoStart = SendMessage(GetDlgItem(hDlg,IDC_START_ON_ROM_OPEN),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"Start Emulation when ROM is opened",0,REG_DWORD,(BYTE *)&AutoStart,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"Start Emulation Upon ROM Opening",0,REG_DWORD,(BYTE *)&AutoStart,sizeof(DWORD));
 				UseIni = SendMessage(GetDlgItem(hDlg,IDC_USEINI),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"Overwrite default settings with ones from RDB?",0,REG_DWORD,(BYTE *)&UseIni,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"RDB ROM Settings",0,REG_DWORD,(BYTE *)&UseIni,sizeof(DWORD));
 				indx = SendMessage(GetDlgItem(hDlg,IDC_CPU_TYPE),CB_GETCURSEL,0,0);
 				SystemCPU_Type = SendMessage(GetDlgItem(hDlg,IDC_CPU_TYPE),CB_GETITEMDATA,indx,0);
-				RegSetValueEx(hKeyResults,"CPU Type",0,REG_DWORD,(BYTE *)&SystemCPU_Type,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"CPU Core Style",0,REG_DWORD,(BYTE *)&SystemCPU_Type,sizeof(DWORD));
 				indx = SendMessage(GetDlgItem(hDlg,IDC_SELFMOD),CB_GETCURSEL,0,0);
 				SystemSelfModCheck = SendMessage(GetDlgItem(hDlg,IDC_SELFMOD),CB_GETITEMDATA,indx,0);
-				RegSetValueEx(hKeyResults,"Self modifying code method",0,REG_DWORD,(BYTE *)&SystemSelfModCheck,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"Self-modifying Code Method",0,REG_DWORD,(BYTE *)&SystemSelfModCheck,sizeof(DWORD));
 				indx = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETCURSEL,0,0);
-				SystemRdramSize = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETITEMDATA,indx,0);
-				RegSetValueEx(hKeyResults,"RDRAM Size",0,REG_DWORD,(BYTE *)&SystemRdramSize,sizeof(DWORD));
+				SystemRDRAMsize = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETITEMDATA,indx,0);
+				RegSetValueEx(hKeyResults,"Memory Size",0,REG_DWORD,(BYTE *)&SystemRDRAMsize,sizeof(DWORD));
 				indx = SendMessage(GetDlgItem(hDlg,IDC_ABL),CB_GETCURSEL,0,0);
 				SystemABL = SendMessage(GetDlgItem(hDlg,IDC_ABL),CB_GETITEMDATA,indx,0);
 				RegSetValueEx(hKeyResults,"Advanced Block Linking",0,REG_DWORD,(BYTE *)&SystemABL,sizeof(DWORD));
@@ -278,28 +278,28 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			lResult = RegOpenKeyEx( HKEY_CURRENT_USER,String,0, KEY_ALL_ACCESS,&hKeyResults);
 			if (lResult == ERROR_SUCCESS) {
 				DWORD Type, Value, Bytes = 4;
-				lResult = RegQueryValueEx(hKeyResults,"Use Default ROM Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
+				lResult = RegQueryValueEx(hKeyResults,"AppPath ROMs",0,&Type,(LPBYTE)(&Value),&Bytes);
 				if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Value = FALSE; }
 				SendMessage(GetDlgItem(hDlg,Value?IDC_ROM_DEFAULT:IDC_ROM_OTHER),BM_SETCHECK, BST_CHECKED,0);
-				lResult = RegQueryValueEx(hKeyResults,"Use Default Auto Save Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
+				lResult = RegQueryValueEx(hKeyResults,"AppPath Save Data",0,&Type,(LPBYTE)(&Value),&Bytes);
 				if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Value = TRUE; }
 				SendMessage(GetDlgItem(hDlg,Value?IDC_AUTO_DEFAULT:IDC_AUTO_OTHER),BM_SETCHECK, BST_CHECKED,0);
-				lResult = RegQueryValueEx(hKeyResults,"Use Default Snap Shot Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
+				lResult = RegQueryValueEx(hKeyResults,"AppPath Screenshots",0,&Type,(LPBYTE)(&Value),&Bytes);
 				if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Value = TRUE; }
 				SendMessage(GetDlgItem(hDlg,Value?IDC_SNAP_DEFAULT:IDC_SNAP_OTHER),BM_SETCHECK, BST_CHECKED,0);
-				lResult = RegQueryValueEx(hKeyResults,"Use Default Instant Save Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
+				lResult = RegQueryValueEx(hKeyResults,"AppPath Savestates",0,&Type,(LPBYTE)(&Value),&Bytes);
 				if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Value = TRUE; }
 				SendMessage(GetDlgItem(hDlg,Value?IDC_INSTANT_DEFAULT:IDC_INSTANT_OTHER),BM_SETCHECK, BST_CHECKED,0);
 				Bytes = sizeof(Directory);
-				lResult = RegQueryValueEx(hKeyResults,"Instant Save Directory",0,&Type,(LPBYTE)Directory,&Bytes);
+				lResult = RegQueryValueEx(hKeyResults,"CustomPath Savestates",0,&Type,(LPBYTE)Directory,&Bytes);
 				if (lResult != ERROR_SUCCESS) { GetInstantSaveDir(Directory); }
 				SetDlgItemText(hDlg,IDC_INSTANT_DIR,Directory);
 				Bytes = sizeof(Directory);
-				lResult = RegQueryValueEx(hKeyResults,"Auto Save Directory",0,&Type,(LPBYTE)Directory,&Bytes);
+				lResult = RegQueryValueEx(hKeyResults,"CustomPath Save Data",0,&Type,(LPBYTE)Directory,&Bytes);
 				if (lResult != ERROR_SUCCESS) { GetAutoSaveDir(Directory); }
 				SetDlgItemText(hDlg,IDC_AUTO_DIR,Directory);
 				Bytes = sizeof(Directory);
-				lResult = RegQueryValueEx(hKeyResults,"Screenshots Directory",0,&Type,(LPBYTE)Directory,&Bytes);
+				lResult = RegQueryValueEx(hKeyResults,"CustomPath Screenshots",0,&Type,(LPBYTE)Directory,&Bytes);
 				if (lResult != ERROR_SUCCESS) { GetSnapShotDir(Directory); }
 				SetDlgItemText(hDlg,IDC_SNAP_DIR,Directory);
 			} else {
@@ -402,28 +402,28 @@ BOOL CALLBACK DirSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			if (lResult == ERROR_SUCCESS) {
 				DWORD Value;
 				Value = SendMessage(GetDlgItem(hDlg,IDC_ROM_DEFAULT),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"Use Default ROM Dir",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"AppPath ROMs",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
 				if (Value == FALSE) {
 					GetDlgItemText(hDlg,IDC_ROM_DIR,String,sizeof(String));
-					RegSetValueEx(hKeyResults,"Rom Directory",0,REG_SZ,(CONST BYTE *)String,strlen(String));
+					RegSetValueEx(hKeyResults,"CustomPath ROMs",0,REG_SZ,(CONST BYTE *)String,strlen(String));
 				}
 				Value = SendMessage(GetDlgItem(hDlg,IDC_AUTO_DEFAULT),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"Use Default Auto Save Dir",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"AppPath Save Data",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
 				if (Value == FALSE) {
 					GetDlgItemText(hDlg,IDC_AUTO_DIR,String,sizeof(String));
-					RegSetValueEx(hKeyResults,"Auto Save Directory",0,REG_SZ,(CONST BYTE *)String,strlen(String));
+					RegSetValueEx(hKeyResults,"CustomPath Save Data",0,REG_SZ,(CONST BYTE *)String,strlen(String));
 				}
 				Value = SendMessage(GetDlgItem(hDlg,IDC_INSTANT_DEFAULT),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"Use Default Instant Save Dir",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"AppPath Savestates",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
 				if (Value == FALSE) {
 					GetDlgItemText(hDlg,IDC_INSTANT_DIR,String,sizeof(String));
-					RegSetValueEx(hKeyResults,"Instant Save Directory",0,REG_SZ,(CONST BYTE *)String,strlen(String));
+					RegSetValueEx(hKeyResults,"CustomPath Savestates",0,REG_SZ,(CONST BYTE *)String,strlen(String));
                                 }
 				Value = SendMessage(GetDlgItem(hDlg,IDC_SNAP_DEFAULT),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-				RegSetValueEx(hKeyResults,"Use Default Snap Shot Dir",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"AppPath Screenshots",0,REG_DWORD,(BYTE *)&Value,sizeof(DWORD));
 				if (Value == FALSE) {
 					GetDlgItemText(hDlg,IDC_SNAP_DIR,String,sizeof(String));
-					RegSetValueEx(hKeyResults,"Snap Shot Directory",0,REG_SZ,(CONST BYTE *)String,strlen(String));
+					RegSetValueEx(hKeyResults,"CustomPath Screenshots",0,REG_SZ,(CONST BYTE *)String,strlen(String));
 				}
 			}
 			RegCloseKey(hKeyResults);
@@ -765,12 +765,12 @@ BOOL CALLBACK RomBrowserProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			RomsToRemember = GetDlgItemInt(hDlg,IDC_REMEMBER,NULL,FALSE);
 			if (RomsToRemember < 0) { RomsToRemember = 0; }
 			if (RomsToRemember > 10) { RomsToRemember = 10; }
-			RegSetValueEx(hKeyResults,"ROMs To Remember",0,REG_DWORD,(BYTE *)&RomsToRemember,sizeof(DWORD));
+			RegSetValueEx(hKeyResults,"Max # of ROMs Remembered",0,REG_DWORD,(BYTE *)&RomsToRemember,sizeof(DWORD));
 			RemoveRecentList(hMainWindow);
 			RomDirsToRemember = GetDlgItemInt(hDlg,IDC_REMEMBERDIR,NULL,FALSE);
 			if (RomDirsToRemember < 0) { RomDirsToRemember = 0; }
 			if (RomDirsToRemember > 10) { RomDirsToRemember = 10; }
-			RegSetValueEx(hKeyResults,"ROM Dirs To Remember",0,REG_DWORD,(BYTE *)&RomDirsToRemember,sizeof(DWORD));
+			RegSetValueEx(hKeyResults,"Max # of ROM Dirs Remembered",0,REG_DWORD,(BYTE *)&RomDirsToRemember,sizeof(DWORD));
 		}
 		break;
 	default:
@@ -865,9 +865,9 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_MEM,ModCode_CheckMemoryCache,&RomSelfMod);
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHANGE_MEM,ModCode_ChangeMemory,&RomSelfMod);
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_ADV,ModCode_CheckMemory2,&RomSelfMod);
-		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,ROM_DEFAULT,-1,&RomRamSize);
-		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,&RomRamSize);
-		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,&RomRamSize);
+		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,ROM_DEFAULT,-1,&ROMRAMsize);
+		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,&ROMRAMsize);
+		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,&ROMRAMsize);
 		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ROM_DEFAULT,-1,&RomUseLinking);
 		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_ON,0,&RomUseLinking);
 		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_OFF,1,&RomUseLinking);
@@ -921,7 +921,7 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 			if (strlen(RomName) == 0) { break; }
 			if (!UseIni) { break; }
 			indx = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETCURSEL,0,0);
-			RomRamSize = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETITEMDATA,indx,0);
+			ROMRAMsize = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETITEMDATA,indx,0);
 			indx = SendMessage(GetDlgItem(hDlg,IDC_SAVE_TYPE),CB_GETCURSEL,0,0);
 			RomSaveUsing = SendMessage(GetDlgItem(hDlg,IDC_SAVE_TYPE),CB_GETITEMDATA,indx,0);
 			indx = SendMessage(GetDlgItem(hDlg,IDC_COUNTFACT),CB_GETCURSEL,0,0);

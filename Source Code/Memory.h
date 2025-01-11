@@ -25,7 +25,7 @@
  */
 #define LargeCompileBufferSize	0x03200000
 #define NormalCompileBufferSize	0x01400000
-extern DWORD *TLB_ReadMap, *TLB_WriteMap, RdramSize, SystemRdramSize;
+extern DWORD *TLB_ReadMap, *TLB_WriteMap, RDRAMsize, SystemRDRAMsize;
 extern BYTE *N64MEM, *RDRAM, *DMEM, *IMEM, *ROM;
 extern void ** JumpTable, ** DelaySlotTable;
 extern BYTE *RecompCode, *RecompPos;

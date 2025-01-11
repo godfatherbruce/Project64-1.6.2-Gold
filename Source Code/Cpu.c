@@ -130,7 +130,7 @@ void CloseCpu (void) {
 	}
 	if (hCPU != NULL) {  TerminateThread(hCPU,0); hCPU = NULL; }
 	CPURunning = FALSE;
-	VirtualProtect(N64MEM,RdramSize,PAGE_READWRITE,&OldProtect);
+	VirtualProtect(N64MEM,RDRAMsize,PAGE_READWRITE,&OldProtect);
 	VirtualProtect(N64MEM + 0x04000000,0x2000,PAGE_READWRITE,&OldProtect);
 	Timer_Stop();
 	CloseeepROM();
@@ -1119,10 +1119,10 @@ void GetAutoSaveDir( char * Directory ) {
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Value, Bytes;
 		Bytes = 4;
-		lResult = RegQueryValueEx(hKeyResults,"Use Default Auto Save Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
+		lResult = RegQueryValueEx(hKeyResults,"AppPath Save Data",0,&Type,(LPBYTE)(&Value),&Bytes);
 		if (lResult == ERROR_SUCCESS && Value == FALSE) {
 			Bytes = sizeof(Dir);
-			lResult = RegQueryValueEx(hKeyResults,"Auto Save Directory",0,&Type,(LPBYTE)Dir,&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"CustomPath Save Data",0,&Type,(LPBYTE)Dir,&Bytes);
 			if (lResult == ERROR_SUCCESS) { strcpy(Directory,Dir); }
 		}
 	}
@@ -1143,10 +1143,10 @@ void GetInstantSaveDir( char * Directory ) {
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Value, Bytes;
 		Bytes = 4;
-		lResult = RegQueryValueEx(hKeyResults,"Use Default Instant Save Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
+		lResult = RegQueryValueEx(hKeyResults,"AppPath Save States",0,&Type,(LPBYTE)(&Value),&Bytes);
 		if (lResult == ERROR_SUCCESS && Value == FALSE) {
 			Bytes = sizeof(Dir);
-			lResult = RegQueryValueEx(hKeyResults,"Instant Save Directory",0,&Type,(LPBYTE)Dir,&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"CustomPath SaveStates",0,&Type,(LPBYTE)Dir,&Bytes);
 			if (lResult == ERROR_SUCCESS) { strcpy(Directory,Dir); }
 		}
 	}
@@ -1182,7 +1182,7 @@ InterruptsDisabled:
 BOOL Machine_LoadState(void) {
 	char Directory[255], FileName[255], ZipFile[255], LoadHeader[64], String[100];
 	char drive[_MAX_DRIVE] ,dir[_MAX_DIR], ext[_MAX_EXT];
-	DWORD dwRead, Value, count, SaveRDRAMSize;
+	DWORD dwRead, Value, count, SaveRDRAMsize;
 	BOOL LoadedZipFile = FALSE;
 	HANDLE hSaveFile;
 	unzFile file;
@@ -1216,7 +1216,7 @@ BOOL Machine_LoadState(void) {
 				unzCloseCurrentFile(file);
 				continue;
 			}
-			unzReadCurrentFile(file,&SaveRDRAMSize,sizeof(SaveRDRAMSize));
+			unzReadCurrentFile(file,&SaveRDRAMsize,sizeof(SaveRDRAMsize));
 			unzReadCurrentFile(file,LoadHeader,0x40);
 			if (CPU_Type != CPU_Interpreter) {
 				ResetRecompCode();
@@ -1224,9 +1224,9 @@ BOOL Machine_LoadState(void) {
 			Timers.CurrentTimerType = -1;
 			Timers.Timer = 0;
 			for (count = 0; count < MaxTimers; count ++) { Timers.Active[count] = FALSE; }
-			//fix rdram size
-			if (SaveRDRAMSize != RdramSize) {
-				if (RdramSize == 0x400000) {
+			//fix RDRAM size
+			if (SaveRDRAMsize != RDRAMsize) {
+				if (RDRAMsize == 0x400000) {
 					if (VirtualAlloc(N64MEM + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
 						DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 						ExitThread(0);
@@ -1245,7 +1245,7 @@ BOOL Machine_LoadState(void) {
 					VirtualFree((BYTE *)DelaySlotTable + (0x400000 >> 0xA), (0x400000 >> 0xA),MEM_DECOMMIT);
 				}
 			}
-			RdramSize = SaveRDRAMSize;
+			RDRAMsize = SaveRDRAMsize;
 			unzReadCurrentFile(file,&Value,sizeof(Value));
 			ChangeTimer(ViTimer,Value);
 			unzReadCurrentFile(file,&PROGRAM_COUNTER,sizeof(PROGRAM_COUNTER));
@@ -1266,7 +1266,7 @@ BOOL Machine_LoadState(void) {
 			unzReadCurrentFile(file,RegSI,sizeof(DWORD)*4);
 			unzReadCurrentFile(file,tlb,sizeof(TLB)*32);
 			unzReadCurrentFile(file,PIF_Ram,0x40);
-			unzReadCurrentFile(file,RDRAM,RdramSize);
+			unzReadCurrentFile(file,RDRAM,RDRAMsize);
 			unzReadCurrentFile(file,DMEM,0x1000);
 			unzReadCurrentFile(file,IMEM,0x1000);
 			unzCloseCurrentFile(file);
@@ -1288,7 +1288,7 @@ BOOL Machine_LoadState(void) {
 		SetFilePointer(hSaveFile,0,NULL,FILE_BEGIN);
 		ReadFile( hSaveFile,&Value,sizeof(Value),&dwRead,NULL);
 		if (Value != 0x23D8A6C8) { return FALSE; }
-		ReadFile( hSaveFile,&SaveRDRAMSize,sizeof(SaveRDRAMSize),&dwRead,NULL);
+		ReadFile( hSaveFile,&SaveRDRAMsize,sizeof(SaveRDRAMsize),&dwRead,NULL);
 		ReadFile( hSaveFile,LoadHeader,0x40,&dwRead,NULL);
 		if (CPU_Type != CPU_Interpreter) {
 			ResetRecompCode();
@@ -1296,9 +1296,9 @@ BOOL Machine_LoadState(void) {
 		Timers.CurrentTimerType = -1;
 		Timers.Timer = 0;
 		for (count = 0; count < MaxTimers; count ++) { Timers.Active[count] = FALSE; }
-		//fix rdram size
-		if (SaveRDRAMSize != RdramSize) {
-			if (RdramSize == 0x400000) {
+		//fix RDRAM size
+		if (SaveRDRAMsize != RDRAMsize) {
+			if (RDRAMsize == 0x400000) {
 				if (VirtualAlloc(N64MEM + 0x400000, 0x400000, MEM_COMMIT, PAGE_READWRITE)==NULL) {
 					DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 					ExitThread(0);
@@ -1317,7 +1317,7 @@ BOOL Machine_LoadState(void) {
 				VirtualFree((BYTE *)DelaySlotTable + (0x400000 >> 0xA), (0x400000 >> 0xA),MEM_DECOMMIT);
 			}
 		}
-		RdramSize = SaveRDRAMSize;
+		RDRAMsize = SaveRDRAMsize;
 		ReadFile( hSaveFile,&Value,sizeof(Value),&dwRead,NULL);
 		ChangeTimer(ViTimer,Value);
 		ReadFile( hSaveFile,&PROGRAM_COUNTER,sizeof(PROGRAM_COUNTER),&dwRead,NULL);
@@ -1338,7 +1338,7 @@ BOOL Machine_LoadState(void) {
 		ReadFile( hSaveFile,RegSI,sizeof(DWORD)*4,&dwRead,NULL);
 		ReadFile( hSaveFile,tlb,sizeof(TLB)*32,&dwRead,NULL);
 		ReadFile( hSaveFile,PIF_Ram,0x40,&dwRead,NULL);
-		ReadFile( hSaveFile,RDRAM,RdramSize,&dwRead,NULL);
+		ReadFile( hSaveFile,RDRAM,RDRAMsize,&dwRead,NULL);
 		ReadFile( hSaveFile,DMEM,0x1000,&dwRead,NULL);
 		ReadFile( hSaveFile,IMEM,0x1000,&dwRead,NULL);
 		CloseHandle(hSaveFile);
@@ -1415,7 +1415,7 @@ BOOL Machine_SaveState(void) {
 		SetFilePointer(hSaveFile,0,NULL,FILE_BEGIN);
 		Value = 0x23D8A6C8;
 		WriteFile( hSaveFile,&Value,sizeof(Value),&dwWritten,NULL);
-		WriteFile( hSaveFile,&RdramSize,sizeof(RdramSize),&dwWritten,NULL);
+		WriteFile( hSaveFile,&RDRAMsize,sizeof(RDRAMsize),&dwWritten,NULL);
 		WriteFile( hSaveFile,RomHeader,0x40,&dwWritten,NULL);
 		Value = Timers.NextTimer[ViTimer] + Timers.Timer;
 		WriteFile( hSaveFile,&Value,sizeof(Value),&dwWritten,NULL);
@@ -1440,7 +1440,7 @@ BOOL Machine_SaveState(void) {
 		WriteFile( hSaveFile,RegSI,sizeof(DWORD)*4,&dwWritten,NULL);
 		WriteFile( hSaveFile,tlb,sizeof(TLB)*32,&dwWritten,NULL);
 		WriteFile( hSaveFile,PIF_Ram,0x40,&dwWritten,NULL);
-		WriteFile( hSaveFile,RDRAM,RdramSize,&dwWritten,NULL);
+		WriteFile( hSaveFile,RDRAM,RDRAMsize,&dwWritten,NULL);
 		WriteFile( hSaveFile,DMEM,0x1000,&dwWritten,NULL);
 		WriteFile( hSaveFile,IMEM,0x1000,&dwWritten,NULL);
 		CloseHandle(hSaveFile);
@@ -1564,7 +1564,7 @@ void StartEmulation ( void ) {
 	memset(&CPU_Action,0,sizeof(CPU_Action));
 	CPU_Action.hStepping = CreateEvent( NULL, FALSE, FALSE, NULL);
 	WrittenToRom = FALSE;
-	memset(N64MEM, 0, RdramSize);
+	memset(N64MEM, 0, RDRAMsize);
 	InitilizeTLB();
 	InitalizeR4300iRegisters(LoadPifRom(*(ROM + 0x3D)),*(ROM + 0x3D),GetCicChipID(ROM));
 	BuildInterpreter();

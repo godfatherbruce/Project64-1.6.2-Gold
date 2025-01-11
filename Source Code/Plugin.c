@@ -81,26 +81,16 @@ void GetCurrentDlls (void) {
 void GetPluginDir( char * Directory ) {
 	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
 	char fname[_MAX_FNAME],ext[_MAX_EXT];
-	char Dir[255], Group[200];
+	char Group[200];
 	long lResult;
 	HKEY hKeyResults = 0;
 	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
 	_splitpath( path_buffer, drive, dir, fname, ext );
 	strcpy(Directory,drive);
-	strcat(Directory,dir);
+	strcat(Directory, dir);
 	strcat(Directory,"Plugin\\");
 	sprintf(Group,"N64 Software\\%s",AppName);
 	lResult = RegOpenKeyEx( HKEY_CURRENT_USER,Group,0,KEY_ALL_ACCESS, &hKeyResults);
-	if (lResult == ERROR_SUCCESS) {
-		DWORD Type, Value, Bytes;
-		Bytes = 4;
-		lResult = RegQueryValueEx(hKeyResults,"Use Default Plugin Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
-		if (lResult == ERROR_SUCCESS && Value == FALSE) {
-			Bytes = sizeof(Dir);
-			lResult = RegQueryValueEx(hKeyResults,"Plugin Directory",0,&Type,(LPBYTE)Dir,&Bytes);
-			if (lResult == ERROR_SUCCESS) { strcpy(Directory,Dir); }
-		}
-	}
 	RegCloseKey(hKeyResults);
 }
 void GetSnapShotDir( char * Directory ) {
@@ -118,10 +108,10 @@ void GetSnapShotDir( char * Directory ) {
 	if (lResult == ERROR_SUCCESS) {
 		DWORD Type, Value, Bytes;
 		Bytes = 4;
-		lResult = RegQueryValueEx(hKeyResults,"Use Default Snap Shot Dir",0,&Type,(LPBYTE)(&Value),&Bytes);
+		lResult = RegQueryValueEx(hKeyResults,"AppPath Screenshots",0,&Type,(LPBYTE)(&Value),&Bytes);
 		if (lResult == ERROR_SUCCESS && Value == FALSE) {
 			Bytes = sizeof(Dir);
-			lResult = RegQueryValueEx(hKeyResults,"Snap Shot Directory",0,&Type,(LPBYTE)Dir,&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"CustomPath Screenshots",0,&Type,(LPBYTE)Dir,&Bytes);
 			if (lResult == ERROR_SUCCESS) { strcpy(Directory,Dir); }
 		}
 	}

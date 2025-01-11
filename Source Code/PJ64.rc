@@ -300,7 +300,7 @@ BEGIN
     CONTROL         "Delay RDP Interrupt",IDC_DELAY_RDP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,171,111,11
     CONTROL         "Delay RSP Interrupt",IDC_DELAY_RSP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,124,171,99,11
     CONTROL         "Emulate AI",IDC_EMULATE_AI,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,158,111,11
-    LTEXT           "Self-modifying code Method:",IDC_SELFMOD_TEXT,11,66,111,10
+    LTEXT           "Self-modifying Code Method:",IDC_SELFMOD_TEXT,11,66,111,10
     COMBOBOX        IDC_SELFMOD,124,65,99,49,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 END
 /////////////////////////////////////////////////////////////////////////////

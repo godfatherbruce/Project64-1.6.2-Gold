@@ -610,33 +610,33 @@ entries, because if you do, then you are just wasting space, assuming you leave 
 
 Internal Name=ROMNAME
 (Internal Name is only printed to help RDB developers differentiate between entries)
-RDRAM Size= 
+MB= 
 (User's Selected Core Setting, 8 by default)
-Counter Factor= 
+CF= 
 (2, 1 if using -CF1)
-Save Type= 
+Save= 
 (First Save Type)
-CPU Type= 
+CPU= 
 (User's Selected Core Setting, Recompiler by default)
-Self-modifying code Method= 
+SCM= 
 (User's Selected Core Setting, Check Memory Advance by default)
-Reg Cache= 
+Caching= 
 (On)
 TLB= 
 (On)
-Delay SI= 
+SI= 
 (Off)
-Delay RDP= 
+RDP= 
 (Off)
-Delay RSP= 
+RSP= 
 (Off)
-Emulate AI= 
+AI= 
 (Off)
-SP Hack= 
+SP= 
 (Off)
-Large Buffer= 
+Buffer= 
 (Off)
-Linking= 
+ABL= 
 (User's Selected Core Setting, Off by default)
 --------------------------------------------------------------------------------------------------------
 

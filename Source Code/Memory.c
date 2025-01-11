@@ -467,13 +467,6 @@ void Compile_SW_Const ( DWORD Value, DWORD Addr ) {
 				if (ModValue != 0) {
 					OrConstToVariable(ModValue,&SP_STATUS_REG,"SP_STATUS_REG");
 				}
-				if ( ( Value & SP_SET_SIG0 ) != 0)
-				{
-					OrConstToVariable(MI_INTR_SP,&MI_INTR_REG,"MI_INTR_REG");
-					Pushad();
-					Call_Direct(CheckInterrupts,"CheckInterrupts");
-					Popad();
-				}
 				if ( ( Value & SP_CLR_INTR ) != 0) {
 					AndConstToVariable(~MI_INTR_SP,&MI_INTR_REG,"MI_INTR_REG");
 					Pushad();
@@ -1657,11 +1650,6 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 			if ( ( Value & SP_SET_SIG6 ) != 0) { SP_STATUS_REG |= SP_STATUS_SIG6;  }
 			if ( ( Value & SP_CLR_SIG7 ) != 0) { SP_STATUS_REG &= ~SP_STATUS_SIG7; }
 			if ( ( Value & SP_SET_SIG7 ) != 0) { SP_STATUS_REG |= SP_STATUS_SIG7;  }
-			if ( ( Value & SP_SET_SIG0 ) != 0)
-			{
-				MI_INTR_REG |= MI_INTR_SP;
-				CheckInterrupts();
-			}
 			if (DelayRDP == TRUE && *( DWORD *)(DMEM + 0xFC0) == 1) {
 				ChangeTimer(RspTimer, 0x900);
 				break;

@@ -148,11 +148,6 @@ void ChangeSpStatus (void) {
 	if ( ( RegModValue & SP_SET_SIG6 ) != 0) { SP_STATUS_REG |= SP_STATUS_SIG6;  }
 	if ( ( RegModValue & SP_CLR_SIG7 ) != 0) { SP_STATUS_REG &= ~SP_STATUS_SIG7; }
 	if ( ( RegModValue & SP_SET_SIG7 ) != 0) { SP_STATUS_REG |= SP_STATUS_SIG7;  }
-	if ( ( RegModValue & SP_SET_SIG0 ) != 0)
-	{
-		MI_INTR_REG |= MI_INTR_SP;
-		CheckInterrupts();
-	}
 	if (DelayRDP == TRUE && *( DWORD *)(DMEM + 0xFC0) == 1) {
 		ChangeTimer(RspTimer, 0x900);
 		return;

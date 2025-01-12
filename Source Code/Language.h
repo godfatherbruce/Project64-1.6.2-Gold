@@ -194,8 +194,8 @@ char * GS               ( int StringID );
 //Advanced Block Linking
 #define ABL_ON				164
 #define ABL_OFF				165
-//Save Type
-#define SAVE_FIRST_USED			166
+
+#define SMCM_CHECK_RETURN		166
 #define SAVE_4K_eepROM			167
 #define SAVE_16K_eepROM			168
 #define SAVE_SRAM			169

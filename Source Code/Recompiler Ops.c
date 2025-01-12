@@ -2180,7 +2180,7 @@ void Compile_R4300i_SDR (BLOCK_SECTION * Section) {
 	Popad();
 }
 void _fastcall ClearRecomplierCache (DWORD Address) {
-	if (SelfModCheck != ModCode_CheckMemory2 || RDRAMsize == 0x400000)
+	if (SelfModCheck != ModCode_CheckMemoryReturn)
 	if (!TranslateVaddr(&Address)) return;
 	if (Address < RDRAMsize) {
 		DWORD Block = Address >> 12;
@@ -2195,7 +2195,8 @@ void Compile_R4300i_CACHE (BLOCK_SECTION * Section){
 	CPU_Message("  %X %s",Section->CompilePC,R4300iOpcodeName(Opcode.Hex,Section->CompilePC));
 	if (SelfModCheck != ModCode_Cache &&
 		SelfModCheck != ModCode_ChangeMemory &&
-		SelfModCheck != ModCode_CheckMemory2 &&
+		SelfModCheck != ModCode_CheckMemoryAdvance &&
+		SelfModCheck != ModCode_CheckMemoryReturn &&
 		SelfModCheck != ModCode_CheckMemoryCache)
 	{
 		return;

@@ -110,9 +110,9 @@ Added and removed plugins (too much to list the specifics here, please see later
 
 Added cheat support for a ton of Zelda64 ROMhacks as well as a great mod known as Super Mario Star Road.
 
-Added drag-n-drop support when opening ROMs so there is no need to go through file explorer's interface.
+Added custom-made "Check Memory & Return" self-modifying code method to help support games like OoT 1.x.
 
-Added file name to title bar after opening a ROM, just in case the internal name isn't updated w/ a mod.
+Added drag-n-drop support when opening ROMs so there is no need to go through file explorer's interface.
 
 Added Linking=Off for all entries w/ Protect Memory to prevent excessive stutters that happen otherwise.
 
@@ -128,8 +128,6 @@ Changed a few error messages to be more informative so that they are actually he
 that something is wrong and not giving the user any idea on how to fix the problem they're experiencing.
 
 Changed CloseCpu to run twice as fast and temp set system timer resolution for consistent functionality.
-
-Changed databases besides the ROM database to print Internal Name= (previously was only printing Name=).
 
 Changed the FPS display to round to whole numbers, de-acronym the term, and display even if not running.
 
@@ -155,8 +153,6 @@ Disabled end emulation in fullscreen mode because it's crashing.
 Fixed "Always On Top" not being togglable from within the ROM browser.
 
 Fixed certain ROMhacks having their save file get deleted upon being saved (Indigo, Ultimate Trial).
-
-Fixed CMA crash in recompiler ops while 8MB RDRAM is currently used (was affecting Ocarina of Time).
 
 Fixed loadstate glitches.
 
@@ -609,36 +605,35 @@ entries, because if you do, then you are just wasting space, assuming you leave 
 
 (In paranthesis, I am telling you what the setting is set to when it is left empty like this as a guide)
 
-Internal Name=ROMNAME
-(Internal Name is only printed to help RDB developers differentiate between entries)
-MB= 
-(User's Selected Core Setting, 8 by default)
-CF= 
-(2, 1 if using -CF1)
-Save= 
-(First Save Type)
-CPU= 
-(User's Selected Core Setting, Recompiler by default)
-SCM= 
-(User's Selected Core Setting, Check Memory Advance by default)
+
+ABL= 
+(User's selected core setting, Off by default)
+AI= 
+(Off)
+Buffer= 
+(Off)
 Caching= 
 (On)
-TLB= 
-(On)
-SI= 
-(Off)
+CF= 
+(2, 1 if using -CF1)
+CPU= 
+(User's selected core setting, Recompiler by default)
+MB= 
+(User's selected core setting, 8 by default)
 RDP= 
 (Off)
 RSP= 
 (Off)
-AI= 
+Save= 
+(Auto selected, AKA First Used)
+SCM= 
+(User's selected core setting, Check Memory Advance by default)
+SI= 
 (Off)
 SP= 
 (Off)
-Buffer= 
-(Off)
-ABL= 
-(User's Selected Core Setting, Off by default)
+TLB= 
+(On)
 --------------------------------------------------------------------------------------------------------
 
 Section#13 How to Develop Project64 1.6 + BEWARE of MiB/PJ64Team!
@@ -648,7 +643,7 @@ Men in Black/Project64 Team, please carefully read this informative document fro
 https://docs.google.com/document/d/1VosUr3DHkhFd6hYRLrwpAtuzDuvYq0zUe2C1rkQ1_xg/edit?usp=sharing
 --------------------------------------------------------------------------------------------------------
 
-Documentation That You Can Use to Help Develop Project64 & Fix Emulation Issues You Encounter
+Section#14 Documentation That You Can Use to Help Develop Project64 & Fix Emulation Issues You Encounter
 --------------------------------------------------------------------------------------------------------
 Surreal64 Documentation for Project64 1.4 from here http://surreal64ce.wikidot.com/settings:pj64settings
 
@@ -702,9 +697,6 @@ memory expansion accessory installed. This results in larger state saves and low
 required by some games.
 
 Note from Bruce IV: 8 is the best default because most romhacks (which get default settings) need 8MB.
-Additionally, using a memory size of 4 will emulate roms differently w/ Check Memory Advance in 1.6.2.
-A memory size of 8 is required for all Majora's Mask, Ocarina of Time Debug, and Ocarina of Time v1.0,
-v1.1, and v1.2 ROMs to function correctly, but you can use 4 size in niche cases with Ocarina of Time.
 
 
 Register Caching
@@ -736,13 +728,21 @@ Many games use "self modifying code". In a nutshell, this makes them harder to e
 several methods of dealing with this situation, which range from fast on one side to more secure/stable
 on the other. In order from fastest to most secure these are:
 
-None, Cache, Check Memory, Check Memory & cache, Change Memory, Protect Memory, Check Memory Advance.
+None, Cache, Check Memory & Cache, Check Memory Advance, Change Memory & Cache, Check Memory & Return,
+Protect Memory.
 
 Note from Bruce IV: I suggest avoiding pairing Protect Memory with ABL on and avoid pairing ABL off with
 Change Memory & Cache. If you don't listen to this suggestion, there may be stuttering or weird crashes.
+I've also resorted the list of fastest to most secure self-modifying code method based on my experience.
+Keep in mind that even though one method may be listed to be more secure than another, it is HIGHLY game
+dependent as to what method will work better for it! Example, Check Memory & Return is great for Ocarina
+of Time, but freezes on Animal Crossing before getting past the intro cutscene. Use ROM Settings wisely!
+Additionally, Check Memory & Return is a reimplementation of Check Memory Advance which returns on clear
+recompiler cache, hence the name. I invented this method so that we can safetly play Ocarina of Time w/o
+crashing from standing on the tree stump top in front of the skull skid and then leaving the lost woods.
 
 
-Large Buffer
+Larger Compile Buffer
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 Yet another highly technical setting. Some games generate particularly complex code structures which
 tend to overlow the default 20MB compiler buffer and stall the system. By enabling this a game will be

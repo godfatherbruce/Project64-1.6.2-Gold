@@ -971,7 +971,6 @@ LRESULT CALLBACK CheatAddProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 				//Add to ini
 				IniFileName = GetCheatIniFileName();
 				sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-				_WritePrivateProfileString(Identifier,"Internal Name",RomName,IniFileName);
 				sprintf(NewCheatName,"Cheat%d",CheatNo);
 				_WritePrivateProfileString(Identifier,NewCheatName,cheat,IniFileName);
 				if (cheat) { free(cheat); cheat = NULL; }
@@ -1156,7 +1155,6 @@ LRESULT CALLBACK CheatEditProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				sprintf(cheat,"\"%s\"",NewCheatName);
 				strcat(cheat, codestring);
 				//Add to ini
-				_WritePrivateProfileString(Identifier,"Internal Name",RomName,IniFileName);
 				sprintf(NewCheatName,"Cheat%d",CheatNo);
 				_WritePrivateProfileString(Identifier,NewCheatName,cheat,IniFileName);
 				if (cheat) { free(cheat); cheat = NULL; }

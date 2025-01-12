@@ -5648,39 +5648,39 @@ Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [B044B569-373C1985-C:50]
 Game Name=The Legend of Zelda - Ocarina of Time (E) (M3) (v1.0)
-MB=8
+MB=4
 CPU=Recompiler
-SCM=Check Memory Advance
+SCM=Check Memory & Return
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [B2055FBD-0BAB4E0C-C:50]
 Game Name=The Legend of Zelda - Ocarina of Time (E) (M3) (v1.1)
-MB=8
+MB=4
 CPU=Recompiler
-SCM=Check Memory Advance
+SCM=Check Memory & Return
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 [EC7011B7-7616D72B-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time (U) (v1.0)
-MB=8
+MB=4
 CPU=Recompiler
-SCM=Check Memory Advance
+SCM=Check Memory & Return
 Status=Compatible
 Cheat0=D109C5AC 0C02,8109C5AC 2400//Subscreen Delay Fix
 Cheat1=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 [D43DA81F-021E1E19-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time (U) (v1.1)
-MB=8
+MB=4
 CPU=Recompiler
-SCM=Check Memory Advance
+SCM=Check Memory & Return
 Status=Compatible
 Cheat0=D109C5BC 0C02,8109C5BC 2400//Subscreen Delay Fix
 Cheat1=D138EA6C 0C0E,8138EA6C 2400//Equipment Screen Delay Fix
 [693BA2AE-B7F14E9F-C:45]
 Game Name=The Legend of Zelda - Ocarina of Time (U) (v1.2)
-MB=8
+MB=4
 CPU=Recompiler
-SCM=Check Memory Advance
+SCM=Check Memory & Return
 Status=Compatible
 Cheat0=D109CC9C 0C02,8109CC9C 2400//Subscreen Delay Fix
 Cheat1=D138F07C 0C0E,8138F07C 2400//Equipment Screen Delay Fix
@@ -6757,25 +6757,25 @@ Status=Compatible
 //ZROMs
 [EC7011B7-7616D72B-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina (J) (v1.0)
-MB=8
+MB=4
 CPU=Recompiler
-SCM=Check Memory Advance
+SCM=Check Memory & Return
 Status=Compatible
 Cheat0=D109C5AC 0C02,8109C5AC 2400//Subscreen Delay Fix
 Cheat1=D138E8CC 0C0E,8138E8CC 2400//Equipment Screen Delay Fix
 [D43DA81F-021E1E19-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina (J) (v1.1)
-MB=8
+MB=4
 CPU=Recompiler
-SCM=Check Memory Advance
+SCM=Check Memory & Return
 Status=Compatible
 Cheat0=D109C5BC 0C02,8109C5BC 2400//Subscreen Delay Fix
 Cheat1=D138EA6C 0C0E,8138EA6C 2400//Equipment Screen Delay Fix
 [693BA2AE-B7F14E9F-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina (J) (v1.2)
-MB=8
+MB=4
 CPU=Recompiler
-SCM=Check Memory Advance
+SCM=Check Memory & Return
 Status=Compatible
 Cheat0=D109CC9C 0C02,8109CC9C 2400//Subscreen Delay Fix
 Cheat1=D138F07C 0C0E,8138F07C 2400//Equipment Screen Delay Fix
@@ -7117,7 +7117,7 @@ CPU=Recompiler
 SCM=Check Memory Advance
 Status=Compatible
 Plugin Note=Jabo's Direct3D8 1.6 ONLY
-[57CB1765-06320872-C:45]
+[5A091FA5-5AAA78FE-C:45]
 Game Name=(Hack) Sands of Time
 MB=8
 CPU=Recompiler

@@ -433,8 +433,7 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 				CPU_Message("      NoTlbEntry:");
 				*((BYTE *)(Jump2))=(BYTE)(RecompPos - Jump2 - 1);
 			}
-		} else if (SelfModCheck == ModCode_CheckMemoryCache) {
-		} else if (SelfModCheck == ModCode_CheckMemory2) { // *** Add in Build 53
+		} else if (SelfModCheck == ModCode_CheckMemoryCache || SelfModCheck == ModCode_CheckMemoryAdvance || SelfModCheck == ModCode_CheckMemoryReturn) {
 		} else {
 			BYTE * Jump, * Jump2;
 			if (TargetPC >= 0x80000000 && TargetPC < 0x90000000) {
@@ -2601,7 +2600,7 @@ void StartRecompilerCPU (void ) {
 	DWORD Addr;
 	BYTE * Block;
 	CoInitialize(NULL);
-	if (ModCode_CheckMemoryCache || ModCode_CheckMemory2) {// *** Add in Build 53
+	if (ModCode_CheckMemoryCache || ModCode_CheckMemoryAdvance || ModCode_CheckMemoryReturn) {// *** Add in Build 53
 		if (TargetInfo == NULL) {
 			TargetInfo = VirtualAlloc(NULL,MaxCodeBlocks * sizeof(TARGET_INFO),MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE);
 			if (TargetInfo == NULL) {
@@ -2805,7 +2804,7 @@ void StartRecompilerCPU (void ) {
 					Block = Target->CodeBlock;
 				}
 			}
-			if (SelfModCheck == ModCode_CheckMemory2 && Block != NULL) {
+			if (SelfModCheck == ModCode_CheckMemoryAdvance && Block != NULL || SelfModCheck == ModCode_CheckMemoryReturn && Block != NULL) {
 				TARGET_INFO * Target = (TARGET_INFO *)Block;
 				if (*(QWORD *)(N64MEM+Addr) != Target->OriginalMemory) {
 					DWORD Start = (Addr & ~0xFFF) - 0x10000;
@@ -2834,7 +2833,7 @@ void StartRecompilerCPU (void ) {
 					ResetRecompCode();
 					Block = Compiler4300iBlock();
 				}
-				if (SelfModCheck == ModCode_CheckMemoryCache || SelfModCheck == ModCode_CheckMemory2) {
+				if (SelfModCheck == ModCode_CheckMemoryCache || SelfModCheck == ModCode_CheckMemoryAdvance || SelfModCheck == ModCode_CheckMemoryReturn) {
 					TargetInfo[TargetIndex].CodeBlock  = Block;
 					TargetInfo[TargetIndex].OriginalMemory = *(QWORD *)(N64MEM+Addr);
 					*(JumpTable + (Addr >> 2)) = &TargetInfo[TargetIndex];

@@ -587,34 +587,34 @@ void ReadRomOptions (void) {
 			else if (strcmp(String,"Recompiler") == 0)   { RomCPUType = CPU_Recompiler; }
 			else                                         { RomCPUType = CPU_Default; }
 			_GetPrivateProfileString(Identifier,"SCM","",String,sizeof(String),IniFileName);
-			if (strcmp(String,"None") == 0)                      { RomSelfMod = ModCode_None; }
-			else if (strcmp(String,"Cache") == 0)                { RomSelfMod = ModCode_Cache; }
-			else if (strcmp(String,"Protect Memory") == 0)     { RomSelfMod = ModCode_ProtectedMemory; }
-			else if (strcmp(String,"Check Memory") == 0)         { RomSelfMod = ModCode_CheckMemoryCache; }
+			if (strcmp(String,"Cache") == 0)                { RomSelfMod = ModCode_Cache; }
+			else if (strcmp(String,"Change Memory & Cache") == 0){ RomSelfMod = ModCode_ChangeMemory; }
 			else if (strcmp(String,"Check Memory & Cache") == 0) { RomSelfMod = ModCode_CheckMemoryCache; }
-			else if (strcmp(String,"Check Memory Advance") == 0) { RomSelfMod = ModCode_CheckMemory2; }
-			else if (strcmp(String,"Change Memory & Cache") == 0)        { RomSelfMod = ModCode_ChangeMemory; }
+			else if (strcmp(String,"Check Memory & Return") == 0){ RomSelfMod = ModCode_CheckMemoryReturn; }
+			else if (strcmp(String,"Check Memory Advance") == 0) { RomSelfMod = ModCode_CheckMemoryAdvance; }
+			else if (strcmp(String,"None") == 0)                      { RomSelfMod = ModCode_None; }
+			else if (strcmp(String,"Protect Memory") == 0)       { RomSelfMod = ModCode_ProtectedMemory; }
 			else                                                 { RomSelfMod = ModCode_Default; }
 		}
 		_GetPrivateProfileString(Identifier,"TLB","",String,sizeof(String),IniFileName);
-		if (strcmp(String,"No") == 0) { RomUseTlb = FALSE; }
+		if (strcmp(String,"Off") == 0) { RomUseTlb = FALSE; }
 		_GetPrivateProfileString(Identifier,"SI","",String,sizeof(String),IniFileName);
-		if (strcmp(String,"Yes") == 0) { RomDelaySI = TRUE; }
+		if (strcmp(String,"On") == 0) { RomDelaySI = TRUE; }
 		_GetPrivateProfileString(Identifier,"SP","",String,sizeof(String),IniFileName);
-		if (strcmp(String,"Yes") == 0) { RomSPHack = TRUE; }
+		if (strcmp(String,"On") == 0) { RomSPHack = TRUE; }
 		_GetPrivateProfileString(Identifier,"Caching","",String,sizeof(String),IniFileName);
-		if (strcmp(String,"No") == 0) { RomUseCache = FALSE; }
+		if (strcmp(String,"Off") == 0) { RomUseCache = FALSE; }
 		_GetPrivateProfileString(Identifier,"Buffer","",String,sizeof(String),IniFileName);
-		if (strcmp(String,"Yes") == 0) { RomUseLargeBuffer = TRUE; }
+		if (strcmp(String,"On") == 0) { RomUseLargeBuffer = TRUE; }
 		_GetPrivateProfileString(Identifier,"ABL","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"On") == 0) { RomUseLinking = 0; }
 		if (strcmp(String,"Off") == 0) { RomUseLinking = 1; }
 		_GetPrivateProfileString(Identifier, "RSP", "", String, sizeof(String), IniFileName);
-		if (strcmp(String, "Yes") == 0 ) { RomDelayRSP = TRUE; }
+		if (strcmp(String, "On") == 0 ) { RomDelayRSP = TRUE; }
 		_GetPrivateProfileString(Identifier, "RDP", "", String, sizeof(String), IniFileName);
-		if (strcmp(String, "Yes") == 0 ) { RomDelayRDP = TRUE; }
+		if (strcmp(String, "On") == 0 ) { RomDelayRDP = TRUE; }
 		_GetPrivateProfileString(Identifier, "AI", "", String, sizeof(String), IniFileName);
-		if (strcmp(String, "Yes") == 0 ) { RomEmulateAI = TRUE; }
+		if (strcmp(String, "On") == 0 ) { RomEmulateAI = TRUE; }
 	}
 }
 void OpenN64Image ( void ) {
@@ -913,17 +913,31 @@ void SaveRomOptions (void) {
 	if (strlen(RomName) == 0) { return; }
 	IniFileName = GetIniFileName();
 	sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
+	_WritePrivateProfileString(Identifier, "ABL", " ", GetIniFileName());
+	if (RomUseLinking == 0) { _WritePrivateProfileString(Identifier, "ABL", "On", GetIniFileName()); }
+	if (RomUseLinking == 1) { _WritePrivateProfileString(Identifier, "ABL", "Off", GetIniFileName()); }
+	_WritePrivateProfileString(Identifier, "AI", RomEmulateAI ? "On" : " ", GetIniFileName());
+	_WritePrivateProfileString(Identifier, "Buffer", RomUseLargeBuffer ? "On" : " ", GetIniFileName());
+	_WritePrivateProfileString(Identifier, "Caching", RomUseCache ? " " : "Off", GetIniFileName());
+	switch (RomCF) {
+	case 1: case 2: case 3: case 4: case 5: case 6: sprintf(String, "%d", RomCF); break;
+	default: sprintf(String, " "); break;
+	}
+	_WritePrivateProfileString(Identifier, "CF", String, GetIniFileName());
+	switch (RomCPUType) {
+	case CPU_Interpreter: sprintf(String, "Interpreter"); break;
+	case CPU_Recompiler: sprintf(String, "Recompiler"); break;
+	default: sprintf(String, " "); break;
+	}
+	_WritePrivateProfileString(Identifier, "CPU", String, GetIniFileName());
 	switch (ROMRAMsize) {
 	case 0x400000: strcpy(String,"4"); break;
 	case 0x800000: strcpy(String,"8"); break;
 	default: strcpy(String," "); break;
 	}
 	_WritePrivateProfileString(Identifier,"MB",String,GetIniFileName());
-	switch (RomCF) {
-	case 1: case 2: case 3: case 4: case 5: case 6: sprintf(String,"%d",RomCF); break;
-	default: sprintf(String," "); break;
-	}
-	_WritePrivateProfileString(Identifier,"CF",String,GetIniFileName());
+	_WritePrivateProfileString(Identifier, "RDP", RomDelayRDP ? "On" : " ", GetIniFileName());
+	_WritePrivateProfileString(Identifier, "RSP", RomDelayRSP ? "On" : " ", GetIniFileName());
 	switch (RomSaveUsing) {
 	case eepROM_4K: sprintf(String,"4"); break;
 	case eepROM_16K: sprintf(String,"16"); break;
@@ -932,33 +946,20 @@ void SaveRomOptions (void) {
 	default: sprintf(String," "); break;
 	}
 	_WritePrivateProfileString(Identifier,"Save",String,GetIniFileName());
-	switch (RomCPUType) {
-	case CPU_Interpreter: sprintf(String,"Interpreter"); break;
-	case CPU_Recompiler: sprintf(String,"Recompiler"); break;
-	default: sprintf(String," "); break;
-	}
-	_WritePrivateProfileString(Identifier,"CPU",String,GetIniFileName());
 	switch (RomSelfMod) {
-	case ModCode_None: sprintf(String,"None"); break;
 	case ModCode_Cache: sprintf(String,"Cache"); break;
+	case ModCode_ChangeMemory: sprintf(String, "Change Memory & Cache"); break;
+	case ModCode_CheckMemoryCache: sprintf(String, "Check Memory & Cache"); break;
+	case ModCode_CheckMemoryReturn: sprintf(String, "Check Memory & Return"); break;
+	case ModCode_CheckMemoryAdvance: sprintf(String, "Check Memory Advance"); break;
+	case ModCode_None: sprintf(String, "None"); break;
 	case ModCode_ProtectedMemory: sprintf(String,"Protect Memory"); break;
-	case ModCode_CheckMemoryCache: sprintf(String,"Check Memory & Cache"); break;
-	case ModCode_CheckMemory2: sprintf(String,"Check Memory Advance"); break;
-	case ModCode_ChangeMemory: sprintf(String,"Change Memory & Cache"); break;
 	default: sprintf(String," "); break;
 	}
 	_WritePrivateProfileString(Identifier,"SCM",String,GetIniFileName());
-	_WritePrivateProfileString(Identifier,"Caching",RomUseCache?" ":"Off",GetIniFileName());
+	_WritePrivateProfileString(Identifier, "SI", RomDelaySI ? "On" : " ", GetIniFileName());
+	_WritePrivateProfileString(Identifier, "SP", RomSPHack ? "On" : " ", GetIniFileName());
 	_WritePrivateProfileString(Identifier,"TLB",RomUseTlb?" ":"Off",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"SI",RomDelaySI?"On":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"RDP",RomDelayRDP?"On":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"RSP",RomDelayRSP?"On":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"AI",RomEmulateAI?"On":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"SP",RomSPHack?"On":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"Buffer",RomUseLargeBuffer?"Yes":" ",GetIniFileName());
-	_WritePrivateProfileString(Identifier,"ABL"," ",GetIniFileName());
-	if (RomUseLinking == 0) { _WritePrivateProfileString(Identifier,"ABL","On",GetIniFileName()); }
-	if (RomUseLinking == 1) { _WritePrivateProfileString(Identifier,"ABL","Off",GetIniFileName()); }
 }
 void SetRecentRomDir (DWORD Index) {
 	Index -= ID_FILE_RECENT_DIR;

@@ -67,10 +67,11 @@ extern "C" {
 #define ModCode_Cache			0
 #define ModCode_ChangeMemory		1
 #define ModCode_CheckMemoryCache	2
-#define ModCode_CheckMemory2		3
-#define ModCode_None			4
-#define ModCode_ProtectedMemory		5
-#define Default_SelfModCheck		ModCode_CheckMemory2
+#define ModCode_CheckMemoryReturn	3
+#define ModCode_CheckMemoryAdvance	4
+#define ModCode_None			5
+#define ModCode_ProtectedMemory		6
+#define Default_SelfModCheck		ModCode_CheckMemoryReturn
 /********** Counter Factor ***********/
 #define Default_CountPerOp		2
 /********** Rom Browser **************/

@@ -35,3 +35,6 @@ Indigo Chapter 2 Sep 16 2024
 Time Lost 01/06/25
 Shadows of Eldoria 10/31/2024
 gamecontrollerdb e9d11d9
+
+NOTE: I have included the Return to Yoshi's Island Demo 2, but I don't plan to upstream it
+because I'd rather wait until the whole game is released and then I'll just go from there.

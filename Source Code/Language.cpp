@@ -204,8 +204,8 @@ LANG_STR DefaultString[] = {
 //Advanced Block Linking
 	{ ABL_ON,              "On"},
 	{ ABL_OFF,             "Off"},
-//Save Type
-	{ SAVE_FIRST_USED,     "Use First Used Save Type"},
+
+	{ SMCM_CHECK_RETURN,	  "Check Memory & Return"},
 	{ SAVE_4K_eepROM,      "4kbit eepROM"},
 	{ SAVE_16K_eepROM,     "16kbit eepROM"},
 	{ SAVE_SRAM,           "32kbytes SRAM"},

@@ -529,6 +529,7 @@ BEGIN
         MENUITEM "Refresh ROM List",            ID_FILE_REFRESHROMLIST
         MENUITEM "Choose ROM Directory",        ID_FILE_ROMDIRECTORY
         MENUITEM "ROM Settings",                ID_EDITSETTINGS
+        MENUITEM "Cheats",                      ID_EDITCHEATS
     END
 END
 IDR_CHEAT_MENU MENU

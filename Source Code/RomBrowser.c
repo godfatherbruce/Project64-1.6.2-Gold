@@ -554,12 +554,15 @@ void RomList_PopupMenu(LPNMHDR pnmh) {
 	MenuSetText(hPopupMenu, 2, GS(MENU_REFRESH), NULL);
 	MenuSetText(hPopupMenu, 3, GS(MENU_CHOOSE_ROM), NULL);
 	MenuSetText(hPopupMenu, 4, GS(TAB_ROMSETTINGS), NULL);
+	MenuSetText(hPopupMenu, 5, GS(MENU_CHEAT), NULL);
 	if (strlen(CurrentRBFileName) == 0) {
-		DeleteMenu(hPopupMenu,4,MF_BYPOSITION);
-		DeleteMenu(hPopupMenu,3,MF_BYPOSITION);
-		DeleteMenu(hPopupMenu,2,MF_BYPOSITION);
-		DeleteMenu(hPopupMenu,0,MF_BYPOSITION);
+		DeleteMenu(hPopupMenu, 5, MF_BYPOSITION);
+		DeleteMenu(hPopupMenu, 4, MF_BYPOSITION);
+		DeleteMenu(hPopupMenu, 3, MF_BYPOSITION);
+		DeleteMenu(hPopupMenu, 2, MF_BYPOSITION);
+		DeleteMenu(hPopupMenu, 0, MF_BYPOSITION);
 	}
+	if (!RememberCheats) DeleteMenu(hPopupMenu, 5, MF_BYPOSITION);
 	TrackPopupMenu(hPopupMenu, 0, Mouse.x, Mouse.y, 0,hMainWindow, NULL);
 	DestroyMenu(hMenu);
 }

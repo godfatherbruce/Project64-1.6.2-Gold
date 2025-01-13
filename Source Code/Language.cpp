@@ -99,8 +99,8 @@ LANG_STR DefaultString[] = {
         { MENUDES_RECENT_DIR, "Lets you choose a ROM directory" },
         { MENUDES_LANGUAGES, "Lets you swap to a different language database if provided" },
         { MENUDES_GAME_SLOT, "Selects a save state slot" },
-        { MENUDES_GAME_SETTINGS, "Lets you edit ROM database (.rdb) settings for a selected ROM" },
-        { MENUDES_GAME_CHEATS, "Lets you use/edit cheat database (.cdb) codes for a selected ROM" },
+        { MENUDES_GAME_SETTINGS, "Lets you edit ROM settings for a selected ROM" },
+        { MENUDES_GAME_CHEATS, "Lets you edit cheat codes for a selected ROM (unavailable without remembered cheats)" },
         { MENUDES_UNINSTALLAPP, "Attempts to factory reset all PJ64 registries/configurations and terminates this instance" },
         { MENUDES_GITHUB, "Takes you to Bruce Shankle IV's Project64 GitHub page" },
 /*********************************************************************************

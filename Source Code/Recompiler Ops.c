@@ -2180,8 +2180,7 @@ void Compile_R4300i_SDR (BLOCK_SECTION * Section) {
 	Popad();
 }
 void _fastcall ClearRecomplierCache (DWORD Address) {
-	if (SelfModCheck != ModCode_CheckMemoryReturn)
-	if (!TranslateVaddr(&Address)) return;
+	if (SelfModCheck != ModCode_CheckMemoryReturn) if (!TranslateVaddr(&Address)) return;
 	if (Address < RDRAMsize) {
 		DWORD Block = Address >> 12;
 		if (N64_Blocks.NoOfRDRAMBlocks[Block] > 0) {

@@ -773,6 +773,7 @@ void OpenChosenFile ( void ) {
 			DisplayError(GS(MSG_FAIL_OPEN_IMAGE));
 			EnableOpenMenuItems();
 			ShowRomList(hMainWindow);
+			RefreshRomBrowser();
 			return;
 		}
 		SetFilePointer(hFile,0,0,FILE_BEGIN);

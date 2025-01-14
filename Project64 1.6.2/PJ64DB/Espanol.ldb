@@ -74,7 +74,7 @@
 #77# "Te permite cambiar a una base de datos de Idioma diferente si esta disponible"
 #78# "Selecciona una ranura de estado de Guardado"
 #79# "Te permite editar la configuracion de la ROM para una ROM seleccionada"
-#80# "Te permite editar codigos de Trucos para una ROM seleccionada (no disponible sin recordar trucos)"
+#80# "Te permite editar codigos de Trucos para una ROM seleccionada"
 #81# "Intenta restablecer todos los registros/configuraciones de PJ64 y termina esta instancia"
 #82# "Te lleva a la pagina de GitHub de Project64 1.6.2 de Bruce Shankle IV"
 #83# "Nombre de archivo"
@@ -116,8 +116,8 @@
 #121# "Recordar Trucos Seleccionados"
 #122# "Max. # de ROMs recordadas (Max 10):"
 #124# "Max. # de directorios de ROMs recordados (Max 10):"
-#126# "Usar buscador de ROMs"
-#127# "Usar recursion de directorios"
+#126# "Buscador de ROMs"
+#127# "Recursion de Directorios"
 #128# "Campos disponibles:"
 #129# "Mostrar campos en este orden:"
 #130# "Agregar ->"
@@ -218,9 +218,7 @@ Emulacion finalizada"
 #214# "Intento de abrir el archivo zip fallido.
 
 Potencialmente es un archivo .zip corrupto: intenta descomprimir ROM manualmente"
-#215# "Error al abrir la ROM.
-
-Potencialmente es una ruta no valida: actualiza el navegador de ROMs si encontraste este error desde alli. De lo contrario, intenta restablecer el nombre y la ubicacion anteriores del archivo ROM en tu unidad"
+#215# "Muestra informacion especifica sobre una ROM seleccionada"
 #216# "Error ocurrido al intentar abrir archivo .zip"
 #217# "El archivo cargado no parece ser una ROM valida.
 

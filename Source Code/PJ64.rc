@@ -182,8 +182,8 @@ BEGIN
     EDITTEXT        IDC_REMEMBERDIR,159,35,26,12,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "dirs",IDC_ROMSEL_TEXT4,189,37,31,8
     GROUPBOX        "",IDC_STATIC,2,55,225,132
-    CONTROL         "Use ROM Browser",IDC_USE_ROMBROWSER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,9,68,97,10
-    CONTROL         "Use Directory recursion",IDC_RECURSION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,121,68,96,10
+    CONTROL         "ROM Browser",IDC_USE_ROMBROWSER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,9,68,97,10
+    CONTROL         "Directory Recursion",IDC_RECURSION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,121,68,96,10
     LTEXT           "Available fields",IDC_ROMSEL_TEXT5,9,85,77,8
     LISTBOX         IDC_AVAILABLE,9,97,80,80,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Show fields in this order:",IDC_ROMSEL_TEXT6,142,85,81,8
@@ -525,11 +525,13 @@ BEGIN
     POPUP "PopupMenu"
     BEGIN
         MENUITEM "Open ROM",                    ID_PLAYGAME
+	MENUITEM "ROM Info",			ID_POPUPMENU_ROMINFORMATION		
         MENUITEM SEPARATOR
-        MENUITEM "Refresh ROM List",            ID_FILE_REFRESHROMLIST
         MENUITEM "Choose ROM Directory",        ID_FILE_ROMDIRECTORY
-        MENUITEM "ROM Settings",                ID_EDITSETTINGS
+        MENUITEM "Refresh ROM List",            ID_FILE_REFRESHROMLIST
+        MENUITEM SEPARATOR
         MENUITEM "Cheats",                      ID_EDITCHEATS
+        MENUITEM "ROM Settings",                ID_EDITSETTINGS
     END
 END
 IDR_CHEAT_MENU MENU

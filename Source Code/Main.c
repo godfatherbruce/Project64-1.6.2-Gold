@@ -390,9 +390,9 @@ void LoadSettings (void) {
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { RomDirsToRemember = Default_RomsDirsToRemember; }
 			lResult = RegQueryValueEx(hKeyResults,"Start Emulation Upon ROM Opening",0,&Type,(BYTE *)(&AutoStart),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { AutoStart = Default_AutoStart; }
-			lResult = RegQueryValueEx(hKeyResults,"Use ROM Browser",0,&Type,(BYTE *)(&RomBrowser),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"ROM Browser",0,&Type,(BYTE *)(&RomBrowser),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { RomBrowser = Default_UseRB; }
-			lResult = RegQueryValueEx(hKeyResults,"Use Recursion",0,&Type,(BYTE *)(&Rercursion),&Bytes);
+			lResult = RegQueryValueEx(hKeyResults,"Directory Recursion",0,&Type,(BYTE *)(&Rercursion),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { Rercursion = Default_Rercursion; }
 			lResult = RegQueryValueEx(hKeyResults,"RDB ROM Settings",0,&Type,(BYTE *)(&UseIni),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { UseIni = Default_UseIni; }
@@ -561,7 +561,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	case WM_MENUSELECT:
 		switch (LOWORD(wParam)) {
 		case ID_PLAYGAME: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_START)); break;
-		case ID_POPUPMENU_ROMINFORMATION: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ROM_INFO)); break;
+		case ID_POPUPMENU_ROMINFORMATION: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MSG_RB_INFO)); break;
 		case ID_EDITSETTINGS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_GAME_SETTINGS)); break;
 		case ID_EDITCHEATS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_GAME_CHEATS)); break;
 		case ID_FILE_OPEN_ROM: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_OPEN)); break;
@@ -1672,6 +1672,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgs,
 			ShowRomList(hMainWindow);
 			RefreshRomBrowser();
 		} else {
+			SetupPlugins(hMainWindow);
 			SetupMenu(hMainWindow);
 			ShowWindow(hMainWindow, nWinMode);
 		}

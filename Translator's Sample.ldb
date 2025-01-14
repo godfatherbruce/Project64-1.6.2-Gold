@@ -77,7 +77,7 @@
 #77# "Lets you swap to a different language database if provided"
 #78# "Selects a save state slot"
 #79# "Lets you edit ROM settings for a selected ROM"
-#80# "Lets you edit cheat codes for a selected ROM (unavailable without remembered cheats)"
+#80# "Lets you edit cheat codes for a selected ROM"
 #81# "Attempts to factory reset all PJ64 registries/configurations and terminates this instance"
 #82# "Takes you to Bruce Shankle IV's Project64 1.6.2 GitHub page"
 #83# "File Name"
@@ -123,8 +123,8 @@
 #123# "ROMs"
 #124# "Max # of ROM Dirs Remembered (Max 10):"
 #125# "Dirs"
-#126# "Use ROM Browser"
-#127# "Use Directory recursion"
+#126# "ROM Browser"
+#127# "Directory Recursion"
 #128# "Available fields:"
 #129# "Show fields in this order:"
 #130# "Add ->"
@@ -232,9 +232,7 @@ Emulation ending"
 #214# "Attempt to open zip file failed.
 
 Potentially is a corrupt zip file - try unzipping ROM manually"
-#215# "Failed to open ROM.
-
-Potentially is an invalid path - refresh the ROM browser if you encountered this error from there. Otherwise, try reinstating the ROM's previous file name and location within your drive"
+#215# "Displays ROM-specific information about a selected ROM"
 #216# "Error occured when trying to open zip file"
 #217# "File loaded does not appear to be a valid ROM.
 

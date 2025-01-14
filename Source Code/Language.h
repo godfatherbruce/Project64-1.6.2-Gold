@@ -262,7 +262,7 @@ char * GS               ( int StringID );
 #define MSG_FAIL_OPEN_SAVE              212
 #define MSG_FAIL_OPEN_FLASH             213
 #define MSG_FAIL_OPEN_ZIP               214
-#define MSG_FAIL_OPEN_IMAGE             215
+#define MSG_RB_INFO			215
 #define MSG_FAIL_ZIP                    216
 #define MSG_FAIL_IMAGE                  217
 #define MSG_UNKNOWN_COUNTRY             218

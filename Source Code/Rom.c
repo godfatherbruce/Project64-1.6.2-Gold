@@ -682,7 +682,10 @@ void OpenChosenFile ( void ) {
 		if (file == NULL) {
 			DisplayError(GS(MSG_FAIL_OPEN_ZIP));
 			EnableOpenMenuItems();
-			ShowRomList(hMainWindow);
+			if (RomBrowser) {
+				ShowRomList(hMainWindow);
+				RefreshRomBrowser();
+			}
 			return;
 		}
 		port = unzGoToFirstFile(file);
@@ -693,14 +696,20 @@ void OpenChosenFile ( void ) {
 				unzClose(file);
 				DisplayError(GS(MSG_FAIL_ZIP));
 				EnableOpenMenuItems();
-				ShowRomList(hMainWindow);
+				if (RomBrowser) {
+					ShowRomList(hMainWindow);
+					RefreshRomBrowser();
+				}
 				return;
 			}
 			if( unzOpenCurrentFile(file) != UNZ_OK ) {
 				unzClose(file);
 				DisplayError(GS(MSG_FAIL_OPEN_ZIP));
 				EnableOpenMenuItems();
-				ShowRomList(hMainWindow);
+				if (RomBrowser) {
+					ShowRomList(hMainWindow);
+					RefreshRomBrowser();
+				}
 				return;
 			}
 			unzReadCurrentFile(file,Test,4);
@@ -712,7 +721,10 @@ void OpenChosenFile ( void ) {
 					unzClose(file);
 					DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 					EnableOpenMenuItems();
-					ShowRomList(hMainWindow);
+					if (RomBrowser) {
+						ShowRomList(hMainWindow);
+						RefreshRomBrowser();
+					}
 					return;
 				}
 				memcpy(ROM,Test,4);
@@ -736,14 +748,20 @@ void OpenChosenFile ( void ) {
 						break;
 					}
 					EnableOpenMenuItems();
-					ShowRomList(hMainWindow);
+					if (RomBrowser) {
+						ShowRomList(hMainWindow);
+						RefreshRomBrowser();
+					}
 					return;
 				}
 				if(unzCloseCurrentFile(file) == UNZ_CRCERROR) {
 					unzClose(file);
 					DisplayError(GS(MSG_FAIL_OPEN_ZIP));
 					EnableOpenMenuItems();
-					ShowRomList(hMainWindow);
+					if (RomBrowser) {
+						ShowRomList(hMainWindow);
+						RefreshRomBrowser();
+					}
 					return;
 				}
 				AddRecentFile(hMainWindow,CurrentFileName);
@@ -759,7 +777,10 @@ void OpenChosenFile ( void ) {
 		    DisplayError(GS(MSG_FAIL_OPEN_ZIP));
 		    unzClose(file);
 			EnableOpenMenuItems();
-			ShowRomList(hMainWindow);
+			if (RomBrowser) {
+				ShowRomList(hMainWindow);
+				RefreshRomBrowser();
+			}
 			return;
 		}
 	} else {
@@ -769,10 +790,11 @@ void OpenChosenFile ( void ) {
 			OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS,
 			NULL);
 		if (hFile == INVALID_HANDLE_VALUE) {
-			SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"" );
-			DisplayError(GS(MSG_FAIL_OPEN_IMAGE));
 			EnableOpenMenuItems();
-			ShowRomList(hMainWindow);
+			if (RomBrowser) {
+				ShowRomList(hMainWindow);
+				RefreshRomBrowser();
+			}
 			RefreshRomBrowser();
 			return;
 		}
@@ -783,7 +805,10 @@ void OpenChosenFile ( void ) {
 			SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"" );
 			DisplayError(GS(MSG_FAIL_IMAGE));
 			EnableOpenMenuItems();
-			ShowRomList(hMainWindow);
+			if (RomBrowser) {
+				ShowRomList(hMainWindow);
+				RefreshRomBrowser();
+			}
 			return;
 		}
 		RomFileSize = GetFileSize(hFile,NULL);
@@ -792,33 +817,17 @@ void OpenChosenFile ( void ) {
 			SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"" );
 			DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 			EnableOpenMenuItems();
+			if (RomBrowser) {
 				ShowRomList(hMainWindow);
+				RefreshRomBrowser();
+			}
 			return;
 		}
 		SetFilePointer(hFile,0,0,FILE_BEGIN);
 		TotalRead = 0;
 		for (count = 0; count < (int)RomFileSize; count += ReadFromRomSection) {
 			dwToRead = RomFileSize - count;
-			if (dwToRead > ReadFromRomSection) { dwToRead = ReadFromRomSection; }
-			if (!ReadFile(hFile,&ROM[count],dwToRead,&dwRead,NULL)) {
-				CloseHandle( hFile );
-				SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"" );
-				DisplayError(GS(MSG_FAIL_OPEN_IMAGE));
-				EnableOpenMenuItems();
-				ShowRomList(hMainWindow);
-				return;
-			}
-			TotalRead += dwRead;
-			SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)Message );
-		}
-		dwRead = TotalRead;
-		if (RomFileSize != dwRead) {
-			CloseHandle( hFile );
-			SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"" );
-			DisplayError(GS(MSG_FAIL_OPEN_IMAGE));
-			EnableOpenMenuItems();
-			ShowRomList(hMainWindow);
-			return;
+			if (!ReadFile(hFile, &ROM[count], dwToRead, &dwRead, NULL));
 		}
 		CloseHandle( hFile );
 		AddRecentFile(hMainWindow,CurrentFileName);

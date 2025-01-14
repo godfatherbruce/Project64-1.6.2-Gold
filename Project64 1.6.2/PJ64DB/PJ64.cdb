@@ -14683,43 +14683,9 @@ Cheat14="All 64 Characters In Multi Player",8002B197 0040
 Cheat15="Secret Island on Dam Level",D0064F31 0020,800D33ED 0050,880D33ED 0000
 Cheat15_N=For the above code to work,Get to the 2nd guard tower & go down the ladder on the left hand side & to the end of the Dock, Press L & GS and you will be transfered in the water. Just keep walking straight & you will get to it. Obviously you can't actually climb ladders or anything, you will simply walkthrough anything on that Part, if you want to walk back to the Dock, when you come near it click the cheat back on & keep pressing  L & GS until you are back on it.
 Cheat16="Replace Cradle with Citadell hidden level",8002A8F7 0029,8104468A 8970,81044690 3F44,81044692 BDEA,81044694 3F80,81044696 0000,81044698 4219,8104469A D89D,80069F80 00C4
-[635A42C5-BDC58EDC-C:45]
-Cheat0="Press GS For 255 Coins",8933B218 00FF
-Cheat0_N=This does not give you a 100 coin star.
-Cheat1="Have\Level Select",A032D58C 00??
-Cheat1_O=$00 Off,$01 On
-Cheat1_N=Accessible from the title screen and any method of course exit, whether that be death, star grab, or from the exit course menu option. But only the first mission of each level is available to you when this is enabled.
-Cheat2="Semi-invulnerability",A033B197 0001
-Cheat2_N=Makes you invulnerable to all forms of death/damage except for fall damage, squish damage, bottomless pits, poison gas, freezing, drowning, whirlpools, quicksand, lava, and final boss shockwaves.
-Cheat3="Infinite\Lives",8033B21D 0064
-Cheat4="Infinite\Energy & Breath",8033B21E 0008
-Cheat5="Have\Debug Mode",A032D598 00??
-Cheat5_O=$00 Off,$01 On
-Cheat6="Mario's Cap Options",8033B177 00??
-Cheat6_O=$09 Capless,$10 Normal,$12 Invisible Mario,$15 Metal Mario,$16 Invisible Metal Mario,$19 Flying Mario
-Cheat7="Press L to Levitate",D033AFA1 0020,8133B1BC 4220,D033AFA1 0020,8133B17C 0300,D033AFA1 0020,8133B17E 0880
-Cheat8="MARIO A File\120 Stars",80207723 0001,8020770B 00C7,50001101 0000,8020770C 00FF
-Cheat9="MARIO A File\Key doors unlocked (and mote empty)",8020770A 007E
-Cheat10="MARIO A File\Max 100 Coin Records For All Levels",50000F01 0000,80207725 0064
-Cheat11="MARIO B File\120 Stars",80207793 0001,8020777B 00C7,50001101 0000,8020777C 00FF
-Cheat12="MARIO B File\Key doors unlocked (and mote empty)",8020777A 007E
-Cheat13="MARIO B File\Max 100 Coin Records For All Levels",50000F01 0000,80207795 0064
-Cheat14="MARIO C File\120 Stars",80207803 0001,802077EB 00C7,50001101 0000,802077EC 00FF
-Cheat15="MARIO C File\Key doors unlocked (and mote empty)",802077EA 007E
-Cheat16="MARIO C File\Max 100 Coin Records For All Levels",50000F01 0000,80207805 0064
-Cheat17="MARIO D File\120 Stars",80207873 0001,8020785B 00C7,50001101 0000,8020785C 00FF
-Cheat18="MARIO D File\Key doors unlocked (and mote empty)",8020785A 007E
-Cheat19="MARIO D File\Max 100 Coin Records For All Levels",50000F01 0000,80207875 0064
-Cheat20="Level Select",D033AFA1 0020,A032DDF9 00??
-Cheat20_N=Hold L while entering a level through any course select to warp to your desired level.
-Cheat20_O=$09 Bob-omb Battlefield,$18 Whomp's Fortress,$0C Jolly Roger Bay,$05 Cool Cool Mountain,$04 Big Boo's Haunt,$07 Hazy Maze Cave,$16 Lethal Lava Land,$08 Shifting Sand Land,$17 Dire Dire Docks,$0A Snowman's Land,$0B Wet Dry World,$24 Tall Tall Mountain,$0D Tiny Huge Island,$0E Tick Tock Clock,$0F Rainbow Ride,$11 Bowser in the Dark World,$1E Bowser in the Dark World Boss,$13 Bowser in the Fire Sea,$21 Bowser in the Fire Sea Boss,$15 Bowser in the Sky,$22 Bowser in the Sky Boss,$1B The Princess's Secret Slide,$14 The Secret Aquarium,$1D Tower of The Wing Cap,$1C Cavern of The Metal Cap,$12 Vanish Cap Under The Moat,$1F Wing Mario Over The Rainbow
 [0DD4ABAB-B5A2A91E-C:45]
 Cheat0="Infinite Max DK Tokens",803A8FD5 0063
 Cheat1="Infinite Max Health",807B6760 0008,807B675F 0003
-[8E9F21D2-DC19C5AB-C:45]
-Cheat0="Infinite\Max Lives",802978F3 00FF
-Cheat1="Infinite\Max Magical\Ball Energy",80297C47 00FF
-Cheat2="Infinite\Max Magical\Spell Energy",80297B2B 00FF
 [B7F40BCF-553556A5-C:45]
 Cheat0="Infinite\Max Lives",80288127 00FF,80270697 00FF
 Cheat1="Infinite\Max Health",8027069B 0006,8027069D 0006,802881CB 0006

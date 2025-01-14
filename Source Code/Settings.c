@@ -740,8 +740,8 @@ BOOL CALLBACK RomBrowserProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 			lResult = RegCreateKeyEx( HKEY_CURRENT_USER, String,0,"", REG_OPTION_NON_VOLATILE,
 				KEY_ALL_ACCESS,NULL, &hKeyResults,&Disposition);
 			if (lResult == ERROR_SUCCESS) {
-				RegSetValueEx(hKeyResults,"Use ROM Browser",0,REG_DWORD,(BYTE *)&RomBrowser,sizeof(DWORD));
-				RegSetValueEx(hKeyResults,"Use Recursion",0,REG_DWORD,(BYTE *)&Rercursion,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"ROM Browser",0,REG_DWORD,(BYTE *)&RomBrowser,sizeof(DWORD));
+				RegSetValueEx(hKeyResults,"Directory Recursion",0,REG_DWORD,(BYTE *)&Rercursion,sizeof(DWORD));
 			}
 			SaveRomBrowserColoumnInfo(); // Any coloumn width changes get saved
 			listCount = SendDlgItemMessage(hDlg,IDC_USING,LB_GETCOUNT,0,0);

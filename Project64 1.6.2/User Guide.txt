@@ -120,6 +120,8 @@ Added Linking=On for all entries w/ Change Memory and not defined Linking or Use
 
 Added plugin hot swapping support which allows the user to change plugins in real-time without problems.
 
+Added ROM browser refresh polling (refreshing everytime the rom browser is loaded, fine for ROM format).
+
 Added shortcuts for Graphics, Audio, Controller, and RSP plugins, CPU Pause, and a Frame advance option.
 
 Added vcruntime140 from MS VC Redistributable 2022 to support one of the new plugins that has got added.
@@ -155,8 +157,6 @@ Fixed "Always On Top" not being togglable from within the ROM browser.
 Fixed certain ROMhacks having their save file get deleted upon being saved (Indigo, Ultimate Trial).
 
 Fixed loadstate glitches.
-
-Fixed ROM browser failing to auto refresh.
 
 Fixed ROM extension association.
 

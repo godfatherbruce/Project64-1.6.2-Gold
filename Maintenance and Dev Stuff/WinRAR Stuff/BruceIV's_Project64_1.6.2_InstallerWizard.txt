@@ -51,4 +51,4 @@ If you plan on using this as your main emulator, I strongly suggest right clicki
 
 
 
-Assuming you have read all of the above, press the install button to setup and autolaunch Project64 1.6.2 on your PC (in a directory that doesn't require admin permissions such as Desktop).
+Assuming you have read all of the above, press the install button to setup and autolaunch Project64 1.6.2 on your PC in a directory that doesn't require admin permissions such as your Desktop.

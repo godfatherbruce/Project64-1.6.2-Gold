@@ -7,16 +7,17 @@ Section#01 IP Notice
 Section#02 Notable Changes Between Project64 Version 1.6.1 & Project64 Version 1.6.2
 Section#03 Project64 Legacy is an unfinished emulator with concerning issues to be aware of if using it!
 Section#04 Plugin Details
-Section#05 RUNNING ROMHACKS
-Section#06 Known Issues
-Section#07 Tips and Tricks
-Section#08 Credits
-Section#09 Donations
-Section#10 Special Thanks & Shoutouts
-Section#11 The End
-Section#12 Extra
-Section#13 How to Develop Project64 1.6 + BEWARE of MiB/PJ64Team!
-Section#14 Documentation That You Can Use to Help Develop Project64 & Fix Emulation Issues You Encounter
+Section#05 Plugin Wombo Combos
+Section#06 RUNNING ROMHACKS
+Section#07 Known Issues
+Section#08 Tips and Tricks
+Section#09 Credits
+Section#10 Donations
+Section#11 Special Thanks & Shoutouts
+Section#12 The End
+Section#13 Extra
+Section#14 How to Develop Project64 1.6 + BEWARE of MiB/PJ64Team!
+Section#15 Documentation That You Can Use to Help Develop Project64 & Fix Emulation Issues You Encounter
 (just ctrl-f the name to navigate to your desired section)
 ********************************************************************************************************
 
@@ -227,6 +228,10 @@ Section#04 Plugin Details
 --------------------------------------------------------------------------------------------------------
 Video (graphics) plugin:
 
+Icepir8's Legacy LLE Ver. 0.3.2 -  An excellent fork of Angrylion's RDP Plus which comes with a built-in
+				   ParaLLel RSP plugin and supports DirectX8, helps plugin hot swapping.
+				   Originally created by Icepir8 for the unfinished "Legacy" experiment.
+
 Jabo's Direct3D8 1.6 -   **Note: This is the previous version of the plugin found below. It was included
 			 because each version of Jabo's plugins seems to bring regressions from previous
 			 versions and Direct3D8 1.6.1 was no exception. In Direct3D8 1.6, the stone mask
@@ -286,15 +291,10 @@ Vigilante 8: fixed some textures
 Legend of Zelda Majora's Mask: fixed day transition borders and lens of truth in snow areas
 
 
-Icepir8's Legacy LLE Ver. 0.3.2 -  An excellent fork of Angrylion's RDP Plus which comes with a built-in
-				   ParaLLel RSP plugin and supports DirectX8, helps plugin hot swapping.
-				   Originally created by Icepir8 for the Project64, "Legacy" Experiment.
-					***Entering fullscreen after changing resolution fixes freezing.
-					*Note: The final version was buggy as hell, so use this version.
-
 Mk3 GLideN64#42d6569 - The last stable release of GLideN64 I am able to find before the bad regressions.
 		       Use this if you want something that generally works but it has high requirements.
 		       Taken from: https://github.com/gonetz/GLideN64/issues/1574#issuecomment-345526911
+		*******Note: This plugin is prone to crashing the emulator on Start Emulation sometimes.
 
 Shankle's AntiFbffr ANGLE GLideN64 (1.0) - Use ANGLE GLideN64 for ROMhacks using DEX3 (F3DEX3) microcode
 					   or for (most) SM64 hacks. You can enable framebuffer from the
@@ -339,18 +339,64 @@ Shankle's Octomino SDL2 Input 0.1.1 (1.0) - Very suggested choice if this plugin
 
 Reality Signal Processor plugin:
 
-Iconoclast+MarathonMan SSE2 RSP - This is very basic but accurate and pure low level RSP. Use the plugin
-				  to test low level graphics emulation. This plugin can also fix graphic
-				  issues seen in Icepir8's Legacy LLE Ver. 0.3.2 as the builtin ParaLLel
-				  RSP is less accurate and prone to some issues aren't seen in this RSP.
-				  Do not ever use this plugin unless you know what it is to be used for.
+Icepir8's Legacy RSP Ver. 0.1.7 - Pairing this plugin with Icepir8's Legacy LLE is needed with a handful
+				  of games like Stunt Racer 64 and World Driver Championship. Otherwise,
+                                  don't ever bother using this plugin because of its horrid performance.
 
 Shankle's Dual Level Sound MP RSP v1.0 - You can cycle between HLE and LLE sound in the config. Not much
 					 else to set it apart from 1.6 RSP other than that it seems more
 					 accurate and doesn't crash when configuring with a running ROM.
 --------------------------------------------------------------------------------------------------------
 
-Section#05 RUNNING ROMHACKS
+Section#05 Plugin Wombo Combos
+--------------------------------------------------------------------------------------------------------
+This section will list very specific plugin combinations to be used for meeting common specific demands.
+
+
+
+Maximum Retail Game Compatiblity (requires high-end PC, DO NOT USE WITH ROMHACKS)
+
+Video (graphics) plugin:
+Icepir8's Legacy LLE Ver. 0.3.2
+
+Reality Signal Processor plugin:
+Icepir8's Legacy RSP Ver. 0.1.7
+
+
+(All combos below are to be used with Shankle's Dual Level Sound MP RSP v1.0)
+
+
+Majority Retail Game Compatibility (requires high-end PC, DO NOT USE WITH ROMHACKS)
+
+Video (graphics) plugin:
+Icepir8's Legacy LLE Ver. 0.3.2
+
+
+Majority Super Mario 64 ROMhacks Compatibility (requires OpenGL 3.3 GPU support)
+
+Video (graphics) plugin:
+Shankle's AntiFbffr ANGLE GLideN64 (1.0)
+
+
+Majority Newer ROMhacks Compatibility (requires OpenGL 3.3 GPU support)
+
+Video (graphics) plugin:
+Mk3 GLideN64#42d6569
+
+
+Majority Older ROMhacks Compatibility
+
+Video (graphics) plugin:
+Jabo's Direct3D8 1.6
+
+
+Maximum PC Hardware Compatibility (reliable combo for playing popular retail N64 games like Zelda/Mario)
+
+Video (graphics) plugin:
+Jabo's Direct3D8 1.6.1
+--------------------------------------------------------------------------------------------------------
+
+Section#06 RUNNING ROMHACKS
 --------------------------------------------------------------------------------------------------------
 First of all, Project64 1.6 was not originally designed for playing ROMhacks. They were not even a thing
 at the time it was made. So if you want to play ROMhacks, you probably need to setup ROM settings for it
@@ -380,9 +426,10 @@ So essentially, in order to get Jabo's Direct3D8 plugins to apply pergame hacks 
 either the ROM header data above the internal name, or the baseROM's internal name. That's the only way!
 --------------------------------------------------------------------------------------------------------
 
-Section#06 Known Issues
+Section#07 Known Issues
 --------------------------------------------------------------------------------------------------------
 GLideN64 is missing microcode support for some games which will crash at some point when using GLideN64.
+The included MK3 GLideN64 can cause errors and crashing upon using start emulation from the ROM browser.
 The rom browser is a bit buggy but this shouldn't affect your gaming experience so it's not a big issue.
 Jabo's Direct3D8 can crash the emulator upon entering fullscreen while connected to a TV and while using
 Azimer's Audio plugin. In this situation, you should either enter fullscreen mode before connecting with
@@ -395,7 +442,7 @@ There are some controllers which are not supported by any known input plugins an
 Some error messages do not get translated into other languages due to them being part of the plugin dll.
 Some cheats act up in ROMhacks with shared CRC values (sometimes needed to get Direct3D8 per ROM hacks).
 In some ROMhacks, they never get a save data file even made for them and they do not ever save progress.
-Having protected memory self modifying code method enabled causes stuttering on certain weaker machines.
+Having protected memory self modifying code method enabled causes stuttering on certain weaker hardware.
 Having advanced block linking and protected memory self modifying code method enabled causes stuttering.
 Having advanced block linking enabled causes some ROMs to not boot up at all and get stuck on blackness.
 Jabo's plugins don't have shadows on intel cards. However, this can be worked around using 3DAnalyzer w/
@@ -411,7 +458,7 @@ If you hold down the F1 key, sometimes it accidentally attempts to load the sele
 The display will be frozen if you either sleep or lock your computer while using Jabo's Direct3D8 video.
 --------------------------------------------------------------------------------------------------------
 
-Section#07 Tips and Tricks
+Section#08 Tips and Tricks
 --------------------------------------------------------------------------------------------------------
 If you're playing newer ROMhacks, GLideN64 is recommended. Use an ANGLE version for Super Mario 64 mods.
 
@@ -433,19 +480,13 @@ DefaultInput.dll
 DefaultRSP.dll
 DefaultVideo.dll
 
-If you try to open a ROMhack then Project64 crashes and fails to open anymore, go into Ver1.6.2's folder
-and try running the RegistKeysUninstaller.reg file, and it should let you open Project64.exe once again.
-
 Project64 Ver1.6.2 is portable and if you would like to say, transfer everything to a new PC, you can do
 so by compressing the Project64 Ver1.6.2 folder on your PC into a .zip file, pasting it into a USB stick
 or uploading it to a cloud storage platform, and then downloading/copying it onto a new PC's hard drive.
 However, the application and Jabo plugin registry settings won't carry over! Same goes for DefaultAudio.
-
-If you already have some save data in Project64 1.6 and you would like to carry it over, simply copy the
-appropriate files from the "Save" folder to the "Save Data" folder within the Project64 Ver1.6.2 folder.
 --------------------------------------------------------------------------------------------------------
 
-Section#08 Credits
+Section#09 Credits
 --------------------------------------------------------------------------------------------------------
 While I won't be able to recall every single person whose work has been used to help develop PJ64 1.6.2,
 I will still try to name as many people as I can and label their contribution appropriately. As follows,
@@ -481,9 +522,10 @@ Maël Hörz - HxD
 Don Ho - Notepad++
 info@redketchup.io - redketchup.io
 listdiff.com
+GitHub Copilot
 --------------------------------------------------------------------------------------------------------
 
-Section#09 Donations
+Section#10 Donations
 --------------------------------------------------------------------------------------------------------
 As well-versed users know, Zilmar turned Project64 into donationware. But don't fret, as Project64 1.6.2
 is completely 100% free, and will not once ever ask you to donate money and punish you for not doing so.
@@ -535,7 +577,7 @@ or their bullshit so please do not assume that this version of Project64 has any
 Thank you in advance.
 --------------------------------------------------------------------------------------------------------
 
-Section#10 Special Thanks & Shoutouts
+Section#11 Special Thanks & Shoutouts
 --------------------------------------------------------------------------------------------------------
 These are my special thanks and memorable quotes from users for their work, assistance, and/or kindness:
 
@@ -563,7 +605,7 @@ Emmanuel - For giving me a piece of candy he found at the bottom of a vending ma
 lilycatx - You're the sweetest person ever lily, thanks for being the best friend a friend could have!💖
 --------------------------------------------------------------------------------------------------------
 
-Section#11 The End
+Section#12 The End
 --------------------------------------------------------------------------------------------------------
 I hope you enjoy using this. If you don't, then I encourage you to improve the source code, and fix bugs
 that bother you so you can make it better. If you do decide to develop it more, it would be great to fix
@@ -573,7 +615,7 @@ Peace! ✌
 - Edwin Bruce Shankle IV
 --------------------------------------------------------------------------------------------------------
 
-Section#12 Extra
+Section#13 Extra
 --------------------------------------------------------------------------------------------------------
 Additionally, if you decide to develop a new revision of Ver1.6.2 or make a Ver1.6.3, I'd suggest fixing
 the following issues with this emulator:
@@ -636,19 +678,19 @@ TLB=
 (On)
 --------------------------------------------------------------------------------------------------------
 
-Section#13 How to Develop Project64 1.6 + BEWARE of MiB/PJ64Team!
+Section#14 How to Develop Project64 1.6 + BEWARE of MiB/PJ64Team!
 --------------------------------------------------------------------------------------------------------
 If you would like to develop Project64 1.6 or you're unaware of the risks involved with associating with
 Men in Black/Project64 Team, please carefully read this informative document from my URL provided below:
 https://docs.google.com/document/d/1VosUr3DHkhFd6hYRLrwpAtuzDuvYq0zUe2C1rkQ1_xg/edit?usp=sharing
 --------------------------------------------------------------------------------------------------------
 
-Section#14 Documentation That You Can Use to Help Develop Project64 & Fix Emulation Issues You Encounter
+Section#15 Documentation That You Can Use to Help Develop Project64 & Fix Emulation Issues You Encounter
 --------------------------------------------------------------------------------------------------------
 Surreal64 Documentation for Project64 1.4 from here http://surreal64ce.wikidot.com/settings:pj64settings
 
-With this documentation and clever text editing, you can fix virtually any emulation issue you encounter 
-by adjusting your ROM Settings appropriately. This documentation is from the Surreal64 website for V 1.4
+With this documentation and clever text editing, you can fix many general emulation issues you encounter 
+by adjusting your ROM Settings as appropriate. This documentation is from the Surreal64 website for V1.4
 but it applies here as well. Simply open up the PJ64.rdb file in your favorite text editor and you'll be
 able to individually tweak how the program emulates ROMs, particularly using the SCM/Self-modifying Code
 Method and the CPU/CPU Core Style. You can fix many issues you encounter between just those two options.

@@ -86,10 +86,7 @@ void CheckTimer (void) {
 		Timers.Timer = Timers.NextTimer[count];
 		Timers.CurrentTimerType = count;
 	}
-	if (Timers.CurrentTimerType == -1) {
-		DisplayError("No active timers detected.\n\nEmulation ending");
-		ExitThread(0);
-	}
+	if (Timers.CurrentTimerType == -1) ExitThread(0);
 	for (count = 0; count < MaxTimers; count++) {
 		if (!Timers.Active[count]) { continue; }
 		if (!(count == CompareTimer && Timers.NextTimer[count] == 0x7FFFFFFF)) {
@@ -821,7 +818,6 @@ char * R4300iOpcodeName ( DWORD OpCode, DWORD PC ) {
 int DelaySlotEffectsCompare (DWORD PC, DWORD Reg1, DWORD Reg2) {
 	OPCODE Command;
 	if (!r4300i_LW_VAddr(PC + 4, &Command.Hex)) {
-		DisplayError("Failed to load word 2.\n\nEmulation ending");
 		ExitThread(0);
 		return TRUE;
 	}

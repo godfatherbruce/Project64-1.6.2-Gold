@@ -77,7 +77,7 @@
 #77# "Lets you swap to a different language database if provided"
 #78# "Selects a save state slot"
 #79# "Lets you edit ROM settings for a selected ROM"
-#80# "Lets you edit cheat codes for a selected ROM"
+#80# "Lets you edit cheat codes for a selected ROM (available when remembered)"
 #81# "Attempts to factory reset all PJ64 registries/configurations and terminates this instance"
 #82# "Takes you to Bruce Shankle IV's Project64 1.6.2 GitHub page"
 #83# "File Name"
@@ -207,10 +207,10 @@ SCM, ABL, Larger Compile Buffer, and Register caching"
 #203# "CPU Resumed"
 #204# "In a permanent loop that cannot be exited.
 
-Emulation ending"
+Exiting thread"
 #205# "Failed to allocate memory.
 
-Emulation ending"
+Exiting thread"
 #206# "The default or selected video plugin is missing or invalid.
 
 You need to go into Settings and select a video (graphics) plugin"
@@ -226,7 +226,7 @@ You need to go into Settings and select an input (controller) plugin"
 #210# "Failed to load plugin"
 #211# "Failed to load word.
 
-Emulation ending"
+Exiting thread"
 #212# "Failed to save this savestate. You should ensure you aren't saving a savestate marked as read-only"
 #213# "Cannot access save data. You may be running the application from an admin rights directory, or you may have multiple instances of Project64 open. Stop doing either of those to make this error go away"
 #214# "Attempt to open zip file failed.
@@ -241,14 +241,13 @@ Verify that your ROM's checksum is valid"
 #219# "Unknown file format"
 #220# "Unknown memory action.
 
-Emulation ending"
+Exiting thread"
 #221# "Unhandled R4300i OpCode at"
 #222# "Failed to open mempak"
 #223# "Executing from non-mapped space.
 
-Emulation ending
-(Try Check Memory Advance)
-(Try Interpreter CPU Core Style)
+Exiting thread
+(Try Check Memory & Return)
 (Try 8MB Memory Size)"
 #224# "Error"
 #225# "Copyright sequence not found in LUT. Game will no longer function"
@@ -259,8 +258,9 @@ Emulation ending
 #230# "Cannot open a ROM because plugins haven't successfully initialized"
 #231# "Cheat name is currently in use"
 #232# "You have reached the maximum amount of cheats allowed for this ROM"
-#233# "Emulation ending
-(Try Interpreter CPU Core Style"
+#233# "Exiting thread
+(Try Check Memory & Return)
+(Try Interpreter CPU Core Style)"
 #234# "This action will attempt to factory reset all Project64 registries/configurations and terminate this instance.
 
 Is it OK to execute this action? If so, press OK to close Project64 or close it yourself. Otherwise, please cancel"

@@ -74,7 +74,7 @@
 #77# "Te permite cambiar a una base de datos de Idioma diferente si esta disponible"
 #78# "Selecciona una ranura de estado de Guardado"
 #79# "Te permite editar la configuracion de la ROM para una ROM seleccionada"
-#80# "Te permite editar codigos de Trucos para una ROM seleccionada"
+#80# "Te permite editar codigos de Trucos para una ROM seleccionada (disponible cuando recordado)"
 #81# "Intenta restablecer todos los registros/configuraciones de PJ64 y termina esta instancia"
 #82# "Te lleva a la pagina de GitHub de Project64 1.6.2 de Bruce Shankle IV"
 #83# "Nombre de archivo"
@@ -193,10 +193,10 @@ SCM, ABL, Bufer de Compilacion Grande y Cache de Registros"
 #203# "CPU Reanudada"
 #204# "La emulacion se atasco en un bucle permanente.
 
-Emulacion finalizada"
+Salir del hilo"
 #205# "Error al asignar memoria.
 
-Emulacion finalizada"
+Salir del hilo"
 #206# "El plugin de Graficos predeterminado o seleccionado falta o no es valido.
 
 Necesitas ir a Configuracion y seleccionar un plugin de Graficos (Video)"
@@ -212,7 +212,7 @@ Necesitas ir a Configuracion y seleccionar un complemento de Controles (Inputs)"
 #210# "Error al cargar el plugin"
 #211# "Error al cargar la palabra.
 
-Emulacion finalizada"
+Salir del hilo"
 #212# "Falla al guardar el estado de guardado. Asegurate de que no estes guardando un estado de guardado marcado como solo lectura"
 #213# "No se puede acceder a los datos de guardado. Puede que estes ejecutando una aplicacion desde un directorio con permisos de admin, o puedes tener multiples instancias de Project64 abiertas. Deten cualquiera de las dos para hacer que este error desaparezca"
 #214# "Intento de abrir el archivo zip fallido.
@@ -227,24 +227,24 @@ Verifica que el checksum de tu ROM sea valido"
 #219# "Formato de archivo desconocido"
 #220# "Accion de memoria desconocida.
 
-Emulacion finalizada"
+Salir del hilo"
 #221# "Codigo de operacion R4300i no controlado en"
 #222# "Error al abrir mempak"
 #223# "Ejecutando desde espacio no asignado.
 
-Emulacion finalizada
-(Intenta Comprobacion de Memoria Avanzada)
-(Intenta Estilo de Nucleo de CPU Interprete)
+Salir del hilo
+(Intenta Revisar Memoria y Devolver)
 (Intenta Tamano de Memoria de 8MB)"
 #225# "Secuencia de copyright no encontrada en LUT. El juego ya no funcionara"
 #226# "Fallo de Proteccion de Copia"
 #227# "Emulacion iniciada"
 #228# "No se puede cargar el estado de Guardado"
-#229# "Emulacion finalizada"
+#229# "Salir del hilo"
 #230# "No se puede abrir una ROM porque los plugins no se han inicializado correctamente"
 #231# "El nombre del Truco ya esta en uso"
 #232# "Has alcanzado la cantidad maxima de Trucos permitidos para esta ROM"
-#233# "Emulacion finalizada
+#233# "Salir del hilo
+(Intenta Revisar Memoria y Devolver)
 (Intenta Estilo de Nucleo de CPU Interprete)"
 #234# "Esta accion intentara restablecer de fabrica todos los registros/configuraciones de Project64 y terminar esta instancia.
 

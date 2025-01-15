@@ -1091,7 +1091,11 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			}
 			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(FULLSCREEN_TOGGLE));
 			break;
-                case ID_SYSTEM_ALTERNATEPAUSE: PauseCpu(); Sleep(3); PauseCpu(); break;
+                case ID_SYSTEM_ALTERNATEPAUSE: {
+			if (!CPU_Paused) { PauseCpu (); }
+			else { PauseCpu(); Sleep(3); PauseCpu(); }
+			}
+			break;
 		case ID_OPTIONS_ALWAYSONTOP:
 			CheckedMenuItem(ID_OPTIONS_ALWAYSONTOP,&AlwaysOnTop,"Always On Top");
 			AlwaysOnTopWindow(hWnd);

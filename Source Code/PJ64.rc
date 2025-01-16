@@ -433,7 +433,7 @@ BEGIN
     POPUP "System"
     BEGIN
         MENUITEM "Reset\tF1",                  ID_CPU_RESET, GRAYED
-        MENUITEM "Pause\tF2",                  ID_CPU_PAUSE, GRAYED
+        MENUITEM "Pause\tF2/Shift+Caps Lock",  ID_CPU_PAUSE, GRAYED
 	MENUITEM "Frame Advance\tCaps Lock",   ID_SYSTEM_ALTERNATEPAUSE, GRAYED
         MENUITEM "Screenshot\tF3",             ID_SYSTEM_GENERATEBITMAP, GRAYED
         MENUITEM SEPARATOR

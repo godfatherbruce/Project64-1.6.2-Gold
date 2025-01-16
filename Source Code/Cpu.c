@@ -1066,7 +1066,7 @@ void DoSomething ( void ) {
 		if (CPU_Action.Pause) {
 			HMENU hMenu = GetMenu(hMainWindow);
 			HMENU hSubMenu = GetSubMenu(hMenu,1);
-			MenuSetText(hSubMenu, 1, GS(MENU_RESUME),"F2");
+			MenuSetText(hSubMenu, 1, GS(MENU_RESUME),"F2/Shift+Caps Lock");
 			CurrentFrame = 0;
 			CPU_Paused = TRUE;
 			CPU_Action.Pause = FALSE;
@@ -1476,7 +1476,7 @@ void PauseCpu (void) {
 		}
 		ResumeThread(hCPU);
 		SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MSG_CPU_RESUMED));
-		MenuSetText(hSubMenu, 1, GS(MENU_PAUSE),"F2");
+		MenuSetText(hSubMenu, 1, GS(MENU_PAUSE),"F2/Shift+Caps Lock");
 		ManualPaused = FALSE;
 		CPU_Paused = FALSE;
 	} else {

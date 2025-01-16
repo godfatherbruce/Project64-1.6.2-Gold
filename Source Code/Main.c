@@ -243,7 +243,7 @@ void FixMenuLang (HMENU hMenu) {
 	//System
 	hSubMenu = GetSubMenu(hMenu,1);
 	MenuSetText(hSubMenu, 0, GS(MENU_RESET),"F1");
-	MenuSetText(hSubMenu, 1, GS(CPU_Paused?MENU_RESUME:MENU_PAUSE),"F2");
+	MenuSetText(hSubMenu, 1, GS(CPU_Paused?MENU_RESUME:MENU_PAUSE),"F2/Shift+Caps Lock");
 	MenuSetText(hSubMenu, 2, GS(MENU_ADVANCE),"Caps Lock");
         MenuSetText(hSubMenu, 3, GS(MENU_BITMAP),"F3");
 	MenuSetText(hSubMenu, 5, GS(MENU_LIMIT_FPS),"F4");

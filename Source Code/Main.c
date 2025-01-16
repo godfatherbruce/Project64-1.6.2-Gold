@@ -827,6 +827,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			} else {
 				HideRomBrowser();
 			}
+			//^ this should be the new logic for the new rom list handling function added to CPU recently
 			break;
 		case ID_FILE_ROMDIRECTORY: SelectRomDir(); break;
 		case ID_FILE_REFRESHROMLIST: RefreshRomBrowser(); break;
@@ -1359,6 +1360,7 @@ void SetupMenu ( HWND hWnd ) {
 	//Disable if cpu is running
 	State = CPURunning?MFS_DISABLED:MFS_ENABLED;
 	EnableMenuItem(hMenu,ID_FILE_ROMDIRECTORY,State|MF_BYCOMMAND);
+	EnableMenuItem(hMenu,ID_FILE_REFRESHROMLIST,State|MF_BYCOMMAND);//Let's disable refresh rom list this way to remain thematically consistent with the other options while rom browser is used
 	if (State == MFS_DISABLED) { EnableMenuItem(hMenu,ID_FILE_STARTEMULATION,State|MF_BYCOMMAND); }
 	SetMenu(hWnd, hMenu);
 	DrawMenuBar(hWnd);

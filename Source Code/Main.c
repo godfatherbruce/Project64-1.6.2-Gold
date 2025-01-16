@@ -821,13 +821,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			EnableMenuItem(hMenu,ID_FILE_STARTEMULATION,MFS_ENABLED|MF_BYCOMMAND);
 			if (DrawScreen != NULL) { DrawScreen(); }
 			CloseCheatWindow();
-			ShowRomList(hMainWindow);
-			if (RomBrowser) {
-				RefreshRomBrowser();
-			} else {
-				HideRomBrowser();
-			}
-			//^ this should be the new logic for the new rom list handling function added to CPU recently
+			CheckRbRefresh();
 			break;
 		case ID_FILE_ROMDIRECTORY: SelectRomDir(); break;
 		case ID_FILE_REFRESHROMLIST: RefreshRomBrowser(); break;
@@ -1680,8 +1674,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgs,
 		strcpy(CurrentFileName, __argv[1]);
 		CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)OpenChosenFile,NULL,0, &ThreadID);
 	} else {
-		CheckRbRefresh();
-		if (!RomBrowser) {
+		if (RomBrowser) {
+			ShowRomList(hMainWindow);
+			RefreshRomBrowser();
+		} else {
 			SetupPlugins(hMainWindow);
 			SetupMenu(hMainWindow);
 			ShowWindow(hMainWindow, nWinMode);

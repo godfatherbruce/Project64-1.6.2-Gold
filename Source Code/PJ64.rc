@@ -446,16 +446,16 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "Current Save State", GRAYED
         BEGIN
-            MENUITEM "01\t1",                  ID_CURRENTSAVE_DEFAULT
-            MENUITEM "02\t2",                  ID_CURRENTSAVE_2
-            MENUITEM "03\t3",                  ID_CURRENTSAVE_3
-            MENUITEM "04\t4",                  ID_CURRENTSAVE_4
-            MENUITEM "05\t5",                  ID_CURRENTSAVE_5
-            MENUITEM "06\t6",                  ID_CURRENTSAVE_6
-            MENUITEM "07\t7",                  ID_CURRENTSAVE_7
-            MENUITEM "08\t8",                  ID_CURRENTSAVE_8
-            MENUITEM "09\t9",                  ID_CURRENTSAVE_9
-            MENUITEM "10\t0",                  ID_CURRENTSAVE_10
+            MENUITEM "01\tShift+1",                  ID_CURRENTSAVE_DEFAULT
+            MENUITEM "02\tShift+2",                  ID_CURRENTSAVE_2
+            MENUITEM "03\tShift+3",                  ID_CURRENTSAVE_3
+            MENUITEM "04\tShift+4",                  ID_CURRENTSAVE_4
+            MENUITEM "05\tShift+5",                  ID_CURRENTSAVE_5
+            MENUITEM "06\tShift+6",                  ID_CURRENTSAVE_6
+            MENUITEM "07\tShift+7",                  ID_CURRENTSAVE_7
+            MENUITEM "08\tShift+8",                  ID_CURRENTSAVE_8
+            MENUITEM "09\tShift+9",                  ID_CURRENTSAVE_9
+            MENUITEM "10\tShift+0",                  ID_CURRENTSAVE_10
             MENUITEM "11\tCtrl+1",             ID_CURRENTSAVE_11
             MENUITEM "12\tCtrl+2",             ID_CURRENTSAVE_12
             MENUITEM "13\tCtrl+3",             ID_CURRENTSAVE_13
@@ -466,36 +466,36 @@ BEGIN
             MENUITEM "18\tCtrl+8",             ID_CURRENTSAVE_18
             MENUITEM "19\tCtrl+9",             ID_CURRENTSAVE_19
             MENUITEM "20\tCtrl+0",             ID_CURRENTSAVE_20
-            MENUITEM "21\tShift+1",            ID_CURRENTSAVE_21
-            MENUITEM "22\tShift+2",            ID_CURRENTSAVE_22
-            MENUITEM "23\tShift+3",            ID_CURRENTSAVE_23
-            MENUITEM "24\tShift+4",            ID_CURRENTSAVE_24
-            MENUITEM "25\tShift+5",            ID_CURRENTSAVE_25
-            MENUITEM "26\tShift+6",            ID_CURRENTSAVE_26
-            MENUITEM "27\tShift+7",            ID_CURRENTSAVE_27
-            MENUITEM "28\tShift+8",            ID_CURRENTSAVE_28
-            MENUITEM "29\tShift+9",            ID_CURRENTSAVE_29
-            MENUITEM "30\tShift+0",            ID_CURRENTSAVE_30
-            MENUITEM "31\tCtrl+Shift+1",       ID_CURRENTSAVE_31
-            MENUITEM "32\tCtrl+Shift+2",       ID_CURRENTSAVE_32
-            MENUITEM "33\tCtrl+Shift+3",       ID_CURRENTSAVE_33
-            MENUITEM "34\tCtrl+Shift+4",       ID_CURRENTSAVE_34
-            MENUITEM "35\tCtrl+Shift+5",       ID_CURRENTSAVE_35
-            MENUITEM "36\tCtrl+Shift+6",       ID_CURRENTSAVE_36
-            MENUITEM "37\tCtrl+Shift+7",       ID_CURRENTSAVE_37
-            MENUITEM "38\tCtrl+Shift+8",       ID_CURRENTSAVE_38
-            MENUITEM "39\tCtrl+Shift+9",       ID_CURRENTSAVE_39
-            MENUITEM "40\tAlt+0",              ID_CURRENTSAVE_40
-            MENUITEM "41\tAlt+1",              ID_CURRENTSAVE_41
-            MENUITEM "42\tAlt+2",              ID_CURRENTSAVE_42
-            MENUITEM "43\tAlt+3",              ID_CURRENTSAVE_43
-            MENUITEM "44\tAlt+4",              ID_CURRENTSAVE_44
-            MENUITEM "45\tAlt+5",              ID_CURRENTSAVE_45
-            MENUITEM "46\tAlt+6",              ID_CURRENTSAVE_46
-            MENUITEM "47\tAlt+7",              ID_CURRENTSAVE_47
-            MENUITEM "48\tAlt+8",              ID_CURRENTSAVE_48
-            MENUITEM "49\tAlt+9",              ID_CURRENTSAVE_49
-            MENUITEM "50\tAlt+0",              ID_CURRENTSAVE_50
+            MENUITEM "21\tAlt+1",            ID_CURRENTSAVE_21
+            MENUITEM "22\tAlt+2",            ID_CURRENTSAVE_22
+            MENUITEM "23\tAlt+3",            ID_CURRENTSAVE_23
+            MENUITEM "24\tAlt+4",            ID_CURRENTSAVE_24
+            MENUITEM "25\tAlt+5",            ID_CURRENTSAVE_25
+            MENUITEM "26\tAlt+6",            ID_CURRENTSAVE_26
+            MENUITEM "27\tAlt+7",            ID_CURRENTSAVE_27
+            MENUITEM "28\tAlt+8",            ID_CURRENTSAVE_28
+            MENUITEM "29\tAlt+9",            ID_CURRENTSAVE_29
+            MENUITEM "30\tAlt+0",            ID_CURRENTSAVE_30
+            MENUITEM "31\tShift+Ctrl+1",       ID_CURRENTSAVE_31
+            MENUITEM "32\tShift+Ctrl+2",       ID_CURRENTSAVE_32
+            MENUITEM "33\tShift+Ctrl+3",       ID_CURRENTSAVE_33
+            MENUITEM "34\tShift+Ctrl+4",       ID_CURRENTSAVE_34
+            MENUITEM "35\tShift+Ctrl+5",       ID_CURRENTSAVE_35
+            MENUITEM "36\tShift+Ctrl+6",       ID_CURRENTSAVE_36
+            MENUITEM "37\tShift+Ctrl+7",       ID_CURRENTSAVE_37
+            MENUITEM "38\tShift+Ctrl+8",       ID_CURRENTSAVE_38
+            MENUITEM "39\tShift+Ctrl+9",       ID_CURRENTSAVE_39
+            MENUITEM "40\tShift+Alt+0",              ID_CURRENTSAVE_40
+            MENUITEM "41\tShift+Alt+1",              ID_CURRENTSAVE_41
+            MENUITEM "42\tShift+Alt+2",              ID_CURRENTSAVE_42
+            MENUITEM "43\tShift+Alt+3",              ID_CURRENTSAVE_43
+            MENUITEM "44\tShift+Alt+4",              ID_CURRENTSAVE_44
+            MENUITEM "45\tShift+Alt+5",              ID_CURRENTSAVE_45
+            MENUITEM "46\tShift+Alt+6",              ID_CURRENTSAVE_46
+            MENUITEM "47\tShift+Alt+7",              ID_CURRENTSAVE_47
+            MENUITEM "48\tShift+Alt+8",              ID_CURRENTSAVE_48
+            MENUITEM "49\tShift+Alt+9",              ID_CURRENTSAVE_49
+            MENUITEM "50\tShift+Alt+0",              ID_CURRENTSAVE_50
         END
         MENUITEM SEPARATOR
         MENUITEM "Cheats\tCtrl+C",              ID_OPTIONS_CHEATS, GRAYED
@@ -597,17 +597,16 @@ BEGIN
 END
 IDR_CPURUNNING ACCELERATORS
 BEGIN
-    "`",            ID_CURRENTSAVE_DEFAULT, ASCII,  NOINVERT
-    "1",            ID_CURRENTSAVE_DEFAULT, ASCII,  NOINVERT
-    "2",            ID_CURRENTSAVE_2,       VIRTKEY, NOINVERT
-    "3",            ID_CURRENTSAVE_3,       VIRTKEY, NOINVERT
-    "4",            ID_CURRENTSAVE_4,       VIRTKEY, NOINVERT
-    "5",            ID_CURRENTSAVE_5,       VIRTKEY, NOINVERT
-    "6",            ID_CURRENTSAVE_6,       VIRTKEY, NOINVERT
-    "7",            ID_CURRENTSAVE_7,       VIRTKEY, NOINVERT
-    "8",            ID_CURRENTSAVE_8,       VIRTKEY, NOINVERT
-    "9",            ID_CURRENTSAVE_9,       VIRTKEY, NOINVERT
-    "0",            ID_CURRENTSAVE_10,      VIRTKEY, NOINVERT
+    "1",            ID_CURRENTSAVE_DEFAULT, VIRTKEY, SHIFT, NOINVERT
+    "2",            ID_CURRENTSAVE_2,       VIRTKEY, SHIFT, NOINVERT
+    "3",            ID_CURRENTSAVE_3,       VIRTKEY, SHIFT, NOINVERT
+    "4",            ID_CURRENTSAVE_4,       VIRTKEY, SHIFT, NOINVERT
+    "5",            ID_CURRENTSAVE_5,       VIRTKEY, SHIFT, NOINVERT
+    "6",            ID_CURRENTSAVE_6,       VIRTKEY, SHIFT, NOINVERT
+    "7",            ID_CURRENTSAVE_7,       VIRTKEY, SHIFT, NOINVERT
+    "8",            ID_CURRENTSAVE_8,       VIRTKEY, SHIFT, NOINVERT
+    "9",            ID_CURRENTSAVE_9,       VIRTKEY, SHIFT, NOINVERT
+    "0",            ID_CURRENTSAVE_10,      VIRTKEY, SHIFT, NOINVERT
     "1",            ID_CURRENTSAVE_11,      VIRTKEY, CONTROL, NOINVERT
     "2",            ID_CURRENTSAVE_12,      VIRTKEY, CONTROL, NOINVERT
     "3",            ID_CURRENTSAVE_13,      VIRTKEY, CONTROL, NOINVERT
@@ -618,36 +617,36 @@ BEGIN
     "8",            ID_CURRENTSAVE_18,      VIRTKEY, CONTROL, NOINVERT
     "9",            ID_CURRENTSAVE_19,      VIRTKEY, CONTROL, NOINVERT
     "0",            ID_CURRENTSAVE_20,      VIRTKEY, CONTROL, NOINVERT
-    "1",            ID_CURRENTSAVE_21,      VIRTKEY, SHIFT, NOINVERT
-    "2",            ID_CURRENTSAVE_22,      VIRTKEY, SHIFT, NOINVERT
-    "3",            ID_CURRENTSAVE_23,      VIRTKEY, SHIFT, NOINVERT
-    "4",            ID_CURRENTSAVE_24,      VIRTKEY, SHIFT, NOINVERT
-    "5",            ID_CURRENTSAVE_25,      VIRTKEY, SHIFT, NOINVERT
-    "6",            ID_CURRENTSAVE_26,      VIRTKEY, SHIFT, NOINVERT
-    "7",            ID_CURRENTSAVE_27,      VIRTKEY, SHIFT, NOINVERT
-    "8",            ID_CURRENTSAVE_28,      VIRTKEY, SHIFT, NOINVERT
-    "9",            ID_CURRENTSAVE_29,      VIRTKEY, SHIFT, NOINVERT
-    "0",            ID_CURRENTSAVE_30,      VIRTKEY, SHIFT, NOINVERT
-    "1",            ID_CURRENTSAVE_31,      VIRTKEY, CONTROL, SHIFT, NOINVERT
-    "2",            ID_CURRENTSAVE_32,      VIRTKEY, CONTROL, SHIFT, NOINVERT
-    "3",            ID_CURRENTSAVE_33,      VIRTKEY, CONTROL, SHIFT, NOINVERT
-    "4",            ID_CURRENTSAVE_34,      VIRTKEY, CONTROL, SHIFT, NOINVERT
-    "5",            ID_CURRENTSAVE_35,      VIRTKEY, CONTROL, SHIFT, NOINVERT
-    "6",            ID_CURRENTSAVE_36,      VIRTKEY, CONTROL, SHIFT, NOINVERT
-    "7",            ID_CURRENTSAVE_37,      VIRTKEY, CONTROL, SHIFT, NOINVERT
-    "8",            ID_CURRENTSAVE_38,      VIRTKEY, CONTROL, SHIFT, NOINVERT
-    "9",            ID_CURRENTSAVE_39,      VIRTKEY, CONTROL, SHIFT, NOINVERT
-    "0",            ID_CURRENTSAVE_40,      VIRTKEY, CONTROL, SHIFT, NOINVERT
-    "1",            ID_CURRENTSAVE_41,      VIRTKEY, ALT, NOINVERT
-    "2",            ID_CURRENTSAVE_42,      VIRTKEY, ALT, NOINVERT
-    "3",            ID_CURRENTSAVE_43,      VIRTKEY, ALT, NOINVERT
-    "4",            ID_CURRENTSAVE_44,      VIRTKEY, ALT, NOINVERT
-    "5",            ID_CURRENTSAVE_45,      VIRTKEY, ALT, NOINVERT
-    "6",            ID_CURRENTSAVE_46,      VIRTKEY, ALT, NOINVERT
-    "7",            ID_CURRENTSAVE_47,      VIRTKEY, ALT, NOINVERT
-    "8",            ID_CURRENTSAVE_48,      VIRTKEY, ALT, NOINVERT
-    "9",            ID_CURRENTSAVE_49,      VIRTKEY, ALT, NOINVERT
-    "0",            ID_CURRENTSAVE_50,      VIRTKEY, ALT, NOINVERT
+    "1",            ID_CURRENTSAVE_21,      VIRTKEY, ALT, NOINVERT
+    "2",            ID_CURRENTSAVE_22,      VIRTKEY, ALT, NOINVERT
+    "3",            ID_CURRENTSAVE_23,      VIRTKEY, ALT, NOINVERT
+    "4",            ID_CURRENTSAVE_24,      VIRTKEY, ALT, NOINVERT
+    "5",            ID_CURRENTSAVE_25,      VIRTKEY, ALT, NOINVERT
+    "6",            ID_CURRENTSAVE_26,      VIRTKEY, ALT, NOINVERT
+    "7",            ID_CURRENTSAVE_27,      VIRTKEY, ALT, NOINVERT
+    "8",            ID_CURRENTSAVE_28,      VIRTKEY, ALT, NOINVERT
+    "9",            ID_CURRENTSAVE_29,      VIRTKEY, ALT, NOINVERT
+    "0",            ID_CURRENTSAVE_30,      VIRTKEY, ALT, NOINVERT
+    "1",            ID_CURRENTSAVE_31,      VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "2",            ID_CURRENTSAVE_32,      VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "3",            ID_CURRENTSAVE_33,      VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "4",            ID_CURRENTSAVE_34,      VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "5",            ID_CURRENTSAVE_35,      VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "6",            ID_CURRENTSAVE_36,      VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "7",            ID_CURRENTSAVE_37,      VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "8",            ID_CURRENTSAVE_38,      VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "9",            ID_CURRENTSAVE_39,      VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "0",            ID_CURRENTSAVE_40,      VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "1",            ID_CURRENTSAVE_41,      VIRTKEY, SHIFT, ALT, NOINVERT
+    "2",            ID_CURRENTSAVE_42,      VIRTKEY, SHIFT, ALT, NOINVERT
+    "3",            ID_CURRENTSAVE_43,      VIRTKEY, SHIFT, ALT, NOINVERT
+    "4",            ID_CURRENTSAVE_44,      VIRTKEY, SHIFT, ALT, NOINVERT
+    "5",            ID_CURRENTSAVE_45,      VIRTKEY, SHIFT, ALT, NOINVERT
+    "6",            ID_CURRENTSAVE_46,      VIRTKEY, SHIFT, ALT, NOINVERT
+    "7",            ID_CURRENTSAVE_47,      VIRTKEY, SHIFT, ALT, NOINVERT
+    "8",            ID_CURRENTSAVE_48,      VIRTKEY, SHIFT, ALT, NOINVERT
+    "9",            ID_CURRENTSAVE_49,      VIRTKEY, SHIFT, ALT, NOINVERT
+    "0",            ID_CURRENTSAVE_50,      VIRTKEY, SHIFT, ALT, NOINVERT
     VK_ESCAPE,      ID_OPTIONS_FULLSCREEN,  VIRTKEY, NOINVERT
     VK_F1,          ID_CPU_RESET,           VIRTKEY, NOINVERT
     VK_F2,          ID_CPU_PAUSE,           VIRTKEY, NOINVERT

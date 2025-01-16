@@ -1608,9 +1608,8 @@ void StartEmulation ( void ) {
 	}
 }
 void CheckRbRefresh ( void ) {
-if (RomBrowser) {
 ShowRomList(hMainWindow);
-RefreshRomBrowser(); }
+if (RomBrowser) RefreshRomBrowser(); else HideRomBrowser();
 }
 void StepOpcode        ( void ) {
 	PulseEvent( CPU_Action.hStepping );

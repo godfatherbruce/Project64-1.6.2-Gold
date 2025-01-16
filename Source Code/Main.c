@@ -820,6 +820,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			hMenu = GetMenu(hMainWindow);
 			EnableMenuItem(hMenu,ID_FILE_STARTEMULATION,MFS_ENABLED|MF_BYCOMMAND);
 			if (DrawScreen != NULL) { DrawScreen(); }
+			CloseCheatWindow();
 			ShowRomList(hMainWindow);
 			if (RomBrowser) {
 				RefreshRomBrowser();

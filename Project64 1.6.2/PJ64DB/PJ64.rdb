@@ -6802,7 +6802,7 @@ MB=8
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-Core Note=Requires recompiler core with TLB off for ROMhacks
+Core Note=Core Note=Emulator crashes without Direct3D8 within an iron knuckle room in Dungeon 1/Requires recompiler core with TLB off for ROMhacks
 CF=1
 Status=Compatible
 Plugin Note=Jabo's Direct3D8 1.6 ONLY/Use GLideN64
@@ -7025,6 +7025,7 @@ CPU=Recompiler
 SCM=Check Memory Advance
 Status=Compatible
 Plugin Note=Jabo's Direct3D8 1.6 ONLY
+Core Note=Emulator crashes without Direct3D8 upon death in Dungeon 1
 CF=1
 [CF2E9419-6F97E25D-C:45]
 Game Name=(Hack) Dark Hyrule Fantasy
@@ -7033,6 +7034,7 @@ CPU=Recompiler
 SCM=Check Memory Advance
 Status=Compatible
 Plugin Note=Jabo's Direct3D8 1.6 ONLY
+Core Note=Emulator crashes without Direct3D8 upon death in Dungeon 1 Boss
 [5A091FA5-5AAA78FE-C:45]
 Game Name=(Hack) Sands of Time
 MB=8

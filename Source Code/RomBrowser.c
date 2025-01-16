@@ -753,7 +753,7 @@ void SelectRomDir (void) {
 				strcat(Directory,"\\");
 			}
 			SetRomDirectory(Directory);
-			RefreshRomBrowser();
+			CheckRbRefresh();
 		}
 	}
 }

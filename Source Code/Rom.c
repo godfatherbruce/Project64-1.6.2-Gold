@@ -131,9 +131,6 @@ int ChooseN64RomToOpen ( void ) {
 	}
 	return FALSE;
 }
-void EnableOpenMenuItems (void) {
-	SetupMenu(hMainWindow);
-}
 void GetRomDirectory ( char * Directory ) {
 	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
 	char fname[_MAX_FNAME],ext[_MAX_EXT];
@@ -622,7 +619,7 @@ void OpenN64Image ( void ) {
 	if (ChooseN64RomToOpen()) {
 		CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)OpenChosenFile,NULL,0, &ThreadID);
 	} else {
-		EnableOpenMenuItems();
+		SetupMenu(hMainWindow);
 	}
 }
 void SetNewFileDirectory (void ){
@@ -642,7 +639,7 @@ void SetNewFileDirectory (void ){
 		GetRomDirectory( CurrentDir );
 		if (strcmp(CurrentDir,Directory) == 0) { return; }
 		SetRomDirectory(Directory);
-		RefreshRomBrowser();
+		CheckRbRefresh();
 	}
 }
 void OpenChosenFile ( void ) {
@@ -681,11 +678,8 @@ void OpenChosenFile ( void ) {
 		file = unzOpen(CurrentFileName);
 		if (file == NULL) {
 			DisplayError(GS(MSG_FAIL_OPEN_ZIP));
-			EnableOpenMenuItems();
-			if (RomBrowser) {
-				ShowRomList(hMainWindow);
-				RefreshRomBrowser();
-			}
+			SetupMenu(hMainWindow);
+			CheckRbRefresh();
 			return;
 		}
 		port = unzGoToFirstFile(file);
@@ -695,21 +689,15 @@ void OpenChosenFile ( void ) {
 		    if (unzLocateFile(file, zname, 1) != UNZ_OK ) {
 				unzClose(file);
 				DisplayError(GS(MSG_FAIL_ZIP));
-				EnableOpenMenuItems();
-				if (RomBrowser) {
-					ShowRomList(hMainWindow);
-					RefreshRomBrowser();
-				}
+				SetupMenu(hMainWindow);
+				CheckRbRefresh();
 				return;
 			}
 			if( unzOpenCurrentFile(file) != UNZ_OK ) {
 				unzClose(file);
 				DisplayError(GS(MSG_FAIL_OPEN_ZIP));
-				EnableOpenMenuItems();
-				if (RomBrowser) {
-					ShowRomList(hMainWindow);
-					RefreshRomBrowser();
-				}
+				SetupMenu(hMainWindow);
+				CheckRbRefresh();
 				return;
 			}
 			unzReadCurrentFile(file,Test,4);
@@ -720,11 +708,8 @@ void OpenChosenFile ( void ) {
 					unzCloseCurrentFile(file);
 					unzClose(file);
 					DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-					EnableOpenMenuItems();
-					if (RomBrowser) {
-						ShowRomList(hMainWindow);
-						RefreshRomBrowser();
-					}
+					SetupMenu(hMainWindow);
+					CheckRbRefresh();
 					return;
 				}
 				memcpy(ROM,Test,4);
@@ -747,21 +732,15 @@ void OpenChosenFile ( void ) {
 						DisplayError(GS(MSG_FAIL_OPEN_ZIP));
 						break;
 					}
-					EnableOpenMenuItems();
-					if (RomBrowser) {
-						ShowRomList(hMainWindow);
-						RefreshRomBrowser();
-					}
+					SetupMenu(hMainWindow);
+					CheckRbRefresh();
 					return;
 				}
 				if(unzCloseCurrentFile(file) == UNZ_CRCERROR) {
 					unzClose(file);
 					DisplayError(GS(MSG_FAIL_OPEN_ZIP));
-					EnableOpenMenuItems();
-					if (RomBrowser) {
-						ShowRomList(hMainWindow);
-						RefreshRomBrowser();
-					}
+					SetupMenu(hMainWindow);
+					CheckRbRefresh();
 					return;
 				}
 				AddRecentFile(hMainWindow,CurrentFileName);
@@ -776,11 +755,8 @@ void OpenChosenFile ( void ) {
 		if (FoundRom == FALSE) {
 		    DisplayError(GS(MSG_FAIL_OPEN_ZIP));
 		    unzClose(file);
-			EnableOpenMenuItems();
-			if (RomBrowser) {
-				ShowRomList(hMainWindow);
-				RefreshRomBrowser();
-			}
+			SetupMenu(hMainWindow);
+			CheckRbRefresh();
 			return;
 		}
 	} else {
@@ -790,12 +766,8 @@ void OpenChosenFile ( void ) {
 			OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS,
 			NULL);
 		if (hFile == INVALID_HANDLE_VALUE) {
-			EnableOpenMenuItems();
-			if (RomBrowser) {
-				ShowRomList(hMainWindow);
-				RefreshRomBrowser();
-			}
-			RefreshRomBrowser();
+			SetupMenu(hMainWindow);
+			CheckRbRefresh();
 			return;
 		}
 		SetFilePointer(hFile,0,0,FILE_BEGIN);
@@ -804,11 +776,8 @@ void OpenChosenFile ( void ) {
 			CloseHandle( hFile );
 			SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"" );
 			DisplayError(GS(MSG_FAIL_IMAGE));
-			EnableOpenMenuItems();
-			if (RomBrowser) {
-				ShowRomList(hMainWindow);
-				RefreshRomBrowser();
-			}
+			SetupMenu(hMainWindow);
+			CheckRbRefresh();
 			return;
 		}
 		RomFileSize = GetFileSize(hFile,NULL);
@@ -816,11 +785,8 @@ void OpenChosenFile ( void ) {
 			CloseHandle( hFile );
 			SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"" );
 			DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-			EnableOpenMenuItems();
-			if (RomBrowser) {
-				ShowRomList(hMainWindow);
-				RefreshRomBrowser();
-			}
+			SetupMenu(hMainWindow);
+			CheckRbRefresh(); 
 			return;
 		}
 		SetFilePointer(hFile,0,0,FILE_BEGIN);
@@ -870,7 +836,7 @@ void OpenChosenFile ( void ) {
 	}
 	SetWindowText(hMainWindow,WinTitle);
 	if (!RememberCheats) { DisableAllCheats(); }
-	EnableOpenMenuItems();
+	SetupMenu(hMainWindow);
 	//if (RomBrowser) { SetupPlugins(hMainWindow); }
         SetCurrentSaveState(hMainWindow,ID_CURRENTSAVE_DEFAULT);
 	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"");
@@ -975,7 +941,7 @@ void SetRecentRomDir (DWORD Index) {
 	Index -= ID_FILE_RECENT_DIR;
 	if (Index < 0 || Index > RomDirsToRemember) { return; }
 	SetRomDirectory(LastDirs[Index]);
-	RefreshRomBrowser();
+	CheckRbRefresh();
 }
 void SetRomDirectory ( char * Directory ) {
 	long lResult;

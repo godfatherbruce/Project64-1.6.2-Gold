@@ -1607,6 +1607,11 @@ void StartEmulation ( void ) {
 	CPU_Action.SaveState = TRUE;
 	}
 }
+void CheckRbRefresh ( void ) {
+if (RomBrowser) {
+ShowRomList(hMainWindow);
+RefreshRomBrowser(); }
+}
 void StepOpcode        ( void ) {
 	PulseEvent( CPU_Action.hStepping );
 }

@@ -529,6 +529,7 @@ void RomList_GetDispInfo(LPNMHDR pnmh) {
 	if (strlen(lpdi->item.pszText) == 0) { strcpy(lpdi->item.pszText,""); }
 }
 void RomList_PopupMenu(LPNMHDR pnmh) {
+	int State;
 	LV_DISPINFO * lpdi = (LV_DISPINFO *)pnmh;
 	HMENU hMenu = LoadMenu(hInst,MAKEINTRESOURCE(IDR_POPUP));
 	HMENU hPopupMenu = GetSubMenu(hMenu,0);
@@ -564,7 +565,8 @@ void RomList_PopupMenu(LPNMHDR pnmh) {
 		DeleteMenu(hPopupMenu, 1, MF_BYPOSITION);
 		DeleteMenu(hPopupMenu, 0, MF_BYPOSITION);
 	}
-	if (!RememberCheats) DeleteMenu(hPopupMenu, 6, MF_BYPOSITION);
+	State = RememberCheats?MFS_ENABLED:MFS_DISABLED;
+	EnableMenuItem(hMenu,ID_EDITCHEATS,State|MF_BYCOMMAND);
 	TrackPopupMenu(hPopupMenu, 0, Mouse.x, Mouse.y, 0,hMainWindow, NULL);
 	DestroyMenu(hMenu);
 }

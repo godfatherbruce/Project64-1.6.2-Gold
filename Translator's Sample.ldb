@@ -44,7 +44,7 @@
 #44# "Help"
 #45# "User Guide"
 #46# "About Databases"
-#47# "GitHub"
+#47# "Frame Advance"
 #48# "Factory Reset"
 #49# "Lets you open N64 ROMs"
 #50# "Displays ROM-specific information about a running ROM"
@@ -226,7 +226,8 @@ You need to go into Settings and select an input (controller) plugin"
 #210# "Failed to load plugin"
 #211# "Failed to load word.
 
-Exiting thread"
+Exiting thread
+(Try a different video plugin)"
 #212# "Failed to save this savestate. You should ensure you aren't saving a savestate marked as read-only"
 #213# "Cannot access save data. You may be running the application from an admin rights directory, or you may have multiple instances of Project64 open. Stop doing either of those to make this error go away"
 #214# "Attempt to open zip file failed.
@@ -270,3 +271,4 @@ Is it OK to execute this action? If so, press OK to close Project64 or close it 
 #238# "Fullscreen mode toggled"
 #239# "GS button pressed"
 #240# "Frames Per Second"
+#241# "Advances through a game in single frames at a time"

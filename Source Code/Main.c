@@ -244,15 +244,16 @@ void FixMenuLang (HMENU hMenu) {
 	hSubMenu = GetSubMenu(hMenu,1);
 	MenuSetText(hSubMenu, 0, GS(MENU_RESET),"F1");
 	MenuSetText(hSubMenu, 1, GS(CPU_Paused?MENU_RESUME:MENU_PAUSE),"F2");
-        MenuSetText(hSubMenu, 2, GS(MENU_BITMAP),"F3");
-	MenuSetText(hSubMenu, 4, GS(MENU_LIMIT_FPS),"F4");
-	MenuSetText(hSubMenu, 6, GS(MENU_SAVE),"F5");
-	MenuSetText(hSubMenu, 7, GS(MENU_SAVE_AS),"Ctrl+S");
-	MenuSetText(hSubMenu, 8, GS(MENU_RESTORE),"F7");
-	MenuSetText(hSubMenu, 9, GS(MENU_LOAD),"Ctrl+L");
-	MenuSetText(hSubMenu, 11, GS(MENU_CURRENT_SAVE),NULL);
-	MenuSetText(hSubMenu, 13, GS(MENU_CHEAT),"Ctrl+C");
-	MenuSetText(hSubMenu, 14, GS(MENU_GS_BUTTON),"F9");
+	MenuSetText(hSubMenu, 2, GS(MENU_ADVANCE),"Caps Lock");
+        MenuSetText(hSubMenu, 3, GS(MENU_BITMAP),"F3");
+	MenuSetText(hSubMenu, 5, GS(MENU_LIMIT_FPS),"F4");
+	MenuSetText(hSubMenu, 7, GS(MENU_SAVE),"F5");
+	MenuSetText(hSubMenu, 8, GS(MENU_SAVE_AS),"Ctrl+S");
+	MenuSetText(hSubMenu, 9, GS(MENU_RESTORE),"F7");
+	MenuSetText(hSubMenu, 10, GS(MENU_LOAD),"Ctrl+L");
+	MenuSetText(hSubMenu, 12, GS(MENU_CURRENT_SAVE),NULL);
+	MenuSetText(hSubMenu, 14, GS(MENU_CHEAT),"Ctrl+C");
+	MenuSetText(hSubMenu, 15, GS(MENU_GS_BUTTON),"F9");
 	//Options
 	hSubMenu = GetSubMenu(hMenu,2);
 	MenuSetText(hSubMenu, 0, GS(MENU_FULL_SCREEN), "Esc");
@@ -266,7 +267,7 @@ void FixMenuLang (HMENU hMenu) {
 	hSubMenu = GetSubMenu(hMenu,3);
 	MenuSetText(hSubMenu, 0, GS(MENU_UNINSTALL), NULL);
 	MenuSetText(hSubMenu, 1, GS(MENU_ABOUT_INI), NULL);
-	MenuSetText(hSubMenu, 2, GS(MENU_GITHUB), NULL);
+	MenuSetText(hSubMenu, 2, "GitHub", NULL);
 	MenuSetText(hSubMenu, 3, GS(MENU_USER_GUIDE), NULL);
 }
 char * GetIniFileName(void) {
@@ -574,6 +575,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_CPU_RESET: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_RESET)); break;
 		case ID_CPU_PAUSE: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_PAUSE)); break;
                 case ID_SYSTEM_GENERATEBITMAP: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_BITMAP)); break;
+		case ID_SYSTEM_ALTERNATEPAUSE: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENU_ADVANCE_DESC)); break;
 		case ID_SYSTEM_LIMITFPS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_LIMIT_FPS)); break;
 		case ID_CPU_SAVE: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_SAVE)); break;
 		case ID_CPU_SAVEAS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_SAVE_AS)); break;
@@ -1330,12 +1332,15 @@ void SetupMenu ( HWND hWnd ) {
 		EnableMenuItem(hMenu,ID_FILE_STARTEMULATION,MFS_ENABLED|MF_BYCOMMAND);
 		EnableMenuItem(hMenu,ID_SYSTEM_GSBUTTON,MFS_ENABLED|MF_BYCOMMAND);						//added by Witten on 10/03/2002
 	}
+	//State = RomBrowser ? MFS_ENABLED : MFS_DISABLED;
+	//EnableMenuItem(hMenu, ID_FILE_REFRESHROMLIST, State | MF_BYCOMMAND);
 	//Enable if cpu is running
 	State = CPURunning?MFS_ENABLED:MFS_DISABLED;
 	EnableMenuItem(hMenu,ID_FILE_ENDEMULATION,State|MF_BYCOMMAND);
 	EnableMenuItem(hMenu,ID_OPTIONS_FULLSCREEN,State|MF_BYCOMMAND);
 	EnableMenuItem(hMenu,ID_CPU_RESET,State|MF_BYCOMMAND);
 	EnableMenuItem(hMenu,ID_CPU_PAUSE,State|MF_BYCOMMAND);
+	EnableMenuItem(hMenu,ID_SYSTEM_ALTERNATEPAUSE,State|MF_BYCOMMAND);
 	EnableMenuItem(hMenu,ID_OPTIONS_CHEATS,State|MF_BYCOMMAND);
 	EnableMenuItem(hMenu,ID_CPU_SAVE,State|MF_BYCOMMAND);
 	EnableMenuItem(hMenu,ID_CPU_SAVEAS,State|MF_BYCOMMAND);
@@ -1347,15 +1352,16 @@ void SetupMenu ( HWND hWnd ) {
 		EnableMenuItem(hMenu,ID_SYSTEM_GENERATEBITMAP,MFS_DISABLED|MF_BYCOMMAND);
 	}
 	hSubMenu = GetSubMenu(hMenu,1); 	//System
-	EnableMenuItem(hSubMenu,11,State|MF_BYPOSITION);  //Save State
+	EnableMenuItem(hSubMenu,12,State|MF_BYPOSITION);  //Save State
 	//Disable if cpu is running
 	State = CPURunning?MFS_DISABLED:MFS_ENABLED;
 	EnableMenuItem(hMenu,ID_FILE_ROMDIRECTORY,State|MF_BYCOMMAND);
-	EnableMenuItem(hMenu,ID_FILE_REFRESHROMLIST,State|MF_BYCOMMAND);
 	if (State == MFS_DISABLED) { EnableMenuItem(hMenu,ID_FILE_STARTEMULATION,State|MF_BYCOMMAND); }
 	SetMenu(hWnd, hMenu);
 	DrawMenuBar(hWnd);
 	hMainMenu = hMenu;
+	hSubMenu = GetSubMenu(hMenu, 0);
+	if (!RomBrowser || CPURunning) { DeleteMenu(hSubMenu, 9, MF_BYPOSITION); }
 }
 void SetCurrentSaveState (HWND hWnd, int State) {
 	char String[256];

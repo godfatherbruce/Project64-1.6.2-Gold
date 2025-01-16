@@ -58,7 +58,7 @@ char * GS               ( int StringID );
 #define MENU_HELP			44
 	#define MENU_USER_GUIDE		45
 	#define MENU_ABOUT_INI		46
-	#define MENU_GITHUB		47
+	#define MENU_ADVANCE		47
 	#define MENU_UNINSTALL		48
 // Menu Descriptions
 #define MENUDES_OPEN			49
@@ -288,9 +288,10 @@ char * GS               ( int StringID );
 #define FULLSCREEN_TOGGLE               238
 #define GS_PRESS                        239
 #define FPS_DISPLAY                     240
-#define NUMBER_1		        241
-#define NUMBER_2		        242
-#define NUMBER_3		        243
-#define NUMBER_4		        244
-#define NUMBER_5		        245
-#define NUMBER_6		        246
+#define MENU_ADVANCE_DESC		241
+#define NUMBER_1		        242
+#define NUMBER_2		        243
+#define NUMBER_3		        244
+#define NUMBER_4		        245
+#define NUMBER_5		        246
+#define NUMBER_6		        247

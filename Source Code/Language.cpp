@@ -66,7 +66,7 @@ LANG_STR DefaultString[] = {
 	        { MENU_HELP,     "Help"                           },
 		{ MENU_USER_GUIDE,    "User Guide"                },
 		{ MENU_ABOUT_INI,   "About Databases"             },
-		{ MENU_GITHUB,    "GitHub"                        },
+		{ MENU_ADVANCE,		  "Frame Advance"},
 		{ MENU_UNINSTALL,   "Factory Reset"               },
 // Menu Descriptions
         { MENUDES_OPEN, "Lets you open N64 ROMs" },
@@ -298,6 +298,7 @@ LANG_STR DefaultString[] = {
         { FULLSCREEN_TOGGLE,      "Fullscreen mode toggled"},
         { GS_PRESS,               "GS button pressed"},
 	{ FPS_DISPLAY,            "Frames Per Second"},
+	{ MENU_ADVANCE_DESC,	  "Advances through a game in single frames at a time"},
 };
 class CLanguage  {
 	void FindLangName  ( int Index );

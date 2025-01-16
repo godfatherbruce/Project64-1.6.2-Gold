@@ -879,9 +879,6 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_1,1,&RomCF);
 		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_2,2,&RomCF);
 		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_3,3,&RomCF);
-		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_4,4,&RomCF);
-		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_5,5,&RomCF);
-		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_6,6,&RomCF);
 		SetFlagControl(hDlg,&RomUseLargeBuffer, IDC_LARGE_COMPILE_BUFFER, ROM_LARGE_BUFFER);
 		SetFlagControl(hDlg,&RomUseTlb, IDC_USE_TLB, ROM_USE_TLB);
 		SetFlagControl(hDlg,&RomUseCache, IDC_ROM_REGCACHE, ROM_REG_CACHE);

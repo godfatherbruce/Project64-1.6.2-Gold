@@ -101,12 +101,6 @@ there were so many things that were fixed I've lost count. Anyways, time to list
 Project64 1.6.2:
 
 
-*Added 60FPS ROM Frame Advance feature via the Caps Lock key after pausing. This is an excellent feature
-*if you have your controller setup in front of your keyboard with right pinky on shift and left on caps.
-*(shift+caps lock will allow you to pause, and you can press caps lock and watch the caps light in order
-*to see if your press registered as a frame advance, and to count how many frames are getting advanced).
-*Use this feature to easily test your input lag. Note that video and/or input plugin is gonna affect it.
-
 Added and removed plugins (too much to list the specifics here, please see later sections of the guide).
 
 Added cheat support for a ton of Zelda64 ROMhacks as well as a great mod known as Super Mario Star Road.
@@ -114,6 +108,8 @@ Added cheat support for a ton of Zelda64 ROMhacks as well as a great mod known a
 Added custom-made "Check Memory & Return" self-modifying code method to help support games like OoT 1.x.
 
 Added drag-n-drop support when opening ROMs so there is no need to go through file explorer's interface.
+
+Added frame advance option under the System tab to let users advance through games, one frame at a time.
 
 Added Linking=Off for all entries w/ Protect Memory to prevent excessive stutters that happen otherwise.
 
@@ -178,7 +174,10 @@ Section#03 Project64 Legacy is an unfinished emulator with concerning issues to 
 --------------------------------------------------------------------------------------------------------
 For your information, here's some issues I have experienced with Project64 "Legacy" as of version 1.6.4:
 
+* Some retail N64 games don't ever boot at all. No matter what settings get used, some games don't work.
+* Screen shaking issue in some games like Indiana Jones and The Infernal Machine.
 * When saving in some ROMhacks, instead of saving your save data, it will outright delete it altogether.
+* In some ROMhacks, you shall get a black screen while the game is still running for no apparent reason.
 * Resetting will straight-up crash the emulator with some games, ROMhack or not (Mario Party, or Conker,
   ROMhacks like, "That Time I Became Friends With The Royal Scuttlebug Family And Fell from Space.z64").
 * Configuring the included high-level RSP freezes if done while a game is running, killing all progress.
@@ -187,7 +186,8 @@ For your information, here's some issues I have experienced with Project64 "Lega
 * Graphics can glitch out momentarily when loading savestates with GLideN64.
 * Loading savestates can cause the emulator to hang the game, happened to me in mario 64's title screen.
 * Taking a screenshot can lock up all emulator controls and then crash it if done using Jabo's Direct3D8
-  1.7.0.47 with any amount of antialiasing applied other than zero.
+  1.7.0.47 with any amount of antialiasing applied other than zero. Jabo's plugins are closed source but
+  Project64 Legacy still refuses to mention to the user in any way about the severe issue in the plugin.
 * Loading some games like Majora's Mask with Jabo's Direct3D8 1.7.0.47 will make an error message appear
   on-screen, and then the emulator will proceed to crash itself.
 * Some games like Majora's Mask have the wrong counter factor applied from the ROM database which causes
@@ -212,6 +212,8 @@ For your information, here's some issues I have experienced with Project64 "Lega
 * Star manager is no longer compatible out of the gate due to a regression with the executable filename.
 * Loading a savestate can ruin all of the graphics if you try to load states just after a ROM is opened.
 * Persistently annoying stuttering in Ocarina of Time which hurts the quality of my gameplay experience.
+
+Note that all the issues mentioned above about Project64 Legacy are not issues in this Project64 V1.6.2.
 
 For the reasons listed above, I consider the legacy project to be a failed experiment that could've been
 succesful in "finishing" what they started, as they put it. But unfortunately, it doesn't quite hold up.

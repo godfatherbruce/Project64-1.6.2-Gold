@@ -501,7 +501,7 @@ void LoadRomOptions ( void ) {
 	if (RomCPUType != CPU_Default) { CPU_Type = RomCPUType; }
 	CountPerOp = RomCF;
 	if (CountPerOp < 1)  { CountPerOp = Default_CountPerOp; }
-	if (CountPerOp > 6)  { CountPerOp = Default_CountPerOp; }
+	if (CountPerOp > 3)  { CountPerOp = Default_CountPerOp; }
 	SaveUsing = RomSaveUsing;
 	SelfModCheck = SystemSelfModCheck;
 	if (RomSelfMod != ModCode_Default) { SelfModCheck = RomSelfMod; }
@@ -571,7 +571,7 @@ void ReadRomOptions (void) {
 			ROMRAMsize = -1;
 		}
 		RomCF = _GetPrivateProfileInt(Identifier,"CF",-1,IniFileName);
-		if (RomCF > 6) { RomCF = -1; }
+		if (RomCF > 3) { RomCF = -1; }
 		_GetPrivateProfileString(Identifier,"Save","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"4") == 0)       { RomSaveUsing = eepROM_4K; }
 		else if (strcmp(String,"16") == 0) { RomSaveUsing = eepROM_16K; }
@@ -896,7 +896,7 @@ void SaveRomOptions (void) {
 	_WritePrivateProfileString(Identifier, "Buffer", RomUseLargeBuffer ? "On" : " ", GetIniFileName());
 	_WritePrivateProfileString(Identifier, "Caching", RomUseCache ? " " : "Off", GetIniFileName());
 	switch (RomCF) {
-	case 1: case 2: case 3: case 4: case 5: case 6: sprintf(String, "%d", RomCF); break;
+	case 1: case 2: case 3: sprintf(String, "%d", RomCF); break;
 	default: sprintf(String, " "); break;
 	}
 	_WritePrivateProfileString(Identifier, "CF", String, GetIniFileName());

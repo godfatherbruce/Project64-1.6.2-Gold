@@ -292,6 +292,3 @@ char * GS               ( int StringID );
 #define NUMBER_1		        242
 #define NUMBER_2		        243
 #define NUMBER_3		        244
-#define NUMBER_4		        245
-#define NUMBER_5		        246
-#define NUMBER_6		        247

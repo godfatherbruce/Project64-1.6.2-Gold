@@ -820,8 +820,12 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			hMenu = GetMenu(hMainWindow);
 			EnableMenuItem(hMenu,ID_FILE_STARTEMULATION,MFS_ENABLED|MF_BYCOMMAND);
 			if (DrawScreen != NULL) { DrawScreen(); }
-			CloseCheatWindow();
-			CheckRbRefresh();
+			ShowRomList(hMainWindow);
+			if (RomBrowser) {
+				RefreshRomBrowser();
+			} else {
+				HideRomBrowser();
+			}
 			break;
 		case ID_FILE_ROMDIRECTORY: SelectRomDir(); break;
 		case ID_FILE_REFRESHROMLIST: RefreshRomBrowser(); break;
@@ -1332,8 +1336,6 @@ void SetupMenu ( HWND hWnd ) {
 		EnableMenuItem(hMenu,ID_FILE_STARTEMULATION,MFS_ENABLED|MF_BYCOMMAND);
 		EnableMenuItem(hMenu,ID_SYSTEM_GSBUTTON,MFS_ENABLED|MF_BYCOMMAND);						//added by Witten on 10/03/2002
 	}
-	//State = RomBrowser ? MFS_ENABLED : MFS_DISABLED;
-	//EnableMenuItem(hMenu, ID_FILE_REFRESHROMLIST, State | MF_BYCOMMAND);
 	//Enable if cpu is running
 	State = CPURunning?MFS_ENABLED:MFS_DISABLED;
 	EnableMenuItem(hMenu,ID_FILE_ENDEMULATION,State|MF_BYCOMMAND);
@@ -1361,7 +1363,7 @@ void SetupMenu ( HWND hWnd ) {
 	DrawMenuBar(hWnd);
 	hMainMenu = hMenu;
 	hSubMenu = GetSubMenu(hMenu, 0);
-	if (!RomBrowser || CPURunning) { DeleteMenu(hSubMenu, 9, MF_BYPOSITION); }
+	if (!RomBrowser) { DeleteMenu(hSubMenu, 9, MF_BYPOSITION); }
 }
 void SetCurrentSaveState (HWND hWnd, int State) {
 	char String[256];

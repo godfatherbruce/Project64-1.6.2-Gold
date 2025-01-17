@@ -99,7 +99,6 @@ LANG_STR DefaultString[] = {
         { MENUDES_GAME_SETTINGS, "Lets you edit ROM settings for a selected ROM" },
         { MENUDES_GAME_CHEATS, "Lets you edit cheat codes for a selected ROM (available when remembered)" },
         { MENUDES_UNINSTALLAPP, "Attempts to factory reset all PJ64 registries/configurations and terminates this instance" },
-        { MENUDES_GITHUB, "Takes you to Bruce Shankle IV's Project64 GitHub page" },
 /*********************************************************************************
 * ROM Browser                                                                    *
 *********************************************************************************/
@@ -288,7 +287,7 @@ LANG_STR DefaultString[] = {
 	{ MSG_CHEAT_NAME_IN_USE,  "Cheat name is currently in use"},
 	{ MSG_MAX_CHEATS,         "You have reached the maximum amount of cheats allowed for this ROM"},
 	{ GZ_ROMS,                "Exiting thread\n(Try Check Memory & Return)\n(Try Interpreter CPU Core Style)"},
-        { MSG_CONFIRMATION_UNINSTALL, "This action will attempt to factory reset all Project64 registries/configurations and terminate this instance.\n\nIs it OK to execute this action? If so, press OK to close Project64 or close it yourself. Otherwise, please cancel"},
+        { MSG_CONFIRMATION_UNINSTALL, "This action will attempt to factory reset all included registries/configurations and terminate this instance."},
         { MSG_PLUGIN_HOT_SWAP,    "Plugin hot swapping in progress"},
         { PLUG_HOT_SWAP_DOUBLE,   "Double click the OK button while plugin hot swapping to quickly close Project64 from this window"},
         { HOT_SWAP_COMPLETE,      "Plugin hot swapping completed"},

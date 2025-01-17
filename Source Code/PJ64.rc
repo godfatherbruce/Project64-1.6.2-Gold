@@ -517,7 +517,6 @@ BEGIN
     BEGIN
         MENUITEM "Factory Reset",                  ID_HELP_UNINSTALL
         MENUITEM "About PJ64 Databases",           ID_HELP_ABOUTSETTINGFILES
-        MENUITEM "Github",                         ID_HELP_GITHUB
         MENUITEM "User Guide",                     ID_HELP_GUIDE
     END
 END

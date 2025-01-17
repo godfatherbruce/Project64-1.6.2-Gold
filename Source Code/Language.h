@@ -94,7 +94,6 @@ char * GS               ( int StringID );
 #define MENUDES_GAME_SETTINGS	        79
 #define MENUDES_GAME_CHEATS		80
 #define MENUDES_UNINSTALLAPP            81
-#define MENUDES_GITHUB	                82
 /*********************************************************************************
 * Rom Browser                                                                    *
 *********************************************************************************/

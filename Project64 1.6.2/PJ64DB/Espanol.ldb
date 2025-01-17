@@ -77,7 +77,6 @@
 #79# "Te permite editar la configuracion de la ROM para una ROM seleccionada"
 #80# "Te permite editar codigos de Trucos para una ROM seleccionada (disponible cuando recordado)"
 #81# "Intenta restablecer todos los registros/configuraciones de PJ64 y termina esta instancia"
-#82# "Te lleva a la pagina de GitHub de Project64 1.6.2 de Bruce Shankle IV"
 #83# "Nombre de archivo"
 #84# "Nombre interno"
 #85# "Nombre del juego"
@@ -245,9 +244,7 @@ Salir del hilo
 #233# "Salir del hilo
 (Intenta Revisar Memoria y Devolver)
 (Intenta Estilo de Nucleo de CPU Interprete)"
-#234# "Esta accion intentara restablecer de fabrica todos los registros/configuraciones de Project64 y terminar esta instancia.
-
-Esta bien ejecutar esta accion? Si es asi, presiona OK para cerrar Project64 o cierralo tu mismo. De lo contrario, por favor cancela"
+#234# "Esta accion intentara restablecer de fabrica todos los registros/configuraciones incluidos y terminar esta instancia."
 #235# "Cambio rapido de Plugin en progreso"
 #236# "Haz doble click sobre el boton OK mientras de cambias rapidamente de plugin para cerrar de inmediato Project64 desde esta ventana"
 #237# "Cambio rapido de plugin completado"

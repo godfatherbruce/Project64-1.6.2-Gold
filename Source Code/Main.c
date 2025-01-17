@@ -267,8 +267,7 @@ void FixMenuLang (HMENU hMenu) {
 	hSubMenu = GetSubMenu(hMenu,3);
 	MenuSetText(hSubMenu, 0, GS(MENU_UNINSTALL), NULL);
 	MenuSetText(hSubMenu, 1, GS(MENU_ABOUT_INI), NULL);
-	MenuSetText(hSubMenu, 2, "GitHub", NULL);
-	MenuSetText(hSubMenu, 3, GS(MENU_USER_GUIDE), NULL);
+	MenuSetText(hSubMenu, 2, GS(MENU_USER_GUIDE), NULL);
 }
 char * GetIniFileName(void) {
 	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
@@ -592,7 +591,6 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_OPTIONS_SETTINGS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_SETTINGS)); break;
 		case ID_HELP_GUIDE: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_USER_GUIDE)); break;
 		case ID_HELP_ABOUTSETTINGFILES: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ABOUT_INI)); break;
-		case ID_HELP_GITHUB: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GITHUB)); break;
 		case ID_HELP_UNINSTALL: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_UNINSTALLAPP)); break;
 		case ID_CURRENTSAVE_DEFAULT:
 			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
@@ -1119,7 +1117,6 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 				}
 			}
 		break;
-		case ID_HELP_GITHUB: ShellExecute(NULL, "open", "https://github.com/BruceShankleIV/Project64-1.6.2", NULL, NULL, SW_SHOWMAXIMIZED); break;
 		case ID_HELP_UNINSTALL: UninstallApplication(hWnd); break;
 		case ID_HELP_ABOUTSETTINGFILES: AboutIniBox(); break;
 		default:
@@ -1580,11 +1577,15 @@ void SetCurrentSaveState (HWND hWnd, int State) {
 	CurrentSaveSlot = State;
 }
 void UninstallApplication(HWND hWnd) {
-	char RegistryKey[300];
 	if (MessageBox(NULL, GS(MSG_CONFIRMATION_UNINSTALL), AppName, MB_OKCANCEL | MB_ICONEXCLAMATION | MB_SETFOREGROUND) ==  IDOK) {
-		// Delete registry keys recursive
-		sprintf(RegistryKey, "N64 Software\\%s", AppName);
-		ForceClose = TRUE;
+		char path_buffer[_MAX_PATH], drive[_MAX_DRIVE], dir[_MAX_DIR];
+		char fname[_MAX_FNAME], ext[_MAX_EXT], HelpFileName[_MAX_PATH];
+		GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
+		_splitpath(path_buffer, drive, dir, fname, ext);
+		_makepath(HelpFileName, drive, dir, "Project64 1.6.2 RegistKeys Uninstaller", "reg");
+		if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
+			ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
+		}
 		DestroyWindow(hWnd);
 	}
 }
@@ -1644,6 +1645,19 @@ void StoreCurrentWinSize (  char * WinName, HWND hWnd ) {
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgs, int nWinMode) {
 #define WindowWidth  640
 #define WindowHeight 480
+	HANDLE hJob = CreateJobObject(NULL, NULL);
+	JOBOBJECT_BASIC_UI_RESTRICTIONS jbur = { 0 };
+	jbur.UIRestrictionsClass = JOB_OBJECT_UILIMIT_DESKTOP |
+		JOB_OBJECT_UILIMIT_DISPLAYSETTINGS |
+		JOB_OBJECT_UILIMIT_EXITWINDOWS |
+		JOB_OBJECT_UILIMIT_GLOBALATOMS |
+		JOB_OBJECT_UILIMIT_HANDLES |
+		JOB_OBJECT_UILIMIT_READCLIPBOARD |
+		JOB_OBJECT_UILIMIT_SYSTEMPARAMETERS |
+		JOB_OBJECT_UILIMIT_WRITECLIPBOARD;
+	if (!SetInformationJobObject(hJob, JobObjectBasicUIRestrictions, &jbur, sizeof(jbur))) CloseHandle(hJob);
+	if (!AssignProcessToJobObject(hJob, GetCurrentProcess())) CloseHandle(hJob);
+	CloseHandle(hJob);
 	HACCEL AccelWinMode, AccelCPURunning, AccelRomBrowser;
 	DWORD X, Y;
 	MSG msg;

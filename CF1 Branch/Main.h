@@ -35,7 +35,7 @@ extern "C" {
 #include "rombrowser.h"
 #include "Language.h"
 /********* General Defaults **********/
-#define AppVer   "1.6.2 (2024)"
+#define AppVer   "1.6.2 (2025)"
 #define AppName  "Project64 Version 1.6.2 (2025)"
 #define IniName						"PJ64.rdb"
 #define CheatIniName				"PJ64.cdb"

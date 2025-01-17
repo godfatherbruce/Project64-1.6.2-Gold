@@ -123,6 +123,8 @@ Added shortcuts for Graphics, Audio, Controller, and RSP plugins, CPU Pause, and
 
 Added vcruntime140 from MS VC Redistributable 2022 to support one of the new plugins that has got added.
 
+Added vulnerability failesafes which prevent various things a cyber attacker may attempt to pull on you.
+
 Changed a few error messages to be more informative so that they are actually helpful, instead of saying
 that something is wrong and not giving the user any idea on how to fix the problem they're experiencing.
 
@@ -163,7 +165,7 @@ Fixed ROM-loading delay.
 
 Fixed slot states not being able to manually load.
 
-Fixed multiple crashes in start emulation.
+Fixed multiple crashes upon start of emulation.
 
 Massive updates to databases.
 
@@ -296,7 +298,6 @@ Legend of Zelda Majora's Mask: fixed day transition borders and lens of truth in
 Mk3 GLideN64#42d6569 - The last stable release of GLideN64 I am able to find before the bad regressions.
 		       Use this if you want something that generally works but it has high requirements.
 		       Taken from: https://github.com/gonetz/GLideN64/issues/1574#issuecomment-345526911
-		*******Note: This plugin is prone to crashing the emulator on Start Emulation sometimes.
 
 Shankle's AntiFbffr ANGLE GLideN64 (1.0) - Use ANGLE GLideN64 for ROMhacks using DEX3 (F3DEX3) microcode
 					   or for (most) SM64 hacks. You can enable framebuffer from the
@@ -484,7 +485,7 @@ DefaultVideo.dll
 Project64 Ver1.6.2 is portable and if you would like to say, transfer everything to a new PC, you can do
 so by compressing the Project64 Ver1.6.2 folder on your PC into a .zip file, pasting it into a USB stick
 or uploading it to a cloud storage platform, and then downloading/copying it onto a new PC's hard drive.
-However, the application and Jabo plugin registry settings won't carry over! Same goes for DefaultAudio.
+However, Project64 1.6 and Jabo plugin configuration settings won't transfer! Same for Shankle AziAudio.
 --------------------------------------------------------------------------------------------------------
 
 Section#09 Credits
@@ -640,7 +641,7 @@ the following issues with this emulator:
 * Ocarina of Time subscreen delay is currently handled via the RDB file, and thus there is going to be a
   delay still with ROMhacks that don't incorporate a subscreen delay fix of their own. Maybe someone can
   integrate the subscreen delay fix coding into the emulator so the subscreen delay fix's can be removed
-  from the RDB and eliminate the issue altogether.
+  from the RDB and eliminate the issue altogether. For now though, Legacy LLE video is an ok workaround.
 
 
 Also, if you develop the ROM database, please do not ever include any of the following lines in your RDB

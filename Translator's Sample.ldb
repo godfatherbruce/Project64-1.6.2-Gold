@@ -79,7 +79,6 @@
 #79# "Lets you edit ROM settings for a selected ROM"
 #80# "Lets you edit cheat codes for a selected ROM (available when remembered)"
 #81# "Attempts to factory reset all PJ64 registries/configurations and terminates this instance"
-#82# "Takes you to Bruce Shankle IV's Project64 1.6.2 GitHub page"
 #83# "File Name"
 #84# "Internal Name"
 #85# "Game Name"
@@ -259,9 +258,7 @@ Exiting thread
 #233# "Exiting thread
 (Try Check Memory & Return)
 (Try Interpreter CPU Core Style)"
-#234# "This action will attempt to factory reset all Project64 registries/configurations and terminate this instance.
-
-Is it OK to execute this action? If so, press OK to close Project64 or close it yourself. Otherwise, please cancel"
+#234# "This action will attempt to factory reset all included registries/configurations and terminate this instance."
 #235# "Plugin hot swapping in progress"
 #236# "Double click the OK button while plugin hot swapping to quickly close Project64 from this window"
 #237# "Plugin hot swapping completed"

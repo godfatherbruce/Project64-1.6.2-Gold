@@ -213,7 +213,6 @@
 #define ID_POPUP_ADDNEWCHEAT            40161
 #define ID_POPUP_EDIT                   40162
 #define ID_POPUP_DELETE                 40163
-#define ID_HELP_GITHUB		        40165
 #define ID_HELP_UNINSTALL               40167
 #define ID_CURRENTSAVE_10               40203
 #define ID_CURRENTSAVE_11               40204
@@ -256,4 +255,4 @@
 #define ID_CURRENTSAVE_48               40242
 #define ID_CURRENTSAVE_49               40243
 #define ID_CURRENTSAVE_50               40244
-#define IDC_PLUGHOTSWAPDOUBLE           20245
+#define IDC_PLUGHOTSWAPDOUBLE           40245

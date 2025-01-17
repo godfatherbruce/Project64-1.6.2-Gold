@@ -53,7 +53,7 @@
 #55# "Cierra Project64"
 #56# "Resetea la ROM actual"
 #57# "Pausa/resume la emulacion de la ROM actual"
-#58# "Intenta tomar una Captura de Pantalla (Depende del plugin, utilizando los plugins de D3D8 1.7 con FSAA congela el juego)"
+#58# "Intenta tomar de Pantalla (Depende del plugin, plugins de D3D8 1.7 con FSAA congela)"
 #59# "Te permite activar velocidades mayores al 100% (Desactivar Sincronizar juego al Audio de la configuracion del plugin de Audio)"
 #60# "Guarda la ultima ranura de estado de Guardado seleccionado"
 #61# "Te permite elegir un directorio para crear un estado de Guardado"

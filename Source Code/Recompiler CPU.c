@@ -668,10 +668,7 @@ void _fastcall FillSectionInfo(BLOCK_SECTION * Section) {
 	memcpy(&Section->RegWorking,&Section->RegStart,sizeof(REG_INFO));
 	NextInstruction = NORMAL;
 	do {
-		if (!r4300i_LW_VAddr(Section->CompilePC, &Command.Hex)) {
-			DisplayError(GS(MSG_FAIL_LOAD_WORD));
-			ExitThread(0);
-		}
+		if (!r4300i_LW_VAddr(Section->CompilePC, &Command.Hex)) ExitThread(0);
 		if (SelfModCheck == ModCode_ChangeMemory) {
 			if ( (Command.Hex >> 16) == 0x7C7C) {
 				Command.Hex = OrigMem[(Command.Hex & 0xFFFF)].OriginalValue;
@@ -1284,10 +1281,7 @@ void _fastcall FillSectionInfo(BLOCK_SECTION * Section) {
 					if (Section->CompilePC == Section->Jump.TargetPC) {
 						int EffectDelaySlot;
 						OPCODE NewCommand;
-						if (!r4300i_LW_VAddr(Section->CompilePC + 4, &NewCommand.Hex)) {
-							DisplayError(GS(MSG_FAIL_LOAD_WORD));
-							ExitThread(0);
-						}
+						if (!r4300i_LW_VAddr(Section->CompilePC + 4, &NewCommand.Hex)) ExitThread(0);
 						EffectDelaySlot = FALSE;
 						if (NewCommand.op == R4300i_CP1) {
 							if (NewCommand.fmt == R4300i_COP1_S && (NewCommand.funct & 0x30) == 0x30 ) {
@@ -1826,10 +1820,7 @@ BOOL GenerateX86Code (BLOCK_SECTION * Section, DWORD Test) {
 	}*/
 	do {
 		__try {
-			if (!r4300i_LW_VAddr(Section->CompilePC, &Opcode.Hex)) {
-				DisplayError(GS(MSG_FAIL_LOAD_WORD));
-				ExitThread(0);
-			}
+			if (!r4300i_LW_VAddr(Section->CompilePC, &Opcode.Hex)) ExitThread(0);
 		} __except( r4300i_CPU_MemoryFilter( GetExceptionCode(), GetExceptionInformation()) ) {
 			DisplayError(GS(MSG_UNKNOWN_MEM_ACTION));
 			ExitThread(0);

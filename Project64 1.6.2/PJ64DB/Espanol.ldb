@@ -211,10 +211,7 @@ Necesitas ir a Configuracion y seleccionar un plugin RSP"
 
 Necesitas ir a Configuracion y seleccionar un complemento de Controles (Inputs)"
 #210# "Error al cargar el plugin"
-#211# "Error al cargar la palabra.
-
-Salir del hilo
-(Prueba con un Plugin de Video diferente)"
+#211# "Avanza a traves del juego en un frame a la vez  (Sincronizar juego al Audio sugerido)"
 #212# "Falla al guardar el estado de guardado. Asegurate de que no estes guardando un estado de guardado marcado como solo lectura"
 #213# "No se puede acceder a los datos de guardado. Puede que estes ejecutando una aplicacion desde un directorio con permisos de admin, o puedes tener multiples instancias de Project64 abiertas. Deten cualquiera de las dos para hacer que este error desaparezca"
 #214# "Intento de abrir el archivo zip fallido.
@@ -257,4 +254,3 @@ Esta bien ejecutar esta accion? Si es asi, presiona OK para cerrar Project64 o c
 #238# "Pantalla completa activada"
 #239# "Boton GS presionado"
 #240# "Frames Por Segundo"
-#241# "Avanza a traves del juego en un frame a la vez"

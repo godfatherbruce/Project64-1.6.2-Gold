@@ -54,10 +54,7 @@ void Compile_R4300i_Branch (BLOCK_SECTION * Section, void (*CompareFunc)(BLOCK_S
 			case BranchTypeCop1:
 				{
 					OPCODE Command;
-					if (!r4300i_LW_VAddr(Section->CompilePC + 4, &Command.Hex)) {
-						DisplayError(GS(MSG_FAIL_LOAD_WORD));
-						ExitThread(0);
-					}
+					if (!r4300i_LW_VAddr(Section->CompilePC + 4, &Command.Hex)) ExitThread(0);
 					EffectDelaySlot = FALSE;
 					if (Command.op == R4300i_CP1) {
 						if (Command.fmt == R4300i_COP1_S && (Command.funct & 0x30) == 0x30 ) {

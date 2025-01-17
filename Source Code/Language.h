@@ -258,7 +258,7 @@ char * GS               ( int StringID );
 #define MSG_FAIL_INIT_RSP               208
 #define MSG_FAIL_INIT_CONTROL           209
 #define MSG_FAIL_LOAD_PLUGIN            210
-#define MSG_FAIL_LOAD_WORD              211
+#define MENU_ADVANCE_DESC		211
 #define MSG_FAIL_OPEN_SAVE              212
 #define MSG_FAIL_OPEN_FLASH             213
 #define MSG_FAIL_OPEN_ZIP               214
@@ -288,7 +288,6 @@ char * GS               ( int StringID );
 #define FULLSCREEN_TOGGLE               238
 #define GS_PRESS                        239
 #define FPS_DISPLAY                     240
-#define MENU_ADVANCE_DESC		241
-#define NUMBER_1		        242
-#define NUMBER_2		        243
-#define NUMBER_3		        244
+#define NUMBER_1		        241
+#define NUMBER_2		        242
+#define NUMBER_3		        243

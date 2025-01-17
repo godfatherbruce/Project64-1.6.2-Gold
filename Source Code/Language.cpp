@@ -264,7 +264,7 @@ LANG_STR DefaultString[] = {
 	{ MSG_FAIL_INIT_AUDIO,    "The default or selected audio plugin is missing or invalid.\n\nYou need to go into Settings and select an audio (sound) plugin"},
 	{ MSG_FAIL_INIT_RSP,      "The default or selected RSP plugin is missing or invalid.\n\nYou need to go into Settings and select an RSP plugin"},
 	{ MSG_FAIL_INIT_CONTROL,  "The default or selected input plugin is missing or invalid.\n\nYou need to go into Settings and select an input (controller) plugin"},
-	{ MSG_FAIL_LOAD_PLUGIN,   "Failed to load plugin"},
+	{ MENU_ADVANCE_DESC,	  "Advances through a game in single frames at a time (Sync game to Audio suggested)"},
 	{ MSG_FAIL_LOAD_WORD,     "Failed to load word.\n\nExiting thread"},
 	{ MSG_FAIL_OPEN_SAVE,     "Failed to save this savestate. You should ensure you aren't saving a savestate marked as read-only"},
         { MSG_FAIL_OPEN_FLASH,    "Cannot access save data. You may be running the application from an admin rights directory, or you may have multiple instances of Project64 open. Stop doing either of those to make this error go away"},
@@ -295,7 +295,6 @@ LANG_STR DefaultString[] = {
         { FULLSCREEN_TOGGLE,      "Fullscreen mode toggled"},
         { GS_PRESS,               "GS button pressed"},
 	{ FPS_DISPLAY,            "Frames Per Second"},
-	{ MENU_ADVANCE_DESC,	  "Advances through a game in single frames at a time"},
 };
 class CLanguage  {
 	void FindLangName  ( int Index );

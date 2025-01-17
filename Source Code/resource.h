@@ -122,8 +122,6 @@
 #define IDC_PAL                         1146
 #define IDC_USA                         1147
 #define IDC_SHELL_INT_TEXT              1149
-#define IDC_RDB_HOME                    1150
-#define IDC_CHT_HOME                    1151
 #define IDC_LAN                         1154
 #define IDC_LAN_AUTHOR                  1155
 #define IDC_LAN_VERSION                 1156

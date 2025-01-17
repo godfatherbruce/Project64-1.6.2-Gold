@@ -60,7 +60,6 @@ void AboutIniBox (void) {
 	DialogBox(hInst, MAKEINTRESOURCE(IDD_About_Ini), hMainWindow, (DLGPROC)AboutIniBoxProc);
 }
 LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	static char RDBHomePage[300], CHTHomePage[300];
 	switch (uMsg) {
 	case WM_INITDIALOG:
 		{
@@ -83,7 +82,6 @@ LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 				EnableWindow(GetDlgItem(hDlg,IDC_RDB_AUTHOR),FALSE);
 				EnableWindow(GetDlgItem(hDlg,IDC_RDB_VERSION),FALSE);
 				EnableWindow(GetDlgItem(hDlg,IDC_RDB_DATE),FALSE);
-				EnableWindow(GetDlgItem(hDlg,IDC_RDB_HOME),FALSE);
 			}
 			sprintf(String2,"%s: %s",GS(INI_AUTHOR),String);
 			SetDlgItemText(hDlg,IDC_RDB_AUTHOR,String2);
@@ -93,11 +91,6 @@ LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 			_GetPrivateProfileString("Meta","Date","",String,sizeof(String),IniFile);
 			sprintf(String2,"%s: %s",GS(INI_DATE),String);
 			SetDlgItemText(hDlg,IDC_RDB_DATE,String2);
-			_GetPrivateProfileString("Meta","Homepage","",RDBHomePage,sizeof(RDBHomePage),IniFile);
-			SetDlgItemText(hDlg,IDC_RDB_HOME,GS(INI_HOMEPAGE));
-			if (strlen(RDBHomePage) == 0) {
-				EnableWindow(GetDlgItem(hDlg,IDC_RDB_HOME),FALSE);
-			}
 			//Cheat
 			SetDlgItemText(hDlg,IDC_CHT,GS(INI_CURRENT_CHT));
 			IniFile = GetCheatIniFileName();
@@ -107,7 +100,6 @@ LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 				EnableWindow(GetDlgItem(hDlg,IDC_CHT_AUTHOR),FALSE);
 				EnableWindow(GetDlgItem(hDlg,IDC_CHT_VERSION),FALSE);
 				EnableWindow(GetDlgItem(hDlg,IDC_CHT_DATE),FALSE);
-				EnableWindow(GetDlgItem(hDlg,IDC_CHT_HOME),FALSE);
 			}
 			sprintf(String2,"%s: %s",GS(INI_AUTHOR),String);
 			SetDlgItemText(hDlg,IDC_CHT_AUTHOR,String2);
@@ -117,18 +109,10 @@ LRESULT CALLBACK AboutIniBoxProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 			_GetPrivateProfileString("Meta","Date","",String,sizeof(String),IniFile);
 			sprintf(String2,"%s: %s",GS(INI_DATE),String);
 			SetDlgItemText(hDlg,IDC_CHT_DATE,String2);
-			_GetPrivateProfileString("Meta","Homepage","",CHTHomePage,sizeof(CHTHomePage),IniFile);
-			SetDlgItemText(hDlg,IDC_CHT_HOME,GS(INI_HOMEPAGE));
-			if (strlen(CHTHomePage) == 0) {
-				EnableWindow(GetDlgItem(hDlg,IDC_CHT_HOME),FALSE);
-			}
 		}
 		break;
 	case WM_COMMAND: {
-			char String[300];
 			switch (LOWORD(wParam)) {
-			case IDC_RDB_HOME: sprintf(String, "https://%s", RDBHomePage); ShellExecute(NULL,"open",String,NULL,NULL,SW_SHOWNORMAL); break;
-			case IDC_CHT_HOME: sprintf(String, "https://%s", CHTHomePage); ShellExecute(NULL,"open",String,NULL,NULL,SW_SHOWNORMAL); break;
 			case IDOK:
 			case IDCANCEL:
 				EndDialog(hDlg,0);
@@ -921,7 +905,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			break;
 		case ID_SYSTEM_LIMITFPS:
 			CheckedMenuItem(ID_SYSTEM_LIMITFPS,&LimitFPS,"Limit FPS");
-			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(LIMIT_FPS_TOGGLED));
+			if (LimitFPS) SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(LIMITFPS_ON)); else SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(LIMITFPS_OFF));
 			break;
 				case ID_CURRENTSAVE_DEFAULT:
 					SetCurrentSaveState(hWnd, LOWORD(wParam));
@@ -1084,11 +1068,12 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 					ChangeWindow();
 					inFullScreen = !inFullScreen;
 					AlwaysOnTopWindow(hMainWindow);
+					SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(FULLSCREEN_EXITED));
 				}
 			} else {
 				CPU_Action.ChangeWindow = TRUE;
+				SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(FULLSCREEN_ENTERED));
 			}
-			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(FULLSCREEN_TOGGLE));
 			break;
                 case ID_SYSTEM_ALTERNATEPAUSE: {
 			if (!CPU_Paused) { PauseCpu (); }

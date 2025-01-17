@@ -19,7 +19,7 @@ char * GS               ( int StringID );
 #define INI_AUTHOR		        6
 #define INI_VERSION		        7
 #define INI_DATE		        8
-#define INI_HOMEPAGE	                9
+#define LIMITFPS_ON			9
 #define INI_CURRENT_RDB                 10
 #define INI_CURRENT_CHT                 11
 // Menu
@@ -94,6 +94,7 @@ char * GS               ( int StringID );
 #define MENUDES_GAME_SETTINGS	        79
 #define MENUDES_GAME_CHEATS		80
 #define MENUDES_UNINSTALLAPP            81
+#define FULLSCREEN_EXITED		82
 /*********************************************************************************
 * Rom Browser                                                                    *
 *********************************************************************************/
@@ -173,7 +174,7 @@ char * GS               ( int StringID );
 #define ROM_DELAY_SI			147
 #define ROM_SP_HACK			148
 #define ROM_DEFAULT			149
-#define LIMIT_FPS_TOGGLED		150
+#define LIMITFPS_OFF			150
 #define ROM_DELAY_RDP			151
 #define ROM_DELAY_RSP			152
 #define ROM_EMULATE_AI                  153
@@ -284,7 +285,7 @@ char * GS               ( int StringID );
 #define MSG_PLUGIN_HOT_SWAP             235
 #define PLUG_HOT_SWAP_DOUBLE            236
 #define HOT_SWAP_COMPLETE               237
-#define FULLSCREEN_TOGGLE               238
+#define FULLSCREEN_ENTERED              238
 #define GS_PRESS                        239
 #define FPS_DISPLAY                     240
 #define NUMBER_1		        241

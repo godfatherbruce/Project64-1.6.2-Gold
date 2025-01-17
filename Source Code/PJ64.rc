@@ -193,21 +193,19 @@ BEGIN
     PUSHBUTTON      "Up",IDC_UP,141,166,38,11
     PUSHBUTTON      "Down",IDC_DOWN,186,166,36,11
 END
-IDD_About_Ini DIALOG 0, 0, 185, 172
+IDD_About_Ini DIALOG 0, 0, 186, 142
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About PJ64 Databases"
 FONT 8, "MS Sans Serif"
 BEGIN
-    GROUPBOX        "ROM Database (.RDB)",IDC_RDB,5,46,175,59
-    LTEXT           "Author:",IDC_RDB_AUTHOR,12,57,166,8
-    LTEXT           "Version:",IDC_RDB_VERSION,12,67,166,8
-    LTEXT           "Date:",IDC_RDB_DATE,12,76,166,8
-    PUSHBUTTON      "visit home page",IDC_RDB_HOME,12,87,163,13
-    GROUPBOX        "Cheat Database (.CDB)",IDC_CHT,6,107,175,59
-    LTEXT           "Author:",IDC_CHT_AUTHOR,13,118,166,8
-    LTEXT           "Version:",IDC_CHT_VERSION,13,128,166,8
-    LTEXT           "Date:",IDC_CHT_DATE,14,137,166,8
-    PUSHBUTTON      "visit home page",IDC_CHT_HOME,13,148,163,13
+    GROUPBOX        "ROM Database (.RDB)",IDC_RDB,5,46,175,44
+    LTEXT           "Author:",IDC_RDB_AUTHOR,13,57,166,8
+    LTEXT           "Version:",IDC_RDB_VERSION,13,67,166,8
+    LTEXT           "Date:",IDC_RDB_DATE,13,76,166,8
+    GROUPBOX        "Cheat Database (.CDB)",IDC_CHT,5,91,175,44
+    LTEXT           "Author:",IDC_CHT_AUTHOR,13,102,166,8
+    LTEXT           "Version:",IDC_CHT_VERSION,13,112,166,8
+    LTEXT           "Date:",IDC_CHT_DATE,13,121,166,8
     GROUPBOX        "Language Database (.LDB) ",IDC_LAN,5,3,175,42
     LTEXT           "Author:",IDC_LAN_AUTHOR,13,14,166,8
     LTEXT           "Version:",IDC_LAN_VERSION,13,24,166,8

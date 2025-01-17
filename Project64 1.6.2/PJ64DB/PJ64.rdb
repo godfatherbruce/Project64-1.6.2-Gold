@@ -2,7 +2,6 @@
 [Meta]
 Author=Bruce Shankle IV
 Date=January 2025
-Homepage=github.com/BruceShankleIV/Project64-1.6.2/blob/main/Project64 1.6.2/PJ64DB/PJ64.rdb
 Version=1.6.2 (2025) WIP
 [Microcode Identifiers]
 38221D7F=0 //SD Hiryuu no Ken Densetsu (J), near start (Smiff)

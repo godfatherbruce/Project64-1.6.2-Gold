@@ -83,7 +83,7 @@ LANG_STR DefaultString[] = {
         { MENUDES_LOAD, "Lets you choose a save state to load" },
         { MENUDES_CHEAT, "Enables/disables GameShark cheats" },
         { MENUDES_GS_BUTTON, "Activates GS cheats when enabled in the cheat menu" },
-        { MENUDES_FULL_SCREEN, "Enters current video plugin's fullscreen mode (plugin-dependent, issues with Direct3D8)" },
+        { MENUDES_FULL_SCREEN, "Enters current plugin's fullscreen mode (problems with D3D8)" },
         { MENUDES_ON_TOP, "Makes Project64 stay in front of all other windows" },
         { MENUDES_CONFIG_GFX, "Lets you change settings inside the Graphics plugin" },
         { MENUDES_CONFIG_AUDIO, "Lets you change settings inside the Audio plugin" },
@@ -98,7 +98,7 @@ LANG_STR DefaultString[] = {
         { MENUDES_GAME_SLOT, "Selects a save state slot" },
         { MENUDES_GAME_SETTINGS, "Lets you edit ROM settings for a selected ROM" },
         { MENUDES_GAME_CHEATS, "Lets you edit cheat codes for a selected ROM (available when remembered)" },
-        { MENUDES_UNINSTALLAPP, "Attempts to factory reset all PJ64 registries/configurations and terminates this instance" },
+        { MENUDES_UNINSTALLAPP, "Attempts to factory reset all included registries/configurations and terminates this instance" },
 /*********************************************************************************
 * ROM Browser                                                                    *
 *********************************************************************************/

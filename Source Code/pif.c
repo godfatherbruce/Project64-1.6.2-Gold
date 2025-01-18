@@ -78,7 +78,6 @@ void PifRamRead (void) {
 			break;
 		case 0xFE: CurPos = 0x40; break;
 		case 0xFF: break;
-		//case 0xB4: case 0x56: case 0xB8: break; /* ??? */
 		default:
 			if ((PIF_Ram[CurPos] & 0xC0) == 0) {
 				if (Channel < 4) {
@@ -128,7 +127,6 @@ void PifRamWrite (void) {
 			break;
 		case 0xFE: CurPos = 0x40; break;
 		case 0xFF: break;
-		//case 0xB4: case 0x56: case 0xB8: break; /* ??? */
 		default:
 			if ((PIF_Ram[CurPos] & 0xC0) == 0) {
 				if (Channel < 4) {
@@ -211,7 +209,6 @@ void ProcessControllerCommand ( int Control, BYTE * Command) {
 							// End of Hack
 							RumbleCommand(Control, *(BOOL *)(&Command[5]));
 					}
-					//break;
 				}
 			default:
 				Command[0x25] = Mempacks_CalulateCrc(&Command[5]);

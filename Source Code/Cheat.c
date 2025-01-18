@@ -105,8 +105,6 @@ void AddCheatExtension(int CheatNo, char * CheatName, int CheatNameLen) {
 /********************************************************************************************
   ConvertXP64Address
   Purpose: Decode encoded XP64 address to physical address
-  Parameters:
-  Returns:
   Author: Witten
 ********************************************************************************************/
 DWORD ConvertXP64Address (DWORD Address) {
@@ -120,8 +118,6 @@ DWORD ConvertXP64Address (DWORD Address) {
 /********************************************************************************************
   ConvertXP64Value
   Purpose: Decode encoded XP64 value
-  Parameters:
-  Returns:
   Author: Witten
 ********************************************************************************************/
 WORD ConvertXP64Value (WORD Value) {
@@ -216,8 +212,6 @@ void ApplyGSButton (void) {
 /********************************************************************************************
   ApplyCheats
   Purpose: Patch codes into memory
-  Parameters: None
-  Returns: None
 ********************************************************************************************/
 int ApplyCheatEntry (GAMESHARK_CODE * Code, BOOL Execute ) {
 	DWORD Address;
@@ -354,155 +348,6 @@ void ApplyCheats (void) {
 		}
 	}
 }
-/*void ApplyCheats (void) {
-	int count, count2, count3;
-	DWORD Address;
-	WORD Value;																	// Added by Witten (witten@pj64cheats.net)
-	int numrepeats, offset, incr;												// Added by Witten (witten@pj64cheats.net)
-	for (count = 0; count < NoOfCodes; count ++) {
-		for (count2 = 0; count2 < MaxGSEntries; count2 ++) {
-			switch (Codes[count].Code[count2].Command & 0xFF000000) {
-			case 0x50000000:													// Added by Witten (witten@pj64cheats.net)
-				numrepeats = (Codes[count].Code[count2].Command & 0x0000FF00) >> 8;
-				offset = Codes[count].Code[count2].Command & 0x000000FF;
-				incr = Codes[count].Code[count2].Value;
-				count2++;
-				switch (Codes[count].Code[count2].Command & 0xFF000000) {
-				case 0x80000000:
-					Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-					Value = Codes[count].Code[count2].Value;
-					for (count3=0; count3<numrepeats; count3++) {
-						r4300i_SB_VAddr(Address, (BYTE)Value);
-						Address += offset;
-						Value += incr;
-					}
-					break;
-				case 0x81000000:
-					Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-					Value = Codes[count].Code[count2].Value;
-					for (count3=0; count3<numrepeats; count3++) {
-						r4300i_SH_VAddr(Address, (WORD)Value);
-						Address += offset;
-						Value += incr;
-					}
-					break;
-				default:
-					break;
-				}
-				break;
-			case 0x80000000:
-				Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-				r4300i_SB_VAddr(Address,(BYTE)Codes[count].Code[count2].Value);
-				break;
-			case 0x81000000:
-				Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-				r4300i_SH_VAddr(Address,Codes[count].Code[count2].Value);
-				break;
-			case 0xA0000000:
-				Address = 0xA0000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-				r4300i_SB_VAddr(Address,(BYTE)Codes[count].Code[count2].Value);
-				break;
-			case 0xA1000000:
-				Address = 0xA0000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-				r4300i_SH_VAddr(Address,Codes[count].Code[count2].Value);
-				break;
-			case 0xD0000000:													// Added by Witten (witten@pj64cheats.net)
-				Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-				r4300i_LB_VAddr(Address, (BYTE*) &Value);
-				Value &= 0x00FF;
-				if (Value == Codes[count].Code[count2].Value) {
-					count2++;
-					switch (Codes[count].Code[count2].Command & 0xFF000000) {
-					case 0x80000000:
-						Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-						r4300i_SB_VAddr(Address,(BYTE)Codes[count].Code[count2].Value);
-						break;
-					case 0x81000000:
-						Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-						r4300i_SH_VAddr(Address,Codes[count].Code[count2].Value);
-						break;
-					default:
-						break;
-					}
-				}
-				else {
-					count2++;
-					break;
-				}
-				break;
-			case 0xD1000000:													// Added by Witten (witten@pj64cheats.net)
-				Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-				r4300i_LH_VAddr(Address, (WORD*) &Value);
-				if (Value == Codes[count].Code[count2].Value) {
-					count2++;
-					switch (Codes[count].Code[count2].Command & 0xFF000000) {
-					case 0x80000000:
-						Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-						r4300i_SB_VAddr(Address,(BYTE)Codes[count].Code[count2].Value);
-						break;
-					case 0x81000000:
-						Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-						r4300i_SH_VAddr(Address,Codes[count].Code[count2].Value);
-						break;
-					default:
-						break;
-					}
-				}
-				else {
-					count2++;
-					break;
-				}
-				break;
-			case 0xD2000000:													// Added by Witten (witten@pj64cheats.net)
-				Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-				r4300i_LB_VAddr(Address, (BYTE*) &Value);
-				Value &= 0x00FF;
-				if (Value != Codes[count].Code[count2].Value) {
-					count2++;
-					switch (Codes[count].Code[count2].Command & 0xFF000000) {
-					case 0x80000000:
-						Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-						r4300i_SB_VAddr(Address,(BYTE)Codes[count].Code[count2].Value);
-						break;
-					case 0x81000000:
-						Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-						r4300i_SH_VAddr(Address,Codes[count].Code[count2].Value);
-						break;
-					default:
-						break;
-					}
-				}
-				else {
-					count2++;
-				}
-				break;
-			case 0xD3000000:													// Added by Witten (witten@pj64cheats.net)
-				Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-				r4300i_LH_VAddr(Address, (WORD*) &Value);
-				if (Value != Codes[count].Code[count2].Value) {
-					count2++;
-					switch (Codes[count].Code[count2].Command & 0xFF000000) {
-					case 0x80000000:
-						Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-						r4300i_SB_VAddr(Address,(BYTE)Codes[count].Code[count2].Value);
-						break;
-					case 0x81000000:
-						Address = 0x80000000 | (Codes[count].Code[count2].Command & 0xFFFFFF);
-						r4300i_SH_VAddr(Address,Codes[count].Code[count2].Value);
-						break;
-					default:
-						break;
-					}
-				}
-				else {
-					count2++;
-				}
-				break;
-			case 0: count2 = MaxGSEntries; break;
-			}
-		}
-	}
-}*/
 void ChangeRomCheats(HWND hwndOwner) {
 	char OrigRomName[sizeof(RomName)], OrigFileName[sizeof(CurrentFileName)];
 	BYTE OrigByteHeader[sizeof(RomHeader)];
@@ -547,12 +392,6 @@ BOOL CheatActive (char * Name) {
 	}
 	return FALSE;
 }
-/********************************************************************************************
-  CheatCodeExProc
-  Purpose: Message handler for
-  Parameters:
-  Returns:
-********************************************************************************************/
 LRESULT CALLBACK CheatsCodeExProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	static DWORD CheatNo;
 	switch (uMsg) {
@@ -624,12 +463,6 @@ LRESULT CALLBACK CheatsCodeExProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM l
 	}
 	return TRUE;
 }
-/********************************************************************************************
-  CheatCodeQuantProc
-  Purpose: Message handler for
-  Parameters:
-  Returns:
-********************************************************************************************/
 LRESULT CALLBACK CheatsCodeQuantProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	static WORD Start, Stop, SelStart, SelStop;
 	static DWORD CheatNo;
@@ -706,12 +539,6 @@ LRESULT CALLBACK CheatsCodeQuantProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARA
 	}
 	return TRUE;
 }
-/********************************************************************************************
-  CheatUsesCodeExtensions
-  Purpose:
-  Parameters:
-  Returns:
-********************************************************************************************/
 BOOL CheatUsesCodeExtensions (char * CheatString) {
 	BOOL CodeExtension;
 	DWORD count, len;
@@ -872,12 +699,6 @@ void ReadOptionsString(HWND hDlg)
 	}
 	if (numoptions < 1) validoptions = FALSE;
 }
-/********************************************************************************************
-  CheatAddProc
-  Purpose:
-  Parameters:
-  Returns:
-********************************************************************************************/
 LRESULT CALLBACK CheatAddProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	char str[1024];
 	switch (uMsg) {
@@ -1223,12 +1044,6 @@ void CheckParentStatus(HTREEITEM hParent) {
 		CheckParentStatus(TreeView_GetParent(hCheatTree,hParent));
 	}
 }
-/********************************************************************************************
-  CheatListProc
-  Purpose:
-  Parameters:
-  Returns:
-********************************************************************************************/
 LRESULT CALLBACK CheatListProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	static HTREEITEM hSelectedItem;
 	switch (uMsg) {
@@ -1543,12 +1358,6 @@ void DisableAllCheats(void) {
 		SaveCheat(CheatName,FALSE);
 	}
 }
-/********************************************************************************************
-  GetCheatIniFileName
-  Purpose:
-  Parameters:
-  Returns:
-********************************************************************************************/
 char * GetCheatIniFileName(void) {
 	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
 	char fname[_MAX_FNAME],ext[_MAX_EXT];
@@ -1558,12 +1367,6 @@ char * GetCheatIniFileName(void) {
 	sprintf(IniFileName,"%s%sPJ64DB\\%s",drive,dir,CheatIniName);
 	return IniFileName;
 }
-/********************************************************************************************
-  GetCheatName
-  Purpose:
-  Parameters:
-  Returns:
-********************************************************************************************/
 BOOL GetCheatName(int CheatNo, char * CheatName, int CheatNameLen) {
 	char *String = NULL, Identifier[100];
 	DWORD len;
@@ -1587,12 +1390,6 @@ void CloseCheatWindow (void) {
 	if (!hManageWindow) { return; }
 	SendMessage(hManageWindow,UM_CLOSE_CHEATS,0,0);
 }
-/********************************************************************************************
-  LoadCheatExt
-  Purpose:
-  Parameters:
-  Returns:
-********************************************************************************************/
 BOOL LoadCheatExt(char * CheatName, char * CheatExt, int MaxCheatExtLen) {
 	char String[350], Identifier[100];
 	HKEY hKeyResults = 0;
@@ -1678,12 +1475,6 @@ void LoadPermCheats (void)
 	}
 	if (String) { free(String); }
 }
-/********************************************************************************************
-  LoadCheats
-  Purpose:
-  Parameters:
-  Returns:
-********************************************************************************************/
 void LoadCheats (void) {
 	DWORD len, count;
 	LPSTR IniFileName;
@@ -1705,9 +1496,6 @@ void LoadCheats (void) {
 		memset(CheatName,0,sizeof(CheatName));
 		strncpy(CheatName,strchr(String,'"') + 1,len);
 		if (strlen(CheatName) == 0) { continue; }
-		//if (strrchr(CheatName,'\\') != NULL) {
-		//	strcpy(CheatName,strrchr(CheatName,'\\') + 1);
-		//}
 		if (!CheatActive (CheatName)) { continue; }
 		ReadPos = strrchr(String,'"') + 2;
 		LoadCode(CheatName, ReadPos);
@@ -1819,12 +1607,6 @@ LRESULT CALLBACK Cheat_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 	}
 	return TRUE;
 }
-/********************************************************************************************
-  ManageCheatsProc
-  Purpose:
-  Parameters:
-  Returns:
-********************************************************************************************/
 LRESULT CALLBACK ManageCheatsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	static int CurrentPanel = SelectCheat;
 	static RECT rcDisp;
@@ -1920,12 +1702,6 @@ void AddCodeLayers (int CheatNumber, char * CheatName, HTREEITEM hParent, BOOL C
 	if (strcmp(Text,CheatName) == 0) { return; }
 	AddCodeLayers(CheatNumber,CheatName + strlen(Text) + 1, hParent, CheatActive);
 }
-/********************************************************************************************
-  RefreshCheatManager
-  Purpose:
-  Parameters:
-  Returns:
-********************************************************************************************/
 void RefreshCheatManager(void) {
 	char CheatName[500];
 	BOOL IsCheatActive;
@@ -1957,12 +1733,6 @@ void SaveCheat(char * CheatName, BOOL Active) {
 		RegCloseKey(hKeyResults);
 	}
 }
-/********************************************************************************************
-  SaveCheatExt
-  Purpose:
-  Parameters:
-  Returns:
-********************************************************************************************/
 void SaveCheatExt(char * CheatName, char * CheatExt) {
 	char String[300], Identifier[100];
 	DWORD Disposition = 0;

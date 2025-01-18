@@ -98,7 +98,7 @@ LANG_STR DefaultString[] = {
         { MENUDES_GAME_SLOT, "Selects a save state slot" },
         { MENUDES_GAME_SETTINGS, "Lets you edit ROM settings for a selected ROM" },
         { MENUDES_GAME_CHEATS, "Lets you edit cheat codes for a selected ROM (available when remembered)" },
-        { MENUDES_UNINSTALLAPP, "Attempts to terminate this instance and factory reset all included registry configurations" },
+        { MENUDES_UNINSTALLAPP, "Attempts to terminate this instance and factory reset included registry configurations" },
 	{ FULLSCREEN_EXITED, "Fullscreen mode exited"},
 /*********************************************************************************
 * ROM Browser                                                                    *
@@ -137,7 +137,7 @@ LANG_STR DefaultString[] = {
 	{ PLUG_AUDIO, " Audio (sound) plugin: "},
 	{ PLUG_CTRL,  " Input (controller) plugin: "},
 
-	{ DIR_ROM_DEFAULT,    "Last folder of ROM Opening"},
+	{ DIR_ROM_DEFAULT,   "Last folder of ROM Opening"},
 	{ DIR_AUTO_SAVE,     "Save Data"},
 	{ DIR_INSTANT_SAVE,  "Save States"},
         { DIR_SCREEN_SHOT,   "Screenshots"},
@@ -194,7 +194,7 @@ LANG_STR DefaultString[] = {
 //Self Mod Methods
 	{ SMCM_NONE,           "None"},
 	{ SMCM_CACHE,          "Cache"},
-	{ SMCM_PROTECTED,       "Protect Memory"},
+	{ SMCM_PROTECTED,      "Protect Memory"},
 	{ SMCM_CHECK_MEM,      "Check Memory & Cache"},
 	{ SMCM_CHANGE_MEM,     "Change Memory & Cache"},
 	{ SMCM_CHECK_ADV,      "Check Memory Advance"},
@@ -202,7 +202,7 @@ LANG_STR DefaultString[] = {
 	{ ABL_ON,              "On"},
 	{ ABL_OFF,             "Off"},
 
-	{ SMCM_CHECK_RETURN,	  "Check Memory & Return"},
+	{ SMCM_CHECK_RETURN,   "Check Memory & Return"},
 	{ SAVE_4K_eepROM,      "4kbit eepROM"},
 	{ SAVE_16K_eepROM,     "16kbit eepROM"},
 	{ SAVE_SRAM,           "32kbytes SRAM"},
@@ -216,7 +216,7 @@ LANG_STR DefaultString[] = {
 /*********************************************************************************
 * ROM Information                                                                *
 *********************************************************************************/
-//ROM Info Title Title
+//ROM Info Title
 	{ INFO_TITLE,             "ROM Information"},
 //ROM Info Text
 	{ INFO_ROM_NAME_TEXT,     "ROM Name:"},
@@ -288,7 +288,7 @@ LANG_STR DefaultString[] = {
 	{ MSG_CHEAT_NAME_IN_USE,  "Cheat name is currently in use"},
 	{ MSG_MAX_CHEATS,         "You have reached the maximum amount of cheats allowed for this ROM"},
 	{ GZ_ROMS,                "Exiting thread\n(Try Check Memory & Return)\n(Try Interpreter CPU Core Style)"},
-        { MSG_CONFIRMATION_UNINSTALL, "This action will attempt to terminate this instance and factory reset all included registry configurations"},
+        { MSG_CONFIRMATION_UNINSTALL, "This action will attempt to terminate this instance and factory reset included registry configurations"},
         { MSG_PLUGIN_HOT_SWAP,    "Plugin hot swapping in progress"},
         { PLUG_HOT_SWAP_DOUBLE,   "Double click the OK button while plugin hot swapping to quickly close Project64 from this window"},
         { HOT_SWAP_COMPLETE,      "Plugin hot swapping completed"},
@@ -321,7 +321,7 @@ private:
 	int m_BaseMenuID;
 };
 /*******************************************************************************
-* Variables                                                                    *
+* Variable                                                                    *
 *******************************************************************************/
 CLanguage lng;
 /*******************************************************************************

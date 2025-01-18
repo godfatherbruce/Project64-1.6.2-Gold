@@ -439,22 +439,6 @@ BOOL LoadRomHeader ( void ) {
 	}
 	ByteSwapRom(RomHeader,sizeof(RomHeader));
 	memcpy(&RomName, &FileName, 60);
-	/*for( count = 0 ; count < 20; count += 4 ) {
-		RomName[count] ^= RomName[count+3];
-		RomName[count + 3] ^= RomName[count];
-		RomName[count] ^= RomName[count+3];
-		RomName[count + 1] ^= RomName[count + 2];
-		RomName[count + 2] ^= RomName[count + 1];
-		RomName[count + 1] ^= RomName[count + 2];
-	}
-	for( count = 19 ; count >= 0; count -- ) {
-		if (RomName[count] == ' ') {
-			RomName[count] = '\0';
-		} else if (RomName[count] == '\0') {
-		} else {
-			count = -1;
-		}
-	}*/
 	RomName[60] = '\0';
 	if (strlen(RomName) == 0) { strcpy(RomName,FileName); }
 	return FALSE;
@@ -713,7 +697,6 @@ void OpenChosenFile ( void ) {
 					return;
 				}
 				memcpy(ROM,Test,4);
-				//len = unzReadCurrentFile(file,&ROM[4],RomFileSize - 4) + 4;
 				len = 4;
 				for (count = 4; count < (int)RomFileSize; count += ReadFromRomSection) {
 					len += unzReadCurrentFile(file,&ROM[count],ReadFromRomSection);
@@ -837,7 +820,6 @@ void OpenChosenFile ( void ) {
 	SetWindowText(hMainWindow,WinTitle);
 	if (!RememberCheats) { DisableAllCheats(); }
 	SetupMenu(hMainWindow);
-	//if (RomBrowser) { SetupPlugins(hMainWindow); }
         SetCurrentSaveState(hMainWindow,ID_CURRENTSAVE_DEFAULT);
 	SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)"");
 	if (AutoStart) {

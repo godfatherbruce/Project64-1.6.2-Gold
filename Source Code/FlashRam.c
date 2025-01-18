@@ -181,7 +181,7 @@ void WriteToFlashCommand(DWORD FlashRAM_Command) {
 		FlashStatus = 0x1111800800C20000;
 		break;
 	case 0xB4000000:
-		FlashFlag = FlashRAM_MODE_WRITE; //????
+		FlashFlag = FlashRAM_MODE_WRITE;
 		break;
 	case 0xA5000000:
 		FlashRAM_Offset = (FlashRAM_Command & 0xffff) * 128;

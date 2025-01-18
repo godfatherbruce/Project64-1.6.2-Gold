@@ -234,9 +234,6 @@ void Compile_R4300i_SWC1 (BLOCK_SECTION * Section){
 		MoveX86RegToX86Reg(TempReg1, TempReg2);
 		ShiftRightUnsignImmed(TempReg2,12);
 		MoveVariableDispToX86Reg(TLB_WriteMap,"TLB_WriteMap",TempReg2,TempReg2,4);
-		//For tlb miss
-		//0041C522 85 C0                test        eax,eax
-		//0041C524 75 01                jne         0041C527
 		UnMap_FPR(Section,Opcode.ft,TRUE);
 		TempReg3 = Map_TempReg(Section,x86_Any,-1,FALSE);
 		sprintf(Name,"FPRFloatLocation[%d]",Opcode.ft);
@@ -295,9 +292,6 @@ void Compile_R4300i_SDC1 (BLOCK_SECTION * Section){
 		MoveX86RegToX86Reg(TempReg1, TempReg2);
 		ShiftRightUnsignImmed(TempReg2,12);
 		MoveVariableDispToX86Reg(TLB_WriteMap,"TLB_WriteMap",TempReg2,TempReg2,4);
-		//For tlb miss
-		//0041C522 85 C0                test        eax,eax
-		//0041C524 75 01                jne         0041C527
 		TempReg3 = Map_TempReg(Section,x86_Any,-1,FALSE);
 		sprintf(Name,"FPRDoubleLocation[%d]",Opcode.ft);
 		MoveVariableToX86reg((BYTE *)&FPRDoubleLocation[Opcode.ft],Name,TempReg3);
@@ -633,7 +627,6 @@ void Compile_R4300i_COP1_S_CMP (BLOCK_SECTION * Section) {
 	int x86reg, cmp = 0;
 	CPU_Message("  %X %s",Section->CompilePC,R4300iOpcodeName(Opcode.Hex,Section->CompilePC));
 	CompileCop1Test(Section);
-	//if ((Opcode.funct & 1) != 0) { Compile_R4300i_UnknownOpcode(Section); }
 	if ((Opcode.funct & 2) != 0) { cmp |= 0x4000; }
 	if ((Opcode.funct & 4) != 0) { cmp |= 0x0100; }
 	Load_FPR_ToTop(Section,Reg1,Reg1, FPU_Float);
@@ -898,7 +891,6 @@ void Compile_R4300i_COP1_D_CMP (BLOCK_SECTION * Section) {
 	int x86reg, cmp = 0;
 	CPU_Message("  %X %s",Section->CompilePC,R4300iOpcodeName(Opcode.Hex,Section->CompilePC));
 	CompileCop1Test(Section);
-	//if ((Opcode.funct & 1) != 0) { Compile_R4300i_UnknownOpcode(Section); }
 	if ((Opcode.funct & 2) != 0) { cmp |= 0x4000; }
 	if ((Opcode.funct & 4) != 0) { cmp |= 0x0100; }
 	Load_FPR_ToTop(Section,Reg1,Reg1, FPU_Double);

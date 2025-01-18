@@ -126,7 +126,6 @@ int ConstantsType (__int64 Value) {
 BYTE * Compiler4300iBlock(void) {
 	DWORD StartAddress;
 	int count;
-	//reset BlockInfo
 	if (BlockInfo.ExitInfo)
 	{
 		for (count = 0; count < BlockInfo.ExitCount; count ++) {
@@ -209,9 +208,7 @@ BYTE * CompileDelaySlot(void) {
 	InitilizeRegSet(&Section->RegStart);
 	memcpy(&Section->RegWorking,&Section->RegStart,sizeof(REG_INFO));
 	BlockCycleCount += CountPerOp;
-	//CPU_Message("BlockCycleCount = %d",BlockCycleCount);
 	BlockRandomModifier += 1;
-	//CPU_Message("BlockRandomModifier = %d",BlockRandomModifier);
 	switch (Opcode.op) {
 	case R4300i_SPECIAL:
 		switch (Opcode.funct) {
@@ -358,7 +355,6 @@ BYTE * CompileDelaySlot(void) {
 	MoveVariableToX86reg(&JumpToLocation,"JumpToLocation",x86Reg);
 	MoveX86regToVariable(x86Reg,&PROGRAM_COUNTER,"PROGRAM_COUNTER");
 	MoveConstToVariable(NORMAL,&NextInstruction,"NextInstruction");
-	//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 	Ret();
 	CPU_Message("====== End of recompiled code ======");
 	return Block;
@@ -386,7 +382,6 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 		BlockInfo.ExitCount += 1;
 		return;
 	}
-	//CPU_Message("CompileExit: %d",reason);
 	InitilzeSection (&Section, NULL, (DWORD)-1, 0);
 	memcpy(&Section.RegWorking, &ExitRegSet, sizeof(REG_INFO));
 	if (TargetPC != (DWORD)-1) { MoveConstToVariable(TargetPC,&PROGRAM_COUNTER,"PROGRAM_COUNTER"); }
@@ -398,7 +393,6 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 	WriteBackRegisters(&Section);
 	switch (reason) {
 	case Normal: case Normal_NoSysCheck:
-		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Section.RegWorking.RandomModifier = 0;
 		Section.RegWorking.CycleCount = 0;
 		if (reason == Normal) { CompileSystemCheck(0,(DWORD)-1,Section.RegWorking);	}
@@ -467,29 +461,24 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 		Ret();
 		break;
 	case DoCPU_Action:
-		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Call_Direct(DoSomething,"DoSomething");
-		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Ret();
 		break;
 	case DoSysCall:
 		MoveConstToX86reg(NextInstruction == JUMP || NextInstruction == DELAY_SLOT,x86_ECX);
 		Call_Direct(DoSysCallException,"DoSysCallException");
-		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Ret();
 		break;
 	case COP1_Unuseable:
 		MoveConstToX86reg(NextInstruction == JUMP || NextInstruction == DELAY_SLOT,x86_ECX);
 		MoveConstToX86reg(1,x86_EDX);
 		Call_Direct(DoCopUnusableException,"DoCopUnusableException");
-		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Ret();
 		break;
 	case ExitResetRecompCode:
 		if (NextInstruction == JUMP || NextInstruction == DELAY_SLOT) {
 			BreakPoint();
 		}
-		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Call_Direct(ResetRecompCode, "ResetRecompCode");
 		Ret();
 		break;
@@ -497,14 +486,12 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 		MoveConstToX86reg(NextInstruction == JUMP || NextInstruction == DELAY_SLOT,x86_ECX);
 		MoveVariableToX86reg(&TLBLoadAddress,"TLBLoadAddress",x86_EDX);
 		Call_Direct(DoTLBMiss,"DoTLBMiss");
-		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Ret();
 		break;
 		case TLBWriteMiss:
 		MoveConstToX86reg(NextInstruction == JUMP || NextInstruction == DELAY_SLOT, x86_ECX);
 		MoveVariableToX86reg(&TLBLoadAddress, "TLBLoadAddress", x86_EDX);
 		Call_Direct(DoTLBMiss, "DoTLBMiss");
-		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		Ret();
 		break;
 	}
@@ -525,9 +512,7 @@ void CompileSystemCheck (DWORD TimerModifier, DWORD TargetPC, REG_INFO RegSet) {
 	InitilzeSection (&Section, NULL, (DWORD)-1, 0);
 	memcpy(&Section.RegWorking, &RegSet, sizeof(REG_INFO));
 	WriteBackRegisters(&Section);
-	//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 	Call_Direct(TimerDone,"TimerDone");
-	//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 	Popad();
 	//Interrupt
 	CompConstToVariable(0,&CPU_Action.DoSomething,"CPU_Action.DoSomething");
@@ -1383,11 +1368,6 @@ void _fastcall FillSectionInfo(BLOCK_SECTION * Section) {
 			if (Command.Hex == 0xC1200000) { break; }
 			if (Command.Hex == 0x4C5A5353) { break; }
 		}
-//		if (Section->CompilePC == 0x8005E4B8) {
-//CPU_Message("%X: %s %s = %d",Section->CompilePC,R4300iOpcodeName(Command.Hex,Section->CompilePC),
-//			GPR_Name[8],MipsRegState(8));
-//_asm int 3
-//		}
 		switch (NextInstruction) {
 		case NORMAL:
 			Section->CompilePC += 4;
@@ -1413,7 +1393,6 @@ void _fastcall FillSectionInfo(BLOCK_SECTION * Section) {
 		}
 		if ((Section->CompilePC & 0xFFFFF000) != (Section->StartPC & 0xFFFFF000)) {
 			if (NextInstruction != END_BLOCK && NextInstruction != NORMAL) {
-			//	DisplayError("Branch running over delay slot ???\nNextInstruction == %d",NextInstruction);
 				Section->Cont.TargetPC = (DWORD)-1;
 				Section->Jump.TargetPC = (DWORD)-1;
 			}
@@ -1449,7 +1428,6 @@ void _fastcall FixConstants (BLOCK_SECTION * Section, DWORD Test, int * Changed)
 				for (count = 0; count < 32; count++) {
 					if (Section->RegStart.MIPS_RegState[count] != Parent->Cont.RegSet.MIPS_RegState[count]) {
 						Section->RegStart.MIPS_RegState[count] = STATE_UNKNOWN;
-						//*Changed = TRUE;
 					}
 					Section->RegStart.MIPS_RegState[count] = STATE_UNKNOWN;
 				}
@@ -1458,7 +1436,6 @@ void _fastcall FixConstants (BLOCK_SECTION * Section, DWORD Test, int * Changed)
 				for (count = 0; count < 32; count++) {
 					if (Section->RegStart.MIPS_RegState[count] != Parent->Jump.RegSet.MIPS_RegState[count]) {
 						Section->RegStart.MIPS_RegState[count] = STATE_UNKNOWN;
-						//*Changed = TRUE;
 					}
 				}
 			}
@@ -1485,7 +1462,6 @@ void FreeSection (BLOCK_SECTION * Section, BLOCK_SECTION * Parent) {
 			if (Section->ParentSection[count] == Parent) {
 				if (NoOfParents == 1) {
 					free(Section->ParentSection);
-					//CPU_Message("Free Parent Section (Section: %d)",Section->SectionID);
 					Section->ParentSection = NULL;
 				} else {
 					memmove(&Section->ParentSection[count],&Section->ParentSection[count + 1],
@@ -1507,14 +1483,12 @@ void FreeSection (BLOCK_SECTION * Section, BLOCK_SECTION * Parent) {
 				if (Parent->ContinueSection == Section) { Parent->ContinueSection = NULL; }
 			}
 			free(Section->ParentSection);
-			//CPU_Message("Free Parent Section (Section: %d)",Section->SectionID);
 			Section->ParentSection = NULL;
 		}
 	}
 	if (Section->ParentSection == NULL) {
 		FreeSection(Section->JumpSection,Section);
 		FreeSection(Section->ContinueSection,Section);
-		//CPU_Message("Free Section (Section: %d)",Section->SectionID);
 		free(Section);
 	}
 }
@@ -1536,7 +1510,7 @@ void GenerateSectionLinkage (BLOCK_SECTION * Section) {
 		}
 	}
 	if ((Section->CompilePC & 0xFFC) == 0xFFC) {
-		//Handle Fall througth
+		//Handle Fall through
 		Jump = NULL;
 		for (count = 0; count < 2; count ++) {
 			if (!JumpInfo[count]->FallThrough) { continue; }
@@ -1581,7 +1555,6 @@ void GenerateSectionLinkage (BLOCK_SECTION * Section) {
 		}
 		if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
 		WriteBackRegisters(Section);
-		//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 		MoveConstToVariable(DELAY_SLOT,&NextInstruction,"NextInstruction");
 		Ret();
 		return;
@@ -1683,8 +1656,6 @@ CPU_Message("PermLoop ***");
 			SetJump32((DWORD *)RecompPos - 1,TargetSection[count]->CompiledLocation);
 		}
 	}
-	//Section->CycleCount = 0;
-	//Section->RandomModifier = 0;
 	for (count = 0; count < 2; count ++) {
 		int count2;
 		if (TargetSection[count] == NULL) { continue; }
@@ -1721,7 +1692,6 @@ CPU_Message("PermLoop ***");
 			GenerateX86Code(TargetSection[count],GetNewTestValue());
 		}
 	}
-	//CPU_Message("Section %d",Section->SectionID);
 	for (count = 0; count < 2; count ++) {
 		if (JumpInfo[count]->LinkLocation == NULL) { continue; }
 		if (TargetSection[count] == NULL) {
@@ -1784,7 +1754,6 @@ CPU_Message("PermLoop ***");
 BOOL GenerateX86Code (BLOCK_SECTION * Section, DWORD Test) {
 	int count;
 	if (Section == NULL) { return FALSE; }
-	//CPU_Message("Section: %d",Section->SectionID);
 	if (Section->CompiledLocation != NULL) {
 		if (Section->Test == Test) { return FALSE; }
 		Section->Test = Test;
@@ -1805,19 +1774,6 @@ BOOL GenerateX86Code (BLOCK_SECTION * Section, DWORD Test) {
 	Section->CompiledLocation = RecompPos;
 	Section->CompilePC = Section->StartPC;
 	NextInstruction = NORMAL;
-	/*if (CPU_Type == CPU_SyncCores) {
-	//if (CPU_Type == CPU_SyncCores && (DWORD)RecompPos > 0x6094C283) {
-		MoveConstToVariable(Section->StartPC,&PROGRAM_COUNTER,"PROGRAM_COUNTER");
-		if (BlockCycleCount != 0) {
-			AddConstToVariable(BlockCycleCount,&CP0[9],Cop0_Name[9]);
-			SubConstFromVariable(BlockCycleCount,&Timers.Timer,"Timer");
-		}
-		if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
-		BlockCycleCount = 0;
-		BlockRandomModifier = 0;
-		Call_Direct(SyncToPC, "SyncToPC");
-		MoveConstToVariable((DWORD)RecompPos,&CurrentBlock,"CurrentBlock");
-	}*/
 	do {
 		__try {
 			if (!r4300i_LW_VAddr(Section->CompilePC, &Opcode.Hex)) ExitThread(0);
@@ -1830,102 +1786,8 @@ BOOL GenerateX86Code (BLOCK_SECTION * Section, DWORD Test) {
 				Opcode.Hex = OrigMem[(Opcode.Hex & 0xFFFF)].OriginalValue;
 			}
 		}
-		//if (Section->CompilePC == 0x800AA51C && NextInstruction == NORMAL) { _asm int 3 }
-		//if (Section->CompilePC == 0x80000050 && NextInstruction == NORMAL) { BreakPoint(); }
-		/*if (Section->CompilePC >= 0x800C4024 && Section->CompilePC < 0x800C4030) {
-			CurrentRoundingModel = RoundUnknown;
-		}*/
-		/*if (Section->CompilePC >= 0x8006F970 && Section->CompilePC < 0x8006F9A0 && NextInstruction == NORMAL) {
-			WriteBackRegisters(Section);
-			if (BlockCycleCount != 0) {
-				AddConstToVariable(BlockCycleCount,&CP0[9],Cop0_Name[9]);
-				SubConstFromVariable(BlockCycleCount,&Timers.Timer,"Timer");
-			}
-			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
-			BlockCycleCount = 0;
-			BlockRandomModifier = 0;
-			MoveConstToVariable(Section->CompilePC,&PROGRAM_COUNTER,"PROGRAM_COUNTER");
-			MoveConstToVariable((DWORD)RecompPos,&CurrentBlock,"CurrentBlock");
-			if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
-		}*/
-		/*if (Section->CompilePC == 0x80000054 && NextInstruction == NORMAL) {
-			WriteBackRegisters(Section);
-			if (BlockCycleCount != 0) {
-				AddConstToVariable(BlockCycleCount,&CP0[9],Cop0_Name[9]);
-				SubConstFromVariable(BlockCycleCount,&Timers.Timer,"Timer");
-			}
-			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
-			BlockCycleCount = 0;
-			BlockRandomModifier = 0;
-			MoveConstToVariable(Section->CompilePC,&PROGRAM_COUNTER,"PROGRAM_COUNTER");
-			MoveConstToVariable((DWORD)RecompPos,&CurrentBlock,"CurrentBlock");
-			if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
-		}*/
-		/*if (Section->CompilePC == 0x8005E460 && NextInstruction == NORMAL) {
-			WriteBackRegisters(Section);
-			if (BlockCycleCount != 0) {
-				AddConstToVariable(BlockCycleCount,&CP0[9],Cop0_Name[9]);
-				SubConstFromVariable(BlockCycleCount,&Timers.Timer,"Timer");
-			}
-			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
-			BlockCycleCount = 0;
-			BlockRandomModifier = 0;
-			MoveConstToVariable(Section->CompilePC,&PROGRAM_COUNTER,"PROGRAM_COUNTER");
-			MoveConstToVariable((DWORD)RecompPos,&CurrentBlock,"CurrentBlock");
-			if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
-		}*/
-		/*if (Section->CompilePC == 0x150A1570 && NextInstruction == NORMAL) {
-			CPU_Message("%s = %d",GPR_Name[14],MipsRegState(14));
-		}
-		if (Section->CompilePC == 0x150A1514 && NextInstruction == NORMAL) {
-			CPU_Message("%s = %d",GPR_Name[14],MipsRegState(14));
-		}
-		if (Section->CompilePC == 0x150A1454 && NextInstruction == NORMAL) {
-			CPU_Message("%s = %d",GPR_Name[14],MipsRegState(14));
-		}*/
-		/*if (Section->CompilePC == 0x150A1570 && NextInstruction == NORMAL) {
-			WriteBackRegisters(Section);
-			if (BlockCycleCount != 0) {
-				AddConstToVariable(BlockCycleCount,&CP0[9],Cop0_Name[9]);
-				SubConstFromVariable(BlockCycleCount,&Timers.Timer,"Timer");
-			}
-			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
-			BlockCycleCount = 0;
-			BlockRandomModifier = 0;
-			MoveConstToVariable(Section->CompilePC,&PROGRAM_COUNTER,"PROGRAM_COUNTER");
-			MoveConstToVariable((DWORD)RecompPos,&CurrentBlock,"CurrentBlock");
-			if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
-		}
-		if (Section->CompilePC == 0x150A1514 && NextInstruction == NORMAL) {
-			WriteBackRegisters(Section);
-			if (BlockCycleCount != 0) {
-				AddConstToVariable(BlockCycleCount,&CP0[9],Cop0_Name[9]);
-				SubConstFromVariable(BlockCycleCount,&Timers.Timer,"Timer");
-			}
-			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
-			BlockCycleCount = 0;
-			BlockRandomModifier = 0;
-			MoveConstToVariable(Section->CompilePC,&PROGRAM_COUNTER,"PROGRAM_COUNTER");
-			MoveConstToVariable((DWORD)RecompPos,&CurrentBlock,"CurrentBlock");
-			if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
-		}
-		if (Section->CompilePC == 0x150A1454 && NextInstruction == NORMAL) {
-			WriteBackRegisters(Section);
-			if (BlockCycleCount != 0) {
-				AddConstToVariable(BlockCycleCount,&CP0[9],Cop0_Name[9]);
-				SubConstFromVariable(BlockCycleCount,&Timers.Timer,"Timer");
-			}
-			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
-			BlockCycleCount = 0;
-			BlockRandomModifier = 0;
-			MoveConstToVariable(Section->CompilePC,&PROGRAM_COUNTER,"PROGRAM_COUNTER");
-			MoveConstToVariable((DWORD)RecompPos,&CurrentBlock,"CurrentBlock");
-			if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
-		}*/
 		BlockCycleCount += CountPerOp;
-		//CPU_Message("BlockCycleCount = %d",BlockCycleCount);
 		BlockRandomModifier += 1;
-		//CPU_Message("BlockRandomModifier = %d",BlockRandomModifier);
 		for (count = 1; count < 10; count ++) { x86Protected(count) = FALSE; }
 		switch (Opcode.op) {
 		case R4300i_SPECIAL:
@@ -2164,28 +2026,7 @@ BOOL GenerateX86Code (BLOCK_SECTION * Section, DWORD Test) {
 		}
 		if (DisableRegCaching) { WriteBackRegisters(Section); }
 		for (count = 1; count < 10; count ++) { x86Protected(count) = FALSE; }
-		/*if ((DWORD)RecompPos > 0x60B452E6) {
-			if (Section->CompilePC == 0x8002D9B8 && Section->CompilePC < 0x8002DA20) {
-				CurrentRoundingModel = RoundUnknown;
-			}
-		}*/
 		UnMap_AllFPRs(Section);
-		/*if ((DWORD)RecompPos > 0x60AD0BD3) {
-			if (Section->CompilePC >= 0x8008B804 && Section->CompilePC < 0x800496D8) {
-				CPU_Message("Blah *");
-				WriteBackRegisters(Section);
-			}
-			/*if (Section->CompilePC >= 0x80000180 && Section->CompilePC < 0x80000190) {
-				CPU_Message("Blah *");
-				//WriteBackRegisters(Section);
-			}*/
-		//}
-		/*for (count = 1; count < 10; count ++) {
-			if (x86Mapped(count) == Stack_Mapped) {
-				UnMap_X86reg (Section, count);
-			}
-		}*/
-		//CPU_Message("MemoryStack = %s",Map_MemoryStack(Section, FALSE) > 0?x86_Name(Map_MemoryStack(Section, FALSE)):"Not Mapped");
 		if ((Section->CompilePC &0xFFC) == 0xFFC) {
 			if (NextInstruction == NORMAL) {
 				CompileExit (Section->CompilePC + 4,Section->RegWorking,Normal,TRUE,NULL);
@@ -2858,7 +2699,6 @@ void SyncRegState (BLOCK_SECTION * Section, REG_INFO * SyncTo) {
 	UnMap_AllFPRs(Section);
 	if (CurrentRoundingModel != SyncTo->RoundingModel) { CurrentRoundingModel = RoundUnknown; }
 	x86Reg = Map_MemoryStack(Section, FALSE);
-	//CPU_Message("MemoryStack for Original State = %s",x86Reg > 0?x86_Name(x86Reg):"Not Mapped");
 	for (x86Reg = 1; x86Reg < 10; x86Reg ++) {
 		if (x86Mapped(x86Reg) != Stack_Mapped) { continue; }
 		if (SyncTo->x86reg_MappedTo[x86Reg] != Stack_Mapped) {
@@ -2877,7 +2717,6 @@ void SyncRegState (BLOCK_SECTION * Section, REG_INFO * SyncTo) {
 	}
 	for (x86Reg = 1; x86Reg < 10; x86Reg ++) {
 		if (SyncTo->x86reg_MappedTo[x86Reg] != Stack_Mapped) { continue; }
-		//CPU_Message("MemoryStack for Sync State = %s",x86Reg > 0?x86_Name(x86Reg):"Not Mapped");
 		if (x86Mapped(x86Reg) == Stack_Mapped) { break; }
 		UnMap_X86reg(Section,x86Reg);
 	}

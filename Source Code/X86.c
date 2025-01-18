@@ -666,7 +666,6 @@ void LeaRegReg(int x86RegDest, int x86RegSrc, int multiplier) {
 void LeaSourceAndOffset(x86DestReg, x86SourceReg, offset) {
 	WORD x86Command;
 	CPU_Message("      lea %s, [%s + %0Xh]",x86_Name(x86DestReg),x86_Name(x86SourceReg),offset);
-//	if ((offset & 0xFFFFFF80) != 0 && (offset & 0xFFFFFF80) != 0xFFFFFF80) {
 	if (1) {
 		switch (x86DestReg) {
 		case x86_EAX: x86Command = 0x808D; break;

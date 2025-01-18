@@ -1,7 +1,5 @@
-//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by PJ64.rc
-//
 #define MAIN_MENU                       116
 #define IDD_Settings_PlugSel            121
 #define IDR_WINDOWMODE                  122

@@ -204,15 +204,15 @@ typedef union {
 		signed   X_AXIS       : 8;
 	};
 } BUTTONS;
-/*** Conteroller plugin's ****/
+/*** Controller plugins ****/
 #define PLUGIN_NONE					1
 #define PLUGIN_MEMPAK				2
 #define PLUGIN_RUMBLE_PAK			3
 #define PLUGIN_TANSFER_PAK			4 // not implemeted for non raw data
 #define PLUGIN_RAW					5 // the controller plugin is passed in raw data
-/******** All DLLs have this function **************/
+/******** Global DLL Function **************/
 void (__cdecl *GetDllInfo)             ( PLUGIN_INFO * PluginInfo );
-/********** RSP DLL: Functions *********************/
+/********** RSP DLL Functions *********************/
 void (__cdecl *RSPCloseDLL)        ( void );
 void (__cdecl *RSPDllAbout)        ( HWND hWnd );
 void (__cdecl *RSPDllConfig)       ( HWND hWnd );
@@ -220,7 +220,7 @@ void (__cdecl *RSPRomClosed)       ( void );
 DWORD (__cdecl *DoRspCycles)       ( DWORD );
 void (__cdecl *InitiateRSP_1_0)    ( RSP_INFO_1_0 Rsp_Info, DWORD * Cycles);
 void (__cdecl *InitiateRSP_1_1)    ( RSP_INFO_1_1 Rsp_Info, DWORD * Cycles);
-/********** GFX DLL: Functions *********************/
+/********** GFX DLL Functions *********************/
 void (__cdecl *CaptureScreen)      ( char * );
 void (__cdecl *ChangeWindow)       ( void );
 void (__cdecl *GFXCloseDLL)        ( void );
@@ -239,7 +239,7 @@ void (__cdecl *ShowCFB)			   ( void );
 void (__cdecl *UpdateScreen)       ( void );
 void (__cdecl *ViStatusChanged)    ( void );
 void (__cdecl *ViWidthChanged)     ( void );
-/************ Audio DLL: Functions *****************/
+/************ Audio DLL Functions *****************/
 void (__cdecl *AiCloseDLL)       ( void );
 void (__cdecl *AiDacrateChanged) ( int SystemType );
 void (__cdecl *AiLenChanged)     ( void );
@@ -251,7 +251,7 @@ void (__cdecl *AiRomClosed)      ( void );
 void (__cdecl *AiUpdate)         ( BOOL Wait );
 BOOL (__cdecl *InitiateAudio)    ( AUDIO_INFO Audio_Info );
 void (__cdecl *ProcessAList)     ( void );
-/********** Controller DLL: Functions **************/
+/********** Controller DLL Functions **************/
 void (__cdecl *ContCloseDLL)     ( void );
 void (__cdecl *ControllerCommand)( int Control, BYTE * Command );
 void (__cdecl *ContDllAbout)     ( HWND hParent );
@@ -265,7 +265,7 @@ void (__cdecl *ContRomClosed)    ( void );
 void (__cdecl *WM_KeyDown)       ( WPARAM wParam, LPARAM lParam );
 void (__cdecl *WM_KeyUp)         ( WPARAM wParam, LPARAM lParam );
 void (__cdecl *RumbleCommand)	 ( int Control, BOOL bRumble );
-/********** Plugin: Functions *********************/
+/********** Plugin Functions *********************/
 void GetPluginDir        ( char * Directory );
 void GetSnapShotDir      ( char * Directory );
 void PluginConfiguration ( HWND hWnd );

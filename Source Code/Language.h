@@ -209,7 +209,7 @@ char * GS               ( int StringID );
 /*********************************************************************************
 * ROM Information                                                                *
 *********************************************************************************/
-//Rom Info Title Title
+//Rom Info Title
 #define INFO_TITLE			175
 //Rom Info Text
 #define INFO_ROM_NAME_TEXT		176

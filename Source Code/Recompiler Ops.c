@@ -1043,7 +1043,6 @@ void Compile_R4300i_JAL (BLOCK_SECTION * Section) {
 			}
 			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
 			WriteBackRegisters(Section);
-			//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 			MoveConstToVariable(DELAY_SLOT,&NextInstruction,"NextInstruction");
 			Ret();
 			NextInstruction = END_BLOCK;
@@ -1188,19 +1187,6 @@ void Compile_R4300i_SLTIU (BLOCK_SECTION * Section) {
 		SetbVariable(&BranchCompare,"BranchCompare");
 		Map_GPR_32bit(Section,Opcode.rt,FALSE, -1);
 		MoveVariableToX86reg(&BranchCompare,"BranchCompare",MipsRegLo(Opcode.rt));
-		/*SetbVariable(&BranchCompare,"BranchCompare");
-		JmpLabel8("Continue",0);
-		Jump[1] = RecompPos - 1;
-		CPU_Message("");
-		CPU_Message("      Low Compare:");
-		*((BYTE *)(Jump[0]))=(BYTE)(RecompPos - Jump[0] - 1);
-		CompConstToVariable((short)Opcode.immediate,&GPR[Opcode.rs].W[0],GPR_NameLo[Opcode.rs]);
-		SetbVariable(&BranchCompare,"BranchCompare");
-		CPU_Message("");
-		CPU_Message("      Continue:");
-		*((BYTE *)(Jump[1]))=(BYTE)(RecompPos - Jump[1] - 1);
-		Map_GPR_32bit(Section,Opcode.rt,FALSE, -1);
-		MoveVariableToX86reg(&BranchCompare,"BranchCompare",MipsRegLo(Opcode.rt));*/
 	}
 }
 void Compile_R4300i_SLTI (BLOCK_SECTION * Section) {
@@ -1237,11 +1223,6 @@ void Compile_R4300i_SLTI (BLOCK_SECTION * Section) {
 			Map_GPR_32bit(Section,Opcode.rt,FALSE, -1);
 			MoveVariableToX86reg(&BranchCompare,"BranchCompare",MipsRegLo(Opcode.rt));
 		} else {
-		/*	CompConstToX86reg(MipsRegLo(Opcode.rs),(short)Opcode.immediate);
-			SetlVariable(&BranchCompare,"BranchCompare");
-			Map_GPR_32bit(Section,Opcode.rt,FALSE, -1);
-			MoveVariableToX86reg(&BranchCompare,"BranchCompare",MipsRegLo(Opcode.rt));
-			*/
 			ProtectGPR(Section, Opcode.rs);
 			Map_GPR_32bit(Section,Opcode.rt,FALSE, -1);
 			CompConstToX86reg(MipsRegLo(Opcode.rs),(short)Opcode.immediate);
@@ -1834,9 +1815,6 @@ void Compile_R4300i_SB (BLOCK_SECTION * Section){
 		ShiftRightUnsignImmed(TempReg2,12);
 		MoveVariableDispToX86Reg(TLB_WriteMap,"TLB_WriteMap",TempReg2,TempReg2,4);
 		CompileWriteTLBMiss(Section, TempReg1, TempReg2);
-		//For tlb miss
-		//0041C522 85 C0                test        eax,eax
-		//0041C524 75 01                jne         0041C527
 		XorConstToX86Reg(TempReg1,3);
 		if (IsConst(Opcode.rt)) {
 			MoveConstByteToX86regPointer((BYTE)MipsRegLo(Opcode.rt),TempReg1, TempReg2);
@@ -1900,9 +1878,6 @@ void Compile_R4300i_SH (BLOCK_SECTION * Section){
 		ShiftRightUnsignImmed(TempReg2,12);
 		MoveVariableDispToX86Reg(TLB_WriteMap,"TLB_WriteMap",TempReg2,TempReg2,4);
 		CompileWriteTLBMiss(Section, TempReg1, TempReg2);
-		//For tlb miss
-		//0041C522 85 C0                test        eax,eax
-		//0041C524 75 01                jne         0041C527
 		XorConstToX86Reg(TempReg1,2);
 		if (IsConst(Opcode.rt)) {
 			MoveConstHalfToX86regPointer((WORD)MipsRegLo(Opcode.rt),TempReg1, TempReg2);
@@ -1965,9 +1940,6 @@ void Compile_R4300i_SWL (BLOCK_SECTION * Section) {
 		MoveX86RegToX86Reg(TempReg1, TempReg2);
 		ShiftRightUnsignImmed(TempReg2,12);
 		MoveVariableDispToX86Reg(TLB_ReadMap,"TLB_ReadMap",TempReg2,TempReg2,4);
-		//For tlb miss
-		//0041C522 85 C0                test        eax,eax
-		//0041C524 75 01                jne         0041C527
 	}
 	Offset = Map_TempReg(Section,x86_Any,-1,FALSE);
 	MoveX86RegToX86Reg(TempReg1, Offset);
@@ -2056,9 +2028,6 @@ void Compile_R4300i_SW (BLOCK_SECTION * Section){
 			ShiftRightUnsignImmed(TempReg2,12);
 			MoveVariableDispToX86Reg(TLB_WriteMap,"TLB_WriteMap",TempReg2,TempReg2,4);
 			CompileWriteTLBMiss(Section, TempReg1, TempReg2);
-			//For tlb miss
-			//0041C522 85 C0                test        eax,eax
-			//0041C524 75 01                jne         0041C527
 			if (IsConst(Opcode.rt)) {
 				MoveConstToX86regPointer(MipsRegLo(Opcode.rt),TempReg1, TempReg2);
 			} else if (IsMapped(Opcode.rt)) {
@@ -2120,9 +2089,6 @@ void Compile_R4300i_SWR (BLOCK_SECTION * Section) {
 		MoveX86RegToX86Reg(TempReg1, TempReg2);
 		ShiftRightUnsignImmed(TempReg2,12);
 		MoveVariableDispToX86Reg(TLB_ReadMap,"TLB_ReadMap",TempReg2,TempReg2,4);
-		//For tlb miss
-		//0041C522 85 C0                test        eax,eax
-		//0041C524 75 01                jne         0041C527
 	}
 	Offset = Map_TempReg(Section,x86_Any,-1,FALSE);
 	MoveX86RegToX86Reg(TempReg1, Offset);
@@ -2354,9 +2320,6 @@ void Compile_R4300i_SC (BLOCK_SECTION * Section){
 		ShiftRightUnsignImmed(TempReg2,12);
 		MoveVariableDispToX86Reg(TLB_WriteMap,"TLB_WriteMap",TempReg2,TempReg2,4);
 		CompileWriteTLBMiss(Section, TempReg1, TempReg2);
-		//For tlb miss
-		//0041C522 85 C0                test        eax,eax
-		//0041C524 75 01                jne         0041C527
 		if (IsConst(Opcode.rt)) {
 			MoveConstToX86regPointer(MipsRegLo(Opcode.rt),TempReg1, TempReg2);
 		} else if (IsMapped(Opcode.rt)) {
@@ -2425,9 +2388,6 @@ void Compile_R4300i_LD (BLOCK_SECTION * Section) {
 		MoveX86RegToX86Reg(TempReg1, TempReg2);
 		ShiftRightUnsignImmed(TempReg2,12);
 		MoveVariableDispToX86Reg(TLB_ReadMap,"TLB_ReadMap",TempReg2,TempReg2,4);
-		//For tlb miss
-		//0041C522 85 C0                test        eax,eax
-		//0041C524 75 01                jne         0041C527
 		Map_GPR_64bit(Section,Opcode.rt,-1);
 		MoveX86regPointerToX86reg(TempReg1, TempReg2,MipsRegHi(Opcode.rt));
 		MoveX86regPointerToX86regDisp8(TempReg1, TempReg2,MipsRegLo(Opcode.rt),4);
@@ -2494,9 +2454,6 @@ void Compile_R4300i_SD (BLOCK_SECTION * Section){
 		ShiftRightUnsignImmed(TempReg2,12);
 		MoveVariableDispToX86Reg(TLB_WriteMap,"TLB_WriteMap",TempReg2,TempReg2,4);
 		CompileWriteTLBMiss(Section, TempReg1, TempReg2);
-		//For tlb miss
-		//0041C522 85 C0                test        eax,eax
-		//0041C524 75 01                jne         0041C527
 		if (IsConst(Opcode.rt)) {
 			if (Is64Bit(Opcode.rt)) {
 				MoveConstToX86regPointer(MipsRegHi(Opcode.rt),TempReg1, TempReg2);
@@ -2702,7 +2659,6 @@ void Compile_R4300i_SPECIAL_JR (BLOCK_SECTION * Section) {
 			}
 			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
 			WriteBackRegisters(Section);
-			//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 			MoveConstToVariable(DELAY_SLOT,&NextInstruction,"NextInstruction");
 			Ret();
 			NextInstruction = END_BLOCK;
@@ -2761,7 +2717,6 @@ void Compile_R4300i_SPECIAL_JALR (BLOCK_SECTION * Section) {
 			}
 			if (BlockRandomModifier != 0) { SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]); }
 			WriteBackRegisters(Section);
-			//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 			MoveConstToVariable(DELAY_SLOT,&NextInstruction,"NextInstruction");
 			Ret();
 			NextInstruction = END_BLOCK;
@@ -2912,11 +2867,6 @@ void Compile_R4300i_SPECIAL_DSRLV (BLOCK_SECTION * Section) {
 			}
 			return;
 		}
-		//if (Shift < 0x20) {
-		//} else {
-		//}
-		//Compile_R4300i_UnknownOpcode(Section);
-		//return;
 	}
 	Map_TempReg(Section,x86_ECX,Opcode.rs,FALSE);
 	AndConstToX86Reg(x86_ECX,0x3F);
@@ -3031,8 +2981,6 @@ void Compile_R4300i_SPECIAL_DIV (BLOCK_SECTION * Section) {
 		CPU_Message("      NoExcept:");
 		*((BYTE *)(Jump[0]))=(BYTE)(RecompPos - Jump[0] - 1);
 	}
-	/*	lo = (SD)rs / (SD)rt;
-		hi = (SD)rs % (SD)rt; */
 	x86Protected(x86_EDX) = TRUE;
 	Map_TempReg(Section,x86_EAX,Opcode.rs,FALSE);
 	/* edx is the signed portion to eax */
@@ -3088,8 +3036,6 @@ void Compile_R4300i_SPECIAL_DIVU ( BLOCK_SECTION * Section) {
 		CPU_Message("      NoExcept:");
 		*((BYTE *)(Jump[0]))=(BYTE)(RecompPos - Jump[0] - 1);
 	}
-	/*	lo = (UD)rs / (UD)rt;
-		hi = (UD)rs % (UD)rt; */
 	x86Protected(x86_EAX) = TRUE;
 	Map_TempReg(Section,x86_EDX, 0, FALSE);
 	x86Protected(x86_EAX) = FALSE;
@@ -3098,7 +3044,6 @@ void Compile_R4300i_SPECIAL_DIVU ( BLOCK_SECTION * Section) {
 	DivX86reg(x86reg);
 	MoveX86regToVariable(x86_EAX,&LO.UW[0],"LO.UW[0]");
 	MoveX86regToVariable(x86_EDX,&HI.UW[0],"HI.UW[0]");
-	/* wouldnt these be zero (???) */
 	ShiftRightSignImmed(x86_EAX,31);	/* paired */
 	ShiftRightSignImmed(x86_EDX,31);
 	MoveX86regToVariable(x86_EAX,&LO.UW[1],"LO.UW[1]");
@@ -3120,7 +3065,6 @@ void Compile_R4300i_SPECIAL_DMULT (BLOCK_SECTION * Section) {
 }
 void Compile_R4300i_SPECIAL_DMULTU (BLOCK_SECTION * Section) {
 	CPU_Message("  %X %s",Section->CompilePC,R4300iOpcodeName(Opcode.Hex,Section->CompilePC));
-	/* LO.UDW = (uint64)GPR[Opcode.rs].UW[0] * (uint64)GPR[Opcode.rt].UW[0]; */
 	x86Protected(x86_EDX) = TRUE;
 	Map_TempReg(Section,x86_EAX,Opcode.rs,FALSE);
 	x86Protected(x86_EDX) = FALSE;
@@ -3128,13 +3072,11 @@ void Compile_R4300i_SPECIAL_DMULTU (BLOCK_SECTION * Section) {
 	MulX86reg(x86_EDX);
 	MoveX86regToVariable(x86_EAX, &LO.UW[0], "LO.UW[0]");
 	MoveX86regToVariable(x86_EDX, &LO.UW[1], "LO.UW[1]");
-	/* HI.UDW = (uint64)GPR[Opcode.rs].UW[1] * (uint64)GPR[Opcode.rt].UW[1]; */
 	Map_TempReg(Section,x86_EAX,Opcode.rs,TRUE);
 	Map_TempReg(Section,x86_EDX,Opcode.rt,TRUE);
 	MulX86reg(x86_EDX);
 	MoveX86regToVariable(x86_EAX, &HI.UW[0], "HI.UW[0]");
 	MoveX86regToVariable(x86_EDX, &HI.UW[1], "HI.UW[1]");
-	/* Tmp[0].UDW = (uint64)GPR[Opcode.rs].UW[1] * (uint64)GPR[Opcode.rt].UW[0]; */
 	Map_TempReg(Section,x86_EAX,Opcode.rs,TRUE);
 	Map_TempReg(Section,x86_EDX,Opcode.rt,FALSE);
 	Map_TempReg(Section,x86_EBX,-1,FALSE);
@@ -3142,7 +3084,6 @@ void Compile_R4300i_SPECIAL_DMULTU (BLOCK_SECTION * Section) {
 	MulX86reg(x86_EDX);
 	MoveX86RegToX86Reg(x86_EAX, x86_EBX); /* EDX:EAX -> ECX:EBX */
 	MoveX86RegToX86Reg(x86_EDX, x86_ECX);
-	/* Tmp[1].UDW = (uint64)GPR[Opcode.rs].UW[0] * (uint64)GPR[Opcode.rt].UW[1]; */
 	Map_TempReg(Section,x86_EAX,Opcode.rs,FALSE);
 	Map_TempReg(Section,x86_EDX,Opcode.rt,TRUE);
 	MulX86reg(x86_EDX);
@@ -3150,19 +3091,14 @@ void Compile_R4300i_SPECIAL_DMULTU (BLOCK_SECTION * Section) {
 	Map_TempReg(Section,x86_EDI,-1,FALSE);
 	MoveX86RegToX86Reg(x86_EAX, x86_ESI); /* EDX:EAX -> EDI:ESI */
 	MoveX86RegToX86Reg(x86_EDX, x86_EDI);
-	/* Tmp[2].UDW = (uint64)LO.UW[1] + (uint64)Tmp[0].UW[0] + (uint64)Tmp[1].UW[0]; */
 	XorX86RegToX86Reg(x86_EDX, x86_EDX);
 	MoveVariableToX86reg(&LO.UW[1], "LO.UW[1]", x86_EAX);
 	AddX86RegToX86Reg(x86_EAX, x86_EBX);
 	AddConstToX86Reg(x86_EDX, 0);
 	AddX86RegToX86Reg(x86_EAX, x86_ESI);
 	AddConstToX86Reg(x86_EDX, 0);			/* EDX:EAX */
-	/* LO.UDW += ((uint64)Tmp[0].UW[0] + (uint64)Tmp[1].UW[0]) << 32; */
-	/* [low+4] += ebx + esi */
 	AddX86regToVariable(x86_EBX, &LO.UW[1], "LO.UW[1]");
 	AddX86regToVariable(x86_ESI, &LO.UW[1], "LO.UW[1]");
-	/* HI.UDW += (uint64)Tmp[0].UW[1] + (uint64)Tmp[1].UW[1] + Tmp[2].UW[1]; */
-	/* [hi] += ecx + edi + edx */
 	AddX86regToVariable(x86_ECX, &HI.UW[0], "HI.UW[0]");
 	AdcConstToVariable(&HI.UW[1], "HI.UW[1]", 0);
 	AddX86regToVariable(x86_EDI, &HI.UW[0], "HI.UW[0]");
@@ -4396,8 +4332,6 @@ void Compile_R4300i_COP0_MT (BLOCK_SECTION * Section) {
 		Call_Direct(SetFpuLocations,"SetFpuLocations");
 		Popad();
 		*(BYTE *)(Jump)= (BYTE )(((BYTE )(RecompPos)) - (((BYTE )(Jump)) + 1));
-		//TestConstToX86Reg(STATUS_FR,OldStatusReg);
-		//CompileExit(Section->CompilePC+4,Section->RegWorking,ExitResetRecompCode,FALSE,JneLabel32);
 		Pushad();
 		Call_Direct(CheckInterrupts,"CheckInterrupts");
 		Popad();
@@ -4495,7 +4429,6 @@ void Compile_R4300i_UnknownOpcode (BLOCK_SECTION * Section) {
 	WriteBackRegisters(Section);
 	AddConstToVariable(BlockCycleCount,&CP0[9],Cop0_Name[9]);
 	SubConstFromVariable(BlockRandomModifier,&CP0[1],Cop0_Name[1]);
-	//if (CPU_Type == CPU_SyncCores) { Call_Direct(SyncToPC, "SyncToPC"); }
 	MoveConstToVariable(Opcode.Hex,&Opcode.Hex,"Opcode.Hex");
 	Call_Direct(R4300i_UnknownOpcode, "R4300i_UnknownOpcode");
 	Ret();

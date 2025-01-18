@@ -35,7 +35,6 @@ int RoundingModel = _RC_NEAR;
 	NextInstruction = JUMP;\
 	JumpToLocation = PROGRAM_COUNTER;\
 	return;
-//#define TEST_COP1_USABLE_EXCEPTION
 #define TEST_COP1_USABLE_EXCEPTION \
 	if ((STATUS_REGISTER & STATUS_CU1) == 0) {\
 		DoCopUnusableException(NextInstruction == JUMP,1);\
@@ -231,13 +230,7 @@ void _fastcall r4300i_LW (void) {
 	if (Opcode.rt == 0) { return; }
 	if (!r4300i_LW_VAddr(Address,&GPR[Opcode.rt].UW[0])) {
 		TLB_READ_EXCEPTION(Address);
-	} else {
-		GPR[Opcode.rt].DW = GPR[Opcode.rt].W[0];
-		//TranslateVaddr(&Address);
-		//if (Address == 0x00090AA0) {
-		//	LogMessage("%X: Read %X from %X",PROGRAM_COUNTER,GPR[Opcode.rt].UW[0],GPR[Opcode.base].UW[0] + (short)Opcode.offset);
-		//}
-	}
+	} else GPR[Opcode.rt].DW = GPR[Opcode.rt].W[0];
 }
 void _fastcall r4300i_LBU (void) {
 	DWORD Address =  GPR[Opcode.base].UW[0] + (short)Opcode.offset;
@@ -1114,7 +1107,7 @@ void _fastcall r4300i_COP1_L_CVT_D (void) {
 	_controlfp(RoundingModel,_MCW_RC);
 	*(double *)FPRDoubleLocation[Opcode.fd] = (double)*(__int64 *)FPRDoubleLocation[Opcode.fs];
 }
-/************************** Other functions **************************/
+/************************** Unknown OpCode Function (seen in recompiler too) **************************/
 void _fastcall R4300i_UnknownOpcode (void) {
 	char Message[200];
 	sprintf(Message,"%s: %08X\n%s\n\n", GS(MSG_UNHANDLED_OP), PROGRAM_COUNTER,

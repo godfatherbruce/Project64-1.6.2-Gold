@@ -674,9 +674,7 @@ void fpuDivQwordReverse(void *Variable, char *VariableName) {
 	PUTDST16(RecompPos,0x3DDC);
 	PUTDST32(RecompPos,Variable);
 }
-//
 // FPU Utility
-//
 unsigned int fpucontrol;
 /* returns and pushes current fpu state, bool for set normal */
 int fpuSaveControl(BOOL bSetNormal) {

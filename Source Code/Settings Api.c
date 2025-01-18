@@ -422,93 +422,7 @@ GetPrivateProfileString_ReturnDefault2:
 	*lpReturnedString = malloc(len + 1);
 	strcpy(*lpReturnedString,lpDefault);
 	return len;
-	//return 0;
 }
-/*int _WritePrivateProfileString(
-  const char * lpAppName,  // pointer to section name
-  const char * lpKeyName,  // pointer to key name
-  const char * lpString,   // pointer to string to add
-  const char * lpFileName  // pointer to initialization filename
-)
-{
-	char Input[300], CurrentSection[300];
-	int result, count;
-	long WritePos;
-	FILE * fInput;
-	//open the file for reading
-	fInput = fopen(lpFileName,"r+b");
-	if (fInput == NULL) { return 0; }
-	fseek(fInput,0,SEEK_SET);
-	CurrentSection[0] = 0;
-	do {
-		char * Pos;
-		result = fGetString(fInput,Input,sizeof(Input));
-		if (result <= 1) { continue; }
-		if (Input[strlen(Input) - 1] == '\r') { Input[strlen(Input) - 1] = 0; }
-		Pos = Input;
-		while (Pos != NULL) {
-			Pos = strchr(Pos,'/');
-			if (Pos != NULL) {
-				if (Pos[1] == '/') { Pos[0] = 0; } else { Pos += 1; }
-			}
-		}
-		for (count = strlen(&Input[0]) - 1; count >= 0; count --) {
-			if (Input[count] != ' ') { break; }
-			Input[count] = 0;
-		}
-		//stip leading spaces
-		if (strlen(Input) <= 1) { continue; }
-		if (Input[0] == '[') {
-			if (Input[strlen(Input) - 1] != ']') { continue; }
-			if (strcmp(lpAppName,CurrentSection) == 0) {
-				result = -1;
-				continue;
-			}
-			strcpy(CurrentSection,&Input[1]);
-			CurrentSection[strlen(CurrentSection) - 1] = 0;
-			WritePos = ftell(fInput);
-			continue;
-		}
-		if (strcmp(lpAppName,CurrentSection) != 0) {
-			continue;
-		}
-		Pos = strchr(Input,'=');
-		if (Pos == NULL) { continue; }
-		Pos[0] = 0;
-		if (strcmp(Input,lpKeyName) != 0) {
-			WritePos = ftell(fInput);
-			continue;
-		}
-		{
-			long OldLen = ftell(fInput) - WritePos;
-			int Newlen = strlen(lpKeyName) + strlen(lpString) + strlen(LineFeed) + 1;
-			if (OldLen != Newlen) {
-				fInsertSpaces(fInput,WritePos,Newlen - OldLen);
-			}
-			fseek(fInput,WritePos,SEEK_SET);
-			fprintf(fInput,"%s=%s%s",lpKeyName,lpString,LineFeed);
-			if ((Newlen - OldLen < 0)) {
-				//copy all file excluding size diff
-			}
-			fclose(fInput);
-		}
-		return 0;
-	} while (result >= 0);
-	if (strcmp(lpAppName,CurrentSection) == 0) {
-		int len = strlen(lpKeyName) + strlen(lpString) + strlen(LineFeed) + 1;
-		fInsertSpaces(fInput,WritePos,len);
-		fseek(fInput,WritePos,SEEK_SET);
-		fprintf(fInput,"%s=%s%s",lpKeyName,lpString,LineFeed);
-		fclose(fInput);
-	} else {
-		fseek(fInput,0,SEEK_END);
-		fprintf(fInput,"%s[%s]%s%s=%s%s",LineFeed,lpAppName,LineFeed,
-			lpKeyName,lpString,LineFeed);
-		fclose(fInput);
-	}
-	return 0;
-}
-*/
 int _DeletePrivateProfileString(
   const char * lpAppName,  // pointer to section name
   const char * lpKeyName,  // pointer to key name
@@ -601,36 +515,6 @@ int _WritePrivateProfileString(
 		if (fInput == NULL) { return 0; }
 	}
 	CurrentSection[0] = 0;
-	//test to see if Fpos is same as current section;
-/*	fseek(fInput,Fpos,SEEK_SET);
-	result = fGetString2(fInput,&Input,&Data,&DataLen,&DataLeft);
-	if (result > 1) {
-		Pos = Input;
-		while (Pos != NULL) {
-			Pos = strchr(Pos,'/');
-			if (Pos != NULL) {
-				if (Pos[1] == '/') { Pos[0] = 0; } else { Pos += 1; }
-			}
-		}
-		for (count = strlen(&Input[0]) - 1; count >= 0; count --) {
-			if (Input[count] != ' ' && Input[count] != '\r') { break; }
-			Input[count] = 0;
-		}
-		//stip leading spaces
-		if (strlen(Input) > 1) {
-			if (Input[0] == '[' && Input[strlen(Input) - 1] == ']') {
-				strcpy(CurrentSection,&Input[1]);
-				CurrentSection[strlen(CurrentSection) - 1] = 0;
-			}
-		}
-	}
-	if (strcmp(lpAppName,CurrentSection) != 0) {
-		DataLen = 0;
-		DataLeft = 0;
-		free(Data);
-		Data = NULL;
-		fseek(fInput,0,SEEK_SET);
-	}*/
 	do {
 		if (strcmp(lpAppName,CurrentSection) != 0) {
 			Fpos = ftell(fInput) - DataLeft;
@@ -707,7 +591,6 @@ int _WritePrivateProfileString(
 	if (Data) {  free(Data);  Data = NULL; }
 	return 0;
 }
-//_GetPrivateProfileSectionNames
 unsigned int _GetPrivateProfileSectionNames(									//added by Witten
   const char * lpszReturnBuffer,	// address of return buffer
   DWORD nSize,						// size of destination buffer

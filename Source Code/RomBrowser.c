@@ -39,7 +39,6 @@ typedef struct {
 	char     Status[60];
 	char     FileName[200];
 	char     InternalName[22];
-	// This changes GoodName to GameGame
 	char     GameName[200];
 	char     CartID[3];
 	char     PluginNotes[250];
@@ -89,7 +88,6 @@ typedef struct {
 } COLOR_CACHE;
 #define RB_FileName			0
 #define RB_InternalName		1
-// This changes define RD_GoodName to RB_GameGame
 #define RB_GameName			2
 #define RB_Status			3
 #define RB_RomSize			4
@@ -301,7 +299,7 @@ void LoadRomBrowserColoumnInfo (void) {
 		DWORD Type, Value, count, Bytes = 4;
 		for (count = 0; count < (DWORD)NoOfFields; count ++) {
 			Bytes = sizeof(szPos);
-			// Coloumn Postion
+			// Coloumn Position
 			lResult = RegQueryValueEx(hKeyResults,RomBrowserFields[count].Name,0,&Type,(LPBYTE)szPos,&Bytes);
 			if (lResult == ERROR_SUCCESS) { RomBrowserFields[count].Pos = atoi(szPos); }
 			//Coloumn Width
@@ -425,7 +423,6 @@ void ResetRomBrowserColomuns (void) {
 	int Coloumn, index;
 	LV_COLUMN lvColumn;
 	char szString[300];
-	//SaveRomBrowserColoumnInfo();
     memset(&lvColumn,0,sizeof(lvColumn));
 	lvColumn.mask = LVCF_FMT;
 	while (ListView_GetColumn(hRomList,0,&lvColumn)) {

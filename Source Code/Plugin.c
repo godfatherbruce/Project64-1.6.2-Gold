@@ -264,7 +264,6 @@ BOOL LoadRSPDll(char * RspDll) {
 void ResetAudio(HWND hWnd) {
 	static DWORD AI_DUMMY = 0;
 	TerminateThread(hAudioThread,0);
-	//if (AiCloseDLL != NULL) { AiCloseDLL(); }
 	FreeLibrary(hAudioDll);
 	if (!LoadAudioDll(AudioDLL) ) {
 		AiCloseDLL       = NULL;

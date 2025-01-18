@@ -36,7 +36,6 @@
 #include "Settings.h"
 #include "htmlHelp.h"
 #include "resource.h"
-#include "Registry.h"
 LARGE_INTEGER Frequency, Frames[8], LastFrame;
 BOOL 	AutoStart,
 	AutoSleep, DisableRegCaching, UseIni, UseTlb, UseLinking, RomBrowser,
@@ -747,7 +746,6 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		if (!CPURunning) { break; }
 		if (WM_KeyUp) { WM_KeyUp(wParam, lParam); };
 		break;
-	//case WM_ERASEBKGND: break;
 	case WM_USER + 10:
 		if (hWnd == hHiddenWin) { break; }
 		if (!wParam) {
@@ -1338,7 +1336,7 @@ void SetupMenu ( HWND hWnd ) {
 	//Disable if cpu is running
 	State = CPURunning?MFS_DISABLED:MFS_ENABLED;
 	EnableMenuItem(hMenu,ID_FILE_ROMDIRECTORY,State|MF_BYCOMMAND);
-	EnableMenuItem(hMenu,ID_FILE_REFRESHROMLIST,State|MF_BYCOMMAND);//Let's disable refresh rom list this way to remain thematically consistent with the other options while rom browser is used
+	EnableMenuItem(hMenu,ID_FILE_REFRESHROMLIST,State|MF_BYCOMMAND);
 	if (State == MFS_DISABLED) { EnableMenuItem(hMenu,ID_FILE_STARTEMULATION,State|MF_BYCOMMAND); }
 	SetMenu(hWnd, hMenu);
 	DrawMenuBar(hWnd);
@@ -1646,7 +1644,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgs,
 	HACCEL AccelWinMode, AccelCPURunning, AccelRomBrowser;
 	DWORD X, Y;
 	MSG msg;
-	//DisplayError("%X",r4300i_COP1_MF);
 	if ( !InitalizeApplication (hInstance) ) { return FALSE; }
 	if ( !RegisterWinClass () ) { return FALSE; }
 	if ( !GetStoredWinPos( "Main", &X, &Y ) ) {

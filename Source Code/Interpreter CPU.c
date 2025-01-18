@@ -683,12 +683,10 @@ void ExecuteInterpreterOpCode (void) {
 		}
 	}
 void StartInterpreterCPU (void ) {
-	//DWORD Value, Value2, Addr = 0x80031000;
 	CoInitialize(NULL);
 	NextInstruction = NORMAL;
 	if (GfxRomOpen != NULL) { GfxRomOpen(); }
 	if (ContRomOpen != NULL) { ContRomOpen(); }
-	//Add_R4300iBPoint(0x802000C8,FALSE);
 	__try {
 		for (;;) {
 			ExecuteInterpreterOpCode();

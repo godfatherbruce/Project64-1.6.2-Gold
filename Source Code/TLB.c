@@ -57,11 +57,6 @@ void SetupTLB (void) {
 		TLB_WriteMap[count >> 12] = ((DWORD)N64MEM + (count & 0x1FFFFFFF)) - count;
 	}
 	for (count = 0; count < 32; count ++) { SetupTLB_Entry(count); }
-	//GE Hack
-	//for (count = 0x7F000000; count < 0x80000000; count += 0x1000) {
-	//	TLB_ReadMap[count >> 12] = ((DWORD)N64MEM + (count - 0x7F000000 + 0x10034b30)) - count;
-	//	TLB_WriteMap[count >> 12] = ((DWORD)N64MEM + (count - 0x7F000000 + 0x10034b30)) - count;
-	//}
 }
 void SetupTLB_Entry (int Entry) {
 	int FastIndx;
@@ -98,10 +93,6 @@ void SetupTLB_Entry (int Entry) {
 		if (FastTlb[FastIndx].PHYSSTART > 0x1FFFFFFF || physend > 0x1FFFFFFF) {
 			continue;
 		}
-		//if (FastTlb[FastIndx].GLOBAL == 0) {
-		//	DisplayError("Non Global TLB Entry ???");
-		//	continue;
-		//}
 		//test if overlap
 		FastTlb[FastIndx].ValidEntry = TRUE;
 		for (count = FastTlb[FastIndx].VSTART; count < FastTlb[FastIndx].VEND; count += 0x1000) {

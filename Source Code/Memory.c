@@ -107,10 +107,6 @@ int Allocate_Memory ( void ) {
 		DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 		return FALSE;
 	}
-//	if(VirtualAlloc((BYTE *)JumpTable + 0x1FC00000, 0x7C0, MEM_COMMIT, PAGE_READWRITE)==NULL) {
-//		DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-//		return FALSE;
-//	}
 	return TRUE;
 }
 void Compile_LB ( int Reg, DWORD Addr, BOOL SignExtend) {
@@ -976,13 +972,11 @@ int r4300i_Command_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 			break;
 		default:
 				*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)N64MEM;
-			//return EXCEPTION_EXECUTE_HANDLER;
 			return EXCEPTION_CONTINUE_SEARCH;
 		}
 		break;
 	default:
 			*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)exRec.ExceptionInformation[1] - (char *)N64MEM;
-		//return EXCEPTION_EXECUTE_HANDLER;
 		return EXCEPTION_CONTINUE_SEARCH;
 	}
 		*(unsigned char *)lpEP->ContextRecord->Eip, lpEP->ContextRecord->Eip, (char *)N64MEM,
@@ -1274,7 +1268,6 @@ int r4300i_LW_NonMemory ( DWORD PAddr, DWORD * Value ) {
 	if (PAddr >= 0x10000000 && PAddr < 0x16000000) {
 		if (WrittenToRom) {
 			*Value = WroteToRom;
-			//LogMessage("%X: Read crap from Rom %X from %X",PROGRAM_COUNTER,*Value,PAddr);
 			WrittenToRom = FALSE;
 			return TRUE;
 		}
@@ -1421,7 +1414,7 @@ int r4300i_LW_NonMemory ( DWORD PAddr, DWORD * Value ) {
 		break;
 	case 0x05000000:
 		switch (PAddr) {
-		case 0x05000508: *Value = 0x0000000000000000; break;	// eepROM access? Setting to 0 makes N64DD IPL Rom not display Error 41 (Real-Time Clock Related)
+		case 0x05000508: *Value = 0x0000000000000000; break;
 		default:
 			*Value = PAddr & 0xFFFF;
 			*Value = (*Value << 16) | *Value;
@@ -1676,7 +1669,6 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 			DPC_END_REG = Value;
 			if (ProcessRDPList) { ProcessRDPList(); }
 			break;
-		//case 0x04100008: DPC_CURRENT_REG = Value; break;
 		case 0x0410000C:
 			if ( ( Value & DPC_CLR_XBUS_DMEM_DMA ) != 0) { DPC_STATUS_REG &= ~DPC_STATUS_XBUS_DMEM_DMA; }
 			if ( ( Value & DPC_SET_XBUS_DMEM_DMA ) != 0) { DPC_STATUS_REG |= DPC_STATUS_XBUS_DMEM_DMA;  }
@@ -1743,7 +1735,6 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 			break;
 		case 0x04400004:
 			VI_ORIGIN_REG = (Value & 0xFFFFFF);
-			//if (UpdateScreen != NULL ) { UpdateScreen(); }
 			break;
 		case 0x04400008:
 			if (VI_WIDTH_REG != Value) {
@@ -1805,7 +1796,6 @@ int r4300i_SW_NonMemory ( DWORD PAddr, DWORD Value ) {
 			PI_DMA_WRITE();
 			break;
 		case 0x04600010:
-			//if ((Value & PI_SET_RESET) != 0 ) { DisplayError("reset Controller"); }
 			if ((Value & PI_CLR_INTR) != 0 ) {
 				MI_INTR_REG &= ~MI_INTR_PI;
 				CheckInterrupts();
@@ -1950,8 +1940,4 @@ void ResetRecompCode (void) {
 		*(DelaySlotTable + (0x04001000 >> 12)) = NULL;
 		if (VirtualProtect((N64MEM + 0x04001000), 4, PAGE_READWRITE, &OldProtect) == 0) {}
 	}
-//	if (N64_Blocks.NoOfPifRomBlocks > 0) {
-//		N64_Blocks.NoOfPifRomBlocks = 0;
-//		memset(JumpTable + (0x1FC00000 >> 2),0,0x1000);
-//	}
 }

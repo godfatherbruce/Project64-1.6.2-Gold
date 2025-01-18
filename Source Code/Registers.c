@@ -276,7 +276,6 @@ void InitalizeR4300iRegisters (int UsePif, int Country, int CIC_Chip) {
 	MI_VERSION_REG	  = 0x02020102;
 	SP_STATUS_REG      = 0x00000001;
 	CAUSE_REGISTER	  = 0x0000005C;
-	//ENTRYHI_REGISTER	  = 0xFFFFE0FF;
 	CONTEXT_REGISTER   = 0x007FFFF0;
 	EPC_REGISTER       = 0xFFFFFFFF;
 	BAD_VADDR_REGISTER = 0xFFFFFFFF;
@@ -892,13 +891,11 @@ void SetFpuLocations (void) {
 	if ((STATUS_REGISTER & STATUS_FR) == 0) {
 		for (count = 0; count < 32; count ++) {
 			FPRFloatLocation[count] = (void *)(&FPR[count & ~1].W[count & 1]);
-			//FPRDoubleLocation[count] = FPRFloatLocation[count];
 			FPRDoubleLocation[count] = (void *)(&FPR[count & ~1].DW);
 		}
 	} else {
 		for (count = 0; count < 32; count ++) {
 			FPRFloatLocation[count] = (void *)(&FPR[count].W[0]);
-			//FPRDoubleLocation[count] = FPRFloatLocation[count];
 			FPRDoubleLocation[count] = (void *)(&FPR[count].DW);
 		}
 	}
@@ -999,7 +996,7 @@ void UnMap_FPR (BLOCK_SECTION * Section, int Reg, int WriteBackValue ) {
 				switch (FpuRoundingModel(i)) {
 				case RoundDefault: OrVariableToX86Reg(&FPU_RoundingMode,"FPU_RoundingMode", x86reg); break;
 				case RoundTruncate: OrConstToX86Reg(0x0C00, x86reg); break;
-				case RoundNearest: /*OrConstToX86Reg(0x0000, x86reg);*/ break;
+				case RoundNearest: break;
 				case RoundDown: OrConstToX86Reg(0x0400, x86reg); break;
 				case RoundUp: OrConstToX86Reg(0x0800, x86reg); break;
 				}
@@ -1049,7 +1046,6 @@ void UnMap_GPR (BLOCK_SECTION * Section, DWORD Reg, int WriteBackValue) {
 		return;
 	}
 	if (IsUnknown(Reg)) { return; }
-	//CPU_Message("UnMap_GPR: State: %X\tReg: %s\tWriteBack: %s",State,GPR_Name[Reg],WriteBackValue?"TRUE":"FALSE");
 	if (IsConst(Reg)) {
 		if (!WriteBackValue) {
 			MipsRegState(Reg) = STATE_UNKNOWN;
@@ -1160,41 +1156,16 @@ void UpdateCurrentHalfLine (void) {
 		HalfLine = 0;
 		return;
 	}
-	//DisplayError("Timer: %X",Timers.Timer);
-	//HalfLine = (Timer / 1500) + VI_INTR_REG;
 	HalfLine = (Timers.Timer / 1500);
 	HalfLine &= ~1;
 	HalfLine |= ViFieldSerration;
 	VI_V_CURRENT_LINE_REG = HalfLine;
-	//Timers.Timer -= 1500;
 }
 void UpdateFieldSerration(int interlaced)
 {
 	ViFieldSerration ^= 1;
 	ViFieldSerration &= interlaced;
 }
-/*void WriteBackRegisters (BLOCK_SECTION * Section) {
-	int count;
-	for (count = 1; count < 10; count ++) { x86Protected(count) = FALSE; }
-	for (count = 1; count < 10; count ++) { UnMap_X86reg (Section, count); }
-	for (count = 1; count < 32; count ++) {
-		switch (MipsRegState(count)) {
-		case STATE_UNKNOWN: break;
-		case STATE_CONST_32:
-			if ((MipsRegLo(count) & 0x80000000) != 0) {
-				MoveConstToVariable(0xFFFFFFFF,&GPR[count].UW[1],GPR_NameHi[count]);
-			} else {
-				MoveConstToVariable(0,&GPR[count].UW[1],GPR_NameHi[count]);
-			}
-			MoveConstToVariable(MipsRegLo(count),&GPR[count].UW[0],GPR_NameLo[count]);
-			MipsRegState(count) = STATE_UNKNOWN;
-			break;
-		default:
-			DisplayError("Unknown State: %d\nin WriteBackRegisters",MipsRegState(count));
-		}
-	}
-	UnMap_AllFPRs(Section);
-}*/
 void WriteBackRegisters (BLOCK_SECTION * Section) {
 	int count;
 	BOOL bEdiZero = FALSE;

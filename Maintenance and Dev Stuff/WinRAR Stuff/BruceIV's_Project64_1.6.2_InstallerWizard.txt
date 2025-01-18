@@ -11,8 +11,8 @@ Path to extract
 Update->Overwrite all files
 
 Advanced->Shortcuts->
-D, "Project64 1.6.2\Project64.exe", \, "Experimental N64 Emulator", "Project64 1.6.2",
-P, "Project64 1.6.2\Project64.exe", \, "Experimental N64 Emulator", "Project64 1.6.2",
+D, "Project64 1.6.2\Project64.exe", \, "Nintendo 64 Emulator", "Project64 1.6.2",
+P, "Project64 1.6.2\Project64.exe", \, "Nintendo 64 Emulator", "Project64 1.6.2",
 
 Setup->Run after extraction
 "Project64 1.6.2\Project64.exe"

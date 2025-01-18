@@ -180,5 +180,5 @@ void Compile_R4300i_COP1_W_CVT_D   ( BLOCK_SECTION * Section );
 /************************** COP1: L functions ************************/
 void Compile_R4300i_COP1_L_CVT_S   ( BLOCK_SECTION * Section );
 void Compile_R4300i_COP1_L_CVT_D   ( BLOCK_SECTION * Section );
-/************************** Other functions **************************/
+/************************** Unknown OpCode Function **************************/
 void Compile_R4300i_UnknownOpcode  ( BLOCK_SECTION * Section );

@@ -1151,16 +1151,12 @@ void GetInstantSaveDir( char * Directory ) {
 void InPermLoop (void) {
 	// *** Changed ***/
 	if (CPU_Action.DoInterrupt) { return; }
-	//Timers.Timer -= 5;
-	//COUNT_REGISTER +=5;
-	//if (CPU_Type == CPU_SyncCores) { SyncRegisters.CP0[9] +=5; }
 	/* Interrupts enabled */
 	if (( STATUS_REGISTER & STATUS_IE  ) == 0 ) { goto InterruptsDisabled; }
 	if (( STATUS_REGISTER & STATUS_EXL ) != 0 ) { goto InterruptsDisabled; }
 	if (( STATUS_REGISTER & STATUS_ERL ) != 0 ) { goto InterruptsDisabled; }
 	if (( STATUS_REGISTER & 0xFF00) == 0) { goto InterruptsDisabled; }
 	/* check sound playing */
-	//if (AiReadLength() != 0) { return; }
 	/* check RSP running */
 	/* check RDP running */
 	if (Timers.Timer > 0) {
@@ -1341,14 +1337,9 @@ BOOL Machine_LoadState(void) {
 		_splitpath( FileName, drive, dir, ZipFile, ext );
 		sprintf(FileName,"%s%s",ZipFile,ext);
 	}
-	//memcpy(RomHeader,ROM,sizeof(RomHeader));
 	ChangeCompareTimer();
-	//if (GfxRomClosed != NULL)  { GfxRomClosed(); }
 	if (AiRomClosed != NULL)   { AiRomClosed(); }
-	//if (ContRomClosed != NULL) { ContRomClosed(); }
 	if (RSPRomClosed) { RSPRomClosed(); }
-	//if (GfxRomOpen != NULL) { GfxRomOpen(); }
-	//if (ContRomOpen != NULL) { ContRomOpen(); }
 	DlistCount = 0;
 	AlistCount = 0;
 	AI_STATUS_REG = 0;
@@ -1374,7 +1365,6 @@ BOOL Machine_SaveState(void) {
 	char drive[_MAX_DRIVE] ,dir[_MAX_DIR], ext[_MAX_EXT];
 	DWORD dwWritten, Value;
 	HANDLE hSaveFile;
-	//LogMessage("SaveState");
 	if (Timers.CurrentTimerType != CompareTimer &&  Timers.CurrentTimerType != ViTimer) {
 		return FALSE;
 	}
@@ -1407,7 +1397,6 @@ BOOL Machine_SaveState(void) {
 		while ((int)Registers.CP0[1] < (int)Registers.CP0[6]) {
 			Registers.CP0[1] += 32 - Registers.CP0[6];
 		}
-		//if fake cause set then do not save ????
 		SetFilePointer(hSaveFile,0,NULL,FILE_BEGIN);
 		Value = 0x23D8A6C8;
 		WriteFile( hSaveFile,&Value,sizeof(Value),&dwWritten,NULL);
@@ -1503,9 +1492,6 @@ void RefreshScreen (void ){
 	UpdateFieldSerration((VI_STATUS_REG & 0x40) != 0);
 	if (LimitFPS) {	Timer_Process(NULL); }
 	if ((CurrentFrame & 7) == 0) {
-		//Disables Screen saver
-		//mouse_event(MOUSEEVENTF_MOVE,1,1,0,GetMessageExtraInfo());
-		//mouse_event(MOUSEEVENTF_MOVE,-1,-1,0,GetMessageExtraInfo());
 		QueryPerformanceCounter(&Time);
 		Frames[(CurrentFrame >> 3) % 8].QuadPart = Time.QuadPart - LastFrame.QuadPart;
 		LastFrame.QuadPart = Time.QuadPart;
@@ -1529,12 +1515,6 @@ void RunRsp (void) {
 			switch (Task) {
 			case 1:
 				DlistCount += 1;
-				/*if ((DlistCount % 2) == 0) {
-					SP_STATUS_REG |= (0x0203 );
-					MI_INTR_REG |= MI_INTR_SP | MI_INTR_DP;
-					CheckInterrupts();
-					return;
-				}*/
 				break;
 			case 2:
 				AlistCount += 1;
@@ -1641,8 +1621,7 @@ void TimerDone (void) {
 	case RspTimer:
 		ChangeTimer(RspTimer,0);
 		RunRsp();
-		CheckInterrupts();	// Test to see if this helps netplay out any.
-							// Jabo believes if it does help netplay then there could be a possible issue inside the rsp.
+		CheckInterrupts();
 		break;
 	case AiTimer:
 		EmuAI_SetNextTimer();

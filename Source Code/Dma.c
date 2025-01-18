@@ -39,7 +39,6 @@ void FirstDMA (void) {
 	}
 }
 void PI_DMA_READ (void) {
-//	PI_STATUS_REG |= PI_STATUS_DMA_BUSY;
 	if ( PI_DRAM_ADDR_REG + PI_RD_LEN_REG + 1 > RDRAMsize) {
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
@@ -140,8 +139,6 @@ void PI_DMA_WRITE (void) {
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
 		CheckInterrupts();
-		//ChangeTimer(PiTimer,(int)(PI_WR_LEN_REG * 8.9) + 50);
-		//ChangeTimer(PiTimer,(int)(PI_WR_LEN_REG * 8.9));
 		CheckTimer();
 		return;
 	}
@@ -169,8 +166,6 @@ void PI_DMA_WRITE (void) {
 		PI_STATUS_REG &= ~PI_STATUS_DMA_BUSY;
 		MI_INTR_REG |= MI_INTR_PI;
 		CheckInterrupts();
-		//ChangeTimer(PiTimer,(int)(PI_WR_LEN_REG * 8.9) + 50);
-		//ChangeTimer(PiTimer,(int)(PI_WR_LEN_REG * 8.9));
 		CheckTimer();
 		return;
 	}
@@ -283,11 +278,6 @@ void SP_DMA_READ (void) {
 		return;
 	}
 	if ((SP_MEM_ADDR_REG & 3) != 0 || (SP_DRAM_ADDR_REG & 3) != 0 || ((SP_RD_LEN_REG + 1) & 3) != 0) ExitThread(0);
-	/*
-	if ((SP_MEM_ADDR_REG & 3) != 0) { _asm int 3 }
-	if ((SP_DRAM_ADDR_REG & 3) != 0) { _asm int 3 }
-	if (((SP_RD_LEN_REG + 1) & 3) != 0) { _asm int 3 }
-	*/
 	memcpy( DMEM + (SP_MEM_ADDR_REG & 0x1FFF), N64MEM + SP_DRAM_ADDR_REG,
 		SP_RD_LEN_REG + 1 );
 	SP_DMA_BUSY_REG = 0;

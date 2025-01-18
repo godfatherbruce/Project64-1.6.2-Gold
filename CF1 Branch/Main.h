@@ -53,6 +53,7 @@ extern "C" {
 #define Default_RememberCheats		TRUE
 #define Default_RomsToRemember		10
 #define Default_RomsDirsToRemember	10
+#define Default_CountPerOp		1
 /*********** Menu Stuff **************/
 #define ID_FILE_RECENT_FILE		1000
 #define ID_FILE_RECENT_DIR		1100
@@ -72,8 +73,6 @@ extern "C" {
 #define ModCode_None			5
 #define ModCode_ProtectedMemory		6
 #define Default_SelfModCheck		ModCode_CheckMemoryReturn
-/********** Counter Factor ***********/
-#define Default_CountPerOp		1
 /********** Rom Browser **************/
 #define Default_UseRB				TRUE
 #define Default_Rercursion			TRUE
@@ -112,8 +111,6 @@ BOOL  TestExtensionRegistered ( char * Extension );
 #ifdef __cplusplus
 }
 #endif
-// Building this in Visual Studio 2005 and higher allows us to dump the external manifest file.
-// This line below allows the use of "XP Style" buttons and other stuff on the gui.
 #pragma comment(linker,"\"/manifestdependency:type='win32' \
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")

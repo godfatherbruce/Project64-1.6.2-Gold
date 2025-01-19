@@ -1639,8 +1639,29 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgs,
 		JOB_OBJECT_UILIMIT_SYSTEMPARAMETERS |
 		JOB_OBJECT_UILIMIT_WRITECLIPBOARD;
 	if (!SetInformationJobObject(hJob, JobObjectBasicUIRestrictions, &jbur, sizeof(jbur))) CloseHandle(hJob);
+	JOBOBJECT_EXTENDED_LIMIT_INFORMATION jeli = { 0 };
+	jeli.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_ACTIVE_PROCESS |
+		JOB_OBJECT_LIMIT_AFFINITY |
+		JOB_OBJECT_LIMIT_DIE_ON_UNHANDLED_EXCEPTION |
+		JOB_OBJECT_LIMIT_JOB_MEMORY |
+		JOB_OBJECT_LIMIT_PRIORITY_CLASS |
+		JOB_OBJECT_LIMIT_PROCESS_MEMORY |
+		JOB_OBJECT_LIMIT_WORKINGSET;
+	jeli.BasicLimitInformation.ActiveProcessLimit = 1;
+	jeli.JobMemoryLimit = 100 * 1024 * 1024;
+	jeli.ProcessMemoryLimit = 50 * 1024 * 1024;
+	jeli.BasicLimitInformation.MinimumWorkingSetSize = 10 * 1024 * 1024;
+	jeli.BasicLimitInformation.MaximumWorkingSetSize = 50 * 1024 * 1024;
+	jeli.BasicLimitInformation.Affinity = 1;
+	jeli.BasicLimitInformation.PriorityClass = NORMAL_PRIORITY_CLASS;
+	if (!SetInformationJobObject(hJob, JobObjectExtendedLimitInformation, &jeli, sizeof(jeli))) CloseHandle(hJob);
+	JOBOBJECT_SECURITY_LIMIT_INFORMATION jsl = { 0 };
+	jsl.SecurityLimitFlags = JOB_OBJECT_SECURITY_NO_ADMIN |
+		JOB_OBJECT_SECURITY_RESTRICTED_TOKEN |
+		JOB_OBJECT_SECURITY_ONLY_TOKEN |
+		JOB_OBJECT_SECURITY_FILTER_TOKENS;
+	if (!SetInformationJobObject(hJob, JobObjectSecurityLimitInformation, &jsl, sizeof(jsl))) CloseHandle(hJob);
 	if (!AssignProcessToJobObject(hJob, GetCurrentProcess())) CloseHandle(hJob);
-	CloseHandle(hJob);
 	HACCEL AccelWinMode, AccelCPURunning, AccelRomBrowser;
 	DWORD X, Y;
 	MSG msg;
@@ -1696,4 +1717,5 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgs,
 	}
 	ShutdownApplication ();
 	return msg.wParam;
+	CloseHandle(hJob);
 }

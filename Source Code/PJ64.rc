@@ -501,7 +501,7 @@ BEGIN
     END
     POPUP "Options"
     BEGIN
-        MENUITEM "Full Screen\tEsc",     ID_OPTIONS_FULLSCREEN, GRAYED
+        MENUITEM "Full Screen\tEsc/Alt+Enter",     ID_OPTIONS_FULLSCREEN, GRAYED
         MENUITEM "Always On Top\tCtrl+A",     ID_OPTIONS_ALWAYSONTOP, GRAYED
         MENUITEM SEPARATOR
         MENUITEM "Configure Graphics Plugin\tCtrl+V",    ID_OPTIONS_CONFIG_GFX, GRAYED

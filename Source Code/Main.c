@@ -239,7 +239,7 @@ void FixMenuLang (HMENU hMenu) {
 	MenuSetText(hSubMenu, 15, GS(MENU_GS_BUTTON),"F9");
 	//Options
 	hSubMenu = GetSubMenu(hMenu,2);
-	MenuSetText(hSubMenu, 0, GS(MENU_FULL_SCREEN), "Esc");
+	MenuSetText(hSubMenu, 0, GS(MENU_FULL_SCREEN), "Esc/Alt+Enter");
 	MenuSetText(hSubMenu, 1, GS(MENU_ON_TOP), "Ctrl+A");
 	MenuSetText(hSubMenu, 3, GS(MENU_CONFIG_GFX), "Ctrl+V");
 	MenuSetText(hSubMenu, 4, GS(MENU_CONFIG_AUDIO), "Ctrl+B");

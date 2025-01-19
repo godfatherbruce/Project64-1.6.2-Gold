@@ -141,16 +141,18 @@ Changed Good Name->Game Name in the browser and in what word it uses to identify
 
 Changed maximum savestate count per game from 10 to 50 to account for games that share the same ROMname.
 
+Disabled ABL dropdown menu and set to off by default, essential in helping reducing the total file size.
+
 Disabled ROM database extension (RDX) because it does not improve gameplay experience and adds to bloat.
 
-Disable savestate ROMheader mismatch prompt, this allows for loading a savestate with an unintended ROM
-but this is beneficial when playing ROMhacks that have hacked checksums to utilize jabo per-game hacks.
+Disabled savestate ROMheader mismatch prompt, this allows for loading a savestate with an unintended ROM
+but this's beneficial when playing ROMhacks that use hacked checksums to activate jabo's per-game hacks.
 
-Disabled state compression because you should have enough drive space reserved for uncompressed states.
+Disabled state compressions because you should have enough drive space reserved for uncompressed states.
 
-Disabled show CPU usage. This is something already present in Windows, it's a bit redundant to keep it.
+Disabled show CPU usage. This is something already present in Windows, it is a bit redundant to keep it.
 
-Disabled plugin directory selection because changing your plugin directory may cause unintended issues.
+Disabled plugin directory selection because changing your plugin directory could have unintended issues.
 
 Disabled end emulation in fullscreen mode because it's crashing.
 
@@ -653,7 +655,7 @@ entries, because if you do, then you are just wasting space, assuming you leave 
 
 
 ABL= 
-(User's selected core setting, Off by default)
+(Off)
 AI= 
 (Off)
 Buffer= 

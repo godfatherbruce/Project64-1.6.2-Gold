@@ -2142,8 +2142,8 @@ void Compile_R4300i_SDR (BLOCK_SECTION * Section) {
 	Call_Direct(r4300i_SDR, "r4300i_SDR");
 	Popad();
 }
-void _fastcall ClearRecomplierCache (DWORD Address) {
-	if (SelfModCheck != ModCode_CheckMemoryReturn) if (!TranslateVaddr(&Address)) return;
+void _fastcall ClearRecompilerCache (DWORD Address) {
+	if (Address <= 0x80000000 || Address >= 0xFFFFFFFF || SelfModCheck != ModCode_CheckMemoryReturn && !TranslateVaddr(&Address)) return;
 	if (Address < RDRAMsize) {
 		DWORD Block = Address >> 12;
 		if (N64_Blocks.NoOfRDRAMBlocks[Block] > 0) {
@@ -2180,7 +2180,7 @@ void Compile_R4300i_CACHE (BLOCK_SECTION * Section){
 			MoveVariableToX86reg(&GPR[Opcode.base].UW[0],GPR_NameLo[Opcode.base],x86_ECX);
 			AddConstToX86Reg(x86_ECX,(short)Opcode.offset);
 		}
-		Call_Direct(ClearRecomplierCache, "ClearRecomplierCache");
+		Call_Direct(ClearRecompilerCache, "ClearRecompilerCache");
 		Popad();
 		break;
 	case 1:

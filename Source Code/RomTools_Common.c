@@ -14,6 +14,6 @@ int RomRegion (BYTE Country) {
 		case 0x58: // X (PAL)
 		case 0x59: // Y (PAL)
 		return PAL_Region;
-		default: return 0;
+		default: return 1;
 	}
 }

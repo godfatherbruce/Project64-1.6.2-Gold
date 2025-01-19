@@ -222,33 +222,32 @@ Potencialmente es un archivo .zip corrupto: intenta descomprimir ROM manualmente
 #217# "El archivo cargado no parece ser una ROM valida.
 
 Verifica que el checksum de tu ROM sea valido"
-#218# "Pais desconocido"
-#219# "Formato de archivo desconocido"
-#220# "Accion de memoria desconocida.
+#218# "Formato de archivo desconocido"
+#219# "Accion de memoria desconocida.
 
 Salir del hilo"
-#221# "Codigo de operacion R4300i no controlado en"
-#222# "Error al abrir mempak"
-#223# "Ejecutando desde espacio no asignado.
+#220# "Codigo de operacion R4300i no controlado en"
+#221# "Error al abrir mempak"
+#222# "Ejecutando desde espacio no asignado.
 
 Salir del hilo
 (Intenta Revisar Memoria y Devolver)
 (Intenta Tamano de Memoria de 8MB)"
-#225# "Secuencia de copyright no encontrada en LUT. El juego ya no funcionara"
-#226# "Fallo de Proteccion de Copia"
-#227# "Emulacion iniciada"
-#228# "No se puede cargar el estado de Guardado"
-#229# "Salir del hilo"
-#230# "No se puede abrir una ROM porque los plugins no se han inicializado correctamente"
-#231# "El nombre del Truco ya esta en uso"
-#232# "Has alcanzado la cantidad maxima de Trucos permitidos para esta ROM"
-#233# "Salir del hilo
+#224# "Secuencia de copyright no encontrada en LUT. El juego ya no funcionara"
+#225# "Fallo de Proteccion de Copia"
+#226# "Emulacion iniciada"
+#227# "No se puede cargar el estado de Guardado"
+#228# "Salir del hilo"
+#229# "No se puede abrir una ROM porque los plugins no se han inicializado correctamente"
+#230# "El nombre del Truco ya esta en uso"
+#231# "Has alcanzado la cantidad maxima de Trucos permitidos para esta ROM"
+#232# "Salir del hilo
 (Intenta Revisar Memoria y Devolver)
 (Intenta Estilo de Nucleo de CPU Interprete)"
-#234# "Esta accion intentara detener esta instancia y resetea de fabrica todo junto la configuracion de registro"
-#235# "Cambio rapido de Plugin en progreso"
-#236# "Haz doble click sobre el boton OK mientras de cambias rapidamente de plugin para cerrar de inmediato Project64 desde esta ventana"
-#237# "Cambio rapido de plugin completado"
-#238# "Modo de Pantalla Completa activado"
-#239# "Boton GS presionado"
-#240# "Frames Por Segundo"
+#233# "Esta accion intentara detener esta instancia y resetea de fabrica todo junto la configuracion de registro"
+#234# "Cambio rapido de Plugin en progreso"
+#235# "Haz doble click sobre el boton OK mientras de cambias rapidamente de plugin para cerrar de inmediato Project64 desde esta ventana"
+#236# "Cambio rapido de plugin completado"
+#237# "Modo de Pantalla Completa activado"
+#238# "Boton GS presionado"
+#239# "Frames Por Segundo"

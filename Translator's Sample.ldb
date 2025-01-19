@@ -235,34 +235,33 @@ Potentially is a corrupt zip file - try unzipping ROM manually"
 #217# "File loaded does not appear to be a valid ROM.
 
 Verify that your ROM's checksum is valid"
-#218# "Unknown country"
-#219# "Unknown file format"
-#220# "Unknown memory action.
+#218# "Unknown file format"
+#219# "Unknown memory action.
 
 Exiting thread"
-#221# "Unhandled R4300i OpCode at"
-#222# "Failed to open mempak"
-#223# "Executing from non-mapped space.
+#220# "Unhandled R4300i OpCode at"
+#221# "Failed to open mempak"
+#222# "Executing from non-mapped space.
 
 Exiting thread
 (Try Check Memory & Return)
 (Try 8MB Memory Size)"
-#224# "Error"
-#225# "Copyright sequence not found in LUT. Game will no longer function"
-#226# "Copy Protection Failure"
-#227# "Emulation started"
-#228# "Unable to load save state"
-#229# "Emulation ended"
-#230# "Cannot open a ROM because plugins haven't successfully initialized"
-#231# "Cheat name is currently in use"
-#232# "You have reached the maximum amount of cheats allowed for this ROM"
-#233# "Exiting thread
+#223# "Error"
+#224# "Copyright sequence not found in LUT. Game will no longer function"
+#225# "Copy Protection Failure"
+#226# "Emulation started"
+#227# "Unable to load save state"
+#228# "Emulation ended"
+#229# "Cannot open a ROM because plugins haven't successfully initialized"
+#230# "Cheat name is currently in use"
+#231# "You have reached the maximum amount of cheats allowed for this ROM"
+#232# "Exiting thread
 (Try Check Memory & Return)
 (Try Interpreter CPU Core Style)"
-#234# "This action will attempt to terminate this instance and factory reset included registry configurations"
-#235# "Plugin hot swapping in progress"
-#236# "Double click the OK button while plugin hot swapping to quickly close Project64 from this window"
-#237# "Plugin hot swapping completed"
-#238# "Fullscreen mode entered"
-#239# "GS button pressed"
-#240# "Frames Per Second"
+#233# "This action will attempt to terminate this instance and factory reset included registry configurations"
+#234# "Plugin hot swapping in progress"
+#235# "Double click the OK button while plugin hot swapping to quickly close Project64 from this window"
+#236# "Plugin hot swapping completed"
+#237# "Fullscreen mode entered"
+#238# "GS button pressed"
+#239# "Frames Per Second"

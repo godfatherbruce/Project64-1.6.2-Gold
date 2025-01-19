@@ -272,7 +272,6 @@ LANG_STR DefaultString[] = {
 	{ MSG_RB_INFO,		  "Displays ROM-specific information about a selected ROM"},
 	{ MSG_FAIL_ZIP,           "Error occured when trying to open zip file"},
 	{ MSG_FAIL_IMAGE,         "File loaded does not appear to be a valid ROM.\n\nVerify that your ROM's checksum is valid"},
-	{ MSG_UNKNOWN_COUNTRY,    "Unknown country"},
 	{ MSG_UNKNOWN_FILE_FORMAT,"Unknown file format"},
 	{ MSG_UNKNOWN_MEM_ACTION, "Unknown memory action.\n\nExiting thread"},
 	{ MSG_UNHANDLED_OP,       "Unhandled R4300i OpCode at"},

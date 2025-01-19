@@ -261,7 +261,7 @@ int LoadPifRom(int country) {
 	case NTSC_Region:
 		sprintf(PifRomName,"%s%sPif\\ntsc.raw",drive,dir); break;
 	default:
-		DisplayError(GS(MSG_UNKNOWN_COUNTRY)); break;
+		sprintf(PifRomName, "%s%sPif\\ntsc.raw", drive, dir); break;
 	}
 	hPifFile = CreateFile(PifRomName,GENERIC_READ,FILE_SHARE_READ,NULL,OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);

@@ -201,7 +201,7 @@ BOOL CALLBACK DefaultOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 		SetDlgItemText(hDlg,IDC_TEXT2,GS(ROM_CPU_STYLE));
 		SetDlgItemText(hDlg,IDC_TEXT3,GS(ROM_SMCM));
 		SetDlgItemText(hDlg,IDC_TEXT4,GS(ROM_MEM_SIZE));
-		SetDlgItemText(hDlg,IDC_TEXT5,GS(ROM_ABL));
+		SetDlgItemText(hDlg,IDC_TEXT5,GS(ROM_COUNTER_FACTOR));
 		SetFlagControl(hDlg,&AutoStart, IDC_START_ON_ROM_OPEN, ADVANCE_AUTO_START);
 		SetFlagControl(hDlg,&UseIni, IDC_USEINI, ADVANCE_OVERWRITE);
 		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_INTERPRETER,CPU_Interpreter,&SystemCPU_Type);
@@ -215,8 +215,9 @@ BOOL CALLBACK DefaultOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_RETURN,ModCode_CheckMemoryReturn,&SystemSelfModCheck);
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,&SystemRDRAMsize);
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,&SystemRDRAMsize);
-		AddDropDownItem(hDlg,IDC_ABL,ABL_ON,TRUE,&SystemABL);
-		AddDropDownItem(hDlg,IDC_ABL,ABL_OFF,FALSE,&SystemABL);
+		AddDropDownItem(hDlg,IDC_CF,NUMBER_1,1,&SystemCF);
+		AddDropDownItem(hDlg,IDC_CF,NUMBER_2,2,&SystemCF);
+		AddDropDownItem(hDlg,IDC_CF,NUMBER_3,3,&SystemCF);
 		break;
 	case WM_NOTIFY:
 		if (((NMHDR FAR *) lParam)->code == PSN_APPLY) {
@@ -241,9 +242,9 @@ BOOL CALLBACK DefaultOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 				indx = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETCURSEL,0,0);
 				SystemRDRAMsize = SendMessage(GetDlgItem(hDlg,IDC_RDRAM_SIZE),CB_GETITEMDATA,indx,0);
 				RegSetValueEx(hKeyResults,"Memory Size",0,REG_DWORD,(BYTE *)&SystemRDRAMsize,sizeof(DWORD));
-				indx = SendMessage(GetDlgItem(hDlg,IDC_ABL),CB_GETCURSEL,0,0);
-				SystemABL = SendMessage(GetDlgItem(hDlg,IDC_ABL),CB_GETITEMDATA,indx,0);
-				RegSetValueEx(hKeyResults,"Advanced Block Linking",0,REG_DWORD,(BYTE *)&SystemABL,sizeof(DWORD));
+				indx = SendMessage(GetDlgItem(hDlg,IDC_CF),CB_GETCURSEL,0,0);
+				SystemCF = SendMessage(GetDlgItem(hDlg,IDC_CF),CB_GETITEMDATA,indx,0);
+				RegSetValueEx(hKeyResults,"Counter Factor",0,REG_DWORD,(BYTE *)&SystemCF,sizeof(DWORD));
 			}
 			RegCloseKey(hKeyResults);
 		}
@@ -867,7 +868,6 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,ROM_DEFAULT,-1,&ROMRAMsize);
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,&ROMRAMsize);
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,&ROMRAMsize);
-		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ROM_DEFAULT,-1,&RomUseLinking);
 		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_ON,0,&RomUseLinking);
 		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_OFF,1,&RomUseLinking);
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,ROM_DEFAULT,Auto,&RomSaveUsing);

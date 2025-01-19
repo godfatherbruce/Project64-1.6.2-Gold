@@ -40,7 +40,7 @@ LARGE_INTEGER Frequency, Frames[8], LastFrame;
 BOOL 	AutoStart,
 	AutoSleep, DisableRegCaching, UseIni, UseTlb, UseLinking, RomBrowser,
 	IgnoreMove, Rercursion, LimitFPS,
-	AutoFullScreen, SystemABL, AlwaysOnTop, BasicMode, DelaySI, RememberCheats,
+	AutoFullScreen, SystemCF, AlwaysOnTop, BasicMode, DelaySI, RememberCheats,
 	DelayRSP, DelayRDP, EmulateAI, ForceClose;
 DWORD CurrentFrame, CPU_Type, SystemCPU_Type, SelfModCheck, SystemSelfModCheck,
 	RomsToRemember, RomDirsToRemember;
@@ -337,7 +337,7 @@ void LoadSettings (void) {
 	SystemCPU_Type = Default_CPU;
 	SystemSelfModCheck = Default_SelfModCheck;
 	SystemRDRAMsize = Default_RDRAMsize;
-	SystemABL = Default_AdvancedBlockLink;
+	SystemCF = Default_CountPerOp;
 	AutoStart = Default_AutoStart;
 	AutoSleep = Default_AutoSleep;
 	DisableRegCaching = Default_DisableRegCaching;
@@ -383,8 +383,8 @@ void LoadSettings (void) {
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemCPU_Type = Default_CPU; }
 			lResult = RegQueryValueEx(hKeyResults,"Self-modifying Code Method",0,&Type,(LPBYTE)(&SystemSelfModCheck),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemSelfModCheck = Default_SelfModCheck; }
-			lResult = RegQueryValueEx(hKeyResults,"Advanced Block Linking",0,&Type,(LPBYTE)(&SystemABL),&Bytes);
-			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemABL = Default_AdvancedBlockLink; }
+			lResult = RegQueryValueEx(hKeyResults,"Counter Factor",0,&Type,(LPBYTE)(&SystemCF),&Bytes);
+			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemCF = Default_CountPerOp; }
 			lResult = RegQueryValueEx(hKeyResults,"Memory Size",0,&Type,(LPBYTE)(&SystemRDRAMsize),&Bytes);
 			if (Type != REG_DWORD || lResult != ERROR_SUCCESS) { SystemRDRAMsize = Default_RDRAMsize; }
 			lResult = RegQueryValueEx(hKeyResults,"Always On Top",0,&Type,(LPBYTE)(&AlwaysOnTop),&Bytes);

@@ -38,7 +38,7 @@
 #define MenuLocOfUsedFiles	11
 #define MenuLocOfUsedDirs	(MenuLocOfUsedFiles + 1)
 DWORD RomFileSize, ROMRAMsize, RomSaveUsing, RomCPUType, RomSelfMod,
-	RomUseTlb, RomUseLinking, RomCF, RomUseLargeBuffer, RomUseCache,
+RomUseTlb, RomUseLinking, RomCF, RomUseLargeBuffer, RomUseCache,
 	RomDelaySI, RomSPHack, RomDelayRDP, RomDelayRSP, RomEmulateAI;
 char CurrentFileName[MAX_PATH+1] = {""}, RomName[MAX_PATH+1] = {""}, RomHeader[0x1000];
 char LastRoms[10][MAX_PATH+1], LastDirs[10][MAX_PATH+1];
@@ -484,8 +484,8 @@ void LoadRomOptions ( void ) {
 	CPU_Type = SystemCPU_Type;
 	if (RomCPUType != CPU_Default) { CPU_Type = RomCPUType; }
 	CountPerOp = RomCF;
-	if (CountPerOp < 1)  { CountPerOp = Default_CountPerOp; }
-	if (CountPerOp > 3)  { CountPerOp = Default_CountPerOp; }
+	if (CountPerOp < 1)  { CountPerOp = SystemCF; }
+	if (CountPerOp > 3)  { CountPerOp = SystemCF; }
 	SaveUsing = RomSaveUsing;
 	SelfModCheck = SystemSelfModCheck;
 	if (RomSelfMod != ModCode_Default) { SelfModCheck = RomSelfMod; }
@@ -495,10 +495,10 @@ void LoadRomOptions ( void ) {
 	DelayRSP = RomDelayRSP;
 	EmulateAI = RomEmulateAI;
 	SPHack = RomSPHack;
-	UseLinking = SystemABL;
+	UseLinking = RomUseLinking;
 	DisableRegCaching = !RomUseCache;
-	if (UseIni && RomUseLinking == 0 ) { UseLinking = TRUE; }
-	if (UseIni && RomUseLinking == 1 ) { UseLinking = FALSE; }
+	if (RomUseLinking == 0 ) { UseLinking = TRUE; }
+	if (RomUseLinking == 1 ) { UseLinking = FALSE; }
 	switch(RomRegion(*(ROM + 0x3D))) {
 	case PAL_Region:
 		EmuAI_SetFrameRate(50);
@@ -530,6 +530,7 @@ void ReadRomOptions (void) {
 	ROMRAMsize        = -1;
 	RomSaveUsing      = Auto;
 	RomCF             = -1;
+	RomUseLinking     = TRUE;
 	RomCPUType        = CPU_Default;
 	RomSelfMod        = ModCode_Default;
 	RomUseTlb         = TRUE;
@@ -537,7 +538,6 @@ void ReadRomOptions (void) {
 	RomSPHack         = FALSE;
 	RomUseCache       = TRUE;
 	RomUseLargeBuffer = FALSE;
-	RomUseLinking     = -1;
 	RomDelayRDP       = FALSE;
 	RomDelayRSP       = FALSE;
 	RomEmulateAI      = FALSE;

@@ -125,8 +125,8 @@ BEGIN
     GROUPBOX        "Core Defaults",IDC_CORE_DEFAULTS,2,57,228,138
     LTEXT           "CPU core style:",IDC_TEXT2,9,69,108,12
     COMBOBOX        IDC_CPU_TYPE,118,68,105,49,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Advanced Block Linking:",IDC_TEXT5,9,118,108,12
-    COMBOBOX        IDC_ABL,118,116,105,49,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Counter Factor:",IDC_TEXT5,9,118,108,12
+    COMBOBOX        IDC_CF,118,116,105,49,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Start Emulation when ROM is opened?",IDC_START_ON_ROM_OPEN,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,149,218,11
     LTEXT           "Self-mod code method:",IDC_TEXT3,9,101,108,12

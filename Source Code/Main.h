@@ -41,7 +41,6 @@ extern "C" {
 #define CheatIniName				"PJ64.cdb"
 #define LangFileName				"PJ64.ldb"
 #define CacheFileName				"PJ64.bdb"
-#define Default_AdvancedBlockLink	FALSE
 #define Default_AutoStart			TRUE
 #define Default_AutoSleep			TRUE
 #define Default_DisableRegCaching	FALSE
@@ -81,7 +80,7 @@ extern LARGE_INTEGER Frequency, Frames[8], LastFrame;
 extern BOOL AutoStart,
 	AutoSleep, DisableRegCaching, UseIni, UseTlb, UseLinking, RomBrowser,
 	IgnoreMove, Rercursion, LimitFPS,
-	AutoFullScreen, SystemABL, AlwaysOnTop, BasicMode, DelaySI, RememberCheats,
+	AutoFullScreen, SystemCF, AlwaysOnTop, BasicMode, DelaySI, RememberCheats,
 	DelayRDP, DelayRSP, EmulateAI;
 extern DWORD CurrentFrame, CPU_Type, SystemCPU_Type, SelfModCheck, SystemSelfModCheck,
 	RomsToRemember, RomDirsToRemember;

@@ -62,7 +62,7 @@
 #define IDC_CPU_TYPE                    1088
 #define IDC_SAVE_TYPE                   1089
 #define IDC_MEMORY_SIZE_TEXT            1090
-#define IDC_ABL                         1090
+#define IDC_CF                          1090
 #define IDC_USEINI                      1091
 #define IDC_SAVE_TYPE_TEXT              1091
 #define IDC_CPU_TYPE_TEXT               1092

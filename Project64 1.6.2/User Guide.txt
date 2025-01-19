@@ -126,6 +126,8 @@ Added vcruntime140 from MS VC Redistributable 2022 to support one of the new plu
 
 Added vulnerability failesafes which prevent various things a cyber attacker may attempt to pull on you.
 
+Blocked hyperlinks for security reasons (a plugin you add could link to a website that becomes harmful).
+
 Changed a few error messages to be more informative so that they are actually helpful, instead of saying
 that something is wrong and not giving the user any idea on how to fix the problem they're experiencing.
 
@@ -511,7 +513,7 @@ raw.githubusercontent.com/BruceShankleIV/Project64-1.6.2/7ff51997c16e35a1c0685cc
 DarkMan - Input Plugin
 N-Rage - Input Plugin
 clickdevin & wermi - Octomino SDL2 Input Plugin
-Gonetz - GLideN64 Plugin Development
+Gonetz/Sergey Lipskiy, Olivieryuyu, Ryan Rosser, yongzh, Hiroshi Morii, ziggy - GLideN64 Plugin Credits
 Azimer - Azimer's Audio Plugin and the original Mupen RSP which M64P RSP is based off of
 Hacktaurux - The original Mupen RSP which M64P RSP is based off of
 Clements, Rice, Gonetz, Malcolm, Dave2001, cryhlove, icepir8, zilmar, Azimer, StrmnNrmn, Orkin - glN64

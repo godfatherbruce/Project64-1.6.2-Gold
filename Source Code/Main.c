@@ -1680,6 +1680,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgs,
 			SetupMenu(hMainWindow);
 			ShowWindow(hMainWindow, nWinMode);
 		}
+		if (!LimitFPS) SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(LIMITFPS_OFF));
 	}
 	while (GetMessage(&msg,NULL,0,0)) {
 		if (!CPURunning && TranslateAccelerator(hMainWindow,AccelRomBrowser,&msg)) { continue; }

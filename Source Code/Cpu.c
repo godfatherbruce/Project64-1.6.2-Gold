@@ -1568,7 +1568,6 @@ void StartEmulation ( void ) {
 	case CPU_Interpreter: hCPU = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)StartInterpreterCPU, NULL, 0, &ThreadID); break;
 	case CPU_Recompiler: hCPU = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)StartRecompilerCPU, NULL, 0, &ThreadID);	break;
 	}
-	{
 	const char* fixedDir;
 	OSVERSIONINFO osvi;
 	ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
@@ -1585,7 +1584,6 @@ void StartEmulation ( void ) {
 	_makepath(SaveFile, drive, fixedDir, (GS(MSG_EMULATION_STARTED)), "");
 	strcpy(SaveAsFileName,SaveFile);
 	CPU_Action.SaveState = TRUE;
-	}
 }
 void CheckRbRefresh ( void ) {
 ShowRomList(hMainWindow);

@@ -503,7 +503,6 @@ void LoadRomOptions ( void ) {
 	case PAL_Region:
 		EmuAI_SetFrameRate(50);
 		Timer_Initialize((double)50); break;
-	case NTSC_Region:
 	default:
 		EmuAI_SetFrameRate(60);
 		Timer_Initialize((double)60); break;

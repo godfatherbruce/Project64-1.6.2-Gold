@@ -1,4 +1,3 @@
 #define ROMTOOLS_H
-#define NTSC_Region 1
-#define PAL_Region 2
+#define PAL_Region 0
 int RomRegion (BYTE Country);

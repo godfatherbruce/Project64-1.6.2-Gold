@@ -258,8 +258,6 @@ int LoadPifRom(int country) {
 	switch(RomRegion(country)) {
 	case PAL_Region:
 		sprintf(PifRomName,"%s%sPif\\pal.raw",drive,dir); break;
-	case NTSC_Region:
-		sprintf(PifRomName,"%s%sPif\\ntsc.raw",drive,dir); break;
 	default:
 		sprintf(PifRomName, "%s%sPif\\ntsc.raw", drive, dir); break;
 	}

@@ -367,7 +367,6 @@ void InitalizeR4300iRegisters (int UsePif, int Country, int CIC_Chip) {
 			GPR[23].DW=0x0000000000000006;
 			GPR[31].DW=0xFFFFFFFFA4001554;
 			break;
-		case NTSC_Region:
 		default:
 			switch (CIC_Chip) {
 			case 2:

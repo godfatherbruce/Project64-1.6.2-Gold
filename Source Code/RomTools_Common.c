@@ -23,6 +23,7 @@ int RomRegion (BYTE Country) {
 		case 0x45:	// USA
 		case 0x47:  // Gateway (NTSC)
 		case 0x4A:	// Japan
+		case 0x0:	// (ROMhacks)
 			return NTSC_Region;
 		default:
 			return Unknown_Region;

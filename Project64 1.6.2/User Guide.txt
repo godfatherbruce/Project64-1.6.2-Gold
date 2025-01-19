@@ -322,7 +322,7 @@ Shankle's LINK's AziAudio [SEP2023] (1.0) - Supports dual HLE / LLE sound. Use S
 
 Input (controller) plugin:
 
-DarkMan's DInput 4.0c - Designed for Keyboard and Mouse, mainly for use with First-Person-Shooter games.
+Adaptoid Plugin v1.0 - This plugin can handle up to 4 Adaptoids with support for various types of packs.
 
 Jabo's DirectInput7 Ver1.6.2 - Great general-use plugin, it's ok for most keyboard and controller users.
 			       Be mindful that the back shoulder buttons cannot hold Z/R simultaneously.
@@ -510,7 +510,6 @@ Project64 1.6 Plus Project64 Team:
 raw.githubusercontent.com/BruceShankleIV/Project64-1.6.2/7ff51997c16e35a1c0685cc076b085ee6eda1b64/About
 .bmp
 
-DarkMan - Input Plugin
 N-Rage - Input Plugin
 clickdevin & wermi - Octomino SDL2 Input Plugin
 Gonetz/Sergey Lipskiy, Olivieryuyu, Ryan Rosser, yongzh, Hiroshi Morii, ziggy - GLideN64 Plugin Credits

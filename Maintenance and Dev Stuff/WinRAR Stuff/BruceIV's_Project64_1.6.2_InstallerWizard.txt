@@ -45,7 +45,7 @@ Avoid loading decompressed roms into the emulator or they can misbehave/crash. W
 The default video plugin can have flickering issues with N64 games on modern hardware. Use Icepir8's Legacy LLE Ver. 0.3.2 or Mk3 GLideN64 to prevent flickering problems in games like Paper Mario.
 
 
-The default input plugin is just for general-use, if you play on keyboard you should use LINK's DirectInput7 which has key binding on the F and G keys (but does not save its config, you can save its config with Jabo's DirectInput7 though), while controller users should try the Octomino SDL2 plugin and configure it after opening a rom. Try Darkman's DirectInput if trying to play First Person Shooter games with keyboard and mouse.
+The default input plugin is just for general-use, if you play on keyboard you should use LINK's DirectInput7 which has key binding on the F and G keys (but does not save its config, you can save its config with Jabo's DirectInput7 though), while controller users should try the Octomino SDL2 plugin and configure it after opening a rom, though Octomino SDL2 lacks pak support which is required by some games like GoldenEye.
 
 
 Project64 1.6 was not designed to support romhacks. If you want to use this emulator with romhacks, you may need to use specific rom settings, update your RDB, or use a specific video plugin. Please see the user guide for more info about this.

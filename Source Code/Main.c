@@ -1569,7 +1569,7 @@ void UninstallApplication(HWND hWnd) {
 		char fname[_MAX_FNAME], ext[_MAX_EXT], HelpFileName[_MAX_PATH];
 		GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
 		_splitpath(path_buffer, drive, dir, fname, ext);
-		_makepath(HelpFileName, drive, dir, "Factory Reset", "reg");
+		_makepath(HelpFileName, drive, dir, "Registry Factory Reset", "reg");
 		if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
 			ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
 		}

@@ -111,10 +111,6 @@ Added drag-n-drop support when opening ROMs so there is no need to go through fi
 
 Added frame advance option under the System tab to let users advance through games, one frame at a time.
 
-Added Linking=Off for all entries w/ Protect Memory to prevent excessive stutters that happen otherwise.
-
-Added Linking=On for all entries w/ Change Memory and not defined Linking or UseTLB=No to stop crashing.
-
 Added plugin hot swapping support which allows the user to change plugins in real-time without problems.
 
 Added ROM browser refresh polling (refreshing everytime the rom browser is loaded, fine for ROM format).

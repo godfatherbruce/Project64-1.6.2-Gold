@@ -257,9 +257,9 @@ int LoadPifRom(int country) {
 	_splitpath( path_buffer, drive, dir, fname, ext );
 	switch(RomRegion(country)) {
 	case PAL_Region:
-		sprintf(PifRomName,"%s%sPif\\pal.raw",drive,dir); break;
+		sprintf(PifRomName,"%s%sROMs\\pal.raw",drive,dir); break;
 	default:
-		sprintf(PifRomName, "%s%sPif\\ntsc.raw", drive, dir); break;
+		sprintf(PifRomName, "%s%sROMs\\ntsc.raw", drive, dir); break;
 	}
 	hPifFile = CreateFile(PifRomName,GENERIC_READ,FILE_SHARE_READ,NULL,OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);

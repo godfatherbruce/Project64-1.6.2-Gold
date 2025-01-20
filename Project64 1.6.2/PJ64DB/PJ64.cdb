@@ -2235,10 +2235,6 @@ Cheat8="Have All\Weapons & Infinite Ammo Player 1",8017A79F 001E,8017A7B3 0008,8
 Cheat9="Start with Weapon\Player 1",8017A7A8 00??
 Cheat9_O=$00 HandGun,$01 Machinegun,$02 Shotgun,$03 Rocket Launcher,$04 M16 With Infinite Ammo,$05 New Cooler Handgun,$06 Invisible Gun 1 With Infinite Ammo,$07 Invisible Gun 2 With Infinite Ammo,$08 Odd Inviso ShotGun With Infinite Ammo,$09 Cool Rocket Launcher With Infinite Ammo,$14 Silenced Handgun
 Cheat10="Time is Always 00:00:00",8110DA62 0000
-[4F1E88F7-4A5A3F96-C:4A]
-Cheat0="Max HP",812D71F8 03E7
-Cheat1="Max MP",812D71FA 03E7
-Cheat2="Max Money",801A70E9 0001,811A70EA 869F
 [2DCFCA60-8354B147-C:4A]
 Cheat0="Infinite\Health",50000804 0000,800FCFC7 00??
 Cheat0_N=This is for All Yoshis All levels

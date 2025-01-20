@@ -199,6 +199,7 @@
 #define ID_FILE_REFRESHROMLIST          40138
 #define ID_SYSTEM_LIMITFPS              40141
 #define ID_HELP_GUIDE                   40142
+#define ID_WEBPAGES			40143
 #define ID_HELP_ABOUTSETTINGFILES       40146
 #define ID_SYSTEM_GSBUTTON              40148
 #define ID_OPTIONS_ALWAYSONTOP          40150

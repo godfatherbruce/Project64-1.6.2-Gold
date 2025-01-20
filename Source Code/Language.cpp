@@ -198,9 +198,9 @@ LANG_STR DefaultString[] = {
 	{ SMCM_CHECK_MEM,      "Check Memory & Cache"},
 	{ SMCM_CHANGE_MEM,     "Change Memory & Cache"},
 	{ SMCM_CHECK_ADV,      "Check Memory Advance"},
-//Advanced Block Linking
-	{ ABL_ON,              "On"},
-	{ ABL_OFF,             "Off"},
+
+	{ ABL_ON,	       "On"},
+	{ WEBPAGES_TEXT,       "Opens the web pages file which contains all relevant URL's"},
 
 	{ SMCM_CHECK_RETURN,   "Check Memory & Return"},
 	{ SAVE_4K_eepROM,      "4kbit eepROM"},
@@ -294,6 +294,7 @@ LANG_STR DefaultString[] = {
         { FULLSCREEN_ENTERED,     "Fullscreen mode entered"},
         { GS_PRESS,               "GS button pressed"},
 	{ FPS_DISPLAY,            "Frames Per Second"},
+	{ WEBPAGES,		  "Web Pages"},
 };
 class CLanguage  {
 	void FindLangName  ( int Index );

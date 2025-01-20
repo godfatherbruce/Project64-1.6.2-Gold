@@ -52,6 +52,7 @@ void MenuSetText ( HMENU hMenu, int MenuPos, char * Title, char * ShotCut );
 void RomInfo     ( void );
 void SetupMenu   ( HWND hWnd );
 void UninstallApplication(HWND hWnd);
+void FetchWebPages(HWND hWnd);
 LRESULT CALLBACK AboutIniBoxProc ( HWND, UINT, WPARAM, LPARAM );
 LRESULT CALLBACK Main_Proc       ( HWND, UINT, WPARAM, LPARAM );
 LRESULT CALLBACK RomInfoProc     ( HWND, UINT, WPARAM, LPARAM );
@@ -250,7 +251,8 @@ void FixMenuLang (HMENU hMenu) {
 	hSubMenu = GetSubMenu(hMenu,3);
 	MenuSetText(hSubMenu, 0, GS(MENU_UNINSTALL), NULL);
 	MenuSetText(hSubMenu, 1, GS(MENU_ABOUT_INI), NULL);
-	MenuSetText(hSubMenu, 2, GS(MENU_USER_GUIDE), NULL);
+	MenuSetText(hSubMenu, 3, GS(MENU_USER_GUIDE), NULL);
+	MenuSetText(hSubMenu, 4, GS(WEBPAGES), NULL);
 }
 char * GetIniFileName(void) {
 	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
@@ -573,6 +575,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_OPTIONS_CONFIG_RSP: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_CONFIG_RSP)); break;
 		case ID_OPTIONS_SETTINGS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_SETTINGS)); break;
 		case ID_HELP_GUIDE: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_USER_GUIDE)); break;
+		case ID_WEBPAGES: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(WEBPAGES_TEXT)); break;
 		case ID_HELP_ABOUTSETTINGFILES: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ABOUT_INI)); break;
 		case ID_HELP_UNINSTALL: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_UNINSTALLAPP)); break;
 		case ID_CURRENTSAVE_DEFAULT:
@@ -1100,6 +1103,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 				}
 			}
 		break;
+		case ID_WEBPAGES: FetchWebPages(hWnd); break;
 		case ID_HELP_UNINSTALL: UninstallApplication(hWnd); break;
 		case ID_HELP_ABOUTSETTINGFILES: AboutIniBox(); break;
 		default:
@@ -1565,12 +1569,22 @@ void UninstallApplication(HWND hWnd) {
 		char fname[_MAX_FNAME], ext[_MAX_EXT], HelpFileName[_MAX_PATH];
 		GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
 		_splitpath(path_buffer, drive, dir, fname, ext);
-		_makepath(HelpFileName, drive, dir, "Project64 1.6.2 RegistKeys Uninstaller", "reg");
+		_makepath(HelpFileName, drive, dir, "Factory Reset", "reg");
 		if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
 			ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
 		}
 		DestroyWindow(hWnd);
 	}
+}
+void FetchWebPages(HWND hWnd) {
+		char path_buffer[_MAX_PATH], drive[_MAX_DRIVE], dir[_MAX_DIR];
+		char fname[_MAX_FNAME], ext[_MAX_EXT], HelpFileName[_MAX_PATH];
+		GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
+		_splitpath(path_buffer, drive, dir, fname, ext);
+		_makepath(HelpFileName, drive, dir, "Web Pages", "txt");
+		if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
+			ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
+		}
 }
 void ShutdownApplication ( void ) {
 	CloseCpu();

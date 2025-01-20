@@ -195,7 +195,7 @@ BEGIN
 END
 IDD_About_Ini DIALOG 0, 0, 186, 142
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "About PJ64 Databases"
+CAPTION "About Databases"
 FONT 8, "MS Sans Serif"
 BEGIN
     GROUPBOX        "ROM Database (.RDB)",IDC_RDB,5,46,175,44
@@ -514,8 +514,10 @@ BEGIN
     POPUP "Help"
     BEGIN
         MENUITEM "Factory Reset",                  ID_HELP_UNINSTALL
-        MENUITEM "About PJ64 Databases",           ID_HELP_ABOUTSETTINGFILES
+        MENUITEM "About Databases",                ID_HELP_ABOUTSETTINGFILES
+        MENUITEM SEPARATOR
         MENUITEM "User Guide",                     ID_HELP_GUIDE
+	MENUITEM "Web Pages",			   ID_WEBPAGES
     END
 END
 IDR_POPUP MENU

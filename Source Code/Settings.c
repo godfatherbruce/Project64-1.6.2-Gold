@@ -868,8 +868,8 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,ROM_DEFAULT,-1,&ROMRAMsize);
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,&ROMRAMsize);
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,&ROMRAMsize);
+		AddDropDownItem(hDlg, IDC_BLOCK_LINKING, ROM_DEFAULT, 1, &RomUseLinking);
 		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_ON,0,&RomUseLinking);
-		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_OFF,1,&RomUseLinking);
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,ROM_DEFAULT,Auto,&RomSaveUsing);
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_4K_eepROM,eepROM_4K,&RomSaveUsing);
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_16K_eepROM,eepROM_16K,&RomSaveUsing);

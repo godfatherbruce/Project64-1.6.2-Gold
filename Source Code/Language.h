@@ -191,9 +191,9 @@ char * GS               ( int StringID );
 #define SMCM_CHECK_MEM			161
 #define SMCM_CHANGE_MEM			162
 #define SMCM_CHECK_ADV			163
-//Advanced Block Linking
+
 #define ABL_ON				164
-#define ABL_OFF				165
+#define WEBPAGES_TEXT			165
 
 #define SMCM_CHECK_RETURN		166
 #define SAVE_4K_eepROM			167
@@ -287,6 +287,7 @@ char * GS               ( int StringID );
 #define FULLSCREEN_ENTERED              237
 #define GS_PRESS                        238
 #define FPS_DISPLAY                     239
-#define NUMBER_1		        240
-#define NUMBER_2		        241
-#define NUMBER_3		        242
+#define WEBPAGES			240
+#define NUMBER_1		        241
+#define NUMBER_2		        242
+#define NUMBER_3		        243

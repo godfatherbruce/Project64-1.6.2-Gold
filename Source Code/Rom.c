@@ -497,8 +497,6 @@ void LoadRomOptions ( void ) {
 	SPHack = RomSPHack;
 	UseLinking = RomUseLinking;
 	DisableRegCaching = !RomUseCache;
-	if (RomUseLinking == 0 ) { UseLinking = TRUE; }
-	if (RomUseLinking == 1 ) { UseLinking = FALSE; }
 	switch(RomRegion(*(ROM + 0x3D))) {
 	case PAL_Region:
 		EmuAI_SetFrameRate(50);
@@ -587,7 +585,7 @@ void ReadRomOptions (void) {
 		_GetPrivateProfileString(Identifier,"Buffer","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"On") == 0) { RomUseLargeBuffer = TRUE; }
 		_GetPrivateProfileString(Identifier,"ABL","",String,sizeof(String),IniFileName);
-		if (strcmp(String,"On") == 0) { RomUseLinking = 0; }
+		if (strcmp(String,"On") == 0) { RomUseLinking = FALSE; }
 		_GetPrivateProfileString(Identifier, "RSP", "", String, sizeof(String), IniFileName);
 		if (strcmp(String, "On") == 0 ) { RomDelayRSP = TRUE; }
 		_GetPrivateProfileString(Identifier, "RDP", "", String, sizeof(String), IniFileName);
@@ -869,8 +867,7 @@ void SaveRomOptions (void) {
 	if (strlen(RomName) == 0) { return; }
 	IniFileName = GetIniFileName();
 	sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-	if (RomUseLinking == 0) { _WritePrivateProfileString(Identifier, "ABL", "On", GetIniFileName()); }
-	if (RomUseLinking == 1) { _WritePrivateProfileString(Identifier, "ABL", " ", GetIniFileName()); }
+	_WritePrivateProfileString(Identifier, "ABL", RomUseLinking ? " " : "On", GetIniFileName());
 	_WritePrivateProfileString(Identifier, "AI", RomEmulateAI ? "On" : " ", GetIniFileName());
 	_WritePrivateProfileString(Identifier, "Buffer", RomUseLargeBuffer ? "On" : " ", GetIniFileName());
 	_WritePrivateProfileString(Identifier, "Caching", RomUseCache ? " " : "Off", GetIniFileName());

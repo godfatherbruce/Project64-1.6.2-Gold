@@ -173,7 +173,7 @@ char * GS               ( int StringID );
 #define ROM_REG_CACHE			146
 #define ROM_DELAY_SI			147
 #define ROM_SP_HACK			148
-#define ROM_DEFAULT			149
+#define ROM_SAVE			149
 #define LIMITFPS_OFF			150
 #define ROM_DELAY_RDP			151
 #define ROM_DELAY_RSP			152
@@ -288,6 +288,10 @@ char * GS               ( int StringID );
 #define GS_PRESS                        238
 #define FPS_DISPLAY                     239
 #define WEBPAGES			240
-#define NUMBER_1		        241
-#define NUMBER_2		        242
-#define NUMBER_3		        243
+#define ABL_OFF				241
+#define MENU_SM64			242
+#define MENUDES_SM64			243
+#define SM64_WARN			244
+#define NUMBER_1		        245
+#define NUMBER_2		        246
+#define NUMBER_3		        247

@@ -74,8 +74,6 @@ Max 10 Recent ROM Dir as default
 
 ROM Dir Recursion as default, this allows sub-directories to be included in ROM browser
 
-Help/Uninstall Application Settings
-
 Uninstall application registry settings from windows registry and deletes Project64.cache
 
 (Undocumented) Checksum mismatch bypassment to allow Jabo video to apply per game hacks for romhacks.

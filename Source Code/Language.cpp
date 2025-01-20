@@ -165,8 +165,8 @@ LANG_STR DefaultString[] = {
 	{ RB_UP,               "Up"},
 	{ RB_DOWN,             "Down"},
 
-	{ ADVANCE_INFO,        "~ Recompiler = High FPS Low Compatibility ~\n~ Interpreter = Low FPS High Compatibility ~\n\nNote Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register caching"},
-	{ ADVANCE_DEFAULTS,    "Core Defaults"},
+	{ ADVANCE_INFO,        "Note Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register Caching"},
+	{ ADVANCE_DEFAULTS,    "Default"},
 	{ ADVANCE_AUTO_START,  "Start Emulation Upon ROM Opening"},
 	{ ADVANCE_OVERWRITE,   "RDB ROM Settings"},
 	{ ROM_CPU_STYLE,       "CPU Core Style:"},
@@ -180,7 +180,7 @@ LANG_STR DefaultString[] = {
 	{ ROM_REG_CACHE,       "Register Caching"},
 	{ ROM_DELAY_SI,        "Delay SI Interrupt"},
 	{ ROM_SP_HACK,         "SP Hack"},
-	{ ROM_DEFAULT,         "Default"},
+	{ ROM_SAVE,	       "Autodetected"},
 	{ LIMITFPS_OFF,	       "Limit FPS off"},
 	{ ROM_DELAY_RDP,       "Delay RDP Interrupt"},
 	{ ROM_DELAY_RSP,       "Delay RSP Interrupt"},
@@ -295,6 +295,10 @@ LANG_STR DefaultString[] = {
         { GS_PRESS,               "GS button pressed"},
 	{ FPS_DISPLAY,            "Frames Per Second"},
 	{ WEBPAGES,		  "Web Pages"},
+	{ ABL_OFF,		  "Off"},
+	{ MENU_SM64,		  "SM64 ROMhacks Registries"},
+	{ MENUDES_SM64,		  "Attempts to terminate this instance and set various registry configurations for SM64 Hacks"},
+	{ SM64_WARN,		  "This action will attempt to terminate this instance and set various registry configurations for SM64 ROMhacks. Change to a lower-end video plugin like Jabo's Direct3D8 1.6 after the registries have been reconfigured if your PC does not support GLideN64"},
 };
 class CLanguage  {
 	void FindLangName  ( int Index );

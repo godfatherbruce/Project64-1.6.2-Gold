@@ -125,12 +125,9 @@
 #131# "<- Remover"
 #132# "Arriba"
 #133# "Abajo"
-#134# "~ Recompilador = Altos FPS, Baja Compatibilidad ~
-~ Interprete = Bajos FPS, Alta Compatibilidad ~
-
-Nota: El Interprete no se ve afectado por los siguientes ajustes:
+#134# "Nota: El Interprete no se ve afectado por los siguientes ajustes:
 SCM, ABL, Bufer de Compilacion Grande y Cache de Registros"
-#135# "Valores Predeterminados del Nucleo"
+#135# "Predeterminado"
 #136# "Iniciar Emulacion cuando Abra la ROM"
 #137# "Configuracion RDB de la ROM"
 #138# "Estilo del Nucleo del CPU:"
@@ -143,7 +140,7 @@ SCM, ABL, Bufer de Compilacion Grande y Cache de Registros"
 #146# "Cache de Registro"
 #147# "Retrasar Interrupcion SI"
 #148# "Hack de SP"
-#149# "Predeterminado"
+#149# "Autodetectado"
 #150# "Limitar FPS desactivado"
 #151# "Retrasar Interrupcion RDP"
 #152# "Retrasar Interrupcion RSP"
@@ -252,3 +249,7 @@ Salir del hilo
 #238# "Boton GS presionado"
 #239# "Frames Por Segundo"
 #240# "Paginas Web"
+#241# "Apagado"
+#242# "Registro de ROMhacks de SM64"
+#243# "Intenta detener esta instancia y coloca varias configuraciones de registro para Hacks de SM64"
+#244# "Esta accion intentara detener esta instancia y colocara varias configuraciones de registro para ROMhacks de SM64. Cambia a un plugin de video de baja gama como Jabo's Direct3D8 1.6 despues de que los registros hayan sido reconfigurados si tu PC no soporta GlideN64"

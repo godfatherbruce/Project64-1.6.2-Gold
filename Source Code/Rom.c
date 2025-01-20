@@ -528,7 +528,7 @@ void ReadRomOptions (void) {
 	ROMRAMsize        = -1;
 	RomSaveUsing      = Auto;
 	RomCF             = -1;
-	RomUseLinking     = TRUE;
+	RomUseLinking     = FALSE;
 	RomCPUType        = CPU_Default;
 	RomSelfMod        = ModCode_Default;
 	RomUseTlb         = TRUE;
@@ -585,7 +585,7 @@ void ReadRomOptions (void) {
 		_GetPrivateProfileString(Identifier,"Buffer","",String,sizeof(String),IniFileName);
 		if (strcmp(String,"On") == 0) { RomUseLargeBuffer = TRUE; }
 		_GetPrivateProfileString(Identifier,"ABL","",String,sizeof(String),IniFileName);
-		if (strcmp(String,"On") == 0) { RomUseLinking = FALSE; }
+		if (strcmp(String,"On") == 0) { RomUseLinking = TRUE; }
 		_GetPrivateProfileString(Identifier, "RSP", "", String, sizeof(String), IniFileName);
 		if (strcmp(String, "On") == 0 ) { RomDelayRSP = TRUE; }
 		_GetPrivateProfileString(Identifier, "RDP", "", String, sizeof(String), IniFileName);
@@ -867,10 +867,10 @@ void SaveRomOptions (void) {
 	if (strlen(RomName) == 0) { return; }
 	IniFileName = GetIniFileName();
 	sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-	_WritePrivateProfileString(Identifier, "ABL", RomUseLinking ? " " : "On", GetIniFileName());
+	_WritePrivateProfileString(Identifier, "ABL", RomUseLinking ? "On" : " ", GetIniFileName());
 	_WritePrivateProfileString(Identifier, "AI", RomEmulateAI ? "On" : " ", GetIniFileName());
 	_WritePrivateProfileString(Identifier, "Buffer", RomUseLargeBuffer ? "On" : " ", GetIniFileName());
-	_WritePrivateProfileString(Identifier, "Caching", RomUseCache ? " " : "Off", GetIniFileName());
+	_WritePrivateProfileString(Identifier, "Caching", RomUseCache ? " " : "On", GetIniFileName());
 	switch (RomCF) {
 	case 1: case 2: case 3: sprintf(String, "%d", RomCF); break;
 	default: sprintf(String, " "); break;

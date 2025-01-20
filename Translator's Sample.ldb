@@ -131,12 +131,9 @@
 #131# "<- Remove"
 #132# "Up"
 #133# "Down"
-#134# "~ Recompiler = High FPS Low Compatibility ~
-~ Interpreter = Low FPS High Compatibility ~
-
-Note Interpreter is not affected by the following settings:
-SCM, ABL, Larger Compile Buffer, and Register caching"
-#135# "Core Defaults"
+#134# "Note Interpreter is not affected by the following settings:
+SCM, ABL, Larger Compile Buffer, and Register Caching"
+#135# "Default"
 #136# "Start Emulation Upon ROM Opening"
 #137# "RDB ROM Settings"
 #138# "CPU Core Style:"
@@ -150,7 +147,7 @@ SCM, ABL, Larger Compile Buffer, and Register caching"
 #146# "Register Caching"
 #147# "Delay SI Interrupt"
 #148# "SP Hack"
-#149# "Default"
+#149# "Autodetected"
 #150# "Limit FPS off"
 #151# "Delay RDP Interrupt"
 #152# "Delay RSP Interrupt"
@@ -266,3 +263,7 @@ Exiting thread
 #238# "GS button pressed"
 #239# "Frames Per Second"
 #240# "Web Pages"
+#241# "Off"
+#242# "SM64 ROMhacks Registries"
+#243# "Attempts to terminate this instance and set various registry configurations for SM64 Hacks"
+#244# "This action will attempt to terminate this instance and set various registry configurations for SM64 ROMhacks. Change to a lower-end video plugin like Jabo's Direct3D8 1.6 after the registries have been reconfigured if your PC does not support GLideN64"

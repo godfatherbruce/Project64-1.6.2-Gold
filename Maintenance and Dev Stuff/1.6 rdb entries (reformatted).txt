@@ -3,28 +3,24 @@ Game Name=007 - The World is Not Enough (E) (M3)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [033F4C13-319EE7A7-C:45]
 Game Name=007 - The World is Not Enough (U)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [58FD3F25-D92EAA8D-C:50]
 Game Name=1080 Snowboarding (E) (M4)
 MB=4
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [1FBAF161-2C1C54F1-C:41]
 Game Name=1080 Snowboarding (JU) (M2)
 MB=4
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [B98BA456-5B2B76AF-C:4A]
 Game Name=64 de Hakken!! Tamagotchi Minna de Tamagotchi World (J)
@@ -149,7 +145,6 @@ Game Name=Akumajou Dracula Mokushiroku - Real Action Adventure (J)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [A5533106-B9F25E5B-C:4A]
 Game Name=Akumajou Dracula Mokushiroku Gaiden-Legend of Cornell (J)
@@ -183,7 +178,6 @@ MB=4
 CPU=Recompiler
 SCM=Change Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [A19F8089-77884B51-C:50]
 Game Name=All-Star Baseball 2000 (E)
@@ -318,7 +312,6 @@ Save=16
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 [733FCCB1-444892F9-C:50]
 Game Name=Banjo-Kazooie (E) (M3)
@@ -341,7 +334,6 @@ Save=16
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 [C9176D39-EA4779D1-C:50]
 Game Name=Banjo-Tooie (E) (M4)
@@ -350,7 +342,6 @@ Save=16
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 [C2E9AA9A-475D70AA-C:45]
 Game Name=Banjo-Tooie (U)
@@ -359,7 +350,6 @@ Save=16
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 [B088FBB4-441E4B1D-C:50]
 Game Name=Bass Hunter 64 (E)
@@ -420,7 +410,6 @@ Game Name=Battlezone - Rise of the Black Dogs (U)
 MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Compatible
 [91691C3D-F4AC5B4D-C:4A]
 Game Name=Transformers - Beast Wars Metals 64 (J)
@@ -484,7 +473,6 @@ CF=1
 CPU=Recompiler
 SCM=Protect Memory
 TLB=Off
-ABL=Off
 Caching=Off
 Status=Issues (plugin)
 [7C64E6DB-55B924DB-C:50]
@@ -700,21 +688,18 @@ Game Name=Castlevania (E) (M3)
 MB=8
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Compatible
 [F35D5F95-8AFE3D69-C:45]
 Game Name=Castlevania (U) (v1.0)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [4BCDFF47-AAA3AF8F-C:45]
 Game Name=Castlevania (U) (v1.2)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [DCCF2134-9DD63578-C:50]
 Game Name=Centre Court Tennis (E)
@@ -876,7 +861,6 @@ Save=16
 CPU=Recompiler
 SCM=Protect Memory
 Buffer=On
-ABL=Off
 Status=Compatible
 [30C7AC50-7704072D-C:45]
 Game Name=Conker's Bad Fur Day (U)
@@ -885,7 +869,6 @@ Save=16
 CPU=Recompiler
 SCM=Protect Memory
 Buffer=On
-ABL=Off
 Status=Compatible
 [46A3F7AF-0F7591D0-C:45]
 Game Name=Cruis'n Exotica (U)
@@ -1046,7 +1029,6 @@ MB=4
 CPU=Recompiler
 SCM=None
 TLB=Off
-ABL=Off
 Status=Compatible
 [596E145B-F7D9879F-C:50]
 Game Name=Diddy Kong Racing (E) (M3) (v1.1)
@@ -1054,7 +1036,6 @@ MB=4
 CPU=Recompiler
 SCM=None
 TLB=Off
-ABL=Off
 Status=Compatible
 [F389A35A-17785562-C:4A]
 Game Name=Diddy Kong Racing (J)
@@ -1062,7 +1043,6 @@ MB=4
 CPU=Recompiler
 SCM=Cache
 TLB=Off
-ABL=Off
 Status=Bad ROM?
 [53D440E7-7519B011-C:45]
 Game Name=Diddy Kong Racing (U) (M2) (v1.0)
@@ -1070,7 +1050,6 @@ MB=4
 CPU=Recompiler
 SCM=None
 TLB=Off
-ABL=Off
 Status=Compatible
 [E402430D-D2FCFC9D-C:45]
 Game Name=Diddy Kong Racing (U) (M2) (v1.1)
@@ -1078,7 +1057,6 @@ MB=4
 CPU=Recompiler
 SCM=None
 TLB=Off
-ABL=Off
 Status=Compatible
 [C16C421B-A21580F7-C:45]
 Game Name=Disney's Donald Duck - Goin' Quackers (U) (M4)
@@ -1136,7 +1114,6 @@ CF=1
 Save=16
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Buffer=On
 Status=Compatible
 [11936D8C-6F2C4B43-C:50]
@@ -1146,7 +1123,6 @@ CF=1
 Save=16
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Buffer=On
 Status=Compatible
 [053C89A7-A5064302-C:4A]
@@ -1156,7 +1132,6 @@ CF=1
 Save=16
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Buffer=On
 Status=Compatible
 [EC58EABF-AD7C7169-C:45]
@@ -1166,7 +1141,6 @@ CF=1
 Save=16
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Buffer=On
 Status=Compatible
 [2C739EAC-9EF77726-C:50]
@@ -1544,7 +1518,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [49E46C2D-7B1A110C-C:4A]
 Game Name=Fighting Cup (J)
@@ -1573,7 +1546,6 @@ MB=4
 CF=1
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Uncertain
 SI=On
 [22E9623F-B60E52AD-C:50]
@@ -1582,7 +1554,6 @@ MB=4
 CF=1
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Compatible
 [A92D52E5-1D26B655-C:45]
 Game Name=Flying Dragon (U)
@@ -1590,7 +1561,6 @@ MB=4
 CF=1
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Compatible
 [35FF8F1A-6E79E3BE-C:4A]
 Game Name=Hiro no Ken Twin (J)
@@ -1598,7 +1568,6 @@ MB=4
 CF=1
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Region issue (p)
 [142A17AA-13028D96-C:50]
 Game Name=Forsaken 64 (E) (M4)
@@ -1637,21 +1606,18 @@ Game Name=F-ZERO X (E)
 MB=4
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Compatible
 [4D3E622E-9B828B4E-C:4A]
 Game Name=F-ZERO X (J)
 MB=4
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Compatible
 [B30ED978-3003C9F9-C:45]
 Game Name=F-ZERO X (U)
 MB=4
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Compatible
 [68FCF726-49658CBC-C:50]
 Game Name=G.A.S.P! Fighter's NEXTream (E)
@@ -1682,28 +1648,24 @@ Game Name=Ganbare Nippon! Olympics 2000 (J)
 MB=4
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Broken (c & p)
 [D543BCD6-2BA5E256-C:50]
 Game Name=Gauntlet Legends (E)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Issues (plugin)
 [70B0260E-6716D04C-C:4A]
 Game Name=Gauntlet Legends (J)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Issues (plugin)
 [729B5E32-B728D980-C:45]
 Game Name=Gauntlet Legends (U)
 MB=8
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Issues (plugin)
 [489C84E6-4C6E49F9-C:4A]
 Game Name=Getter Love!! Cho Renai Party Game (J)
@@ -1781,7 +1743,6 @@ MB=4
 CPU=Recompiler
 SCM=Change Memory & Cache
 Buffer=On
-ABL=Off
 Status=Compatible
 SP=On
 [A24F4CF1-A82327BA-C:4A]
@@ -1790,7 +1751,6 @@ MB=4
 CPU=Recompiler
 SCM=Change Memory & Cache
 Buffer=On
-ABL=Off
 Status=Compatible
 SP=On
 [DCBC50D1-09FD1AA3-C:45]
@@ -1799,7 +1759,6 @@ MB=4
 CPU=Recompiler
 SCM=Change Memory & Cache
 Buffer=On
-ABL=Off
 Status=Compatible
 SP=On
 [EE4A0E33-8FD588C9-C:50]
@@ -2022,14 +1981,12 @@ Game Name=International Superstar Soccer 2000 (E) (M2)
 MB=8
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Compatible
 [8E835437-CD5748B4-C:45]
 Game Name=International Superstar Soccer 2000 (U)
 MB=8
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Compatible
 [E2D37CF0-F57E4EAE-C:50]
 Game Name=International Superstar Soccer 64 (E)
@@ -2159,7 +2116,6 @@ Game Name=Jikkyou J. League 1999 - Perfect Striker 2 (J)
 MB=4
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [146C4366-72A6DEB3-C:4A]
 Game Name=Jikkyou J. League Perfect Striker (J)
@@ -2185,7 +2141,6 @@ Game Name=Jikkyou World Cup France '98 (J)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [E0A79F8C-32CC97FA-C:4A]
 Game Name=Jikkyou World Soccer 3 (J)
@@ -2277,21 +2232,18 @@ Game Name=Knife Edge - Nose Gunner (E)
 MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Compatible
 [931AEF3F-EF196B90-C:4A]
 Game Name=Knife Edge - Nose Gunner (J)
 MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Compatible
 [FCE0D799-65316C54-C:45]
 Game Name=Knife Edge - Nose Gunner (U)
 MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Compatible
 [E3D6A795-2A1C5D3C-C:50]
 Game Name=Knockout Kings 2000 (E)
@@ -2336,7 +2288,6 @@ Game Name=Legend of Zelda, The - Majora's Mask (E) (M4) (v1.0)
 MB=8
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Compatible
 [5354631C-03A2DEF0-C:45]
 Game Name=Legend of Zelda, The - Majora's Mask (U)
@@ -2344,7 +2295,6 @@ MB=8
 CPU=Recompiler
 SCM=Change Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [B044B569-373C1985-C:50]
 Game Name=Legend of Zelda, The - Ocarina of Time (E) (M3) (v1.0)
@@ -2352,7 +2302,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801D860B 0002 //Subscreen Delay Fix
 [B2055FBD-0BAB4E0C-C:50]
@@ -2361,7 +2310,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801D864B 0002 //Subscreen Delay Fix
 [EC7011B7-7616D72B-C:45]
@@ -2370,7 +2318,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801DA5CB 0002 //Subscreen Delay Fix
 [D43DA81F-021E1E19-C:45]
@@ -2379,7 +2326,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801DA78B 0002 //Subscreen Delay Fix
 [693BA2AE-B7F14E9F-C:45]
@@ -2388,7 +2334,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801DAE8B 0002 //Subscreen Delay Fix
 [F478D8B3-9716DD6D-C:50]
@@ -2716,7 +2661,6 @@ MB=8
 Save=16
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Issues (plugin)
 [3A6C42B5-1ACADA1B-C:4A]
 Game Name=Mario Tennis (J)
@@ -2724,7 +2668,6 @@ MB=8
 Save=16
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Issues (plugin)
 [5001CF4F-F30CB3BD-C:45]
 Game Name=Mario Tennis (U)
@@ -2732,7 +2675,6 @@ MB=8
 Save=16
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Issues (plugin)
 [0EC158F5-FB3E6896-C:45]
 Game Name=Mega Man 64 (U)
@@ -2827,42 +2769,36 @@ Game Name=Mission Impossible (E)
 MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Status=Compatible
 [20095B34-343D9E87-C:46]
 Game Name=Mission Impossible (F)
 MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Status=Compatible
 [93EB3F7E-81675E44-C:44]
 Game Name=Mission Impossible (G)
 MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Status=Compatible
 [EBA949DC-39BAECBD-C:49]
 Game Name=Mission Impossible (I)
 MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Status=Compatible
 [5F6A04E2-D4FA070D-C:53]
 Game Name=Mission Impossible (S)
 MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Status=Compatible
 [26035CF8-802B9135-C:45]
 Game Name=Mission Impossible (U)
 MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Status=Compatible
 [28768D6D-B379976C-C:45]
 Game Name=Monaco Grand Prix (U)
@@ -2917,14 +2853,12 @@ Game Name=Mortal Kombat Mythologies - Sub-Zero (E)
 MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Compatible
 [C34304AC-2D79C021-C:45]
 Game Name=Mortal Kombat Mythologies - Sub-Zero (U)
 MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Compatible
 [8C3D1192-BEF172E1-C:50]
 Game Name=Mortal Kombat Trilogy (E)
@@ -3256,7 +3190,6 @@ Game Name=NFL Quarterback Club 2001 (U)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Buffer=On
 Status=Compatible
 [4B629EF4-99B21D9B-C:50]
@@ -3295,7 +3228,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [29CE7692-71C58579-C:50]
 Game Name=NHL Breakaway 98 (E)
@@ -3381,14 +3313,12 @@ Game Name=Off Road Challenge (E)
 MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Status=Issues (plugin)
 [319093EC-0FC209EF-C:45]
 Game Name=Off Road Challenge (U)
 MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Status=Issues (plugin)
 [0375CF67-56A93FAA-C:4A]
 Game Name=Ogre Battle 64 - Person of Lordly Caliber (J) (v1.1)
@@ -3466,7 +3396,6 @@ Game Name=Jikkyou Powerful Pro Yakyuu 6 (J)
 MB=4
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [F468118C-E32EE44E-C:4A]
 Game Name=PD Ultraman Battle Collection 64 (J)
@@ -3496,7 +3425,6 @@ Save=16
 CPU=Recompiler
 SCM=Protect Memory
 Buffer=On
-ABL=Off
 Status=Compatible
 [96747EB4-104BB243-C:4A]
 Game Name=Perfect Dark (J)
@@ -3505,7 +3433,6 @@ Save=16
 CPU=Recompiler
 SCM=Protect Memory
 Buffer=On
-ABL=Off
 Status=Compatible
 [DDF460CC-3CA634C0-C:45]
 Game Name=Perfect Dark (U) (v1.0)
@@ -3514,7 +3441,6 @@ Save=16
 CPU=Recompiler
 SCM=Protect Memory
 Buffer=On
-ABL=Off
 Status=Compatible
 [41F2B98F-B458B466-C:45]
 Game Name=Perfect Dark (U) (v1.1)
@@ -3523,7 +3449,6 @@ Save=16
 CPU=Recompiler
 SCM=Protect Memory
 Buffer=On
-ABL=Off
 Status=Compatible
 [EE08C602-6BC2D5A6-C:50]
 Game Name=PGA European Tour (E) (M5)
@@ -3926,7 +3851,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [673D099B-A4C808DE-C:45]
 Game Name=Rampage 2 - Universal Tour (U)
@@ -3934,7 +3858,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [20FD0BF1-F5CF1D87-C:50]
 Game Name=Rat Attack (E) (M6)
@@ -4010,7 +3933,6 @@ CF=1
 CPU=Recompiler
 SCM=Protect Memory
 TLB=Off
-ABL=Off
 Caching=Off
 Status=Issues (plugin)
 [C3E7E29E-5D7251CC-C:50]
@@ -4140,14 +4062,12 @@ Game Name=Rugrats in Paris - The Movie (E)
 MB=4
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Issues (plugin)
 [1FC21532-0B6466D4-C:45]
 Game Name=Rugrats in Paris - The Movie (U)
 MB=4
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Status=Issues (plugin)
 [B7CF2136-FA0AA715-C:50]
 Game Name=Rush 2 - Extreme Racing USA (E) (M6)
@@ -4294,7 +4214,6 @@ Game Name=Tsumi to Batsu - Chikyuu no Keishousha (J)
 MB=8
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Compatible
 [2EF4D519-C64A0C5E-C:4A]
 Game Name=Snow Speeder (J)
@@ -4639,7 +4558,6 @@ MB=4
 CPU=Recompiler
 SCM=Change Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [93945F48-5C0F2E30-C:50]
 Game Name=Super Smash Bros. (E) (M3)
@@ -4647,7 +4565,6 @@ MB=4
 CPU=Recompiler
 SCM=Change Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [916B8B5B-780B85A4-C:45]
 Game Name=Super Smash Bros. (U)
@@ -4655,7 +4572,6 @@ MB=4
 CPU=Recompiler
 SCM=Change Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [9CE02E22-206EF1B0-C:4A]
 Game Name=Super Speed Race 64 (J)
@@ -4929,7 +4845,6 @@ CF=1
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 [CB93DB97-7F5C63D5-C:46]
 Game Name=Toy Story 2 (F)
@@ -4938,7 +4853,6 @@ CF=1
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 [782A9075-E552631D-C:44]
 Game Name=Toy Story 2 (G)
@@ -4947,7 +4861,6 @@ CF=1
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 [A150743E-CF2522CD-C:45]
 Game Name=Toy Story 2 (U)
@@ -4956,7 +4869,6 @@ CF=1
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 [FE4B6B43-081D29A7-C:45]
 Game Name=Triple Play 2000 (U)
@@ -5461,7 +5373,6 @@ Game Name=World Driver Championship (E)
 MB=8
 CPU=Recompiler
 SCM=Check Memory & Cache
-ABL=Off
 Status=Needs video plugin
 [308DFEC8-CE2EB5F6-C:45]
 Game Name=World Driver Championship (U)
@@ -5621,7 +5532,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801DA5CB 0002 //Subscreen Delay Fix
 [EC417312-EB31DE5F-C:4A]
@@ -5630,7 +5540,6 @@ MB=8
 CPU=Recompiler
 SCM=Change Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [1C010CCD-22D3B7FA-C:4A]
 Game Name=Zool - Majou Tsukai Densetsu (J)
@@ -5648,7 +5557,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801D8F4B 0002 //Subscreen Delay Fix
 Cheat1=D109A8C4 0320,8109A8C4 0000,D109A8C6 F809,8109A8C6 0000 //End Credits Fix
@@ -5695,7 +5603,6 @@ Game Name=Legend of Zelda, The - Majora's Mask (E) (M4) (v1.1)
 MB=8
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Compatible
 [1D4136F3-AF63EEA9-C:50] //New entry in RDB 1.6
 Game Name=Legend of Zelda, The - Ocarina of Time - Master Quest (E) (GC Version)
@@ -5703,7 +5610,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801D8F4B 0002 //Subscreen Delay Fix
 Cheat1=D109A8C4 0320,8109A8C4 0000,D109A8C6 F809,8109A8C6 0000 //End Credits Fix
@@ -5713,7 +5619,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801D8F4B 0002 //Subscreen Delay Fix
 Cheat1=D109A8C4 0320,8109A8C4 0000,D109A8C6 F809,8109A8C6 0000 //End Credits Fix
@@ -5723,7 +5628,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801D8F8B 0002 //Subscreen Delay Fix
 Cheat1=D109A8E4 0320,8109A8E4 0000,D109A8E6 F809,8109A8E6 0000 //End Credits Fix
@@ -5733,7 +5637,6 @@ MB=8
 CPU=Recompiler
 SCM=Change Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [91C9E05D-AD3AAFB9-C:50] //New entry in RDB 1.6
 Game Name=Pokemon Stadium (E) (v1.1)
@@ -6382,7 +6285,6 @@ CF=1
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 [8F5179C4-803526DC-C:0]
 Game Name=Spice Girls Rotator Demo by RedboX (PD) [a1]
@@ -6582,7 +6484,6 @@ Game Name=International Superstar Soccer 2000 (FI)
 MB=8
 CPU=Recompiler
 SCM=Check Memory Advance
-ABL=Off
 Status=Compatible
 [451ACA0F-7863BC8A-C:44]
 Game Name=Rugrats - Die große Schatzsuche (G)
@@ -6603,7 +6504,6 @@ MB=4
 CPU=Recompiler
 SCM=Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [F63B89CE-4582D57D-C:49]
 Game Name=A Bug's Life (I)
@@ -6649,7 +6549,6 @@ Game Name=Jikkyou World Cup France '98 (J) (v1.2)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [3A180FF4-5C8E8AF7-C:4A]
 Game Name=Chou-Kuukan Night Pro Yakyuu King 2 (J)
@@ -6663,7 +6562,6 @@ Game Name=Legend of Zelda, The - Majora's Mask - Collector's Edition (E) (GC Ver
 MB=8
 CPU=Recompiler
 SCM=Change Memory & Cache
-ABL=Off
 Status=Compatible
 [F3DD35BA-4152E075-C:45] //New entry in RDB 1.6x BETA13
 Game Name=Legend of Zelda, The - Ocarina of Time (U) (GC Version)
@@ -6671,7 +6569,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801DB78B 0002 //Subscreen Delay Fix
 Cheat1=D109A814 0320,8109A814 0000,D109A816 F809,8109A816 0000 //End Credits Fix
@@ -6681,7 +6578,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801DB74B 0002 //Subscreen Delay Fix
 Cheat1=D109A7F4 0320,8109A7F4 0000,D109A7F6 F809,8109A7F6 0000 //End Credits Fix
@@ -6691,7 +6587,6 @@ MB=8
 CPU=Recompiler
 SCM=Change Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [F7F52DB8-2195E636-C:4A] //New entry in RDB 1.6x BETA13
 Game Name=Zelda no Densetsu - Toki no Ocarina - Zelda Collection Version (J) (GC Version)
@@ -6699,7 +6594,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801DB78B 0002 //Subscreen Delay Fix
 Cheat1=D109A814 0320,8109A814 0000,D109A816 F809,8109A816 0000 //End Credits Fix
@@ -6709,7 +6603,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801DB78B 0002 //Subscreen Delay Fix
 Cheat1=D109A834 0320,8109A834 0000,D109A836 F809,8109A836 0000 //End Credits Fix
@@ -6719,7 +6612,6 @@ DRAM Size=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801DB78B 0002 //Subscreen Delay Fix
 Cheat1=D109A814 0320,8109A814 0000,D109A816 F809,8109A816 0000 //End Credits Fix
@@ -6747,7 +6639,6 @@ Game Name=Jikkyou World Cup France '98 (J) (v1.1)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-ABL=Off
 Status=Compatible
 [69AE0438-2C63F3F3-C:4A] //New entry in RDB 1.6.014
 Game Name=Zelda no Densetsu - Mujura no Kamen (J) (v1.1)
@@ -6755,7 +6646,6 @@ MB=8
 CPU=Recompiler
 SCM=Change Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [D43DA81F-021E1E19-C:4A] //New entry in RDB 1.6.014
 Game Name=Zelda no Densetsu - Toki no Ocarina (J) (v1.1)
@@ -6763,7 +6653,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801DA78B 0002 //Subscreen Delay Fix
 [693BA2AE-B7F14E9F-C:4A] //New entry in RDB 1.6.014
@@ -6772,7 +6661,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Compatible
 Cheat0=801DAE8B 0002 //Subscreen Delay Fix
 [E86415A6-98395B53-C:50] //New entry in RDB 1.6.014
@@ -6791,7 +6679,6 @@ MB=8
 CPU=Recompiler
 SCM=Check Memory Advance
 TLB=Off
-ABL=Off
 Status=Issues (plugin)
 [BF799345-39FF7A02-C:45] //New entry in RDB 1.6.014
 Game Name=Legend of Zelda, The - Majora's Mask (U) (Demo)
@@ -6799,7 +6686,6 @@ MB=8
 CPU=Recompiler
 SCM=Change Memory & Cache
 TLB=Off
-ABL=Off
 Status=Compatible
 [E8E5B179-44AA30E8-C:45] //New entry in RDB 1.6.014
 Game Name=Frogger 2 (U) (Unreleased Alpha)

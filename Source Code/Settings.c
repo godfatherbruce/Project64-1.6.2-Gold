@@ -196,7 +196,6 @@ BOOL CALLBACK DefaultOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 	int indx;
 	switch (uMsg) {
 	case WM_INITDIALOG:
-		SetDlgItemText(hDlg,IDC_INFO,GS(ADVANCE_INFO));
 		SetDlgItemText(hDlg,IDC_CORE_DEFAULTS,GS(ADVANCE_DEFAULTS));
 		SetDlgItemText(hDlg,IDC_TEXT2,GS(ROM_CPU_STYLE));
 		SetDlgItemText(hDlg,IDC_TEXT3,GS(ROM_SMCM));
@@ -848,16 +847,17 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 	switch (uMsg) {
 	case WM_INITDIALOG:
 		ReadRomOptions();
+		SetDlgItemText(hDlg, IDC_INFO, GS(ADVANCE_INFO));
 		SetDlgItemText(hDlg,IDC_CPU_TYPE_TEXT,GS(ROM_CPU_STYLE));
 		SetDlgItemText(hDlg,IDC_SELFMOD_TEXT,GS(ROM_SMCM));
 		SetDlgItemText(hDlg,IDC_MEMORY_SIZE_TEXT,GS(ROM_MEM_SIZE));
 		SetDlgItemText(hDlg,IDC_BLOCK_LINKING_TEXT,GS(ROM_ABL));
 		SetDlgItemText(hDlg,IDC_SAVE_TYPE_TEXT,GS(ROM_SAVE_TYPE));
 		SetDlgItemText(hDlg,IDC_COUNTFACT_TEXT,GS(ROM_COUNTER_FACTOR));
-		AddDropDownItem(hDlg,IDC_CPU_TYPE,ROM_DEFAULT,CPU_Default,&RomCPUType);
+		AddDropDownItem(hDlg,IDC_CPU_TYPE,ADVANCE_DEFAULTS,CPU_Default,&RomCPUType);
 		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_INTERPRETER,CPU_Interpreter,&RomCPUType);
 		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_RECOMPILER,CPU_Recompiler,&RomCPUType);
-		AddDropDownItem(hDlg,IDC_SELFMOD,ROM_DEFAULT,ModCode_Default,&RomSelfMod);
+		AddDropDownItem(hDlg,IDC_SELFMOD,ADVANCE_DEFAULTS,ModCode_Default,&RomSelfMod);
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CACHE,ModCode_Cache,&RomSelfMod);
 		AddDropDownItem(hDlg, IDC_SELFMOD, SMCM_CHANGE_MEM, ModCode_ChangeMemory, &RomSelfMod);
 		AddDropDownItem(hDlg, IDC_SELFMOD, SMCM_CHECK_MEM, ModCode_CheckMemoryCache, &RomSelfMod);
@@ -865,17 +865,17 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		AddDropDownItem(hDlg, IDC_SELFMOD, SMCM_CHECK_ADV, ModCode_CheckMemoryAdvance, &RomSelfMod);
 		AddDropDownItem(hDlg, IDC_SELFMOD, SMCM_NONE, ModCode_None, &RomSelfMod);
 		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_PROTECTED,ModCode_ProtectedMemory,&RomSelfMod);
-		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,ROM_DEFAULT,-1,&ROMRAMsize);
+		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,ADVANCE_DEFAULTS,-1,&ROMRAMsize);
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,&ROMRAMsize);
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,&ROMRAMsize);
-		AddDropDownItem(hDlg, IDC_BLOCK_LINKING, ROM_DEFAULT, 1, &RomUseLinking);
-		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_ON,0,&RomUseLinking);
-		AddDropDownItem(hDlg,IDC_SAVE_TYPE,ROM_DEFAULT,Auto,&RomSaveUsing);
+		AddDropDownItem(hDlg, IDC_BLOCK_LINKING, ABL_OFF,0, &RomUseLinking);
+		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_ON,1,&RomUseLinking);
+		AddDropDownItem(hDlg,IDC_SAVE_TYPE,ROM_SAVE,Auto,&RomSaveUsing);
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_4K_eepROM,eepROM_4K,&RomSaveUsing);
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_16K_eepROM,eepROM_16K,&RomSaveUsing);
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_SRAM,SRAM,&RomSaveUsing);
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_FlashRAM,FlashRAM,&RomSaveUsing);
-		AddDropDownItem(hDlg,IDC_COUNTFACT,ROM_DEFAULT,-1,&RomCF);
+		AddDropDownItem(hDlg,IDC_COUNTFACT,ADVANCE_DEFAULTS,-1,&RomCF);
 		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_1,1,&RomCF);
 		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_2,2,&RomCF);
 		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_3,3,&RomCF);

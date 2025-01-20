@@ -95,7 +95,7 @@ SCM=Change Memory & Cache
 ABL=On
 Status=Compatible
 CF=2
-//AROMs
+//aROMs
 [8F12C096-45DC17E1-C:50]
 Game Name=A Bug's Life (E)
 MB=4
@@ -375,7 +375,7 @@ CPU=Recompiler
 SCM=Cache
 Status=Compatible
 CF=2
-//BROMs
+//bROMs
 [E340A49C-74318D41-C:4A]
 Game Name=Baku Bomberman (J)
 MB=4
@@ -800,7 +800,7 @@ CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Compatible
 CF=2
-//CROMs
+//cROMs
 [AC16400E-CF5D071A-C:45]
 Game Name=California Speed (U)
 MB=4
@@ -1179,7 +1179,7 @@ CPU=Recompiler
 SCM=Cache
 Status=Semicompatible
 CF=2
-//DROMs
+//dROMs
 [7188F445-84410A68-C:4A]
 Game Name=Dance Dance Revolution - Disney Dancing Museum (J)
 MB=4
@@ -1550,7 +1550,7 @@ SCM=Cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 CF=2
-//EROMs
+//eROMs
 [492B9DE8-C6CCC81C-C:50]
 Game Name=Earthworm Jim 3D (E) (M6)
 MB=4
@@ -1710,7 +1710,7 @@ SCM=Check Memory & Cache
 Buffer=On
 Status=Compatible
 CF=1
-//FROMs
+//fROMs
 [FDD248B2-569A020E-C:50]
 Game Name=F-1 Pole Position 64 (E) (M3)
 MB=4
@@ -1990,7 +1990,7 @@ SCM=Change Memory & Cache
 ABL=On
 Status=Compatible
 CF=2
-//GROMs
+//gROMs
 [68FCF726-49658CBC-C:50]
 Game Name=G.A.S.P!! Fighters' NEXTream (E)
 MB=8
@@ -2214,7 +2214,7 @@ SCM=Check Memory Advance
 SI=On
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-//HROMs
+//hROMs
 [95A80114-E0B72A7F-C:4A]
 Game Name=Hamster Monogatari 64 (J)
 MB=4
@@ -2463,7 +2463,7 @@ SCM=Protect Memory
 Status=Compatible
 Cheat0=81000470 2400,810005D0 2400//Nekokabu Game Fix
 CF=2
-//IROMs
+//iROMs
 [77DA3B8D-162B0D7C-C:4A]
 Game Name=Ide Yousuke no Mahjong Juku (J)
 MB=4
@@ -2599,7 +2599,7 @@ CPU=Recompiler
 SCM=Change Memory & Cache
 ABL=On
 Status=Compatible
-//JROMs
+//jROMs
 [87766747-91C27165-C:4A]
 Game Name=J.League Dynamite Soccer 64 (J)
 MB=4
@@ -2878,7 +2878,7 @@ CPU=Recompiler
 SCM=Protect Memory
 Status=Compatible
 CF=2
-//KROMs
+//kROMs
 [4F29474F-30CB707A-C:4A]
 Game Name=Kakutou Denshou - F-Cup Maniax (J)
 MB=4
@@ -3005,7 +3005,7 @@ CPU=Recompiler
 SCM=None
 Status=Compatible
 CF=2
-//LROMs
+//lROMs
 [7F304099-52CF5276-C:4A]
 Game Name=Last Legion UX (J)
 MB=4
@@ -3097,7 +3097,7 @@ CPU=Recompiler
 SCM=Protect Memory
 Status=Compatible
 CF=2
-//MROMs
+//mROMs
 [1145443D-11610EDB-C:50]
 Game Name=Mace - The Dark Age (E)
 MB=4
@@ -3765,7 +3765,7 @@ SCM=Check Memory & Cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 CF=2
-//NROMs
+//nROMs
 [6D452016-713C09EE-C:50]
 Game Name=Nagano Winter Olympics '98 (E)
 MB=4
@@ -4190,7 +4190,7 @@ CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
-//OROMs
+//oROMs
 [AE2D3A35-24F0D41A-C:50]
 Game Name=Olympic Hockey Nagano '98 (E) (M4)
 MB=4
@@ -4267,7 +4267,7 @@ SCM=Cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 CF=2
-//PROMs
+//pROMs
 [0AE2B37C-FBC174F0-C:4A]
 Game Name=Pro Mahjong Kiwame 64 (J) (v1.1)
 MB=4
@@ -4798,7 +4798,7 @@ CPU=Recompiler
 SCM=Protect Memory
 Status=Compatible
 CF=2
-//QROMs
+//qROMs
 [16931D74-65DC6D34-C:50]
 Game Name=Quake 64 (E)
 MB=4
@@ -4839,7 +4839,7 @@ SCM=Check Memory & Cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 CF=2
-//RROMs
+//rROMs
 [2877AC2D-C3DC139A-C:44]
 Game Name=Racing Simulation 2 (G)
 MB=4
@@ -5167,7 +5167,7 @@ CF=1
 CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Compatible
-//SROMs
+//sROMs
 [918E2D60-F865683E-C:50]
 Game Name=S.C.A.R.S. (E) (M3)
 MB=4
@@ -5727,6 +5727,7 @@ CF=1
 CPU=Recompiler
 SCM=Cache
 Status=Compatible
+Plugin Note=Use ANGLE GLideN64 or Direct3D8
 [4EAA3D0E-74757C24-C:4A]
 Game Name=Super Mario 64 (J)
 MB=8
@@ -5734,6 +5735,7 @@ CF=1
 CPU=Recompiler
 SCM=Cache
 Status=Compatible
+Plugin Note=Use ANGLE GLideN64 or Direct3D8
 [635A2BFF-8B022326-C:45]
 Game Name=Super Mario 64 (U)
 MB=4
@@ -5741,6 +5743,7 @@ CF=1
 CPU=Recompiler
 SCM=Cache
 Status=Compatible
+Plugin Note=Use ANGLE GLideN64 or Direct3D8
 [D6FBA4A8-6326AA2C-C:4A]
 Game Name=Super Mario 64 - Shindou Pack Taiou Version (J) (v1.3)
 MB=8
@@ -5748,6 +5751,7 @@ CF=1
 CPU=Recompiler
 SCM=Cache
 Status=Compatible
+Plugin Note=Use ANGLE GLideN64 or Direct3D8
 [66572080-28E348E1-C:4A]
 Game Name=Super Robot Spirits (J)
 MB=4
@@ -5839,7 +5843,7 @@ SCM=Protect Memory
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 CF=2
-//TROMs
+//tROMs
 [B6BE20A5-FACAF66D-C:58]
 Game Name=Turok - Rage Wars (E) (M3) (Eng-Fre-Ita)
 MB=8
@@ -6337,7 +6341,7 @@ Game Name=Transformers - Beast Wars Metals 64 (J)
 MB=4
 CPU=Recompiler
 SCM=None
-ABL=On
+AI=On
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 CF=2
@@ -6346,7 +6350,7 @@ Game Name=Transformers - Beast Wars Transmetal (U)
 MB=4
 CPU=Recompiler
 SCM=None
-ABL=On
+AI=On
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 CF=2
@@ -6511,7 +6515,7 @@ SCM=Check Memory & Cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 CF=2
-//UROMs
+//uROMs
 [28D5562D-E4D5AE50-C:4A]
 Game Name=Ucchan Nanchan no Hono no Challenger - Denryuu Ira Ira Bou (J)
 MB=4
@@ -6521,7 +6525,7 @@ SCM=Protect Memory
 Plugin Note=Graphic issues with Jabo plugins
 SI=On
 Status=Semicompatible
-//VROMs
+//vROMs
 [DD10BC7E-F900B351-C:50]
 Game Name=Vigilante 8 - 2nd Offense (E)
 MB=8
@@ -6653,7 +6657,7 @@ SCM=Check Memory & Cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 CF=2
-//WROMs
+//wROMs
 [BB121FEC-537BA297-C:4A]
 Game Name=Wave Race 64 (J) (v1.0)
 MB=4
@@ -7093,7 +7097,7 @@ ABL=On
 Buffer=On
 Status=Compatible
 CF=2
-//XROMs
+//xROMs
 [0A1667C7-293346A6-C:50]
 Game Name=Xena Warrior Princess - Talisman of Fate (E)
 MB=4
@@ -7108,7 +7112,7 @@ CPU=Recompiler
 SCM=Cache
 Status=Compatible
 CF=2
-//YROMs
+//yROMs
 [9F8B96C3-A01194DC-C:4A]
 Game Name=Yakouchuu II - Satsujin Kouro (J)
 MB=4
@@ -7151,7 +7155,7 @@ CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Compatible
 CF=2
-//ZROMs
+//zROMs
 [EC7011B7-7616D72B-C:4A]
 Game Name=Zelda no Densetsu - Toki no Ocarina (J) (v1.0)
 MB=4

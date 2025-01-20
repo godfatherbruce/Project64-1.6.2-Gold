@@ -1,4 +1,0 @@
-Hyperlinks are blocked, don't bother including them. This is for security reasons only (a site could be harmful to the end-user as it is or if it changes in the future).
-
-Also, it is suggested you bundle a low level RSP like ParaLLel RSP if you make a low level video plugin for this emulator as the on-board low level RSP has speed issues,
-it was only included because I wanted the most accurate RSP plugin.

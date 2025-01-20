@@ -31,7 +31,6 @@ Before installing or using this application, please carefully review the followi
 
 
 
-
 Windows Security's Virus & threat protection can interfere with this installer wizard and potentially Project64.exe itself. I highly suggest disabling real-time protection under Virus & threat protection settings before installing 1.6.2. After installing 1.6.2 from this InstallerWiz, scroll to the bottom, click "Add or remove exclusions", click "Add an exclusion", click "Folder", then single-click on the Project64 1.6.2 folder and press "Select Folder". Once you have done all that, re-enable real-time protection to turn your antivirus back on.
 
 

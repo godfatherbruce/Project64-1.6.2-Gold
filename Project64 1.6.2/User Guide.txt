@@ -469,9 +469,8 @@ Section#08 Tips and Tricks
 --------------------------------------------------------------------------------------------------------
 If you're playing newer ROMhacks, GLideN64 is recommended. Use an ANGLE version for Super Mario 64 mods.
 
-Try out the 1.6.2-CF1 build if the only ROMhacks you are playing can take advantage of counter factor 1.
-However, if the RDB included in the CF1 build has not been properly adjusted to account for CF1 default,
-you may encounter sudden crashes in other roms which depend on counter factor 2 such as Ocarina of Time.
+Try using Counter Factor 1 by default if the only ROMhacks you play are Super Mario 64 or Majora's Mask.
+(this can also apply to playing any other games which benefit from counter factor by 1 without crashing)
 
 You can get better default ROM settings (applies to ROMhacks) by disabling hide advanced settings in the
 options to access the advanced tab to fine tune the core settings. You can also lower your RAM to 4MB by
@@ -663,7 +662,7 @@ Buffer=
 Caching= 
 (On)
 CF= 
-(2, 1 if using -CF1)
+(User's selected core setting, 2 by default)
 CPU= 
 (User's selected core setting, Recompiler by default)
 MB= 
@@ -673,7 +672,7 @@ RDP=
 RSP= 
 (Off)
 Save= 
-(Auto selected, AKA First Used)
+(First Used)
 SCM= 
 (User's selected core setting, Check Memory Advance by default)
 SI= 

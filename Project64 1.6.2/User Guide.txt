@@ -111,6 +111,8 @@ Added frame advance option under the System tab to let users advance through gam
 
 Added plugin hot swapping support which allows the user to change plugins in real-time without problems.
 
+Added registries options in the help tab for factory resets or configuring PJ64 1.6.2 for SM64 ROMhacks.
+
 Added ROM browser refresh polling (refreshing everytime the rom browser is loaded, fine for ROM format).
 
 Added shortcuts for Graphics, Audio, Controller, and RSP plugins, CPU Pause, and a Frame advance option.
@@ -328,8 +330,8 @@ LINK's DirectInput7 Ver1.6.2 - A fork of the above plugin, it does not save conf
 			       Be mindful that the back shoulder buttons cannot hold Z/R simultaneously.
 
 N-Rage's DirectInput8 Ver1.83 - Solid DirectInput plugin with tons of features. You can receive profiles
-				for this plugin from Inputs\N-Rage from the author which have fine tuned
-				configurations for the games Goldeneye, Duke Nukem, and Duke Nukem Zero.
+				for this plugin from the author which have very fine tuned configuration
+				profiles for the ROMs Goldeneye, Duke Nukem, as well as Duke Nukem Zero.
 
 Shankle's Octomino SDL2 Input 0.1.1 (1.0) - Very suggested choice if this plugin is compatible with your
 					    controller. Supports a limited configuration user interface,

@@ -111,8 +111,8 @@ Added frame advance option under the System tab to let users advance through gam
 
 Added plugin hot swapping support which allows the user to change plugins in real-time without problems.
 
-Added new Registry section under Options' tab for factory resets, standard mode, and SM64 ROMhacks mode.
-(Use standard mode to gracefully exit SM64 ROMhacks mode to better support different types of ROMhacks!)
+Added new Registry section under Options' tab for factory resets and various different modes to try out.
+(Use standard mode to gracefully exit from custom modes to better support different kinds of N64 games!)
 
 Added ROM browser refresh polling (refreshing everytime the rom browser is loaded, fine for ROM format).
 

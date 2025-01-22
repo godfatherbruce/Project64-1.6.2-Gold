@@ -177,7 +177,7 @@ char * GS               ( int StringID );
 #define LIMITFPS_OFF			150
 #define ROM_DELAY_RDP			151
 #define ROM_DELAY_RSP			152
-#define ROM_EMULATE_AI                  153
+#define MENU_SLOW			153
 //Core Styles
 #define CORE_INTERPRETER		154
 #define CORE_RECOMPILER			155
@@ -296,6 +296,8 @@ char * GS               ( int StringID );
 #define MENUDES_STANDARD		246
 #define STANDARD_WARN			247
 #define REGISTRY			248
-#define NUMBER_1		        249
-#define NUMBER_2		        250
-#define NUMBER_3		        251
+#define MENUDES_SLOW			249
+#define SLOW_WARN			250
+#define NUMBER_1		        251
+#define NUMBER_2		        252
+#define NUMBER_3		        253

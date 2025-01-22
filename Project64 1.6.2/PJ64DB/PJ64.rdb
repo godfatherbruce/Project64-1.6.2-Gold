@@ -29,7 +29,6 @@ MB=8
 CPU=Recompiler
 SCM=Protect Memory
 Status=Compatible
-AI=On
 CF=2
 [033F4C13-319EE7A7-C:45]
 Game Name=007 - The World is Not Enough (U)
@@ -37,7 +36,6 @@ MB=8
 CPU=Recompiler
 SCM=Protect Memory
 Status=Compatible
-AI=On
 CF=2
 [58FD3F25-D92EAA8D-C:50]
 Game Name=1080 Snowboarding (E) (M4)
@@ -179,7 +177,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 Status=Compatible
-AI=On
 Cheat0=81068FCE 0000//freeze fix by Jelta
 CF=2
 [2DC4FFCC-C8FF5A21-C:50]
@@ -539,7 +536,6 @@ SCM=Check Memory Advance
 Caching=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=2
 [A1B64A61-D014940B-C:50]
 Game Name=Beetle Adventure Racing! (E) (M3)
@@ -548,7 +544,6 @@ SCM=Check Memory Advance
 Caching=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 MB=8
 CF=2
 [EDF419A8-BF1904CC-C:45]
@@ -559,7 +554,6 @@ SCM=Check Memory Advance
 Caching=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=2
 [08FFA4B7-01F453B6-C:45]
 Game Name=Big Mountain 2000 (U)
@@ -1237,7 +1231,6 @@ ABL=On
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 Cheat0=D10C21A2 3021,810C21A0 2406,D10C21A2 3021,810C21A2 0001//save fix
-AI=On
 CF=2
 [630AA37D-896BD7DB-C:50]
 Game Name=Destruction Derby 64 (E) (M3)
@@ -1319,7 +1312,6 @@ MB=4
 CPU=Recompiler
 SCM=Protect Memory
 Status=Compatible
-AI=On
 CF=2
 [001A3BD0-AFB3DE1A-C:46]
 Game Name=Disney's Tarzan (F)
@@ -1327,7 +1319,6 @@ MB=4
 CPU=Recompiler
 SCM=Protect Memory
 Status=Compatible
-AI=On
 CF=2
 [4C261323-4F295E1A-C:44]
 Game Name=Disney's Tarzan (G)
@@ -1335,7 +1326,6 @@ MB=4
 CPU=Recompiler
 SCM=Protect Memory
 Status=Compatible
-AI=On
 CF=2
 [CBFE69C7-F2C0AB2A-C:45]
 Game Name=Disney's Tarzan (U)
@@ -1343,7 +1333,6 @@ MB=4
 CPU=Recompiler
 SCM=Protect Memory
 Status=Compatible
-AI=On
 CF=2
 [3DF17480-193DED5A-C:50]
 Game Name=Donald Duck - Quack Attack (E) (M5)
@@ -1795,7 +1784,6 @@ CPU=Recompiler
 SCM=Cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=2
 [F5733C67-17A3973A-C:4A]
 Game Name=FIFA - Road to World Cup 98 - World Cup heno Michi (J)
@@ -1820,7 +1808,6 @@ CPU=Recompiler
 SCM=Check Memory & Cache
 Caching=Off
 Status=Compatible
-AI=On
 CF=2
 [7613A630-3ED696F3-C:45]
 Game Name=FIFA 99 (U)
@@ -1837,7 +1824,6 @@ CPU=Recompiler
 SCM=Cache
 Caching=Off
 Status=Compatible
-AI=On
 Cheat0=810C1102 2400//Nekokabu Game Fix
 CF=2
 [C3F19159-65D2BC5A-C:45]
@@ -1847,7 +1833,6 @@ CPU=Recompiler
 SCM=Cache
 Caching=Off
 Status=Compatible
-AI=On
 Cheat0=810C1104 2400//Nekokabu Game Fix
 CF=2
 [36F1C74B-F2029939-C:50]
@@ -2397,7 +2382,6 @@ SCM=Check Memory Advance
 Caching=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=2
 [5535972E-BD8E3295-C:4A]
 Game Name=Human Grand Prix - New Generation (J)
@@ -2435,7 +2419,6 @@ CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=2
 [29A045CE-ABA9060E-C:46]
 Game Name=Hydro Thunder (F)
@@ -2444,7 +2427,6 @@ CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=2
 [C8DC65EB-3D8C8904-C:45]
 Game Name=Hydro Thunder (U)
@@ -2453,7 +2435,6 @@ CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=2
 [2FC5C34C-7A05CC9D-C:4A]
 Game Name=Hyper Olympics in Nagano 64 (J)
@@ -2552,7 +2533,6 @@ SCM=Protect Memory
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 RSP=On
-AI=On
 [5F2763C4-62412AE5-C:45]
 Game Name=International Superstar Soccer 64 (U)
 MB=4
@@ -3129,7 +3109,6 @@ CPU=Recompiler
 SCM=Protect Memory
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=2
 [13836389-265B3C76-C:45]
 Game Name=Madden Football 64 (U)
@@ -3162,7 +3141,6 @@ CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 [DEB78BBA-52F6BD9D-C:45]
 Game Name=Madden NFL 99 (U) (v1.0)
 MB=4
@@ -4127,7 +4105,6 @@ CPU=Recompiler
 SCM=Protect Memory
 SI=On
 Status=Compatible
-AI=On
 [CD3C3CDF-317793FA-C:4A]
 Game Name=Nintama Rantarou 64 Game Gallery (J)
 MB=4
@@ -4977,7 +4954,6 @@ SCM=Protect Memory
 Caching=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=1
 [AA18B1A5-07DB6AEB-C:45]
 Game Name=Resident Evil 2 (U)
@@ -4987,7 +4963,6 @@ SCM=Protect Memory
 Caching=Off
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=1
 [2F493DD0-2E64DFD9-C:45]
 Game Name=Resident Evil 2 (U) (v1.0)
@@ -5005,7 +4980,6 @@ CF=1
 CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Compatible
-AI=On
 [0F1FA987-BFC1AFA6-C:45]
 Game Name=Re-Volt (U)
 MB=8
@@ -5013,7 +4987,6 @@ CF=1
 CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Compatible
-AI=On
 [02D8366A-6CABEF9C-C:50]
 Game Name=Road Rash 64 (E)
 MB=8
@@ -5115,7 +5088,6 @@ CPU=Recompiler
 SCM=Protect Memory
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=2
 [451ACA0F-7863BC8A-C:44]
 Game Name=Rugrats - Die grosse Schatzsuche (G)
@@ -5150,7 +5122,6 @@ Game Name=Rugrats in Paris - The Movie (U)
 MB=4
 CPU=Recompiler
 SCM=Protect Memory
-AI=On
 Status=Semicompatible
 CF=2
 [B7CF2136-FA0AA715-C:50]
@@ -6089,7 +6060,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 Status=Compatible
-AI=On
 CF=2
 [63E7391C-E6CCEA33-C:45]
 Game Name=Tom and Jerry in Fists of Furry (U)
@@ -6097,7 +6067,6 @@ MB=4
 CPU=Recompiler
 SCM=Check Memory Advance
 Status=Compatible
-AI=On
 CF=2
 [4875AF3D-9A66D3A2-C:50]
 Game Name=Tom Clancy's Rainbow Six (E)
@@ -6253,7 +6222,6 @@ SCM=Check Memory & Cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
 RDP=On
-AI=On
 CF=2
 [0E596247-753D4B8B-C:4A]
 Game Name=Top Gear Rally (J)
@@ -6262,7 +6230,6 @@ CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=2
 [62269B3D-FE11B1E8-C:45]
 Game Name=Top Gear Rally (U)
@@ -6271,7 +6238,6 @@ CPU=Recompiler
 SCM=Check Memory & Cache
 Status=Semicompatible
 Plugin Note=Graphic issues with Jabo plugins
-AI=On
 CF=2
 [BEBAB677-51B0B5E4-C:50]
 Game Name=Top Gear Rally 2 (E)
@@ -6341,7 +6307,6 @@ Game Name=Transformers - Beast Wars Metals 64 (J)
 MB=4
 CPU=Recompiler
 SCM=None
-AI=On
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 CF=2
@@ -6350,7 +6315,6 @@ Game Name=Transformers - Beast Wars Transmetal (U)
 MB=4
 CPU=Recompiler
 SCM=None
-AI=On
 Status=Compatible
 Plugin Note=Graphic issues with Jabo plugins
 CF=2
@@ -6977,12 +6941,14 @@ Plugin Note=Graphic issues with Jabo plugins
 CF=2
 [AC062778-DFADFCB8-C:50]
 Game Name=World Driver Championship (E) (M5)
+MB=4
 CPU=Interpreter
 Plugin Note=Use Icepir8's plugins
 Status=Compatible
 CF=2
 [308DFEC8-CE2EB5F6-C:45]
 Game Name=World Driver Championship (U)
+MB=4
 CPU=Interpreter
 Plugin Note=Use Icepir8's plugins
 Status=Compatible

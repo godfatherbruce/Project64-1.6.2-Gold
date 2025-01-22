@@ -41,7 +41,7 @@ BOOL 	AutoStart,
 	AutoSleep, DisableRegCaching, UseIni, UseTlb, UseLinking, RomBrowser,
 	IgnoreMove, Rercursion, LimitFPS,
 	AutoFullScreen, SystemCF, AlwaysOnTop, BasicMode, DelaySI, RememberCheats,
-	DelayRSP, DelayRDP, EmulateAI, ForceClose;
+	DelayRSP, DelayRDP, ForceClose;
 DWORD CurrentFrame, CPU_Type, SystemCPU_Type, SelfModCheck, SystemSelfModCheck,
 	RomsToRemember, RomDirsToRemember;
 HWND hMainWindow, hHiddenWin, hStatusWnd;
@@ -54,6 +54,7 @@ void SetupMenu   ( HWND hWnd );
 void UninstallApplication(HWND hWnd);
 void FetchWebPages(HWND hWnd);
 void SM64settings(HWND hWnd);
+void SLOWsettings(HWND hWnd);
 void Standardsettings(HWND hWnd);
 LRESULT CALLBACK AboutIniBoxProc ( HWND, UINT, WPARAM, LPARAM );
 LRESULT CALLBACK Main_Proc       ( HWND, UINT, WPARAM, LPARAM );
@@ -254,8 +255,9 @@ void FixMenuLang (HMENU hMenu) {
 	hSubMenu = GetSubMenu(hMenu, 2);
 	hSubMenu = GetSubMenu(hSubMenu, 8);
 	MenuSetText(hSubMenu, 0, GS(MENU_UNINSTALL), "Shift+F1");
-	MenuSetText(hSubMenu, 1, GS(MENU_STANDARD), "Shift+F2");
-	MenuSetText(hSubMenu, 2, GS(MENU_SM64), "Shift+F3");
+	MenuSetText(hSubMenu, 2, GS(MENU_STANDARD), "Shift+F2");
+	MenuSetText(hSubMenu, 3, GS(MENU_SM64), "Shift+F3");
+	MenuSetText(hSubMenu, 4, GS(MENU_SLOW), "Shift+F4");
 	//Help Menu
 	hSubMenu = GetSubMenu(hMenu,3);
 	MenuSetText(hSubMenu, 0, GS(WEBPAGES), NULL);
@@ -588,6 +590,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_HELP_UNINSTALL: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_UNINSTALLAPP)); break;
 		case ID_HELP_STANDARD: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_STANDARD)); break;
 		case ID_HELP_SM64: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_SM64)); break;
+		case ID_HELP_SLOW: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_SLOW)); break;
 		case ID_CURRENTSAVE_DEFAULT:
 			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
 			break;
@@ -1117,6 +1120,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_HELP_UNINSTALL: UninstallApplication(hWnd); break;
 		case ID_HELP_STANDARD: Standardsettings(hWnd); break;
 		case ID_HELP_SM64: SM64settings(hWnd); break;
+		case ID_HELP_SLOW: SLOWsettings(hWnd); break;
 		case ID_HELP_ABOUTSETTINGFILES: AboutIniBox(); break;
 		default:
 			if (LOWORD(wParam) >= ID_FILE_RECENT_FILE && LOWORD(wParam) <= (ID_FILE_RECENT_FILE + RomsToRemember)) {
@@ -1593,7 +1597,7 @@ void FetchWebPages(HWND hWnd) {
 		char fname[_MAX_FNAME], ext[_MAX_EXT], HelpFileName[_MAX_PATH];
 		GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
 		_splitpath(path_buffer, drive, dir, fname, ext);
-		_makepath(HelpFileName, drive, dir, "Web Pages", "txt");
+		_makepath(HelpFileName, drive, dir, "Relevant Web Pages", "txt");
 		if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
 			ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
 		}
@@ -1605,6 +1609,19 @@ void SM64settings(HWND hWnd) {
 		GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
 		_splitpath(path_buffer, drive, dir, fname, ext);
 		_makepath(HelpFileName, drive, dir, "Registry SM64 ROMhacks Mode", "reg");
+		if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
+			ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
+		}
+		DestroyWindow(hWnd);
+	}
+}
+void SLOWsettings(HWND hWnd) {
+	if (MessageBox(NULL, GS(SLOW_WARN), AppName, MB_OKCANCEL | MB_ICONEXCLAMATION | MB_SETFOREGROUND) ==  IDOK) {
+		char path_buffer[_MAX_PATH], drive[_MAX_DRIVE], dir[_MAX_DIR];
+		char fname[_MAX_FNAME], ext[_MAX_EXT], HelpFileName[_MAX_PATH];
+		GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
+		_splitpath(path_buffer, drive, dir, fname, ext);
+		_makepath(HelpFileName, drive, dir, "Registry LLE Slow Mode (Experimental)", "reg");
 		if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
 			ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
 		}

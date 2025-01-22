@@ -1,0 +1,5 @@
+You can visit my unofficial Project64 1.6.2 repo here: https://github.com/BruceShankleIV/Project64-1.6.2
+
+You may receive Project64 1.6.2 updates here: https://github.com/BruceShankleIV/Project64-1.6.2/releases
+
+ROMhacks - github.com/BruceShankleIV/Project64-1.6.2/tree/main/flips.exe%20patches%20(for%20romhack%20fangames)

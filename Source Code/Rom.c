@@ -39,7 +39,7 @@
 #define MenuLocOfUsedDirs	(MenuLocOfUsedFiles + 1)
 DWORD RomFileSize, ROMRAMsize, RomSaveUsing, RomCPUType, RomSelfMod,
 RomUseTlb, RomUseLinking, RomCF, RomUseLargeBuffer, RomUseCache,
-	RomDelaySI, RomSPHack, RomDelayRDP, RomDelayRSP, RomEmulateAI;
+	RomDelaySI, RomSPHack, RomDelayRDP, RomDelayRSP;
 char CurrentFileName[MAX_PATH+1] = {""}, RomName[MAX_PATH+1] = {""}, RomHeader[0x1000];
 char LastRoms[10][MAX_PATH+1], LastDirs[10][MAX_PATH+1];
 BOOL IsValidRomImage ( BYTE Test[4] );
@@ -493,7 +493,6 @@ void LoadRomOptions ( void ) {
 	DelaySI = RomDelaySI;
 	DelayRDP = RomDelayRDP;
 	DelayRSP = RomDelayRSP;
-	EmulateAI = RomEmulateAI;
 	SPHack = RomSPHack;
 	UseLinking = RomUseLinking;
 	DisableRegCaching = !RomUseCache;
@@ -538,7 +537,6 @@ void ReadRomOptions (void) {
 	RomUseLargeBuffer = FALSE;
 	RomDelayRDP       = FALSE;
 	RomDelayRSP       = FALSE;
-	RomEmulateAI      = FALSE;
 	if (strlen(RomName) != 0) {
 		char Identifier[100];
 		LPSTR IniFileName;
@@ -590,8 +588,6 @@ void ReadRomOptions (void) {
 		if (strcmp(String, "On") == 0 ) { RomDelayRSP = TRUE; }
 		_GetPrivateProfileString(Identifier, "RDP", "", String, sizeof(String), IniFileName);
 		if (strcmp(String, "On") == 0 ) { RomDelayRDP = TRUE; }
-		_GetPrivateProfileString(Identifier, "AI", "", String, sizeof(String), IniFileName);
-		if (strcmp(String, "On") == 0 ) { RomEmulateAI = TRUE; }
 	}
 }
 void OpenN64Image ( void ) {
@@ -868,7 +864,6 @@ void SaveRomOptions (void) {
 	IniFileName = GetIniFileName();
 	sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
 	_WritePrivateProfileString(Identifier, "ABL", RomUseLinking ? "On" : " ", GetIniFileName());
-	_WritePrivateProfileString(Identifier, "AI", RomEmulateAI ? "On" : " ", GetIniFileName());
 	_WritePrivateProfileString(Identifier, "Buffer", RomUseLargeBuffer ? "On" : " ", GetIniFileName());
 	_WritePrivateProfileString(Identifier, "Caching", RomUseCache ? " " : "On", GetIniFileName());
 	switch (RomCF) {

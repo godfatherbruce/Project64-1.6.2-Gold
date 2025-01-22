@@ -165,7 +165,6 @@
 #define IDC_LANG_SEL                    1219
 #define IDC_DELAY_RDP                   1238
 #define IDC_DELAY_RSP                   1239
-#define IDC_EMULATE_AI                  1240
 #define ID_FILE_OPEN_ROM                40001
 #define ID_FILE_ROM_INFO                40002
 #define ID_FILE_EXIT                    40005
@@ -213,6 +212,7 @@
 #define ID_HELP_UNINSTALL               40167
 #define ID_HELP_STANDARD		40168
 #define ID_HELP_SM64			40169
+#define ID_HELP_SLOW			40170
 #define ID_CURRENTSAVE_10               40203
 #define ID_CURRENTSAVE_11               40204
 #define ID_CURRENTSAVE_12               40205

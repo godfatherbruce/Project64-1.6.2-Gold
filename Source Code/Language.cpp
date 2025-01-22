@@ -184,7 +184,7 @@ LANG_STR DefaultString[] = {
 	{ LIMITFPS_OFF,	       "Limit FPS off"},
 	{ ROM_DELAY_RDP,       "Delay RDP Interrupt"},
 	{ ROM_DELAY_RSP,       "Delay RSP Interrupt"},
-	{ ROM_EMULATE_AI,      "AI"},
+	{ MENU_SLOW,	       "LLE Slow Mode (Experimental)"},
 //Core Styles
 	{ CORE_INTERPRETER,    "Interpreter"},
 	{ CORE_RECOMPILER,     "Recompiler"},
@@ -303,6 +303,8 @@ LANG_STR DefaultString[] = {
 	{ MENUDES_STANDARD,	  "Attempts to terminate this instance and set various standard registry configurations"},
 	{ STANDARD_WARN,	  "This action will attempt to terminate this instance and set various standard registry configurations for standard settings"},
 	{ REGISTRY,		  "Registry"},
+	{ MENUDES_SLOW,		  "Attempts to terminate this instance and set various slow registry configurations"},
+	{ SLOW_WARN,		  "This action will attempt to terminate this instance and set various LLE slow registry configurations (Interpreter x CF3 x Icepir8's plugins). This is very experimental, you should only use this mode if you are having technical difficulties getting a ROM to work properly and you don't know what settings to use"},
 };
 class CLanguage  {
 	void FindLangName  ( int Index );

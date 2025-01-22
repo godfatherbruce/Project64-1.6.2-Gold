@@ -54,6 +54,7 @@ void SetupMenu   ( HWND hWnd );
 void UninstallApplication(HWND hWnd);
 void FetchWebPages(HWND hWnd);
 void SM64settings(HWND hWnd);
+void Standardsettings(HWND hWnd);
 LRESULT CALLBACK AboutIniBoxProc ( HWND, UINT, WPARAM, LPARAM );
 LRESULT CALLBACK Main_Proc       ( HWND, UINT, WPARAM, LPARAM );
 LRESULT CALLBACK RomInfoProc     ( HWND, UINT, WPARAM, LPARAM );
@@ -247,14 +248,19 @@ void FixMenuLang (HMENU hMenu) {
 	MenuSetText(hSubMenu, 4, GS(MENU_CONFIG_AUDIO), "Ctrl+B");
 	MenuSetText(hSubMenu, 5, GS(MENU_CONFIG_CTRL), "Ctrl+D");
 	MenuSetText(hSubMenu, 6, GS(MENU_CONFIG_RSP), "Ctrl+R");
-	MenuSetText(hSubMenu, 8, GS(MENU_SETTINGS), "Ctrl+T");
+	MenuSetText(hSubMenu, 8, GS(REGISTRY), NULL);
+	MenuSetText(hSubMenu, 10, GS(MENU_SETTINGS), "Ctrl+T");
+	//Registry
+	hSubMenu = GetSubMenu(hMenu, 2);
+	hSubMenu = GetSubMenu(hSubMenu, 8);
+	MenuSetText(hSubMenu, 0, GS(MENU_UNINSTALL), "Shift+F1");
+	MenuSetText(hSubMenu, 1, GS(MENU_STANDARD), "Shift+F2");
+	MenuSetText(hSubMenu, 2, GS(MENU_SM64), "Shift+F3");
 	//Help Menu
 	hSubMenu = GetSubMenu(hMenu,3);
-	MenuSetText(hSubMenu, 0, GS(MENU_UNINSTALL), NULL);
-	MenuSetText(hSubMenu, 1, GS(MENU_SM64), NULL);
-	MenuSetText(hSubMenu, 3, GS(WEBPAGES), NULL);
-	MenuSetText(hSubMenu, 4, GS(MENU_USER_GUIDE), NULL);
-	MenuSetText(hSubMenu, 6, GS(MENU_ABOUT_INI), NULL);
+	MenuSetText(hSubMenu, 0, GS(WEBPAGES), NULL);
+	MenuSetText(hSubMenu, 1, GS(MENU_USER_GUIDE), NULL);
+	MenuSetText(hSubMenu, 3, GS(MENU_ABOUT_INI), NULL);
 }
 char * GetIniFileName(void) {
 	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
@@ -580,6 +586,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_WEBPAGES: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(WEBPAGES_TEXT)); break;
 		case ID_HELP_ABOUTSETTINGFILES: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ABOUT_INI)); break;
 		case ID_HELP_UNINSTALL: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_UNINSTALLAPP)); break;
+		case ID_HELP_STANDARD: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_STANDARD)); break;
 		case ID_HELP_SM64: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_SM64)); break;
 		case ID_CURRENTSAVE_DEFAULT:
 			SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_GAME_SLOT));
@@ -1108,6 +1115,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		break;
 		case ID_WEBPAGES: FetchWebPages(hWnd); break;
 		case ID_HELP_UNINSTALL: UninstallApplication(hWnd); break;
+		case ID_HELP_STANDARD: Standardsettings(hWnd); break;
 		case ID_HELP_SM64: SM64settings(hWnd); break;
 		case ID_HELP_ABOUTSETTINGFILES: AboutIniBox(); break;
 		default:
@@ -1596,7 +1604,20 @@ void SM64settings(HWND hWnd) {
 		char fname[_MAX_FNAME], ext[_MAX_EXT], HelpFileName[_MAX_PATH];
 		GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
 		_splitpath(path_buffer, drive, dir, fname, ext);
-		_makepath(HelpFileName, drive, dir, "SM64 ROMhacks Registries", "reg");
+		_makepath(HelpFileName, drive, dir, "Registry SM64 ROMhacks Mode", "reg");
+		if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
+			ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
+		}
+		DestroyWindow(hWnd);
+	}
+}
+void Standardsettings(HWND hWnd) {
+	if (MessageBox(NULL, GS(STANDARD_WARN), AppName, MB_OKCANCEL | MB_ICONEXCLAMATION | MB_SETFOREGROUND) ==  IDOK) {
+		char path_buffer[_MAX_PATH], drive[_MAX_DRIVE], dir[_MAX_DIR];
+		char fname[_MAX_FNAME], ext[_MAX_EXT], HelpFileName[_MAX_PATH];
+		GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
+		_splitpath(path_buffer, drive, dir, fname, ext);
+		_makepath(HelpFileName, drive, dir, "Registry Standard Mode", "reg");
 		if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
 			ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
 		}

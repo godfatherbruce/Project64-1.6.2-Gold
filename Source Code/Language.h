@@ -292,6 +292,10 @@ char * GS               ( int StringID );
 #define MENU_SM64			242
 #define MENUDES_SM64			243
 #define SM64_WARN			244
-#define NUMBER_1		        245
-#define NUMBER_2		        246
-#define NUMBER_3		        247
+#define MENU_STANDARD			245
+#define MENUDES_STANDARD		246
+#define STANDARD_WARN			247
+#define REGISTRY			248
+#define NUMBER_1		        249
+#define NUMBER_2		        250
+#define NUMBER_3		        251

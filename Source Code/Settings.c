@@ -887,7 +887,7 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		SetFlagControl(hDlg,&RomDelayRSP, IDC_DELAY_RSP, ROM_DELAY_RSP);
 		SetFlagControl(hDlg,&RomEmulateAI, IDC_EMULATE_AI, ROM_EMULATE_AI);
 		SetFlagControl(hDlg,&RomSPHack, IDC_ROM_SPHACK, ROM_SP_HACK);
-		if (strlen(RomName) == 0) {
+		if (strlen(RomName) == 0 || !UseIni) {
 			EnableWindow(GetDlgItem(hDlg,IDC_MEMORY_SIZE_TEXT),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_RDRAM_SIZE),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_SAVE_TYPE_TEXT),FALSE);

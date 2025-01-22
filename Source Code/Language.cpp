@@ -296,9 +296,13 @@ LANG_STR DefaultString[] = {
 	{ FPS_DISPLAY,            "Frames Per Second"},
 	{ WEBPAGES,		  "Web Pages"},
 	{ ABL_OFF,		  "Off"},
-	{ MENU_SM64,		  "SM64 ROMhacks Registries"},
-	{ MENUDES_SM64,		  "Attempts to terminate this instance and set various registry configurations for SM64 Hacks"},
-	{ SM64_WARN,		  "This action will attempt to terminate this instance and set various registry configurations for SM64 ROMhacks. Change to a lower-end video plugin like Jabo's Direct3D8 1.6 after the registries have been reconfigured if your PC does not support GLideN64"},
+	{ MENU_SM64,		  "SM64 ROMhacks Mode"},
+	{ MENUDES_SM64,		  "Attempts to terminate this instance and set various SM64 registry configurations"},
+	{ SM64_WARN,		  "This action will attempt to terminate this instance and set various SM64 registry configurations for SM64 ROMhacks settings. Change to a lower-end video plugin like Jabo's Direct3D8 1.6 after the registries have been reconfigured if your PC does not support GLideN64"},
+	{ MENU_STANDARD,	  "Standard Mode"},
+	{ MENUDES_STANDARD,	  "Attempts to terminate this instance and set various standard registry configurations"},
+	{ STANDARD_WARN,	  "This action will attempt to terminate this instance and set various standard registry configurations for standard settings"},
+	{ REGISTRY,		  "Registry"},
 };
 class CLanguage  {
 	void FindLangName  ( int Index );

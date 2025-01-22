@@ -211,7 +211,8 @@
 #define ID_POPUP_EDIT                   40162
 #define ID_POPUP_DELETE                 40163
 #define ID_HELP_UNINSTALL               40167
-#define ID_HELP_SM64			40168
+#define ID_HELP_STANDARD		40168
+#define ID_HELP_SM64			40169
 #define ID_CURRENTSAVE_10               40203
 #define ID_CURRENTSAVE_11               40204
 #define ID_CURRENTSAVE_12               40205

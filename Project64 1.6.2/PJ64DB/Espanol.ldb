@@ -259,4 +259,4 @@ Salir del hilo
 #247# "Esta accion intentara detener esta instancia y coloca varias configuraciones estandares de registro para la configuracion estandar"
 #248# "Registro"
 #249# "Intentara detener esta instancia y coloca varias configuraciones de registro lenta"
-#250# "This action will attempt to terminate this instance and set various LLE slow registry configurations (Interpreter x CF3 x Icepir8's plugins). This is very experimental, you should only use this mode if you are having technical difficulties getting a ROM to work properly and you don't know what settings to use"
+#250# "Esta accion intentara detener esta instancia y coloca varias configuraciones de registro lento LLE (Interpretador x CF3 x plugins de Icepir8's). Este modo es muy experimental, solo deberias usarlo si estas teniendo problemas tecnicos consiguiendo que una ROM trabaje correctamente y no sabes que configuracion usar"

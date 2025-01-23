@@ -557,8 +557,6 @@ void RomList_PopupMenu(LPNMHDR pnmh) {
 	if (strlen(CurrentRBFileName) == 0) {
 		DeleteMenu(hPopupMenu, 7, MF_BYPOSITION);
 		DeleteMenu(hPopupMenu, 6, MF_BYPOSITION);
-		DeleteMenu(hPopupMenu, 4, MF_BYPOSITION);
-		DeleteMenu(hPopupMenu, 3, MF_BYPOSITION);
 		DeleteMenu(hPopupMenu, 1, MF_BYPOSITION);
 		DeleteMenu(hPopupMenu, 0, MF_BYPOSITION);
 	}

@@ -851,7 +851,6 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		SetDlgItemText(hDlg,IDC_CPU_TYPE_TEXT,GS(ROM_CPU_STYLE));
 		SetDlgItemText(hDlg,IDC_SELFMOD_TEXT,GS(ROM_SMCM));
 		SetDlgItemText(hDlg,IDC_MEMORY_SIZE_TEXT,GS(ROM_MEM_SIZE));
-		SetDlgItemText(hDlg,IDC_BLOCK_LINKING_TEXT,GS(ROM_ABL));
 		SetDlgItemText(hDlg,IDC_SAVE_TYPE_TEXT,GS(ROM_SAVE_TYPE));
 		SetDlgItemText(hDlg,IDC_COUNTFACT_TEXT,GS(ROM_COUNTER_FACTOR));
 		AddDropDownItem(hDlg,IDC_CPU_TYPE,ADVANCE_DEFAULTS,CPU_Default,&RomCPUType);
@@ -868,8 +867,6 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,ADVANCE_DEFAULTS,-1,&ROMRAMsize);
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,&ROMRAMsize);
 		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,&ROMRAMsize);
-		AddDropDownItem(hDlg, IDC_BLOCK_LINKING, ABL_OFF,0, &RomUseLinking);
-		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_ON,1,&RomUseLinking);
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,ROM_SAVE,Auto,&RomSaveUsing);
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_4K_eepROM,eepROM_4K,&RomSaveUsing);
 		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_16K_eepROM,eepROM_16K,&RomSaveUsing);
@@ -879,13 +876,13 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_1,1,&RomCF);
 		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_2,2,&RomCF);
 		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_3,3,&RomCF);
+		SetFlagControl(hDlg,&RomUseLinking,IDC_BLOCK_LINKING,ROM_ABL);
 		SetFlagControl(hDlg,&RomUseLargeBuffer, IDC_LARGE_COMPILE_BUFFER, ROM_LARGE_BUFFER);
 		SetFlagControl(hDlg,&RomUseTlb, IDC_USE_TLB, ROM_USE_TLB);
 		SetFlagControl(hDlg,&RomUseCache, IDC_ROM_REGCACHE, ROM_REG_CACHE);
 		SetFlagControl(hDlg,&RomDelaySI, IDC_DELAY_SI, ROM_DELAY_SI);
 		SetFlagControl(hDlg,&RomDelayRDP, IDC_DELAY_RDP, ROM_DELAY_RDP);
 		SetFlagControl(hDlg,&RomDelayRSP, IDC_DELAY_RSP, ROM_DELAY_RSP);
-
 		SetFlagControl(hDlg,&RomSPHack, IDC_ROM_SPHACK, ROM_SP_HACK);
 		if (strlen(RomName) == 0 || !UseIni) {
 			EnableWindow(GetDlgItem(hDlg,IDC_MEMORY_SIZE_TEXT),FALSE);
@@ -902,11 +899,9 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 			EnableWindow(GetDlgItem(hDlg,IDC_DELAY_SI),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_DELAY_RDP),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_DELAY_RSP),FALSE);
-
 			EnableWindow(GetDlgItem(hDlg,IDC_ROM_SPHACK),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_ROM_SPHACK),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_ROM_REGCACHE),FALSE);
-			EnableWindow(GetDlgItem(hDlg,IDC_BLOCK_LINKING_TEXT),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_BLOCK_LINKING),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_LARGE_COMPILE_BUFFER),FALSE);
 			EnableWindow(GetDlgItem(hDlg,IDC_NOTES),FALSE);
@@ -926,12 +921,10 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 			RomCPUType = SendMessage(GetDlgItem(hDlg,IDC_CPU_TYPE),CB_GETITEMDATA,indx,0);
 			indx = SendMessage(GetDlgItem(hDlg,IDC_SELFMOD),CB_GETCURSEL,0,0);
 			RomSelfMod = SendMessage(GetDlgItem(hDlg,IDC_SELFMOD),CB_GETITEMDATA,indx,0);
-			indx = SendMessage(GetDlgItem(hDlg,IDC_BLOCK_LINKING),CB_GETCURSEL,0,0);
-			RomUseLinking = SendMessage(GetDlgItem(hDlg,IDC_BLOCK_LINKING),CB_GETITEMDATA,indx,0);
+			RomUseLinking = SendMessage(GetDlgItem(hDlg,IDC_BLOCK_LINKING),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 			RomDelaySI = SendMessage(GetDlgItem(hDlg,IDC_DELAY_SI),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 			RomDelayRDP = SendMessage(GetDlgItem(hDlg,IDC_DELAY_RDP),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 			RomDelayRSP = SendMessage(GetDlgItem(hDlg,IDC_DELAY_RSP),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
-
 			RomSPHack = SendMessage(GetDlgItem(hDlg,IDC_ROM_SPHACK),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 			RomUseTlb = SendMessage(GetDlgItem(hDlg,IDC_USE_TLB),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;
 			RomUseCache = SendMessage(GetDlgItem(hDlg,IDC_ROM_REGCACHE),BM_GETSTATE, 0,0) == BST_CHECKED?TRUE:FALSE;

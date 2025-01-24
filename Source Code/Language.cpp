@@ -172,7 +172,7 @@ LANG_STR DefaultString[] = {
 	{ ROM_CPU_STYLE,       "CPU Core Style:"},
 	{ ROM_SMCM,            "Self-modifying Code Method:"},
 	{ ROM_MEM_SIZE,        "Memory Size:" },
-	{ ROM_ABL,             "Advanced Block Linking:"},
+	{ ROM_ABL,             "ABL"},
 	{ ROM_SAVE_TYPE,       "Save Type:"},
 	{ ROM_COUNTER_FACTOR,  "Counter Factor:"},
 	{ ROM_LARGE_BUFFER,    "Larger Compile Buffer"},
@@ -199,7 +199,7 @@ LANG_STR DefaultString[] = {
 	{ SMCM_CHANGE_MEM,     "Change Memory & Cache"},
 	{ SMCM_CHECK_ADV,      "Check Memory Advance"},
 
-	{ ABL_ON,	       "On"},
+	{ MENUDES_SLOW,		  "Attempts to terminate this instance and set various slow registry configurations"},
 	{ WEBPAGES_TEXT,       "Opens the web pages file which contains all relevant URL's"},
 
 	{ SMCM_CHECK_RETURN,   "Check Memory & Return"},
@@ -295,7 +295,7 @@ LANG_STR DefaultString[] = {
         { GS_PRESS,               "GS button pressed"},
 	{ FPS_DISPLAY,            "Frames Per Second"},
 	{ WEBPAGES,		  "Web Pages"},
-	{ ABL_OFF,		  "Off"},
+	{ SLOW_WARN,		  "This action will attempt to terminate this instance and set various LLE slow registry configurations (Interpreter x CF3 x Icepir8's plugins). This is very experimental, you should only use this mode if you are having technical difficulties getting a ROM to work properly and you don't know what settings to use"},
 	{ MENU_SM64,		  "SM64 ROMhacks Mode"},
 	{ MENUDES_SM64,		  "Attempts to terminate this instance and set various SM64 registry configurations"},
 	{ SM64_WARN,		  "This action will attempt to terminate this instance and set various SM64 registry configurations for SM64 ROMhacks settings. Change to a lower-end video plugin like Jabo's Direct3D8 1.6 after the registries have been reconfigured if your PC does not support GLideN64"},
@@ -303,8 +303,6 @@ LANG_STR DefaultString[] = {
 	{ MENUDES_STANDARD,	  "Attempts to terminate this instance and set various standard registry configurations"},
 	{ STANDARD_WARN,	  "This action will attempt to terminate this instance and set various standard registry configurations for standard settings"},
 	{ REGISTRY,		  "Registry"},
-	{ MENUDES_SLOW,		  "Attempts to terminate this instance and set various slow registry configurations"},
-	{ SLOW_WARN,		  "This action will attempt to terminate this instance and set various LLE slow registry configurations (Interpreter x CF3 x Icepir8's plugins). This is very experimental, you should only use this mode if you are having technical difficulties getting a ROM to work properly and you don't know what settings to use"},
 };
 class CLanguage  {
 	void FindLangName  ( int Index );

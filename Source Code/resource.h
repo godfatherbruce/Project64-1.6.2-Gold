@@ -67,7 +67,6 @@
 #define IDC_SAVE_TYPE_TEXT              1091
 #define IDC_CPU_TYPE_TEXT               1092
 #define IDC_SELFMOD_TEXT                1093
-#define IDC_BLOCK_LINKING_TEXT          1094
 #define IDC_REMEMBER                    1095
 #define IDC_COUNTFACT_TEXT              1095
 #define IDC_AUTOSLEEP                   1096

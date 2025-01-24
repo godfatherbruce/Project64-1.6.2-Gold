@@ -192,7 +192,7 @@ char * GS               ( int StringID );
 #define SMCM_CHANGE_MEM			162
 #define SMCM_CHECK_ADV			163
 
-#define ABL_ON				164
+#define MENUDES_SLOW			164
 #define WEBPAGES_TEXT			165
 
 #define SMCM_CHECK_RETURN		166
@@ -288,7 +288,7 @@ char * GS               ( int StringID );
 #define GS_PRESS                        238
 #define FPS_DISPLAY                     239
 #define WEBPAGES			240
-#define ABL_OFF				241
+#define SLOW_WARN			241
 #define MENU_SM64			242
 #define MENUDES_SM64			243
 #define SM64_WARN			244
@@ -296,8 +296,6 @@ char * GS               ( int StringID );
 #define MENUDES_STANDARD		246
 #define STANDARD_WARN			247
 #define REGISTRY			248
-#define MENUDES_SLOW			249
-#define SLOW_WARN			250
-#define NUMBER_1		        251
-#define NUMBER_2		        252
-#define NUMBER_3		        253
+#define NUMBER_1		        249
+#define NUMBER_2		        250
+#define NUMBER_3		        251

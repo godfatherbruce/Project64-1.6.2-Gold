@@ -78,21 +78,7 @@ Uninstall application registry settings from windows registry and deletes Projec
 
 (Undocumented) Checksum mismatch bypassment to allow Jabo video to apply per game hacks for romhacks.
 
-
-
-^All of the above was kept in for 1.6.2 besides the uninstall application settings, which no longer will
-delete the cache (now renamed as .bdb as in browser database since that's what it used for) because that
-introduced a regression and wasn't even needed. 1.6 Plus also introduced many regressions that have been
-fixed such as: Project64 frequently crashing, CIC Chip not showing up in ROM browser, Really poor plugin
-support for what was included, causing all sorts of problems especially with their rendition of D3D8 1.7
-which is prone to all issues mentioned below in the list of Legacy's concerning issues, like screenshots
-crashing, insane graphical glitches, emulator crashes, while the icepir8 RSP was very bad, causing black
-screen when trying to open ROMs and having overall worse performance and being unneeded which I consider
-to be bloat, and there was lots of it. The icepir8 gfx plugin was also crashing the emulator right after
-bootup with some games. It's like nobody on the Project64 team did any testing or had any heart for what
-they were developing unfortunately. It's too much to describe the huge number of issues and bugs present
-in Plus that was fixed in 1.6.2 because when I truly got to looking at the source and its given package,
-there were so many things that were fixed I've lost count. Anyways, time to list notable V1.6.2 changes:
+(Undocumented) Several new regressions and problems introduced which were later fixed in Ver1.6.2.
 
 
 

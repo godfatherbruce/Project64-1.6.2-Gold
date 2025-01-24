@@ -40,7 +40,6 @@ extern "C" {
 #define IniName						"PJ64.rdb"
 #define CheatIniName				"PJ64.cdb"
 #define LangFileName				"PJ64.ldb"
-#define CacheFileName				"PJ64.bdb"
 #define Default_AutoStart			TRUE
 #define Default_AutoSleep			TRUE
 #define Default_DisableRegCaching	FALSE

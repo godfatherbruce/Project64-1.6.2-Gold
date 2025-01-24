@@ -104,7 +104,6 @@ void FillRomExtensionInfo    ( ROM_INFO * pRomInfo );
 BOOL FillRomInfo             ( ROM_INFO * pRomInfo );
 void SetSortAscending        ( BOOL Ascending, int Index );
 void SetSortField            ( char * FieldName, int Index );
-void SaveRomList             ( void );
 #define COLOR_TEXT 0
 #define COLOR_SELECTED_TEXT 1
 #define COLOR_HIGHLIGHTED 2
@@ -237,39 +236,10 @@ BOOL IsSortAscending (int Index) {
 	return TRUE;
 }
 void LoadRomList (void) {
-	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
-	char fname[_MAX_FNAME],ext[_MAX_EXT];
-	char FileName[_MAX_PATH];
-	int Size, count, index;
+	int count, index;
 	ROM_INFO * pRomInfo;
 	LV_ITEM  lvItem;
-	DWORD dwRead;
-	HANDLE hFile;
-	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
-	_splitpath( path_buffer, drive, dir, fname, ext );
-	sprintf(FileName,"%s%sPJ64DB\\%s",drive,dir,CacheFileName);
-	hFile = CreateFile(FileName,GENERIC_READ,0,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
-	if (hFile == INVALID_HANDLE_VALUE) {
-		RefreshRomBrowser();
-		return;
-	}
-	Size = 0;
-	ReadFile(hFile,&Size,sizeof(Size),&dwRead,NULL);
-	if (Size != sizeof(ROM_INFO) || dwRead != sizeof(Size)) {
-		CloseHandle(hFile);
-		RefreshRomBrowser();
-		return;
-	}
 	FreeRomBrowser();
-	ReadFile(hFile,&ItemList.ListCount,sizeof(ItemList.ListCount),&dwRead,NULL);
-	if (ItemList.ListCount == 0) {
-		CloseHandle(hFile);
-		return;
-	}
-	ItemList.List = (ROM_INFO *)malloc(ItemList.ListCount * sizeof(ROM_INFO));
-	ItemList.ListAlloc = ItemList.ListCount;
-	ReadFile(hFile,ItemList.List,sizeof(ROM_INFO) * ItemList.ListCount,&dwRead,NULL);
-	CloseHandle(hFile);
 	ListView_DeleteAllItems(hRomList);
 	for (count = 0; count < ItemList.ListCount; count ++) {
 		pRomInfo = &ItemList.List[count];
@@ -416,7 +386,6 @@ void RefreshRomBrowser (void) {
 	FreeRomBrowser();
 	GetRomDirectory(RomDir);
 	FillRomList (RomDir);
-	SaveRomList();
 	RomList_SortList();
 }
 void ResetRomBrowserColomuns (void) {
@@ -698,23 +667,6 @@ void SaveRomBrowserColoumnPosition (int index, int Position) {
 		RegSetValueEx(hKeyResults,RomBrowserFields[index].Name,0,REG_SZ,(CONST BYTE *)szPos,strlen(szPos));
 		RegCloseKey(hKeyResults);
 	}
-}
-void SaveRomList (void) {
-	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
-	char fname[_MAX_FNAME],ext[_MAX_EXT];
-	char FileName[_MAX_PATH];
-	DWORD dwWritten;
-	HANDLE hFile;
-	int Size;
-	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
-	_splitpath( path_buffer, drive, dir, fname, ext );
-	sprintf(FileName,"%s%sPJ64DB\\%s",drive,dir,CacheFileName);
-	hFile = CreateFile(FileName,GENERIC_WRITE,0,NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, NULL);
-	Size = sizeof(ROM_INFO);
-	WriteFile(hFile,&Size,sizeof(Size),&dwWritten,NULL);
-	WriteFile(hFile,&ItemList.ListCount,sizeof(ItemList.ListCount),&dwWritten,NULL);
-	WriteFile(hFile,ItemList.List,Size * ItemList.ListCount,&dwWritten,NULL);
-	CloseHandle(hFile);
 }
 int CALLBACK SelectRomDirCallBack(HWND hwnd,DWORD uMsg,DWORD lp, DWORD lpData) {
   switch(uMsg)

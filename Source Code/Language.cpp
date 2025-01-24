@@ -168,7 +168,7 @@ LANG_STR DefaultString[] = {
 	{ ADVANCE_INFO,        "Note Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register Caching"},
 	{ ADVANCE_DEFAULTS,    "Default"},
 	{ ADVANCE_AUTO_START,  "Start Emulation Upon ROM Opening"},
-	{ ADVANCE_OVERWRITE,   "RDB ROM Settings"},
+	{ ADVANCE_OVERWRITE,   "Don't Overwrite ROM Settings With Defaults"},
 	{ ROM_CPU_STYLE,       "CPU Core Style:"},
 	{ ROM_SMCM,            "Self-modifying Code Method:"},
 	{ ROM_MEM_SIZE,        "Memory Size:" },

@@ -403,8 +403,7 @@ LRESULT CALLBACK CheatsCodeExProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM l
 			DWORD len;
 			SetWindowText(hDlg, GS(CHEAT_CODE_EXT_TITLE));
 			SetDlgItemText(hDlg,IDC_NOTE, GS(CHEAT_CODE_EXT_TXT));
-			IDOK;
-			IDCANCEL;
+			SetDlgItemText(hDlg, IDOK, GS(MENU_SAVE));
 			GetCheatName(CheatNo,CheatName,sizeof(CheatName));
 			SetDlgItemText(hDlg,IDC_CHEAT_NAME,CheatName);
 			LoadCheatExt(CheatName,CheatExt,sizeof(CheatExt));
@@ -449,82 +448,6 @@ LRESULT CALLBACK CheatsCodeExProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM l
 				if (index < 0) { index = 0; }
 				GetDlgItemText(hDlg,IDC_CHEAT_NAME,CheatName,sizeof(CheatName));
 				index = SendMessage(GetDlgItem(hDlg,IDC_CHEAT_LIST),LB_GETTEXT,index,(LPARAM)CheatExten);
-				SaveCheatExt(CheatName,CheatExten);
-				LoadCheats();
-			}
-			EndDialog(hDlg,0);
-			break;
-		case IDCANCEL:
-			EndDialog(hDlg,0);
-			break;
-		}
-	default:
-		return FALSE;
-	}
-	return TRUE;
-}
-LRESULT CALLBACK CheatsCodeQuantProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	static WORD Start, Stop, SelStart, SelStop;
-	static DWORD CheatNo;
-	switch (uMsg) {
-	case WM_INITDIALOG:
-		CheatNo = lParam;
-		{
-			char * String = NULL, Identifier[100], CheatName[300],CheatExt[300], * ReadPos;
-			LPSTR IniFileName;
-			IniFileName = GetCheatIniFileName();
-			sprintf(Identifier,"%08X-%08X-C:%X",*(DWORD *)(&RomHeader[0x10]),*(DWORD *)(&RomHeader[0x14]),RomHeader[0x3D]);
-			sprintf(CheatName,"Cheat%d_RN",CheatNo);
-			_GetPrivateProfileString2(Identifier,CheatName,"",&String,IniFileName);
-			SetDlgItemText(hDlg,IDC_NOTES,String);
-			sprintf(CheatName,"Cheat%d_R",CheatNo);
-			_GetPrivateProfileString2(Identifier,CheatName,"",&String,IniFileName);
-			Start = (WORD)(String[0] == '$'?AsciiToHex(&String[1]):atol(String));
-			ReadPos  = strrchr(String,'-');
-			if (ReadPos != NULL) {
-				Stop = (WORD)(ReadPos[1] == '$'?AsciiToHex(&ReadPos[2]):atol(&ReadPos[1]));
-			} else {
-				Stop = 0;
-			}
-			GetCheatName(CheatNo,CheatName,sizeof(CheatName));
-			SetDlgItemText(hDlg,IDC_CHEAT_NAME,CheatName);
-			LoadCheatExt(CheatName,CheatExt,sizeof(CheatExt));
-			SetDlgItemText(hDlg,IDC_VALUE,CheatExt);
-			if (String) { free(String); }
-		}
-		break;
-	case WM_COMMAND:
-		switch (LOWORD(wParam)) {
-		case IDC_VALUE:
-			if (HIWORD(wParam) == EN_UPDATE) {
-				TCHAR szTmp[10], szTmp2[10];
-				DWORD Value;
-				GetDlgItemText(hDlg,IDC_VALUE,szTmp,sizeof(szTmp));
-				Value = szTmp[0] =='$'?AsciiToHex(&szTmp[1]):AsciiToHex(szTmp);
-				if (Value > Stop) { Value = Stop; }
-				if (Value < Start) { Value = Start; }
-				sprintf(szTmp2,"$%X",Value);
-				if (strcmp(szTmp,szTmp2) != 0) {
-					SetDlgItemText(hDlg,IDC_VALUE,szTmp2);
-					if (SelStop == 0) { SelStop = strlen(szTmp2); SelStart = SelStop; }
-					SendDlgItemMessage(hDlg,IDC_VALUE,EM_SETSEL,(WPARAM)SelStart,(LPARAM)SelStop);
-				} else {
-					WORD NewSelStart, NewSelStop;
-					SendDlgItemMessage(hDlg,IDC_VALUE,EM_GETSEL,(WPARAM)&NewSelStart,(LPARAM)&NewSelStop);
-					if (NewSelStart != 0) { SelStart = NewSelStart; SelStop = NewSelStop; }
-				}
-			}
-			break;
-		case IDOK:
-			{
-				TCHAR CheatName[300], CheatExten[300], szTmp[10];
-				DWORD Value;
-				GetDlgItemText(hDlg,IDC_VALUE,szTmp,sizeof(szTmp));
-				Value = szTmp[0] =='$'?AsciiToHex(&szTmp[1]):AsciiToHex(szTmp);
-				if (Value > Stop) { Value = Stop; }
-				if (Value < Start) { Value = Start; }
-				GetDlgItemText(hDlg,IDC_CHEAT_NAME,CheatName,sizeof(CheatName));
-				sprintf(CheatExten,"$%X",Value);
 				SaveCheatExt(CheatName,CheatExten);
 				LoadCheats();
 			}

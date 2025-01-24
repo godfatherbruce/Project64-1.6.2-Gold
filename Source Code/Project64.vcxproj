@@ -93,7 +93,6 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EmulateAI.c" />
     <ClCompile Include="n64_cic_nus_6105.c" />
     <ClCompile Include="Real-Time Clock.c" />
     <ClCompile Include="RomTools_Common.c" />
@@ -133,7 +132,6 @@
     <ClCompile Include="Language.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EmulateAI.h" />
     <ClInclude Include="n64_cic_nus_6105.h" />
     <ClInclude Include="Real-Time Clock.h" />
     <ClInclude Include="RomTools_Common.h" />

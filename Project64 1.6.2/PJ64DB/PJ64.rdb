@@ -2484,7 +2484,7 @@ Game Name=Indiana Jones and the Infernal Machine (U)
 MB=8
 CPU=Interpreter
 Status=Semicompatible
-Plugin Note=Use Icepir8's LLE
+Plugin Note=Use Icepir8's plugins
 CF=2
 [E436467A-82DE8F9B-C:45]
 Game Name=Indy Racing 2000 (U)

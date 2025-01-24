@@ -309,9 +309,7 @@ Shankle's AntiFbffr ANGLE GLideN64 (1.0) - Use ANGLE GLideN64 for ROMhacks using
 
 Audio (sound) plugin:
 
-Jabo's DirectSound 1.6.1 - Supports LLE only. Use this plugin to log sound w/ Sync game to Audio set ON.
-			   Additionally, you should use this plugin when entering fullscreen mode whilst
-			   using Jabo's Direct3D8 on a TV to avoid entering fullscreen causing crashing.
+Jabo's DirectSound 1.6.1 - Supports LLE only. Use this plugin to log sound or if AziAudio fails for you.
 
 Shankle's LINK's AziAudio [SEP2023] (1.0) - Supports dual HLE / LLE sound. Use Sync game to Audio option
 					    to fix stuttering with pauses, state loads, & frame advance.
@@ -432,11 +430,12 @@ either the ROM header data above the internal name, or the baseROM's internal na
 
 Section#07 Known Issues
 --------------------------------------------------------------------------------------------------------
+F4 does not affect the game speed when used with Jabo's DirectSound 1.6.1. However, this is intentional.
+Sync game to Audio also has no noticeable effect in Jabo's DirectSound 1.6.1, which is also intentional.
+When performing plugin hot swaps, it seems to fail sometimes while Icepir8's Legacy RSP is getting used.
+The audio speed can get desynced/run too fast in a few games. Try loading savestate if this is the case.
 GLideN64 is missing microcode support for some games which will crash at some point when using GLideN64.
 The rom browser is a bit buggy but this shouldn't affect your gaming experience so it's not a big issue.
-Jabo's Direct3D8 can crash the emulator upon entering fullscreen while connected to a TV and while using
-Azimer's Audio plugin. In this situation, you should either enter fullscreen mode before connecting with
-the TV, or you should use Jabo's DirectSound 1.6.1 with Sync game to Audio on after starting up the ROM.
 GLideN64 is prone to crashing upon using "End Emulation". It seems to be related to a lack of threading.
 Lots of tearing in fullscreen mode if VSync is not set and initialized (hot swap will initialize Vsync).
 Special characters aren't supported when it comes to language database translations for other languages.

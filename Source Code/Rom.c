@@ -32,7 +32,6 @@
 #include "plugin.h"
 #include "cheats.h"
 #include "unzip.h"
-#include "EmulateAI.h"
 #include "resource.h"
 #include "RomTools_Common.h"
 #define MenuLocOfUsedFiles	11
@@ -484,8 +483,7 @@ void LoadRomOptions ( void ) {
 	CPU_Type = SystemCPU_Type;
 	if (RomCPUType != CPU_Default) { CPU_Type = RomCPUType; }
 	CountPerOp = RomCF;
-	if (CountPerOp < 1)  { CountPerOp = SystemCF; }
-	if (CountPerOp > 3)  { CountPerOp = SystemCF; }
+	if (CountPerOp < 1 || CountPerOp > 3)  { CountPerOp = SystemCF; }
 	SaveUsing = RomSaveUsing;
 	SelfModCheck = SystemSelfModCheck;
 	if (RomSelfMod != ModCode_Default) { SelfModCheck = RomSelfMod; }

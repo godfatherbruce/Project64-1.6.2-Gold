@@ -135,7 +135,7 @@
 SCM, ABL, Larger Compile Buffer, and Register Caching"
 #135# "Default"
 #136# "Start Emulation Upon ROM Opening"
-#137# "RDB ROM Settings"
+#137# "Don't Overwrite ROM Settings With Defaults"
 #138# "CPU Core Style:"
 #139# "Self-modifying Code Method:"
 #140# "Memory Size:"

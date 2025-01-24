@@ -129,7 +129,7 @@
 SCM, ABL, Bufer de Compilacion Grande y Cache de Registros"
 #135# "Predeterminado"
 #136# "Iniciar Emulacion cuando Abra la ROM"
-#137# "Configuracion RDB de la ROM"
+#137# "No sobrescribir los ajustes de la ROM con Por Defecto"
 #138# "Estilo del Nucleo del CPU:"
 #139# "Metodo de trabajar codigo:"
 #140# "Tamano de la Memoria:"

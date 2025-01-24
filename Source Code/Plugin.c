@@ -29,7 +29,6 @@
 #include "CPU.h"
 #include "plugin.h"
 #include "settings.h"
-#include "EmulateAI.h"
 #include "resource.h"
 char RspDLL[100], GfxDLL[100], AudioDLL[100],ControllerDLL[100], * PluginNames[MaxDlls];
 HINSTANCE hAudioDll, hControllerDll, hGfxDll, hRspDll;

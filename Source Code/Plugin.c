@@ -284,15 +284,17 @@ void ResetAudio(HWND hWnd) {
 		AudioInfo.RDRAM = N64MEM;
 		AudioInfo.DMEM = DMEM;
 		AudioInfo.IMEM = IMEM;
-		AudioInfo.MI__INTR_REG = &AI_DUMMY;
+		if (CPU_Type == CPU_Recompiler) AudioInfo.MI__INTR_REG = &AI_DUMMY;
+		else AudioInfo.MI__INTR_REG = &AudioIntrReg;
 		AudioInfo.AI__DRAM_ADDR_REG = &AI_DRAM_ADDR_REG;
 		AudioInfo.AI__LEN_REG = &AI_LEN_REG;
 		AudioInfo.AI__CONTROL_REG = &AI_CONTROL_REG;
-		AudioInfo.AI__STATUS_REG =  &AI_DUMMY;
+		if (CPU_Type == CPU_Recompiler) AudioInfo.AI__STATUS_REG = &AI_DUMMY;
+		else AudioInfo.AI__STATUS_REG = &AI_STATUS_REG;
 		AudioInfo.AI__DACRATE_REG = &AI_DACRATE_REG;
 		AudioInfo.AI__BITRATE_REG = &AI_BITRATE_REG;
 		AudioInfo.CheckInterrupts = AiCheckInterrupts;
-		EmuAI_InitializePluginHook();
+		if (CPU_Type == CPU_Recompiler) EmuAI_InitializePluginHook();
 		if (!InitiateAudio(AudioInfo)) {
 			AiCloseDLL       = NULL;
 			AiDacrateChanged = NULL;
@@ -377,15 +379,17 @@ void SetupPlugins (HWND hWnd) {
 		AudioInfo.RDRAM = N64MEM;
 		AudioInfo.DMEM = DMEM;
 		AudioInfo.IMEM = IMEM;
-		AudioInfo.MI__INTR_REG = &AI_DUMMY;
+		if (CPU_Type == CPU_Recompiler) AudioInfo.MI__INTR_REG = &AI_DUMMY;
+		else AudioInfo.MI__INTR_REG = &AudioIntrReg;
 		AudioInfo.AI__DRAM_ADDR_REG = &AI_DRAM_ADDR_REG;
 		AudioInfo.AI__LEN_REG = &AI_LEN_REG;
 		AudioInfo.AI__CONTROL_REG = &AI_CONTROL_REG;
-		AudioInfo.AI__STATUS_REG =  &AI_DUMMY;
+		if (CPU_Type == CPU_Recompiler) AudioInfo.AI__STATUS_REG = &AI_DUMMY;
+		else AudioInfo.AI__STATUS_REG = &AI_STATUS_REG;
 		AudioInfo.AI__DACRATE_REG = &AI_DACRATE_REG;
 		AudioInfo.AI__BITRATE_REG = &AI_BITRATE_REG;
 		AudioInfo.CheckInterrupts = AiCheckInterrupts;
-		EmuAI_InitializePluginHook();
+		if (CPU_Type == CPU_Recompiler) EmuAI_InitializePluginHook();
 		if (!InitiateAudio(AudioInfo)) {
 			AiCloseDLL       = NULL;
 			AiDacrateChanged = NULL;

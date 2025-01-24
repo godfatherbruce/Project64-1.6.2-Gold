@@ -161,7 +161,7 @@ char * GS               ( int StringID );
 #define ADVANCE_INFO			134
 #define ADVANCE_DEFAULTS		135
 #define ADVANCE_AUTO_START		136
-#define ADVANCE_OVERWRITE		137
+#define NUMBER_1			137
 #define ROM_CPU_STYLE			138
 #define ROM_SMCM			139
 #define ROM_MEM_SIZE			140
@@ -296,6 +296,5 @@ char * GS               ( int StringID );
 #define MENUDES_STANDARD		246
 #define STANDARD_WARN			247
 #define REGISTRY			248
-#define NUMBER_1		        249
-#define NUMBER_2		        250
-#define NUMBER_3		        251
+#define NUMBER_2		        249
+#define NUMBER_3		        250

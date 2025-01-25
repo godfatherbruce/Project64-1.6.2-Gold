@@ -165,7 +165,7 @@ LANG_STR DefaultString[] = {
 	{ ADVANCE_INFO,        "Note Interpreter is not affected by the following settings:\nSCM, ABL, Larger Compile Buffer, and Register Caching"},
 	{ ADVANCE_DEFAULTS,    "Default"},
 	{ ADVANCE_AUTO_START,  "Start Emulation Upon ROM Opening"},
-	{ NUMBER_1,	       "1 (lagless, unstable)"},
+	{ NUMBER_1,	       "1 (Lagless, Unstable)"},
 	{ ROM_CPU_STYLE,       "CPU Core Style:"},
 	{ ROM_SMCM,            "Self-modifying Code Method:"},
 	{ ROM_MEM_SIZE,        "Memory Size:" },
@@ -184,7 +184,7 @@ LANG_STR DefaultString[] = {
 	{ MENU_SLOW,	       "LLE Slow Mode (Experimental)"},
 //Core Styles
 	{ CORE_INTERPRETER,    "Interpreter"},
-	{ CORE_RECOMPILER,     "Recompiler"},
+	{ CORE_RECOMPILER,     "Recompiler (AI Audio)"},
 //RDRAM Size
 	{ RDRAM_4MB,           "4 MB" },
 	{ RDRAM_8MB,           "8 MB" },
@@ -300,8 +300,8 @@ LANG_STR DefaultString[] = {
 	{ MENUDES_STANDARD,	  "Attempts to terminate this instance and set various standard registry configurations"},
 	{ STANDARD_WARN,	  "This action will attempt to terminate this instance and set various standard registry configurations for standard settings"},
 	{ REGISTRY,		  "Configure registries"},
-	{ NUMBER_2,		  "2 (laggy, typically stable)"},
-	{ NUMBER_3,               "3 (laggard, always stable)"},
+	{ NUMBER_2,		  "2 (Laggy, Semi-stable)"},
+	{ NUMBER_3,               "3 (Laggard, Stable)"},
 };
 class CLanguage  {
 	void FindLangName  ( int Index );

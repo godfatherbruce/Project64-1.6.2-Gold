@@ -52,7 +52,6 @@ void MenuSetText ( HMENU hMenu, int MenuPos, char * Title, char * ShotCut );
 void RomInfo     ( void );
 void SetupMenu   ( HWND hWnd );
 void UninstallApplication(HWND hWnd);
-void openRegistryEditor();
 void SM64settings(HWND hWnd);
 void SLOWsettings(HWND hWnd);
 void Standardsettings(HWND hWnd);
@@ -1116,7 +1115,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 				}
 			}
 		break;
-		case ID_REGEDIT: openRegistryEditor(); break;
+		case ID_REGEDIT: ShellExecute(NULL, "open", "regedit", NULL, NULL, SW_SHOWNORMAL); break;
 		case ID_HELP_UNINSTALL: UninstallApplication(hWnd); break;
 		case ID_HELP_STANDARD: Standardsettings(hWnd); break;
 		case ID_HELP_SM64: SM64settings(hWnd); break;
@@ -1591,12 +1590,6 @@ void UninstallApplication(HWND hWnd) {
 		}
 		DestroyWindow(hWnd);
 	}
-}
-void openRegistryEditor() {
-    char command[256];
-    sprintf(command, "start regedit");
-    int result = system(command);
-	FreeConsole();
 }
 void SM64settings(HWND hWnd) {
 	if (MessageBox(NULL, GS(SM64_WARN), AppName, MB_OKCANCEL | MB_ICONEXCLAMATION | MB_SETFOREGROUND) ==  IDOK) {

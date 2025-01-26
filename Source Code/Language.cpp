@@ -184,7 +184,7 @@ LANG_STR DefaultString[] = {
 	{ MENU_SLOW,	       "LLE Slow Mode (Experimental)"},
 //Core Styles
 	{ CORE_INTERPRETER,    "Interpreter"},
-	{ CORE_RECOMPILER,     "Recompiler (AI Audio)"},
+	{ CORE_RECOMPILER,     "Recompiler"},
 //RDRAM Size
 	{ RDRAM_4MB,           "4 MB" },
 	{ RDRAM_8MB,           "8 MB" },

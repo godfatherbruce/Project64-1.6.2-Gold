@@ -296,8 +296,7 @@ Audio (sound) plugin:
 
 Jabo's DirectSound 1.6.1 - Supports LLE only. Use this plugin to wav log or if AziAudio gives you issues
 			   with your current machine (less demanding than AziAudio with lower end PC's).
-			   Note that this plugin does not support F4 with recompiler games and has awful
-			   crackling with interpreter games and has issues with Sync game to Audio mode.
+			   Use Sync game to Audio (per-game) during wav audio logging to stop crackling.
 
 Shankle's LINK's AziAudio [SEP2023] (1.0) - Supports dual HLE / LLE sound. Use Sync game to Audio option
 					    to fix stuttering which happens upon pause, savestate loads,
@@ -419,14 +418,7 @@ either the ROM header data above the internal name, or the baseROM's internal na
 
 Section#07 Known Issues
 --------------------------------------------------------------------------------------------------------
-F4 does not affect the game speed when used with Jabo's DirectSound 1.6.1 when using the recompiler CPU.
-However, F4 does affect game speed with Jabo's DirectSound 1.6.1 on interpreter, but on the interpreter,
-Sync game to Audio is fully off and there is a lot of crackling in Jabo's DirectSound 1.6.1 due to that.
-If you enable Sync game to Audio for games which are using MusyX audio, it freezes until you disable it,
-but this only applies for Jabo's DirectSound and is not an issue with AziAudio, but Sync must be enabled
-in Jabo's DirectSound with games using the interpreter cpu so as to prevent the crackling. Use AziAudio!
-The audio speed does not sync with the game speed when Limit FPS is off in a very small number of games.
-When performing plugin hot swaps, it seems to fail sometimes while Icepir8's Legacy RSP is getting used.
+The audio does not sync with the game when Limit FPS is off in a few games while on AziAudio with AI on.
 GLideN64 is missing microcode support for some games which will crash at some point when using GLideN64.
 The rom browser is a bit buggy but this shouldn't affect your gaming experience so it's not a big issue.
 GLideN64 is prone to crashing upon using "End Emulation". It seems to be related to a lack of threading.

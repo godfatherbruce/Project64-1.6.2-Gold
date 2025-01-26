@@ -57,7 +57,6 @@ typedef struct {
 #define PiTimer					2
 #define ViTimer					3
 #define RspTimer				4
-#define AiTimer					5
 typedef struct {
 	int  NextTimer[MaxTimers];
 	BOOL Active[MaxTimers];
@@ -77,11 +76,6 @@ void GetAutoSaveDir     ( char * Directory );
 void GetInstantSaveDir  ( char * Directory );
 void InPermLoop         ( void );
 void INITIALIZECPUFlags ( void );
-void EmuAI_ClearAudio();
-void EmuAI_InitializePluginHook();
-void EmuAI_SetFrameRate(int frameRate);
-void EmuAI_SetVICountPerFrame(DWORD value);
-void EmuAI_SetNextTimer ();
 BOOL Machine_LoadState  ( void );
 BOOL Machine_SaveState  ( void );
 void PauseCpu           ( void );

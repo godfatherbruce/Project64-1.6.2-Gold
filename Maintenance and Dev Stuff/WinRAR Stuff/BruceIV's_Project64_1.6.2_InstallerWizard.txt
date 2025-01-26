@@ -26,16 +26,13 @@ Text to display in SFX window
 Project64 1.6.2 is a 3rd party deployment-ready dual-core/level Nintendo 64 software emulator developed by Edwin Bruce Shankle IV from the source code of Project64 1.6.1/1.6 Plus in this fork. This is not a friendly fork, this is a divergent fork made with the intent to provide an update for Project64 1.6/1.6.1 accoording to my vision. This does not target anywhere near hardware-level accuracy or Public Domain ROMs. Project64 1.6.2's specialty is with playing non-hardware compatible ROMhacks (typically older one's) and running on low-end Windows computers which lack the necessary specs required for accurate emulation, although this emulator is capable of relatively accurate emulation with the right settings and plugins being used (Icepir8 plugins). Project64 1.6.2 is very flexible in terms of what it can support by utilizing the included plugin library. This emulator has received one vulnerability fix, but there could be other vulnerabilities highlighted in the future so be on the lookout! See the SECURITY.MD file on the GitHub repository for more details here: https://github.com/BruceShankleIV/Project64-1.6.2/blob/main/SECURITY.MD
 
 
-Before installing or using this application, please carefully review the following information as is described below.
+Before installing or using this application, please carefully review the following information as described below.
 
 
 
 
 Windows Security's Virus & threat protection can interfere with this installer wizard and potentially Project64.exe itself. I highly suggest disabling real-time protection under Virus & threat protection settings before installing 1.6.2. After installing 1.6.2 from this InstallerWiz, scroll to the bottom, click "Add or remove exclusions", click "Add an exclusion", click "Folder", then single-click on the Project64 1.6.2 folder and press "Select Folder". Once you have done all that, re-enable real-time protection to turn your antivirus back on.
 
-
-
-On the GitHub repository you can find a CF1 portable which sets Counter Factor to 1 by default and updates the RDB to account for this. Do not apply this patch unless it has a niche benefit for you, such as if the romhacks you play with this emulator are only of Super Mario 64 and it doesn't happen to be SKELUX's Star Road which we already have RDB entries for.
 
 
 Avoid loading decompressed roms into the emulator or they can misbehave/crash. When I say decompressed I don't mean extracted from a .zip/compression format, but when the .z64/.n64 file itself has not been compressed.

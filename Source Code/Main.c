@@ -52,7 +52,7 @@ void MenuSetText ( HMENU hMenu, int MenuPos, char * Title, char * ShotCut );
 void RomInfo     ( void );
 void SetupMenu   ( HWND hWnd );
 void UninstallApplication(HWND hWnd);
-void FetchWebPages(HWND hWnd);
+void openRegistryEditor();
 void SM64settings(HWND hWnd);
 void SLOWsettings(HWND hWnd);
 void Standardsettings(HWND hWnd);
@@ -255,14 +255,14 @@ void FixMenuLang (HMENU hMenu) {
 	hSubMenu = GetSubMenu(hMenu, 2);
 	hSubMenu = GetSubMenu(hSubMenu, 8);
 	MenuSetText(hSubMenu, 0, GS(MENU_UNINSTALL), "Shift+F1");
-	MenuSetText(hSubMenu, 2, GS(MENU_STANDARD), "Shift+F2");
-	MenuSetText(hSubMenu, 3, GS(MENU_SM64), "Shift+F3");
-	MenuSetText(hSubMenu, 4, GS(MENU_SLOW), "Shift+F4");
+	MenuSetText(hSubMenu, 1, GS(MENU_STANDARD), "Shift+F2");
+	MenuSetText(hSubMenu, 2, GS(MENU_SM64), "Shift+F3");
+	MenuSetText(hSubMenu, 3, GS(MENU_SLOW), "Shift+F4");
+	MenuSetText(hSubMenu, 5, GS(OPEN_REGEDIT), "Shift+R");
 	//Help Menu
 	hSubMenu = GetSubMenu(hMenu,3);
-	MenuSetText(hSubMenu, 0, GS(WEBPAGES), NULL);
-	MenuSetText(hSubMenu, 1, GS(MENU_USER_GUIDE), NULL);
-	MenuSetText(hSubMenu, 3, GS(MENU_ABOUT_INI), NULL);
+	MenuSetText(hSubMenu, 0, GS(MENU_USER_GUIDE), NULL);
+	MenuSetText(hSubMenu, 1, GS(MENU_ABOUT_INI), NULL);
 }
 char * GetIniFileName(void) {
 	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
@@ -585,7 +585,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case ID_OPTIONS_CONFIG_RSP: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_CONFIG_RSP)); break;
 		case ID_OPTIONS_SETTINGS: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_SETTINGS)); break;
 		case ID_HELP_GUIDE: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_USER_GUIDE)); break;
-		case ID_WEBPAGES: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(WEBPAGES_TEXT)); break;
+		case ID_REGEDIT: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(REGEDIT_MENUDES)); break;
 		case ID_HELP_ABOUTSETTINGFILES: SendMessage(hStatusWnd,SB_SETTEXT,0,(LPARAM)GS(MENUDES_ABOUT_INI)); break;
 		case ID_HELP_UNINSTALL: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_UNINSTALLAPP)); break;
 		case ID_HELP_STANDARD: SendMessage(hStatusWnd, SB_SETTEXT, 0, (LPARAM)GS(MENUDES_STANDARD)); break;
@@ -1116,7 +1116,7 @@ LRESULT CALLBACK Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 				}
 			}
 		break;
-		case ID_WEBPAGES: FetchWebPages(hWnd); break;
+		case ID_REGEDIT: openRegistryEditor(); break;
 		case ID_HELP_UNINSTALL: UninstallApplication(hWnd); break;
 		case ID_HELP_STANDARD: Standardsettings(hWnd); break;
 		case ID_HELP_SM64: SM64settings(hWnd); break;
@@ -1592,15 +1592,11 @@ void UninstallApplication(HWND hWnd) {
 		DestroyWindow(hWnd);
 	}
 }
-void FetchWebPages(HWND hWnd) {
-		char path_buffer[_MAX_PATH], drive[_MAX_DRIVE], dir[_MAX_DIR];
-		char fname[_MAX_FNAME], ext[_MAX_EXT], HelpFileName[_MAX_PATH];
-		GetModuleFileName(NULL, path_buffer, sizeof(path_buffer));
-		_splitpath(path_buffer, drive, dir, fname, ext);
-		_makepath(HelpFileName, drive, dir, "Relevant Web Pages", "txt");
-		if (HtmlHelp(hWnd, HelpFileName, HH_DISPLAY_INDEX, 0) == NULL) {
-			ShellExecute(hWnd, "open", HelpFileName, NULL, NULL, SW_SHOW);
-		}
+void openRegistryEditor() {
+    char command[256];
+    sprintf(command, "start regedit");
+    int result = system(command);
+	FreeConsole();
 }
 void SM64settings(HWND hWnd) {
 	if (MessageBox(NULL, GS(SM64_WARN), AppName, MB_OKCANCEL | MB_ICONEXCLAMATION | MB_SETFOREGROUND) ==  IDOK) {

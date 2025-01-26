@@ -193,8 +193,7 @@ char * GS               ( int StringID );
 #define SMCM_CHECK_ADV			163
 
 #define MENUDES_SLOW			164
-#define WEBPAGES_TEXT			165
-
+#define REGEDIT_MENUDES			165
 #define SMCM_CHECK_RETURN		166
 #define SAVE_4K_eepROM			167
 #define SAVE_16K_eepROM			168
@@ -287,7 +286,7 @@ char * GS               ( int StringID );
 #define FULLSCREEN_ENTERED              237
 #define GS_PRESS                        238
 #define FPS_DISPLAY                     239
-#define WEBPAGES			240
+#define OPEN_REGEDIT			240
 #define SLOW_WARN			241
 #define MENU_SM64			242
 #define MENUDES_SM64			243

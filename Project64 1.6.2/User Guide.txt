@@ -1,3 +1,4 @@
+You can visit my unofficial Project64 1.6.2 repo here: https://github.com/BruceShankleIV/Project64-1.6.2
 ********************************************************************************************************
 ---------------------------
 |||||Table of Contents|||||
@@ -74,8 +75,6 @@ Max 10 Recent ROM Dir as default
 
 ROM Dir Recursion as default, this allows sub-directories to be included in ROM browser
 
-Uninstall application registry settings from windows registry and deletes Project64.cache
-
 (Undocumented) Checksum mismatch bypassment to allow Jabo video to apply per game hacks for romhacks.
 
 (Undocumented) Several new regressions and problems introduced which were later fixed in Ver1.6.2.
@@ -97,7 +96,7 @@ Added frame advance option under the System tab to let users advance through gam
 
 Added plugin hot swapping support which allows the user to change plugins in real-time without problems.
 
-Added new Registry section under Options' tab for factory resets and various different modes to try out.
+Added new Registry section under the Options tab with various different registry options for you to try.
 (Use standard mode to gracefully exit from custom modes to better support different kinds of N64 games!)
 
 Added ROM browser refresh polling (refreshing everytime the rom browser is loaded, fine for ROM format).
@@ -295,7 +294,8 @@ Shankle's AntiFbffr ANGLE GLideN64 (1.0) - Use ANGLE GLideN64 for ROMhacks using
 
 Audio (sound) plugin:
 
-Jabo's DirectSound 1.6.1 - Supports LLE only. Use this plugin to log sound or if AziAudio fails for you.
+Jabo's DirectSound 1.6.1 - Supports LLE only. Use this plugin to wav log or if AziAudio gives you issues
+			   with your current machine (less demanding than AziAudio with lower end PC's).
 			   Note that this plugin does not support F4 with recompiler games and has awful
 			   crackling with interpreter games and has issues with Sync game to Audio mode.
 

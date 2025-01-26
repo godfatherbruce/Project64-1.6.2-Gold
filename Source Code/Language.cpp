@@ -196,9 +196,8 @@ LANG_STR DefaultString[] = {
 	{ SMCM_CHANGE_MEM,     "Change Memory & Cache"},
 	{ SMCM_CHECK_ADV,      "Check Memory Advance"},
 
-	{ MENUDES_SLOW,		  "Attempts to terminate this instance and set various slow registry configurations"},
-	{ WEBPAGES_TEXT,       "Opens the web pages file which contains all relevant URL's"},
-
+	{ MENUDES_SLOW,	       "Attempts to terminate this instance and set various slow registry configurations"},
+	{ REGEDIT_MENUDES,     "Opens the registry editor to view/edit/export registries"},
 	{ SMCM_CHECK_RETURN,   "Check Memory & Return"},
 	{ SAVE_4K_eepROM,      "4kbit eepROM"},
 	{ SAVE_16K_eepROM,     "16kbit eepROM"},
@@ -291,7 +290,7 @@ LANG_STR DefaultString[] = {
         { FULLSCREEN_ENTERED,     "Fullscreen mode entered"},
         { GS_PRESS,               "GS button pressed"},
 	{ FPS_DISPLAY,            "Frames Per Second"},
-	{ WEBPAGES,		  "Web Pages"},
+	{ OPEN_REGEDIT,		  "Open REGEDIT"},
 	{ SLOW_WARN,		  "This action will attempt to terminate this instance and set various LLE slow registry configurations (Interpreter x CF3 x Icepir8's plugins). It's experimental, you should only use this mode if you are having technical difficulties getting a ROM to work properly and you don't know what settings to use"},
 	{ MENU_SM64,		  "SM64 ROMhacks Mode"},
 	{ MENUDES_SM64,		  "Attempts to terminate this instance and set various SM64 registry configurations"},
@@ -299,7 +298,7 @@ LANG_STR DefaultString[] = {
 	{ MENU_STANDARD,	  "Standard Mode"},
 	{ MENUDES_STANDARD,	  "Attempts to terminate this instance and set various standard registry configurations"},
 	{ STANDARD_WARN,	  "This action will attempt to terminate this instance and set various standard registry configurations for standard settings"},
-	{ REGISTRY,		  "Configure registries"},
+	{ REGISTRY,		  "Configure Registries"},
 	{ NUMBER_2,		  "2 (Laggy, Semi-stable)"},
 	{ NUMBER_3,               "3 (Laggard, Stable)"},
 };

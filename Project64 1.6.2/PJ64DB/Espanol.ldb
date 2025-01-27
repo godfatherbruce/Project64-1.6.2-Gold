@@ -239,6 +239,7 @@ Salir del hilo
 #230# "El nombre del Truco ya esta en uso"
 #231# "Has alcanzado la cantidad maxima de Trucos permitidos para esta ROM"
 #232# "Salir del hilo
+(Intenta el Plugin LLE de Icepir8's)
 (Intenta Revisar Memoria y Devolver)
 (Intenta Estilo de Nucleo de CPU Interprete)"
 #233# "Esta accion intentara detener esta instancia y resetea de fabrica todo junto la configuracion de registro"

@@ -282,7 +282,7 @@ LANG_STR DefaultString[] = {
 	{ MSG_PLUGIN_NOT_INIT,    "Cannot open a ROM because plugins haven't successfully initialized"},
 	{ MSG_CHEAT_NAME_IN_USE,  "Cheat name is currently in use"},
 	{ MSG_MAX_CHEATS,         "You have reached the maximum amount of cheats allowed for this ROM"},
-	{ GZ_ROMS,                "Exiting thread\n(Try Check Memory & Return)\n(Try Interpreter CPU Core Style)"},
+	{ GZ_ROMS,                "Exiting thread\n(Try Icepir8's LLE Plugin)\n(Try Check Memory & Return)\n(Try Interpreter CPU Core Style)"},
         { MSG_CONFIRMATION_UNINSTALL, "This action will attempt to terminate this instance and factory reset included registry configurations"},
         { MSG_PLUGIN_HOT_SWAP,    "Plugin hot swapping in progress"},
         { PLUG_HOT_SWAP_DOUBLE,   "Double click the OK button while plugin hot swapping to quickly close Project64 from this window"},

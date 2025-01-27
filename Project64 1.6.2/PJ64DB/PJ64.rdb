@@ -4953,7 +4953,16 @@ CPU=Recompiler
 SCM=Protect Memory
 Caching=Off
 Status=Compatible
-Plugin Note=Use Icepir8's LLE
+Plugin Note=Graphic issues with Jabo plugins
+CF=1
+[AA18B1A5-07DB6AEB-C:45]
+Game Name=Resident Evil 2 (U)
+MB=8
+CPU=Recompiler
+SCM=Protect Memory
+Caching=Off
+Status=Compatible
+Plugin Note=Graphic issues with Jabo plugins
 CF=1
 [2F493DD0-2E64DFD9-C:45]
 Game Name=Resident Evil 2 (U) (v1.0)
@@ -4963,7 +4972,7 @@ CPU=Recompiler
 SCM=Protect Memory
 Caching=Off
 Status=Semicompatible
-Plugin Note=Use Icepir8's LLE
+Plugin Note=Graphic issues with Jabo plugins
 [C3E7E29E-5D7251CC-C:50]
 Game Name=Re-Volt (E) (M4)
 MB=8

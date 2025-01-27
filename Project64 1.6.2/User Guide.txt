@@ -532,35 +532,39 @@ Attackers on www.pj64-emu.com might attempt to trick you into installing program
 harm your browsing experience (for example, by changing your homepage or showing
 extra ads on sites that you visit)."
 
-https://youtu.be/DzoL7KwgC20?feature=shared&t=167
+Want to see what I'm talking about? View the commit history for Project64's installers
+
+https://github.com/project64/project64/commit/596caf94c5c3e0ef69403186b810f8bd71980831
+https://github.com/project64/project64/commit/7937d356d9bf12192ddc03f47f32b6ce2742cd3f
+https://github.com/project64/project64/commit/f825b21de5e7e3cbc5722275754274eadb5497d0
+https://github.com/project64/project64/commit/c823815cc123dca12a23121ff2d58ef10c2558f5
+https://github.com/project64/project64/commit/a7e723e642ca72cba0a47ef04b70085ce4065707
+https://github.com/project64/project64/commit/047eab9b7038460a533faf510d435adb780a5e41
+https://github.com/project64/project64/commit/a201d219eab294e70b2f17699de238d54efa962a
+https://github.com/project64/project64/commit/47b1456c8d46df9085a29d3eac1f08b38f77de47
 https://www.emutalk.net/threads/removing-the-spyware-from-project64-2-1.54652/
 https://www.emutalk.net/threads/removing-the-spyware-from-project64-2-1.54652/page-2
-https://github.com/project64/project64/pull/354 (github code is verifiable evidence, cannot be deleted!)
+
 Use http://web.archive.org/ to pull up these links if they are not available to you for whatever reason.
 
+Look at the stuff on GitHub. It's awful. Delta Toolbar, Delta SearchBar, and they told people installing
+malware helps support Project64. I see it in the source. It literally says this in ln 315 installer.iss:
 
-Then, the guy responsible for this has the audacity to state that he's been, "wholeheartedly committed".
-Wholeheartedly - with complete sincerity and commitment.
-Sincerity - the quality of being free from pretense, deceit, or hypocrisy.
-Pretense - a false display of feelings, attitudes, or intentions.
-Deceit - the action or practice of deceiving someone by concealing or misrepresenting the truth
-Hypocrisy - the practice of claiming to have moral standards or beliefs to which one's own behavior does
-not conform; pretense.
+'Lollipop - Optional Installation', 'Installing this helps supports Project 64'
 
-In the same page where they claim to be "wholeheartedly committed", they also say the following message:
-"It's worth noting that Project64 will stay free!" Which feels so deceiving because it's not really free
-as anyone would know who has used Project64 for any sufficient period of time. A donation box shall show
-up about donating, which you can close and continue using the emulator. But then it shows up again, then
-again, and then it will show up again and you will not be able to close the popup for a while unless you
-download some 3rd party files from the internet and run it to circumvent the irritating donating popups,
-or if you hand over some of your hard-earned deserved mulah to Mr. "wholeheartedly comitted" over there.
+https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?Name=Adware:Win32/Lollipop
 
-The Project64 of today is not wholehearted, but the Project64 of the past was a genuine ambitious effort
-to create an awesome Nintendo 64 emulator. I just wanted to clarify here, that I do not subscribe to the
-scummy strategies employed by the original creator of Project64 "Zilmar" nor to any of his followers who
-claim "there was never any malware in Project64" like Derek Roe. I want nothing to do with these nutjobs
-or their bullshit so please do not assume that this version of Project64 has anything to do with theirs.
-Thank you in advance.
+What's microsoft got to say about this?
+
+"This adware program shows ads as you browse the web. It can also redirect your search engine results,
+monitor what you do on your PC, download applications, and send information about your PC to a hacker.
+
+It can be downloaded from the program's website or bundled with some third-party software installation
+programs."
+
+
+I just want to clarify that I am not going to pull this BS on you. Project64 1.6.2 won't be hacking you.
+And if you don't believe that guess what, you don't have to take my word for it. Get on GitHub yourself.
 --------------------------------------------------------------------------------------------------------
 
 Section#11 Special Thanks & Shoutouts

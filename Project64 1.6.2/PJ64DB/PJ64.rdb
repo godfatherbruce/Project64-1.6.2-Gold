@@ -1,6 +1,6 @@
 
 [Meta]
-Author=Bruce Shankle IV
+Author=Bruce Shankle IV x Smiff
 Date=January 2025
 Version=1.6.2 (2025) WIP
 [Microcode Identifiers]
@@ -4952,17 +4952,17 @@ MB=8
 CPU=Recompiler
 SCM=Protect Memory
 Caching=Off
-Status=Compatible
-Plugin Note=Graphic issues with Jabo plugins
+Status=Semicompatible
+Plugin Note=Use Icepir8's LLE
 CF=1
 [AA18B1A5-07DB6AEB-C:45]
-Game Name=Resident Evil 2 (U)
+Game Name=Resident Evil 2 (U) (v1.1)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
 Caching=Off
-Status=Compatible
-Plugin Note=Graphic issues with Jabo plugins
+Status=Semicompatible
+Plugin Note=Use Icepir8's LLE
 CF=1
 [2F493DD0-2E64DFD9-C:45]
 Game Name=Resident Evil 2 (U) (v1.0)
@@ -4972,7 +4972,7 @@ CPU=Recompiler
 SCM=Protect Memory
 Caching=Off
 Status=Semicompatible
-Plugin Note=Graphic issues with Jabo plugins
+Plugin Note=Use Icepir8's LLE
 [C3E7E29E-5D7251CC-C:50]
 Game Name=Re-Volt (E) (M4)
 MB=8
@@ -5597,14 +5597,14 @@ Game Name=Star Wars Episode I - Battle for Naboo (E)
 MB=8
 CPU=Recompiler
 SCM=Protect Memory
-Status=Compatible
+Status=Semicompatible
 Plugin Note=Use Icepir8's LLE
 CF=2
 [3D02989B-D4A381E2-C:45]
 Game Name=Star Wars Episode I - Battle for Naboo (U)
 MB=8
 CPU=Interpreter
-Status=Compatible
+Status=Semicompatible
 Plugin Note=Use Icepir8's LLE
 CF=2
 [53ED2DC4-06258002-C:50]
@@ -5665,7 +5665,7 @@ CF=2
 Game Name=Stunt Racer 64 (U)
 MB=8
 CPU=Interpreter
-Status=Compatible
+Status=Semicompatible
 Plugin Note=Use Icepir8's plugins
 CF=2
 [F4646B69-C5751095-C:4A]
@@ -5856,7 +5856,7 @@ RDP=On
 Game Name=Telefoot Soccer 2000 (F)
 MB=8
 CPU=Interpreter
-Status=Compatible
+Status=Semicompatible
 Plugin Note=Use Icepir8's LLE
 CF=2
 [963ADBA6-F7D5C89B-C:4A]
@@ -6944,14 +6944,14 @@ Game Name=World Driver Championship (E) (M5)
 MB=4
 CPU=Interpreter
 Plugin Note=Use Icepir8's plugins
-Status=Compatible
+Status=Semicompatible
 CF=2
 [308DFEC8-CE2EB5F6-C:45]
 Game Name=World Driver Championship (U)
 MB=4
 CPU=Interpreter
 Plugin Note=Use Icepir8's plugins
-Status=Compatible
+Status=Semicompatible
 CF=2
 [2D21C57B-8FE4C58C-C:50]
 Game Name=Worms - Armageddon (E) (M6)

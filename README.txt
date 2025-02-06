@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.postimg.cc/zfTr0Ymh/Poke-Stad-Gold.jpg" alt="logo" width="433" />
+  <img src="https://camo.githubusercontent.com/eb0a2916edf51fec8a8cda3a6c0b06cf4246a689fc7a2a091cfab08d05cefec3/68747470733a2f2f692e706f7374696d672e63632f7a66547230596d682f506f6b652d537461642d476f6c642e6a7067" alt="logo" width="433" />
 </p>
 
 # Project64 1.6.2 Gold
